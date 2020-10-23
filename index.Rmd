@@ -6,7 +6,7 @@ site: bookdown::bookdown_site
 documentclass: book
 biblio-style: apalike
 link-citations: yes
-description: "This material and exercises for 'Python for social and experimental psychology' seminar."
+description: "Material and exercises for 'Python for social and experimental psychology' seminar."
 ---
 
 # Introduction {-}
