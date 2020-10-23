@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Python for social and experimental psychology</title>
+  <meta name="description" content="This is a material for ‘Python for social and experimental psychology’ seminar." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Python for social and experimental psychology" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a material for ‘Python for social and experimental psychology’ seminar." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Python for social and experimental psychology" />
+  
+  <meta name="twitter:description" content="This is a material for ‘Python for social and experimental psychology’ seminar." />
+  
+
+<meta name="author" content="Alexander Pastukhov" />
+
+
+<meta name="date" content="2020-10-23" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+
+<link rel="next" href="getting-started.html"/>
+<script src="libs/header-attrs-2.5/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Python for social and experimental psychology</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#about-the-seminar"><i class="fa fa-check"></i>About the seminar</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#why-python"><i class="fa fa-check"></i>Why Python?</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="getting-started.html"><a href="getting-started.html"><i class="fa fa-check"></i>Getting Started</a>
+<ul>
+<li class="chapter" data-level="" data-path="getting-started.html"><a href="getting-started.html#install-anaconda"><i class="fa fa-check"></i>Installing Anaconda environment</a></li>
+<li class="chapter" data-level="" data-path="getting-started.html"><a href="getting-started.html#install-vs-code"><i class="fa fa-check"></i>Installing Visual Studio Code</a></li>
+<li class="chapter" data-level="" data-path="getting-started.html"><a href="getting-started.html#install-psychopy"><i class="fa fa-check"></i>Installing PsychoPy</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Python for social and experimental psychology</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="header">
+<h1 class="title">Python for social and experimental psychology</h1>
+<p class="author"><em>Alexander Pastukhov</em></p>
+<p class="date"><em>2020-10-23</em></p>
+</div>
+<div id="introduction" class="section level1 unnumbered" number="">
+<h1>Introduction</h1>
+<div id="about-the-seminar" class="section level2 unnumbered" number="">
+<h2>About the seminar</h2>
+<p>This is a material for <em>Python for social and experimental psychology</em> seminar. Each chapter covers a single seminar, introducing necessary ideas and is accompanied by a notebook with exercises, which you need to complete and submit. The material assumes no foreknowledge of Python or programming from the reader. Its purpose is to gradually build up your knowledge and allow you to create more and more complex games. Yes, games! Of course, the real research is about performing experiments but there is little difference between the two. The basic ingredients are the same and, arguably, experiments are just boring games. And, be assured, if you can program a game, you certainly can program an experiment.</p>
+<p>We will start with simple <em>Guess a Number</em> text-only game with first you and then the computer doing the guessing. Next, we will implement a classic <em>Hunt the Wumpus</em> text adventure game that will require use of more complex structures. Once we master the basics, we will up the ante by making a video game with graphics and sounds using <a href="https://psychopy.org/">PsychoPy</a> library to code a classic <em>Memory Game</em>. Finally, we will create a more dynamic game by making a clone of a <em>Flappy Bird</em>.</p>
+<p>Remember that throughout the seminar you can and should(!) always ask me whenever something is unclear, you do not understand a concept or logic behind certain code. Do not hesitate to write me in the team or (better) directly to me in the chat (in the latter case, the notifications are harder miss and we don’t spam others with our conversation).
+As a final assignment, you will need to program a (currently mysterious) video game, which will only require the material covered by the seminar. Please inform me, If you require a grade, as then I will create a more specific description for you to have a clear understanding of how the program will be graded.</p>
+</div>
+<div id="why-python" class="section level2 unnumbered" number="">
+<h2>Why Python?</h2>
+<p>The ultimate goal of this seminar is to teach you how to create an experiment for psychology research. There are many ways to achieve this end. You can use drag-and-drop systems either commercial like <a href="https://www.neurobs.com/">Presentation</a>, <a href="https://www.sr-research.com/experiment-builder/">Experiment Builder</a> or free like <a href="https://psychopy.org/builder">PsychoPy Bulder interface</a>. They have a much shallower learning curve, so you can start creating and running your experiments faster. However, the simplicity of their use has the price: They are fairly limited in which stimuli you can use and how you can control the presentation schedule, feedback, etc. Typically, they allow you to extend them by programming the desired behavior but you do need to know how to program to do this. Thus, I think that while these systems, in particular <a href="https://psychopy.org/">PsychoPy</a>, are great tools to quickly bang a simple experiment together, they are most useful if you understand how they create the code and how you would program it yourself. Then, you will not fill being limited by the software, as you know you can program something the default drag-and-drop won’t allow, but you can always opt in, if drag-and-drop is sufficient but faster. At the end, it is about having options and creative freedom to program an experiment that will answer your research question, not an experiment that your software allows you to program.</p>
+<p>We will learn programming in Python, which is a great language that combines simple and clear syntax with power and ability to tackle almost any problem. The advantage of learning Python, as compared to say Matlab, which is commonly used in neuroscience, is that it allows you do almost anything. In this seminar, we will concentrate on desktop experiments but you can use it for online experiments (<a href="https://otree.readthedocs.io/en/latest/">oTree</a>), scientific programming (<a href="https://numpy.org/">NumPy</a> and <a href="https://www.scipy.org/">SciPy</a>), data analysis (<a href="https://pandas.pydata.org/">pandas</a>), machine learning (<a href="https://keras.io/">keras</a>), website programming (<a href="https://www.djangoproject.com/">django</a>), computer vision (<a href="https://opencv.org/">OpenCV</a>), etc. Thus, learning Python will give you one of the most versitile programming tools that you can use for all stages of your research or work. And, Python is free, so you do not need to worry whether you or your future employer will be able to afford the license fees (a very real problem, if you use Matlab).</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+<a href="getting-started.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["python-for-experimental-psychology.pdf", "python-for-experimental-psychology.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
