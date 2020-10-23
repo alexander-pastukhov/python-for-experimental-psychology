@@ -1,0 +1,3 @@
+# Guess the Number {#seminar01}
+
+Before we start, create a folder called _python-for-experiments_ (or with some other more suitable but meaningful name) in you user folder (this is where Jupyter Notebook expect to find them). Download the [exercise notebook](notebooks/Seminar 01. Guess the number.ipynb) and put it in this folder. Open Jupyter Notebook (see [Getting Started](#getting-started), if you forgot how you do that), navigate to the folder you created and open the downloaded notebook. You will need to switch between explanations here and the exercises in the notebook, so keep them both open.
