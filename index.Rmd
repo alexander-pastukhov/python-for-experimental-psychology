@@ -1,0 +1,26 @@
+--- 
+title: "Python for social and experimental psychology"
+author: "Alexander Pastukhov"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+biblio-style: apalike
+link-citations: yes
+description: "This is a material for 'Python for social and experimental psychology' seminar."
+---
+
+# Introduction {-}
+
+
+## About the seminar {-}
+This is a material for _Python for social and experimental psychology_ seminar. Each chapter covers a single seminar, introducing necessary ideas and is accompanied by a notebook with exercises, which you need to complete and submit. The material assumes no foreknowledge of Python or programming from the reader. Its purpose is to gradually build up your knowledge and allow you to create more and more complex games. Yes, games! Of course, the real research is about performing experiments but there is little difference between the two. The basic ingredients are the same and, arguably, experiments are just boring games. And, be assured, if you can program a game, you certainly can program an experiment.
+
+We will start with simple _Guess a Number_ text-only game with first you and then the computer doing the guessing. Next, we will implement a classic _Hunt the Wumpus_ text adventure game that will require use of more complex structures. Once we master the basics, we will up the ante by making a video game with graphics and sounds using [PsychoPy](https://psychopy.org/) library to code a classic _Memory Game_. Finally, we will create a more dynamic game by making a clone of a _Flappy Bird_.
+
+Remember that throughout the seminar you can and should(!) always ask me whenever something is unclear, you do not understand a concept or logic behind certain code. Do not hesitate to write me in the team or (better) directly to me in the chat (in the latter case, the notifications are harder miss and we don't spam others with our conversation).
+As a final assignment, you will need to program a (currently mysterious) video game, which will only require the material covered by the seminar. Please inform me, If you require a grade, as then I will create a more specific description for you to have a clear understanding of how the program will be graded.
+
+## Why Python? {-}
+The ultimate goal of this seminar is to teach you how to create an experiment for psychology research. There are many ways to achieve this end. You can use drag-and-drop systems either commercial like [Presentation](https://www.neurobs.com/), [Experiment Builder](https://www.sr-research.com/experiment-builder/) or free like [PsychoPy Bulder interface](https://psychopy.org/builder). They have a much shallower learning curve, so you can start creating and running your experiments faster. However, the simplicity of their use has the price: They are fairly limited in which stimuli you can use and how you can control the presentation schedule, feedback, etc. Typically, they allow you to extend them by programming the desired behavior but you do need to know how to program to do this. Thus, I think that while these systems, in particular [PsychoPy](https://psychopy.org/), are great tools to quickly bang a simple experiment together, they are most useful if you understand how they create the code and how you would program it yourself. Then, you will not fill being limited by the software, as you know you can program something the default drag-and-drop won't allow, but you can always opt in, if drag-and-drop is sufficient but faster. At the end, it is about having options and creative freedom to program an experiment that will answer your research question, not an experiment that your software allows you to program.
+
+We will learn programming in Python, which is a great language that combines simple and clear syntax with power and ability to tackle almost any problem. The advantage of learning Python, as compared to say Matlab, which is commonly used in neuroscience, is that it allows you do almost anything. In this seminar, we will concentrate on desktop experiments but you can use it for online experiments ([oTree](https://otree.readthedocs.io/en/latest/)), scientific programming ([NumPy](https://numpy.org/) and [SciPy](https://www.scipy.org/)), data analysis ([pandas](https://pandas.pydata.org/)), machine learning ([keras](https://keras.io/)), website programming ([django](https://www.djangoproject.com/)), computer vision ([OpenCV](https://opencv.org/)), etc. Thus, learning Python will give you one of the most versitile programming tools that you can use for all stages of your research or work. And, Python is free, so you do not need to worry whether you or your future employer will be able to afford the license fees (a very real problem, if you use Matlab).
