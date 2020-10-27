@@ -1,4 +1,50 @@
 # Guess the Number {#seminar02}
 
+Our seminar 1 covered Python basics, so now you are ready to start developing you first game! We will build it step by and there will be a lot to learn about input, libraries, conditional statements, indentation, and loops. As before, download [exercise notebook](notebooks/Seminar 02. Guess the number.ipynb), copy it in your designated folder, and open it in Jupyter Notebook.
+
 ## Game description
-We will program a game where one participant (computer) picks the number within a certain range, say, between 1 and 10 and the other participant (player) is trying to guess it. After every guess, the first participant (computer) responds whether the actual number is lower than a guess, higher than a guess, or matches it. The game is over when the player correctly guess the number or (in the later version of the game) runs out of attempts.
+We will program a game in which one participant (computer) picks the number within a certain range, say, between 1 and 10 and the other participant (player) is trying to guess it. After every guess, the first participant (computer) responds whether the actual number is lower than a guess, higher than a guess, or matches it. The game is over when the player correctly guess the number or (in the later version of the game) runs out of attempts.
+
+Our first version will allow just one attempt (will make it more fun later on) and the overall game algorithm will look like this:
+```{python eval=FALSE}
+# 1. computer generates a random number
+# 2. prints it out for debug purposes
+# 3. prompts user to enter a guess
+# 4. compares two number and print outs the outcome 
+#    "My number is lower", "My number is higher", or "Spot on!"
+```
+
+## Let's pick the number (Exercise 1)
+Let us start by creating a variable that will hold a number that computer "picked". Let us name it `number_picked` (or some other meaningful name) and, to make things a bit simpler, let us assign some hardcoded arbitrary number between 1 and 10 to it (whatever you fill like). Then, let us print it out, so that we know the number ourselves (we know it now but that won't be the case when computer will generate it randomly). Use string formatting to make things user-friendly, e.g. print out something like "The number I've picked is ...". Your code should be a two-liner:
+```{python eval=FALSE}
+# 1. create variable and set it value
+# 2. print out the value
+```
+Switch to exercise #1 and make sure your code works!
+
+## Asking user for a guess (Exercise 2)
+Now we need to ask the player to enter their guess. For this, we will use function [input([prompt])](https://docs.python.org/3/library/functions.html#input) (here and below links lead to the official documentation). It prints out `prompt` (a value string) if it is supplied, reads the input (key presses) until the user presses `Enter`, and returns it **as a string**. For a moment, let us assume that the input is always an integer number, so we can simply convert it to an integer and assign this value to a new variable called `guess`. Thus, you need to write a single line assignment statement with `guess` variable on the left side, whereas on the right should be a call to the `input(...)` function (think of a nice prompt message) wrapped by the type-conversion to `int(...)`. Switch to exercise 2 and, for the moment, only enter valid integers when running the code, so that the conversion works without an error.
+
+## Comparing two numbers (Exercises 3-X)
+Now we have numbers one that computer picked and one that player guessed. Next, we need to compare them to provide correct output. For this, we will use conditional [if statement](https://docs.python.org/3/tutorial/controlflow.html#if-statements):
+```{python eval=FALSE}
+if some_condition_is_true:
+  # do something
+elif some_other_condition_is_true:
+  # do something else
+elif yet_another_condition_is_true:
+  # do yet something else
+else:
+  # do something only if all conditions above are false.
+```
+Only the `if` part is required, whereas `elif` (short form of "else, if") and `else` are optional. Thus you can do something, only if a condition is true:
+```{python eval=FALSE}
+if some_condition_is_true:
+  # do something, but OTHERWISE DO NOT DO ANYTHING 
+  # and continue with code execution
+  
+# some code that is executed after the if-statement,
+# irrespective of whether the condition was true or not.
+```
+Before we can properly use the condition statements, you need to understand the conditions themselves and use of indentation as a mean of grouping statements together.
+
