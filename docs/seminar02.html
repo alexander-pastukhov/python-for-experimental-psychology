@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Getting Started | Python for social and experimental psychology</title>
+  <title>Seminar 2 Guess the Number | Python for social and experimental psychology</title>
   <meta name="description" content="Material and exercises for ‘Python for social and experimental psychology’ seminar." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Getting Started | Python for social and experimental psychology" />
+  <meta property="og:title" content="Seminar 2 Guess the Number | Python for social and experimental psychology" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Getting Started | Python for social and experimental psychology" />
+  <meta name="twitter:title" content="Seminar 2 Guess the Number | Python for social and experimental psychology" />
   
   <meta name="twitter:description" content="Material and exercises for ‘Python for social and experimental psychology’ seminar." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="index.html"/>
-<link rel="next" href="seminar01.html"/>
+<link rel="prev" href="seminar01.html"/>
+
 <script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -180,27 +180,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="getting-started" class="section level1 unnumbered" number="">
-<h1>Getting Started</h1>
-<div id="install-anaconda" class="section level2 unnumbered" number="">
-<h2>Installing Anaconda environment</h2>
-<p>First, install <a href="https://www.anaconda.com">Anaconda</a>, a Python distribution that includes many packages and tools out-of-the-box, makes it easy to install new packages and keep them updated. Follow this <a href="https://www.anaconda.com/products/individual">link</a> and download the installer suitable for your platform. You can pick either 32- or 64-bit version but I would recommend the latter, so that we all have maximally similar setup (it won’t really make a difference in practice, though). Follow the installer instructions and use defaults, unless you have reasons to modify them (e.g. folder location, as the drive for the default choice may have limited available space, as in my case).</p>
-<p>After installation you will have a new <em>Anaconda3 (64-bit)</em> folder that contains links to programs.
-<img src="images/anaconda-shortcuts.png" width="126" /></p>
-<p>You can use <em>Anaconda Navigator</em> that allows you to choose a specific programming environment, including <a href="https://jupyter.org/">Jupyter Notebook</a> that we will use (not JupyterLab, it more versatile but we want to keep things simple at the beginning!). Alternatively, you can start <em>Jupyter Notebook</em> directly from the start menu. Please read the <a href="https://jupyter-notebook.readthedocs.io/en/stable/examples/Notebook/examples_index.html">online documentation</a> to familiarize yourself with Jupyter Notebook basic interface, e.g. how to create a new cell, run it, etc.</p>
-</div>
-<div id="install-vs-code" class="section level2 unnumbered" number="">
-<h2>Installing Visual Studio Code</h2>
-<p><a href="https://code.visualstudio.com/">Visual Studio Code</a> is a lightweight free open-source editor with strong support for Python. We will start use it in earnest, once our programs grow to be sufficiently long and complex. At the early stages, we will mostly use Jupyter notebooks and I would recommend using Jupyter notebooks using the default browser-based editor you installed as part of <a href="getting-started.html#install-anaconda">Anaconda</a>. However, you can also work with Jupyter notebooks in VS Code <a href="https://code.visualstudio.com/docs/python/jupyter-support">directly</a>.</p>
-<p>As in case of <a href="getting-started.html#install-anaconda">Anaconda</a>, download the installer for your platform and follow the instructions. Start VS Code and open any Python file, for example <a href="other/empty.py">this one</a> (use <code>Alt+click</code> to download it, ignore warnings, it is has only comments, so cannot harm you). When you open Python file for the first time, VS Code will suggest to install a Python extension. Do just that andinstall a linter as well when VS Code suggests that (<a href="https://code.visualstudio.com/docs/python/linting">linting</a> highlights syntactical and stylistic problems in your code, making it easier to write consistent clear code).</p>
-<p>Once the Python extension is activated, you will see which Python interpreter is used (you can have more than one or you may use have multiple <a href="https://docs.python.org/3/tutorial/venv.html">virtual environments</a>).
-<img src="images/vscode-python-interpreter.png" width="250" />
-If the selected environment is the wrong one or you are simply not sure, click on it and it will open a drop-down list with all interpreters and environments you have. Consult VS Code <a href="https://code.visualstudio.com/docs/python/environments">online documentation</a> on environments, if you need to change/add/delete environment (the exact settings may change, so looking at constantly updated online documentation is wiser than copying it here, so it would be outdated quite soon).</p>
-</div>
-<div id="install-psychopy" class="section level2 unnumbered" number="">
-<h2>Installing PsychoPy</h2>
-<p>This step can wait until the first <a href="#memory-game-01">Memory Game</a> seminar.</p>
-<p>Download and install <a href="https://www.psychopy.org/download.html">Standalone PsychoPy</a> version. You can install PsychoPy as a conda package or via pip but using it as a standalone would ensure that you have all necessary additional libraries and a builder interface for the future use. We will use PsychoPy’s python environment in <a href="getting-started.html#install-vs-code">VS Code</a>.</p>
+<div id="seminar02" class="section level1" number="2">
+<h1><span class="header-section-number">Seminar 2</span> Guess the Number</h1>
+<div id="game-description" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Game description</h2>
+<p>We will program a game where one participant (computer) picks the number within a certain range, say, between 1 and 10 and the other participant (player) is trying to guess it. After every guess, the first participant (computer) responds whether the actual number is lower than a guess, higher than a guess, or matches it. The game is over when the player correctly guess the number or (in the later version of the game) runs out of attempts.</p>
 
 </div>
 </div>
@@ -209,8 +193,8 @@ If the selected environment is the wrong one or you are simply not sure, click o
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="seminar01.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="seminar01.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

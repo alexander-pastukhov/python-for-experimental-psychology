@@ -1,11 +1,8 @@
 seminar01
-game-description
-python-variables
-constants
-assigning-value
-note-on-exercises.
 variables
+constants
 value-types
 printing-output
 string-formatting
-old-format
+seminar02
+game-description
