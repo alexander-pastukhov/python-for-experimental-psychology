@@ -87,7 +87,7 @@ So far, we only used integer numeric values (1, 2, 5, 1000...). Although, Python
 
 * integer numbers, we already used, e.g. `-1`, `100000`, `42`.
 * float numbers that can take any real value, e.g. `42.0`, `3.14159265359`, `2.71828`.
-* strings that can store text. The text is enclosed between either paired quotes `"some text"` or apostrophes `'some text'`. This means that you can use quotes or apostrophes inside the string, as long as its is enclosed by the alternative. E.g., `"students' homework"` (enclosed in `"`, apostrophe `'` inside) or `'"All generalizations are false, including this one." Mark Twain'` (quotation enclosed by apostrophes).
+* strings that can store text. The text is enclosed between either paired quotes `"some text"` or apostrophes `'some text'`. This means that you can use quotes or apostrophes inside the string, as long as its is enclosed by the alternative. E.g., `"students' homework"` (enclosed in `"`, apostrophe `'` inside) or `'"All generalizations are false, including this one." Mark Twain'` (quotation enclosed by apostrophes). There is much more to strings and we will cover that material throughout the course.
 * logical / Boolean values that are either `True` or `False`.
 
 When using a variable it is important that you know what type of value it stores. In some cases, Python will automatically convert values between certain types, e.g. any integer value is also a real value, so conversion from `1` to `1.0` is mostly trivial and automatic. However, in other cases you may need to use explicit conversion. Go to exercise #4 and think about which code will run and which will throw an error due to incompatible types? 
