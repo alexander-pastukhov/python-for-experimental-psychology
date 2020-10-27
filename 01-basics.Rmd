@@ -76,21 +76,21 @@ x = 3
 Switch to the notebook and do exercise #3 to make sure you understand this.
 
 ## Constants
-Although the real power of variables is that you can their value, you should use them even if the value remains constant. There are no constants in Python, rather the agreement is that their names should be all `UPPER_CASE`. So, if number of legs stays constant throughout the game, you should highlight that constancy and write 
+Although the real power of variables is that you can change their value, you should use them even if the value remains constant. There are no constants in Python, rather the agreement is that their names should be all `UPPER_CASE`. So, if number of legs stays constant throughout the game, you should highlight that constancy and write 
 ```{python eval=FALSE}
 NUMBER_OF_LEGS = 2
 ```
-I strongly recommend using constants and avoid hardcoding the values. First, if you have several identical values that mean different things (2 legs, 2 eyes, 2 ears, 2 vehicles per character, etc.), seeing a `2` in the code won't tell you what does this `2` mean (the legs? the ears? the score multiplier?). You can, of course, figure it out based on the code that uses this number but you could spare yourself that extra effort and use a constant instead. Then, you just read its name and the meaning of the value becomes apparent. Second, if you decide to _change_ that value (say, our main character is now a tripod), when using a constant you have only one place to worry about, the rest of the code stays as is. If you hard-coded that number, you are in for an exciting (not really) and long search-and-replace through the entire code.
+I strongly recommend using constants and avoid hardcoding the values. First, if you have several identical values that mean different things (2 legs, 2 eyes, 2 ears, 2 vehicles per character, etc.), seeing a `2` in the code won't tell you what does this `2` mean (the legs? the ears? the score multiplier?). You can, of course, figure it out based on the code that uses this number but you could spare yourself that extra effort and use a constant instead. Then, you just read its name and the meaning of the value becomes apparent. Second, if you decide to _change_ that value (say, our main character is now a tripod), when using a constant means you have only one place to worry about, the rest of the code stays as is. If you hard-coded that number, you are in for an exciting (not really) and long search-and-replace throughout the entire code.
 
 ## Value types
-So far, we only used integer numeric values (1, 2, 5, 1000...). Although, Python supports [many different value types](https://docs.python.org/3/library/stdtypes.html) but we will first concentrate on a small subset of them:
+So far, we only used integer numeric values (1, 2, 5, 1000...). Although, Python supports [many different value types](https://docs.python.org/3/library/stdtypes.html) but we will concentrate on a small subset of them first:
 
-* integer numbers, we already used
-* float numbers that can take any real value
-* strings that can store text
+* integer numbers, we already used, e.g. `-1`, `100000`, `42`.
+* float numbers that can take any real value, e.g. `42.0`, `3.14159265359`, `2.71828`.
+* strings that can store text. The text is enclosed between either paired quotes `"some text"` or apostrophes `'some text'`. This means that you can use quotes or apostrophes inside the string, as long as its is enclosed by the alternative. E.g., `"students' homework"` (enclosed in `"`, apostrophe `'` inside) or `'"All generalizations are false, including this one." Mark Twain'` (quotation enclosed by apostrophes).
 * logical / Boolean values that are either `True` or `False`.
 
-When using a variable it is important that you know what type of value it stores. In some cases, Python will automatically convert values between certain types, e.g. any integer value is also a real value, so conversion from `1` to `1.0` is trivial an automatic. However, in other cases you may need to use explicit conversion. Go to exercise #4 and think about which code will run and which will throw an error due to incompatible types? 
+When using a variable it is important that you know what type of value it stores. In some cases, Python will automatically convert values between certain types, e.g. any integer value is also a real value, so conversion from `1` to `1.0` is mostly trivial and automatic. However, in other cases you may need to use explicit conversion. Go to exercise #4 and think about which code will run and which will throw an error due to incompatible types? 
 
 ```{python eval=FALSE}
 5 + 2.0
@@ -120,7 +120,7 @@ bool(secret_message)
 bool('False')
 ```
 
-Converting to integer or float numbers is trickier. The simplest case is from logical to integer/float, as `True` gives you `int(True)` is `1` and `float(True)` is `1.0` and `False` gives you `0`/`0.0`. When converting from float to integer, Python simply drops the fractional part. When converting a string, it must be a valid number of the corresponding type or the error is thrown. E.g., you can convert a string like `"123"` to and integer or a float but this won't work for `"a123"`. Moreover, you can convert `"123.4"` to floating-point number but not to an integer, as it has fractional part in it. Given all this, which cells would work and what output would they give (go to exercise #7 in the notebook)?
+Converting to integer or float numbers is trickier. The simplest case is from logical to integer/float, as `True` gives you `int(True)` is `1` and `float(True)` is `1.0` and `False` gives you `0`/`0.0`. When converting from float to integer, Python simply drops the fractional part (not rounding!). When converting a string, it must be a valid number of the corresponding type or the error is thrown. E.g., you can convert a string like `"123"` to and integer or a float but this won't work for `"a123"`. Moreover, you can convert `"123.4"` to floating-point number but not to an integer, as it has fractional part in it. Given all this, which cells would work and what output would they give (go to exercise #7 in the notebook)?
 
 ```{python eval=FALSE}
 float(False)
@@ -130,7 +130,7 @@ int("123+3")
 ```
 
 ## Printing output
-To print the value, you need you use `print()` function. In simplest case, you pass the value and it will be printed out.
+To print the value, you need you use `print()` function (we will talk about functions in greater detail later). In simplest case, you pass the value and it will be printed out.
 ```{python}
 print(5)
 ```
@@ -176,22 +176,37 @@ meal = "breakfast"
 dish = "pancakes"
 count = 10
 ```
-You could, of course do `print(meal, dish, count)` but it would be nice instead to print 
+You could, of course do `print(meal, dish, count)` but it would be nicer to print 
 
 "_I had **10 pancakes** for **breakfast**_"
 
 there items in bold would be the inserted variables' values. For this, we need to use string formatting. Please note that the string formatting is not specific to printing, you can create a new string value via formatting and store it in a variable (without printing it out) or print it out (without storing it).
 
 ## String formatting
-A great resource on string formatting in Python is [pyformat.info](https://pyformat.info/). As Python constantly evolves, it now has more than one way to format strings. Below, I will introduce an "old" format that is based on classic string formatting used in `sprintf` function is C, Matlab or R. It is somewhat less flexible than a new one but for simple tasks the difference is negligible. Knowing the old format is useful, as you can utilise this knowledge for other programming languages, which is why we'll learn it here! If you want to learn alternatives, read at the link above.
+A great resource on string formatting in Python is [pyformat.info](https://pyformat.info/). As Python constantly evolves, it now has more than one way to format strings. Below, I will introduce the "old" format that is based on classic string formatting used in `sprintf` function is C, Matlab, R, and many other programming languages. It is somewhat less flexible than a newer ones but for simple tasks the difference is negligible. Knowing the old format is useful because of its generality. If you want to learn alternatives, read at the link above.
 
-### Old format
 The general call is `"a string with formatting"%(tuple of values to be used during formatting)`.
 
-In `"a string with formatting"`, you specify where you want to put the value via `%` symbol that is followed by an optional formatting info and the required symbol that defines the **type** of the value. The type symbols are
+In `"a string with formatting"`, you specify where you want to put the value via `%` symbol that is followed by an _optional_ formatting info and the _required_ symbol that defines the **type** of the value. The type symbols are
 * `s` for string
 * `d` for an integer
 * `f` for a float value, so that it is fully printed
 * `g` for an optimally printed float value, so that scientific notation is used for large values (_e.g._, `10e5` instead of `100000`).
 
 Here is an example of formatting a string using an integer:
+```{python}
+print("I had %d pancakes for breakfast"%(10))
+```
+
+You are not limited to a single value that you can put into a string. You can specify more locations via `%` but you must make sure that you pass the right number of values. Before running it, can you figure out which call will actually work (and what will be the output ) and which will produce an error (go to exercise #9)?
+
+```{python eval=FALSE}
+print('I had %d pancakes and either %d  or %d stakes for dinner'%(2))
+print('I had %d pancakes and %d stakes for dinner'%(7, 10))
+print('I had %d pancakes and %d stakes for dinner'%(1, 7, 10))
+```
+
+In case of real values you have two options: `%f` and `%g`. The latter uses scientific notation (e.g. `1e10` for `10000000000`) to make the representation more compact. To get a better feeling for the difference do exercise #10.
+
+These is much more to formatting and you can read about it at [pyformat.info](https://pyformat.info/). However, these basics are sufficient for us to start programming our first game during the next seminar. Don't forget to submit your exercise notebook and see you next time!
+
