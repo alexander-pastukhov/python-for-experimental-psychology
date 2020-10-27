@@ -1,0 +1,5 @@
+# Links to useful resources {-}
+
+* [PyFormat](https://pyformat.info/) Information on string formatting with practical examples.
+* [PsychoPy](https://www.psychopy.org/) PsychoPy standalone application and library.
+
