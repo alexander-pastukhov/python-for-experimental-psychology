@@ -1,0 +1,197 @@
+# Python basics {#seminar01}
+
+Before we start, create a folder called _python-for-experiments_ (or with some other more suitable but meaningful name) in you user folder (this is where Anaconda's Jupyter Notebook expect to find them). Download the [exercise notebook](notebooks/Seminar 01. Guess the number.ipynb) and put it in this folder. Open Jupyter Notebook (see [Getting Started](#getting-started), if you forgot how you do that), navigate to the folder you created and open the downloaded notebook. You will need to switch between explanations here and the exercises in the notebook, so keep them both open. The seminar contains the material introducing the concepts and tools that you require to implement the game step-by-step.
+
+
+## Variables
+The first fundamental concept that we need to be acquainted with is **variable**. Variables are used to store information and you can think of it as a box with a name tag in which you can put something. The name tag on that the box is the name of the variable and its value what you store in it. For example, we can create a variable that stores the number of legs a game character has and we begin with a number typical for a human being.
+
+**FIGURE!**
+
+In Python, you would write
+```{python eval=FALSE}
+number_of_legs = 2
+```
+The **assignment statement** above has very simple structure `<variable-name> = <value>`. Variable name (name tag on the box) should be meaningful, it can start with letters or _ and can contain letters, numbers, and _ symbols but must have no spaces in them. Preferably, you should use **snake_case** (all lower-case, underscore for spaces) to format your variable names. The `<value>` on the right side is a more complex story, as it can be simply hard-coded (as in example above), computed using other variables or the same variable, returned by a function, etc.
+
+Using variables means that you can concentrate what corresponding values **mean** rather than worrying about what these values are. For example, the next time you need to compute something based on number of character's legs (e.g. how many pairs of shoes does a character need), you can compute it based on current value of `number_of_legs` variable rather than assume that it is `1`. 
+```{python eval=FALSE}
+# BAD: why 1? Is it because the character has two legs or
+# because we issue one pair of shoes per character irrespective of
+# their actual number of legs?
+pairs_of_shoes = 1
+
+# BETTER!
+pairs_of_shoes = number_of_legs / 2
+```
+
+Variables also gives you flexibility. Their values can change during the program run: player's score is increasing, number of lives decreasing, number of spells it can cast grows or falls depending on their use, etc. Yet, you can use the value in the variable to perform necessary computations. For example, here is a slightly extended `number_of_shoes` example.
+
+```{python eval=FALSE}
+number_of_legs = 2
+
+# ...
+# something happens and our character is turned into an octopus
+number_of_legs = 8
+# ...
+
+# the same code still works and we know the correct number of pairs of shoes
+pairs_of_shoes = number_of_legs / 2
+```
+
+As noted above, you can think about a variable as box labeled box you can store something in. That means that you can always "throw away" the old value and put something new. In case of variables, the "throwing away" part happens automatically, as the new value overwrites the old one. Check yourself, what will be final value of the variable in the code below? Go to exercise #1 in the notebook.
+
+```{python eval=FALSE}
+number_of_legs = 2
+number_of_legs = 5
+number_of_legs = 1
+number_of_legs
+```
+
+As you have already seen, you can _compute_ a value instead of specifying it. What would be the answer here? Do exercise #2 in the notebook.
+```{python eval=FALSE}
+number_of_legs = 2 * 2
+number_of_legs = 7 - 2
+number_of_legs
+```
+
+A **very important** rule that you must keep in mind when understanding assignments: the right side expression is evaluated first until the final value is computed, only when the computation finished the value is assigned to the variable (put in the box). What this means is that you can use the same variable on **both** sides! Let's take a look at this code:
+```{python eval=FALSE}
+x = 2
+y = 5
+x = x + y - 4
+```
+What happens when computer evaluates the following line?
+```{python eval=FALSE}
+x = x + y - 4
+``` 
+First, it takes _current_ values of all variables (`x` and `y`) and substitutes them into the expression. After that internal step, the expression looks like
+```{python eval=FALSE}
+x = 2 + 5 - 4
+```
+Then, it computes the arithmetic expression for the right side and stores that new value in `x`
+```{python eval=FALSE}
+x = 3
+```
+Switch to the notebook and do exercise #3 to make sure you understand this.
+
+## Constants
+Although the real power of variables is that you can their value, you should use them even if the value remains constant. There are no constants in Python, rather the agreement is that their names should be all `UPPER_CASE`. So, if number of legs stays constant throughout the game, you should highlight that constancy and write 
+```{python eval=FALSE}
+NUMBER_OF_LEGS = 2
+```
+I strongly recommend using constants and avoid hardcoding the values. First, if you have several identical values that mean different things (2 legs, 2 eyes, 2 ears, 2 vehicles per character, etc.), seeing a `2` in the code won't tell you what does this `2` mean (the legs? the ears? the score multiplier?). You can, of course, figure it out based on the code that uses this number but you could spare yourself that extra effort and use a constant instead. Then, you just read its name and the meaning of the value becomes apparent. Second, if you decide to _change_ that value (say, our main character is now a tripod), when using a constant you have only one place to worry about, the rest of the code stays as is. If you hard-coded that number, you are in for an exciting (not really) and long search-and-replace through the entire code.
+
+## Value types
+So far, we only used integer numeric values (1, 2, 5, 1000...). Although, Python supports [many different value types](https://docs.python.org/3/library/stdtypes.html) but we will first concentrate on a small subset of them:
+
+* integer numbers, we already used
+* float numbers that can take any real value
+* strings that can store text
+* logical / Boolean values that are either `True` or `False`.
+
+When using a variable it is important that you know what type of value it stores. In some cases, Python will automatically convert values between certain types, e.g. any integer value is also a real value, so conversion from `1` to `1.0` is trivial an automatic. However, in other cases you may need to use explicit conversion. Go to exercise #4 and think about which code will run and which will throw an error due to incompatible types? 
+
+```{python eval=FALSE}
+5 + 2.0
+'5' + 2
+'5' + '2'
+'5' + True
+5 + True
+```
+Surprised by the last one? This is because internally, `True` is also `1` and `False` is `0`!
+
+You can explicitly convert from one type to another using special functions (we will explore these functions in greater detail below). For example, to turn a number or a logical value into a string, you simply write `str(<value>)`. In examples below, what would be the result (go to exercise #5 in the notebook)?
+```{python eval=FALSE}
+str(10 / 2)
+str(2.5 + True)
+str(True)
+```
+
+Similarly, you can convert to a logical/Boolean variable using `bool(<value>)` function. The rules are simple, for numeric values `0` is `False`, any other non-zero value is converted to `True`. For string, an empty string `''` is evaluated to `False` and non-empty string is converted to `True`. What would be the output in the examples below (go to exercise #6 in the notebook)?
+
+```{python eval=FALSE}
+bool(-10)
+bool(0.0)
+
+secret_message = ''
+bool(secret_message)
+
+bool('False')
+```
+
+Converting to integer or float numbers is trickier. The simplest case is from logical to integer/float, as `True` gives you `int(True)` is `1` and `float(True)` is `1.0` and `False` gives you `0`/`0.0`. When converting from float to integer, Python simply drops the fractional part. When converting a string, it must be a valid number of the corresponding type or the error is thrown. E.g., you can convert a string like `"123"` to and integer or a float but this won't work for `"a123"`. Moreover, you can convert `"123.4"` to floating-point number but not to an integer, as it has fractional part in it. Given all this, which cells would work and what output would they give (go to exercise #7 in the notebook)?
+
+```{python eval=FALSE}
+float(False)
+int(-3.3)
+float("67.8")
+int("123+3")
+```
+
+## Printing output
+To print the value, you need you use `print()` function. In simplest case, you pass the value and it will be printed out.
+```{python}
+print(5)
+```
+or 
+```{python}
+print("five")
+```
+
+Of course, you already know about the variables, so rather that putting the value directly, you can pass a variable instead and it is its value that will be printed out.
+
+```{python}
+number_of_pancakes = 10
+print(number_of_pancakes)
+```
+
+or
+ 
+```{python}
+breakfast = "pancakes"
+print(breakfast)
+```
+
+You can also pass more than one value/variable to the print function and all the values will be printed one after another. For example, if we want to tell the user what did I had for breakfast and just how many of those, we can do
+
+```{python}
+breakfast = "pancakes"
+number_of_items = 10
+print(breakfast, number_of_items)
+```
+
+Go to exercise #8 and figure out what will be printed by the code below:
+```{python eval=FALSE}
+dinner = "stake"
+count = 4
+desert = "cupcakes"
+
+print(count, dinner, count, desert)
+```
+
+However, you probably would want to be more explicit, when you print out the information. For example, imagine you have these three variables:
+```{python}
+meal = "breakfast"
+dish = "pancakes"
+count = 10
+```
+You could, of course do `print(meal, dish, count)` but it would be nice instead to print 
+
+"_I had **10 pancakes** for **breakfast**_"
+
+there items in bold would be the inserted variables' values. For this, we need to use string formatting. Please note that the string formatting is not specific to printing, you can create a new string value via formatting and store it in a variable (without printing it out) or print it out (without storing it).
+
+## String formatting
+A great resource on string formatting in Python is [pyformat.info](https://pyformat.info/). As Python constantly evolves, it now has more than one way to format strings. Below, I will introduce an "old" format that is based on classic string formatting used in `sprintf` function is C, Matlab or R. It is somewhat less flexible than a new one but for simple tasks the difference is negligible. Knowing the old format is useful, as you can utilise this knowledge for other programming languages, which is why we'll learn it here! If you want to learn alternatives, read at the link above.
+
+### Old format
+The general call is `"a string with formatting"%(tuple of values to be used during formatting)`.
+
+In `"a string with formatting"`, you specify where you want to put the value via `%` symbol that is followed by an optional formatting info and the required symbol that defines the **type** of the value. The type symbols are
+* `s` for string
+* `d` for an integer
+* `f` for a float value, so that it is fully printed
+* `g` for an optimally printed float value, so that scientific notation is used for large values (_e.g._, `10e5` instead of `100000`).
+
+Here is an example of formatting a string using an integer:
