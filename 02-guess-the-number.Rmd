@@ -1,4 +1,4 @@
-# Guess the Number {#seminar01}
+# Guess the Number {#seminar02}
 
 ## Game description
 We will program a game where one participant (computer) picks the number within a certain range, say, between 1 and 10 and the other participant (player) is trying to guess it. After every guess, the first participant (computer) responds whether the actual number is lower than a guess, higher than a guess, or matches it. The game is over when the player correctly guess the number or (in the later version of the game) runs out of attempts.
