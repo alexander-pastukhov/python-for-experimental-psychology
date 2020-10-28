@@ -29,19 +29,19 @@ Now we need to ask the player to enter their guess. For this, we will use functi
 Now we have numbers one that computer picked and one that player guessed. Next, we need to compare them to provide correct output. For this, we will use conditional [if statement](https://docs.python.org/3/tutorial/controlflow.html#if-statements):
 ```{python eval=FALSE}
 if some_condition_is_true:
-  # do something
+    # do something
 elif some_other_condition_is_true:
-  # do something else
+    # do something else
 elif yet_another_condition_is_true:
-  # do yet something else
+    # do yet something else
 else:
-  # do something only if all conditions above are false.
+    # do something only if all conditions above are false.
 ```
 Only the `if` part is required, whereas `elif` (short form of "else, if") and `else` are optional. Thus you can do something, only if a condition is true:
 ```{python eval=FALSE}
 if some_condition_is_true:
-  # do something, but OTHERWISE DO NOT DO ANYTHING 
-  # and continue with code execution
+    # do something, but OTHERWISE DO NOT DO ANYTHING 
+    # and continue with code execution
   
 # some code that is executed after the if-statement,
 # irrespective of whether the condition was true or not.
@@ -71,4 +71,33 @@ You can also combine several comparisons using `and` and `or` operators. As in h
 
 Finally, like in simple arithmetic, you can use brackets `()` to group conditions together. Thus a statement "I always eat chocolate but I eat spinach only when I am hungry" can be written as `food == "chocolate" or (food == "spinach" and hungry)`. Here, `the food == "chocolate"` and `food == "spinach" and hungry` are evaluated independently, their values are substituted in their place and then the `and` condition is evaluated. Go to exercise #7.
 
+## Grouping statements via identation (exercise #8)
+Let us go back to the conditional if-statement. Take a look at following code example, in which statement #1 is executed only if some condition is true, whereas statement #2 is executed after that irrespective of the condition.
+```{python eval=FALSE}
+if some_condition_is_true:
+    statement #1
+statement #2 
+```
+Both statements #1 and #2 appear after the if-statement, so how does Python now that the first one is executed if condition is true but the other one always runs? The answer is indentation (the **4 (four!)** spaces, they are automatically added whenever you press `Tab` and removed whenever you press `Shift + Tab`) that puts statement #1 _inside_ the if-statement. Thus, indentation shows whether statements belong to the same group (same indentation as of `if` and `statement #2`) or are inside conditional statement, loop, or function. For more complex code, which will have, for example, if-statement inside an if-statement inside a loop, you will express this by adding more levels of indentation. E.g.
+```{python eval=FALSE}
+# some statements outside of the loop (0 indentation)
+while game_is_not_over: # (0 indentation)
+    # statements inside of the loop 
+    if key_pressed: # (indentation of 4)
+        # inside loop and if-statement 
+        if key == "Space": # (indentation of 8)
+            # inside the loop, and if-statement, and another if-statement
+            jump() # (indentation of 12)
+        else: # (indentation of 4)
+            # inside the loop, and if-statement, and else part of another if-statement
+            stand() # (indentation of 12)
+    
+    # statements inside of the loop but outside of the outermost if-statement
+    print(key) # (indentation of 4)
+    
+# some statements outside of the loop (0 indentation)
+```
+Pay very close attention to the indentation as it determines which statements are executed together! Let us do exercise #8.
 
+
+ 
