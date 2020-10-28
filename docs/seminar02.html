@@ -24,7 +24,7 @@
 <meta name="author" content="Alexander Pastukhov" />
 
 
-<meta name="date" content="2020-10-27" />
+<meta name="date" content="2020-10-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="seminar01.html"/>
-
+<link rel="next" href="cross-references.html"/>
 <script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -159,7 +159,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2" data-path="seminar02.html"><a href="seminar02.html"><i class="fa fa-check"></i><b>2</b> Guess the Number</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="seminar02.html"><a href="seminar02.html#game-description"><i class="fa fa-check"></i><b>2.1</b> Game description</a></li>
+<li class="chapter" data-level="2.2" data-path="seminar02.html"><a href="seminar02.html#lets-pick-the-number-exercise-1"><i class="fa fa-check"></i><b>2.2</b> Let’s pick the number (Exercise 1)</a></li>
+<li class="chapter" data-level="2.3" data-path="seminar02.html"><a href="seminar02.html#input-function"><i class="fa fa-check"></i><b>2.3</b> Asking user for a guess (Exercise 2)</a></li>
+<li class="chapter" data-level="2.4" data-path="seminar02.html"><a href="seminar02.html#comparing-two-numbers-exercises-3-x"><i class="fa fa-check"></i><b>2.4</b> Comparing two numbers (Exercises 3-X)</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="cross-references.html"><a href="cross-references.html"><i class="fa fa-check"></i>Cross references</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -182,9 +186,47 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="seminar02" class="section level1" number="2">
 <h1><span class="header-section-number">Seminar 2</span> Guess the Number</h1>
+<p>Our seminar 1 covered Python basics, so now you are ready to start developing you first game! We will build it step by and there will be a lot to learn about input, libraries, conditional statements, indentation, and loops. As before, download <a href="notebooks/Seminar%2002.%20Guess%20the%20number.ipynb">exercise notebook</a>, copy it in your designated folder, and open it in Jupyter Notebook.</p>
 <div id="game-description" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> Game description</h2>
-<p>We will program a game where one participant (computer) picks the number within a certain range, say, between 1 and 10 and the other participant (player) is trying to guess it. After every guess, the first participant (computer) responds whether the actual number is lower than a guess, higher than a guess, or matches it. The game is over when the player correctly guess the number or (in the later version of the game) runs out of attempts.</p>
+<p>We will program a game in which one participant (computer) picks the number within a certain range, say, between 1 and 10 and the other participant (player) is trying to guess it. After every guess, the first participant (computer) responds whether the actual number is lower than a guess, higher than a guess, or matches it. The game is over when the player correctly guess the number or (in the later version of the game) runs out of attempts.</p>
+<p>Our first version will allow just one attempt (will make it more fun later on) and the overall game algorithm will look like this:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb30-1"><a href="seminar02.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. computer generates a random number</span></span>
+<span id="cb30-2"><a href="seminar02.html#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. prints it out for debug purposes</span></span>
+<span id="cb30-3"><a href="seminar02.html#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. prompts user to enter a guess</span></span>
+<span id="cb30-4"><a href="seminar02.html#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. compares two number and print outs the outcome </span></span>
+<span id="cb30-5"><a href="seminar02.html#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="co">#    &quot;My number is lower&quot;, &quot;My number is higher&quot;, or &quot;Spot on!&quot;</span></span></code></pre></div>
+</div>
+<div id="lets-pick-the-number-exercise-1" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Let’s pick the number (Exercise 1)</h2>
+<p>Let us start by creating a variable that will hold a number that computer “picked”. Let us name it <code>number_picked</code> (or some other meaningful name) and, to make things a bit simpler, let us assign some hardcoded arbitrary number between 1 and 10 to it (whatever you fill like). Then, let us print it out, so that we know the number ourselves (we know it now but that won’t be the case when computer will generate it randomly). Use string formatting to make things user-friendly, e.g. print out something like “The number I’ve picked is …”. Your code should be a two-liner:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a href="seminar02.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. create variable and set it value</span></span>
+<span id="cb31-2"><a href="seminar02.html#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. print out the value</span></span></code></pre></div>
+<p>Switch to exercise #1 and make sure your code works!</p>
+</div>
+<div id="input-function" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Asking user for a guess (Exercise 2)</h2>
+<p>Now we need to ask the player to enter their guess. For this, we will use function <a href="https://docs.python.org/3/library/functions.html#input">input([prompt])</a> (here and below links lead to the official documentation). It prints out <code>prompt</code> (a value string) if it is supplied, reads the input (key presses) until the user presses <code>Enter</code>, and returns it <strong>as a string</strong>. For a moment, let us assume that the input is always an integer number, so we can simply convert it to an integer and assign this value to a new variable called <code>guess</code>. Thus, you need to write a single line assignment statement with <code>guess</code> variable on the left side, whereas on the right should be a call to the <code>input(...)</code> function (think of a nice prompt message) wrapped by the type-conversion to <code>int(...)</code>. Switch to exercise 2 and, for the moment, only enter valid integers when running the code, so that the conversion works without an error.</p>
+</div>
+<div id="comparing-two-numbers-exercises-3-x" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> Comparing two numbers (Exercises 3-X)</h2>
+<p>Now we have numbers one that computer picked and one that player guessed. Next, we need to compare them to provide correct output. For this, we will use conditional <a href="https://docs.python.org/3/tutorial/controlflow.html#if-statements">if statement</a>:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb32-1"><a href="seminar02.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> some_condition_is_true:</span>
+<span id="cb32-2"><a href="seminar02.html#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># do something</span></span>
+<span id="cb32-3"><a href="seminar02.html#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> some_other_condition_is_true:</span>
+<span id="cb32-4"><a href="seminar02.html#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># do something else</span></span>
+<span id="cb32-5"><a href="seminar02.html#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> yet_another_condition_is_true:</span>
+<span id="cb32-6"><a href="seminar02.html#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># do yet something else</span></span>
+<span id="cb32-7"><a href="seminar02.html#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb32-8"><a href="seminar02.html#cb32-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># do something only if all conditions above are false.</span></span></code></pre></div>
+<p>Only the <code>if</code> part is required, whereas <code>elif</code> (short form of “else, if”) and <code>else</code> are optional. Thus you can do something, only if a condition is true:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb33-1"><a href="seminar02.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> some_condition_is_true:</span>
+<span id="cb33-2"><a href="seminar02.html#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># do something, but OTHERWISE DO NOT DO ANYTHING </span></span>
+<span id="cb33-3"><a href="seminar02.html#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># and continue with code execution</span></span>
+<span id="cb33-4"><a href="seminar02.html#cb33-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb33-5"><a href="seminar02.html#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="co"># some code that is executed after the if-statement,</span></span>
+<span id="cb33-6"><a href="seminar02.html#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="co"># irrespective of whether the condition was true or not.</span></span></code></pre></div>
+<p>Before we can properly use the condition statements, you need to understand the conditions themselves and use of indentation as a mean of grouping statements together.</p>
 
 </div>
 </div>
@@ -193,8 +235,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="seminar01.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="seminar01.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="cross-references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

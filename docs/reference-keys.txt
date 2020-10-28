@@ -6,3 +6,6 @@ printing-output
 string-formatting
 seminar02
 game-description
+lets-pick-the-number-exercise-1
+input-function
+comparing-two-numbers-exercises-3-x

@@ -5,12 +5,13 @@
 \documentclass[
 ]{book}
 \usepackage{lmodern}
-\usepackage{amssymb,amsmath}
+\usepackage{amsmath}
 \usepackage{ifxetex,ifluatex}
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
+  \usepackage{amssymb}
 \else % if luatex or xetex
   \usepackage{unicode-math}
   \defaultfontfeatures{Scale=MatchLowercase}
@@ -108,12 +109,15 @@
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
 \usepackage{booktabs}
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
 
 \title{Python for social and experimental psychology}
 \author{Alexander Pastukhov}
-\date{2020-10-27}
+\date{2020-10-28}
 
 \begin{document}
 \maketitle
@@ -196,7 +200,7 @@ Download and install \href{https://www.psychopy.org/download.html}{Standalone Ps
 \hypertarget{seminar01}{%
 \chapter{Python basics}\label{seminar01}}
 
-Before we start, create a folder called \emph{python-for-experiments} (or with some other more suitable but meaningful name) in you user folder (this is where Anaconda's Jupyter Notebook expect to find them). Download the \href{notebooks/Seminar\%2001.\%20Guess\%20the\%20number.ipynb}{exercise notebook} and put it in this folder. Open Jupyter Notebook (see \protect\hyperlink{getting-started}{Getting Started}, if you forgot how you do that), navigate to the folder you created and open the downloaded notebook. You will need to switch between explanations here and the exercises in the notebook, so keep them both open. The seminar contains the material introducing the concepts and tools that you require to implement the game step-by-step.
+Before we start, create a folder called \emph{python-for-experiments} (or with some other more suitable but meaningful name) in you user folder (this is where Anaconda's Jupyter Notebook expect to find them). Download the \href{notebooks/Seminar\%2001.\%20Basics.ipynb}{exercise notebook} and put it in this folder. Open Jupyter Notebook (see \protect\hyperlink{getting-started}{Getting Started}, if you forgot how you do that), navigate to the folder you created and open the downloaded notebook. You will need to switch between explanations here and the exercises in the notebook, so keep them both open. The seminar contains the material introducing the concepts and tools that you require to implement the game step-by-step.
 
 \hypertarget{variables}{%
 \section{Variables}\label{variables}}
@@ -327,7 +331,7 @@ So far, we only used integer numeric values (1, 2, 5, 1000\ldots). Although, Pyt
 \item
   float numbers that can take any real value, e.g.~\texttt{42.0}, \texttt{3.14159265359}, \texttt{2.71828}.
 \item
-  strings that can store text. The text is enclosed between either paired quotes \texttt{"some\ text"} or apostrophes \texttt{\textquotesingle{}some\ text\textquotesingle{}}. This means that you can use quotes or apostrophes inside the string, as long as its is enclosed by the alternative. E.g., \texttt{"students\textquotesingle{}\ homework"} (enclosed in \texttt{"}, apostrophe \texttt{\textquotesingle{}} inside) or \texttt{\textquotesingle{}"All\ generalizations\ are\ false,\ including\ this\ one."\ Mark\ Twain\textquotesingle{}} (quotation enclosed by apostrophes).
+  strings that can store text. The text is enclosed between either paired quotes \texttt{"some\ text"} or apostrophes \texttt{\textquotesingle{}some\ text\textquotesingle{}}. This means that you can use quotes or apostrophes inside the string, as long as its is enclosed by the alternative. E.g., \texttt{"students\textquotesingle{}\ homework"} (enclosed in \texttt{"}, apostrophe \texttt{\textquotesingle{}} inside) or \texttt{\textquotesingle{}"All\ generalizations\ are\ false,\ including\ this\ one."\ Mark\ Twain\textquotesingle{}} (quotation enclosed by apostrophes). There is much more to strings and we will cover that material throughout the course.
 \item
   logical / Boolean values that are either \texttt{True} or \texttt{False}.
 \end{itemize}
@@ -518,9 +522,145 @@ These is much more to formatting and you can read about it at \href{https://pyfo
 \hypertarget{seminar02}{%
 \chapter{Guess the Number}\label{seminar02}}
 
+Our seminar 1 covered Python basics, so now you are ready to start developing you first game! We will build it step by and there will be a lot to learn about input, libraries, conditional statements, indentation, and loops. As before, download \href{notebooks/Seminar\%2002.\%20Guess\%20the\%20number.ipynb}{exercise notebook}, copy it in your designated folder, and open it in Jupyter Notebook.
+
 \hypertarget{game-description}{%
 \section{Game description}\label{game-description}}
 
-We will program a game where one participant (computer) picks the number within a certain range, say, between 1 and 10 and the other participant (player) is trying to guess it. After every guess, the first participant (computer) responds whether the actual number is lower than a guess, higher than a guess, or matches it. The game is over when the player correctly guess the number or (in the later version of the game) runs out of attempts.
+We will program a game in which one participant (computer) picks the number within a certain range, say, between 1 and 10 and the other participant (player) is trying to guess it. After every guess, the first participant (computer) responds whether the actual number is lower than a guess, higher than a guess, or matches it. The game is over when the player correctly guess the number or (in the later version of the game) runs out of attempts.
+
+Our first version will allow just one attempt (will make it more fun later on) and the overall game algorithm will look like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 1. computer generates a random number}
+\CommentTok{\# 2. prints it out for debug purposes}
+\CommentTok{\# 3. prompts user to enter a guess}
+\CommentTok{\# 4. compares two number and print outs the outcome }
+\CommentTok{\#    "My number is lower", "My number is higher", or "Spot on!"}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{lets-pick-the-number-exercise-1}{%
+\section{Let's pick the number (Exercise 1)}\label{lets-pick-the-number-exercise-1}}
+
+Let us start by creating a variable that will hold a number that computer ``picked''. Let us name it \texttt{number\_picked} (or some other meaningful name) and, to make things a bit simpler, let us assign some hardcoded arbitrary number between 1 and 10 to it (whatever you fill like). Then, let us print it out, so that we know the number ourselves (we know it now but that won't be the case when computer will generate it randomly). Use string formatting to make things user-friendly, e.g.~print out something like ``The number I've picked is \ldots{}''. Your code should be a two-liner:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 1. create variable and set it value}
+\CommentTok{\# 2. print out the value}
+\end{Highlighting}
+\end{Shaded}
+
+Switch to exercise \#1 and make sure your code works!
+
+\hypertarget{input-function}{%
+\section{Asking user for a guess (Exercise 2)}\label{input-function}}
+
+Now we need to ask the player to enter their guess. For this, we will use function \href{https://docs.python.org/3/library/functions.html\#input}{input({[}prompt{]})} (here and below links lead to the official documentation). It prints out \texttt{prompt} (a value string) if it is supplied, reads the input (key presses) until the user presses \texttt{Enter}, and returns it \textbf{as a string}. For a moment, let us assume that the input is always an integer number, so we can simply convert it to an integer and assign this value to a new variable called \texttt{guess}. Thus, you need to write a single line assignment statement with \texttt{guess} variable on the left side, whereas on the right should be a call to the \texttt{input(...)} function (think of a nice prompt message) wrapped by the type-conversion to \texttt{int(...)}. Switch to exercise 2 and, for the moment, only enter valid integers when running the code, so that the conversion works without an error.
+
+\hypertarget{comparing-two-numbers-exercises-3-x}{%
+\section{Comparing two numbers (Exercises 3-X)}\label{comparing-two-numbers-exercises-3-x}}
+
+Now we have numbers one that computer picked and one that player guessed. Next, we need to compare them to provide correct output. For this, we will use conditional \href{https://docs.python.org/3/tutorial/controlflow.html\#if-statements}{if statement}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ some\_condition\_is\_true:}
+  \CommentTok{\# do something}
+\ControlFlowTok{elif}\NormalTok{ some\_other\_condition\_is\_true:}
+  \CommentTok{\# do something else}
+\ControlFlowTok{elif}\NormalTok{ yet\_another\_condition\_is\_true:}
+  \CommentTok{\# do yet something else}
+\ControlFlowTok{else}\NormalTok{:}
+  \CommentTok{\# do something only if all conditions above are false.}
+\end{Highlighting}
+\end{Shaded}
+
+Only the \texttt{if} part is required, whereas \texttt{elif} (short form of ``else, if'') and \texttt{else} are optional. Thus you can do something, only if a condition is true:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ some\_condition\_is\_true:}
+  \CommentTok{\# do something, but OTHERWISE DO NOT DO ANYTHING }
+  \CommentTok{\# and continue with code execution}
+  
+\CommentTok{\# some code that is executed after the if{-}statement,}
+\CommentTok{\# irrespective of whether the condition was true or not.}
+\end{Highlighting}
+\end{Shaded}
+
+Before we can properly use the condition statements, you need to understand the conditions themselves and use of indentation as a mean of grouping statements together.
+
+\hypertarget{cross-references}{%
+\chapter*{Cross references}\label{cross-references}}
+\addcontentsline{toc}{chapter}{Cross references}
+
+\hypertarget{a}{%
+\section*{A}\label{a}}
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://www.anaconda.com}{Anaconda}, a scientific Python distribution, see also \protect\hyperlink{install-anaconda}{installation notes}.
+\end{itemize}
+
+\hypertarget{c}{%
+\section*{C}\label{c}}
+
+\begin{itemize}
+\tightlist
+\item
+  \protect\hyperlink{constants}{Constants}
+\end{itemize}
+
+\hypertarget{i}{%
+\section*{I}\label{i}}
+
+\begin{itemize}
+\tightlist
+\item
+  \protect\hyperlink{input-function}{input({[}prompt{]}) function}, see also \href{https://docs.python.org/3/library/functions.html\#input}{official manual}
+\end{itemize}
+
+\hypertarget{p}{%
+\section*{P}\label{p}}
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://www.psychopy.org/}{PsychoPy} PsychoPy standalone application and library, see also \protect\hyperlink{install-psychopy}{installation notes}.
+\end{itemize}
+
+\hypertarget{s}{%
+\section*{S}\label{s}}
+
+\begin{itemize}
+\tightlist
+\item
+  \protect\hyperlink{string-formatting}{String formatting}, see also \href{https://pyformat.info/}{PyFormat} for information on new string formatting and practical examples.
+\end{itemize}
+
+\hypertarget{t}{%
+\section*{T}\label{t}}
+
+\begin{itemize}
+\tightlist
+\item
+  \protect\hyperlink{value-types}{Types}
+\end{itemize}
+
+\hypertarget{v}{%
+\section*{V}\label{v}}
+
+\begin{itemize}
+\item
+  \protect\hyperlink{value-types}{Value types (simple)}
+\item
+  \protect\hyperlink{variables}{Variables}
+\item
+  \href{https://code.visualstudio.com/}{Visual Studio Code}, a lightweight free open-source editor with strong support for Python. See also \protect\hyperlink{install-vs-code}{installation notes}.
+\end{itemize}
 
 \end{document}
