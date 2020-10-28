@@ -1,0 +1,25 @@
+# Cross references {-}
+
+## A{.unlisted .unnumbered}
+* [Anaconda](https://www.anaconda.com), a scientific Python distribution, see also [installation notes](#install-anaconda). 
+
+## C{- .unlisted}
+* [Constants](#constants)
+
+## I{- .unlisted}
+* [input([prompt]) function](#input-function), see also [official manual](https://docs.python.org/3/library/functions.html#input)
+
+## P{- .unlisted}
+* [PsychoPy](https://www.psychopy.org/) PsychoPy standalone application and library, see also [installation notes](#install-psychopy).
+
+## S{- .unlisted}
+* [String formatting](#string-formatting), see also [PyFormat](https://pyformat.info/) for information on new string formatting and practical examples.
+
+## T{- .unlisted}
+* [Types](#value-types)
+
+## V{- .unlisted}
+* [Value types (simple)](#value-types)
+* [Variables](#variables)
+
+* [Visual Studio Code](https://code.visualstudio.com/), a  lightweight free open-source editor with strong support for Python. See also [installation notes](#install-vs-code).
