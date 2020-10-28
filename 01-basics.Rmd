@@ -3,7 +3,7 @@
 Before we start, create a folder called _python-for-experiments_ (or with some other more suitable but meaningful name) in you user folder (this is where Anaconda's Jupyter Notebook expect to find them). Download the [exercise notebook](notebooks/Seminar 01. Basics.ipynb) and put it in this folder. Open Jupyter Notebook (see [Getting Started](#getting-started), if you forgot how you do that), navigate to the folder you created and open the downloaded notebook. You will need to switch between explanations here and the exercises in the notebook, so keep them both open. The seminar contains the material introducing the concepts and tools that you require to implement the game step-by-step.
 
 
-## Variables
+## Variables {#variables}
 The first fundamental concept that we need to be acquainted with is **variable**. Variables are used to store information and you can think of it as a box with a name tag in which you can put something. The name tag on that the box is the name of the variable and its value what you store in it. For example, we can create a variable that stores the number of legs a game character has and we begin with a number typical for a human being.
 
 **FIGURE!**
@@ -75,14 +75,14 @@ x = 3
 ```
 Switch to the notebook and do exercise #3 to make sure you understand this.
 
-## Constants
+## Constants {#constants}
 Although the real power of variables is that you can change their value, you should use them even if the value remains constant. There are no constants in Python, rather the agreement is that their names should be all `UPPER_CASE`. So, if number of legs stays constant throughout the game, you should highlight that constancy and write 
 ```{python eval=FALSE}
 NUMBER_OF_LEGS = 2
 ```
 I strongly recommend using constants and avoid hardcoding the values. First, if you have several identical values that mean different things (2 legs, 2 eyes, 2 ears, 2 vehicles per character, etc.), seeing a `2` in the code won't tell you what does this `2` mean (the legs? the ears? the score multiplier?). You can, of course, figure it out based on the code that uses this number but you could spare yourself that extra effort and use a constant instead. Then, you just read its name and the meaning of the value becomes apparent. Second, if you decide to _change_ that value (say, our main character is now a tripod), when using a constant means you have only one place to worry about, the rest of the code stays as is. If you hard-coded that number, you are in for an exciting (not really) and long search-and-replace throughout the entire code.
 
-## Value types
+## Value types {#value-types}
 So far, we only used integer numeric values (1, 2, 5, 1000...). Although, Python supports [many different value types](https://docs.python.org/3/library/stdtypes.html) but we will concentrate on a small subset of them first:
 
 * integer numbers, we already used, e.g. `-1`, `100000`, `42`.
@@ -182,7 +182,7 @@ You could, of course do `print(meal, dish, count)` but it would be nicer to prin
 
 there items in bold would be the inserted variables' values. For this, we need to use string formatting. Please note that the string formatting is not specific to printing, you can create a new string value via formatting and store it in a variable (without printing it out) or print it out (without storing it).
 
-## String formatting
+## String formatting {#string-formatting}
 A great resource on string formatting in Python is [pyformat.info](https://pyformat.info/). As Python constantly evolves, it now has more than one way to format strings. Below, I will introduce the "old" format that is based on classic string formatting used in `sprintf` function is C, Matlab, R, and many other programming languages. It is somewhat less flexible than a newer ones but for simple tasks the difference is negligible. Knowing the old format is useful because of its generality. If you want to learn alternatives, read at the link above.
 
 The general call is `"a string with formatting"%(tuple of values to be used during formatting)`.

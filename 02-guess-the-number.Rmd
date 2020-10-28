@@ -22,7 +22,7 @@ Let us start by creating a variable that will hold a number that computer "picke
 ```
 Switch to exercise #1 and make sure your code works!
 
-## Asking user for a guess (Exercise 2)
+## Asking user for a guess (Exercise 2) {#input-function}
 Now we need to ask the player to enter their guess. For this, we will use function [input([prompt])](https://docs.python.org/3/library/functions.html#input) (here and below links lead to the official documentation). It prints out `prompt` (a value string) if it is supplied, reads the input (key presses) until the user presses `Enter`, and returns it **as a string**. For a moment, let us assume that the input is always an integer number, so we can simply convert it to an integer and assign this value to a new variable called `guess`. Thus, you need to write a single line assignment statement with `guess` variable on the left side, whereas on the right should be a call to the `input(...)` function (think of a nice prompt message) wrapped by the type-conversion to `int(...)`. Switch to exercise 2 and, for the moment, only enter valid integers when running the code, so that the conversion works without an error.
 
 ## Comparing two numbers (Exercises 3-X)
