@@ -46,10 +46,21 @@ if some_condition_is_true:
 # some code that is executed after the if-statement,
 # irrespective of whether the condition was true or not.
 ```
+Also note that conditions are checked one-by-one in the order you formulated them and later `elif` are checked only if previous conditions were `False`. Take a look at this example:
+```{python eval = FALSE}
+if 2 * 2 == 4:
+  print("4!")
+elif 3 * 3 == 9:
+  print("9!")
+else:
+  print("I don't know!")
+```
+Here, even thought the second condition is true (`3 * 3 == 9` → `True`), it is never evaluated because the prior comparison `2 * 2 == 4` is also true.
+
 Before we can properly use conditional statements, you need to understand the conditions themselves and use of indentation as a mean of grouping statements together.
 
 ## Conditions and comparisons (exercises 3-7)
-Conditions is any expression that can be evaluated to see whether it is `True` or `False`. A straightforward example of such expression are comparisons, in human language expressed as "is today Thursday?", "is the answer equal to 42", "is it raining and I have an umbrella?". We will concentrate on them here but later you will see that in Python **any** expression is either `True` or `False`, even when it does not look like a comparison.
+Condition is any expression that can be evaluated to see whether it is `True` or `False`. A straightforward example of such expression are comparisons, in human language expressed as "is today Thursday?", "is the number of sighted UFOs larger than 42", "is it raining and I have an umbrella?". We will concentrate on them here but later you will see that in Python **any** expression is either `True` or `False`, even when it does not look like a comparison.
 
 For the comparison, you can use the following operators:
 
@@ -67,7 +78,7 @@ You can _invert_ the logical value using `not` operator, so that `not True` is `
 
 Go to exercise #4 to explore this inversion yourself.
 
-You can also combine several comparisons using `and` and `or` operators. As in human language, `and` means that both parts must be true: `True and True` → `True` but `True and False` → `False`, `False and True` → `False`, and `False and False` → `False`. Same holds if you have more have two conditions/comparisons, **all** of them must be true. In case of `or` only one of the statements must be true, e.g. `True and True` → `True`, `True and False` → `True`, `False and True` → `True`, but `False and False` → `False`. Again, for more than two comparisons/conditions at least one of them should be true for the entire expression to be true. Go to exercises #5 and #6.
+You can also combine several comparisons using `and` and `or` operators. As in human language, `and` means that both parts must be true: `True and True` → `True` but `True and False` → `False`, `False and True` → `False`, and `False and False` → `False`. Same holds if you have more have two conditions/comparisons, **all** of them must be true. In case of `or` at least one of the statements must be true, e.g. `True and True` → `True`, `True and False` → `True`, `False and True` → `True`, but `False and False` → `False`. Again, for more than two comparisons/conditions at least one of them should be true for the entire expression to be true. Go to exercises #5 and #6.
 
 Finally, like in simple arithmetic, you can use brackets `()` to group conditions together. Thus a statement "I always eat chocolate but I eat spinach only when I am hungry" can be written as `food == "chocolate" or (food == "spinach" and hungry)`. Here, `the food == "chocolate"` and `food == "spinach" and hungry` are evaluated independently, their values are substituted in their place and then the `and` condition is evaluated. Go to exercise #7.
 
@@ -78,7 +89,7 @@ if some_condition_is_true:
     statement #1
 statement #2 
 ```
-Both statements #1 and #2 appear after the if-statement, so how does Python now that the first one is executed if condition is true but the other one always runs? The answer is indentation (the **4 (four!)** spaces, they are automatically added whenever you press `Tab` and removed whenever you press `Shift + Tab`) that puts statement #1 _inside_ the if-statement. Thus, indentation shows whether statements belong to the same group (same indentation as of `if` and `statement #2`) or are inside conditional statement, loop, or function. For more complex code, which will have, for example, if-statement inside an if-statement inside a loop, you will express this by adding more levels of indentation. E.g.
+Both statements #1 and #2 appear after the if-statement, so how does Python now that the first one is executed if condition is true but the other one always runs? The answer is the indentation (the **4 (four!)** spaces, they are automatically added whenever you press `Tab` and removed whenever you press `Shift + Tab`) that puts statement #1 _inside_ the if-statement. Thus, indentation shows whether statements belong to the same group (same indentation as of `if` and `statement #2`) or are inside conditional statement, loop, or function. For more complex code, which will have, for example, if-statement inside an if-statement inside a loop, you will express this by adding more levels of indentation. E.g.
 ```{python eval=FALSE}
 # some statements outside of the loop (0 indentation)
 while game_is_not_over: # (0 indentation)
@@ -97,7 +108,28 @@ while game_is_not_over: # (0 indentation)
     
 # some statements outside of the loop (0 indentation)
 ```
-Pay very close attention to the indentation as it determines which statements are executed together! Let us do exercise #8.
+Pay very close attention to the indentation as it determines which statements are executed together! Go to exercise #8.
 
+## Checking the answer
+Now you have all necessary instruments to finish the first version of our game. Go to exercise #9 and, first, copy-paste your solutions to exercise #1 (settings computer pick and printing it out) and #2 (getting player input as an integer). Now, add  conditional statements below, so that 
 
- 
+* if the computer pick is smaller than player's guess, it will print "My number is lower!"
+* if the computer pick is larger than player's guess, it will print "My number is higher!"
+* if two numbers are identical, it will print "Spot on!"
+
+## Picking number randomly
+Our game is "feature-complete": computer picks a number, player makes a guess, computer responds appropriately. However, currently we are playing for both sides, as we hand pick the number for computer. Now, we will let computer pick this number itself using [randint(a, b)](https://docs.python.org/3/library/random.html#random.randint) function. It is part of the [random](https://docs.python.org/3/library/random.html) library, so you will need to _import_ it first. We will talk about libraries and importing them in greater detail later. For now, it suffices that the top line of your code is 
+```{python eval=FALSE}
+from random import randint
+```
+Function `randint(a, b)` generates a random integer on the interval `a..b`. In our case, this interval is `1..10`. Go to exercise #9. First copy-paste your solution for exercise #8. Add the `from random import randint` as the first line. Then, replace the hard-coded value you used for computer's pick with a call to `randint()` function. Run the code several times to check that computer does pick different random values.
+
+Congratulations, you just programmed your first computer game! Yes, it is very simple but it has key ingredients: a random decision by computer, user input, and feedback. Next time, you will learn about loops to allow for multiple attempts and about functions to make your code modular and reliable. In the meantime, let us solidify your knowledge by programming yet another game!
+
+## One-armed bandit
+You know everything you need to program a simple version of an "one-armed bandit" game (exercise #11). Here is the game logic:
+
+1. `from random import randint`
+2. Generate three random integers (say, between 1 and 5) and store them in three variables `slot1`, `slot2`, and `slot3`.
+3. Print out the numbers, use string formatting to make it look nice.`
+4. In addition, if all three values are the same, print `"Three of a kind!"`. If only two numbers match, print `"Pair!"`. Print nothing, if all numbers are different.
