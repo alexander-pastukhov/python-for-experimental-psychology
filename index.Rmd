@@ -10,7 +10,7 @@ description: "Material and exercises for 'Python for social and experimental psy
 ---
 
 ```{r, setup, include=FALSE}
-rmarkdown::find_pandoc(dir = "c:/Program Files/Pandoc", cache=FALSE)
+# rmarkdown::find_pandoc(dir = "c:/Program Files/Pandoc", cache=FALSE)
 ```
 
 # Introduction {-}
