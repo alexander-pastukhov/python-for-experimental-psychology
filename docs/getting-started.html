@@ -21,10 +21,10 @@
   <meta name="twitter:description" content="Material and exercises for ‘Python for social and experimental psychology’ seminar." />
   
 
-<meta name="author" content="Alexander Pastukhov" />
+<meta name="author" content="Alexander (Sasha) Pastukhov" />
 
 
-<meta name="date" content="2020-10-28" />
+<meta name="date" content="2020-11-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -151,17 +151,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1" data-path="seminar01.html"><a href="seminar01.html"><i class="fa fa-check"></i><b>1</b> Python basics</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="seminar01.html"><a href="seminar01.html#variables"><i class="fa fa-check"></i><b>1.1</b> Variables</a></li>
-<li class="chapter" data-level="1.2" data-path="seminar01.html"><a href="seminar01.html#constants"><i class="fa fa-check"></i><b>1.2</b> Constants</a></li>
-<li class="chapter" data-level="1.3" data-path="seminar01.html"><a href="seminar01.html#value-types"><i class="fa fa-check"></i><b>1.3</b> Value types</a></li>
-<li class="chapter" data-level="1.4" data-path="seminar01.html"><a href="seminar01.html#printing-output"><i class="fa fa-check"></i><b>1.4</b> Printing output</a></li>
-<li class="chapter" data-level="1.5" data-path="seminar01.html"><a href="seminar01.html#string-formatting"><i class="fa fa-check"></i><b>1.5</b> String formatting</a></li>
+<li class="chapter" data-level="1.2" data-path="seminar01.html"><a href="seminar01.html#assignments-are-not-equations"><i class="fa fa-check"></i><b>1.2</b> Assignments are not equations!</a></li>
+<li class="chapter" data-level="1.3" data-path="seminar01.html"><a href="seminar01.html#constants"><i class="fa fa-check"></i><b>1.3</b> Constants</a></li>
+<li class="chapter" data-level="1.4" data-path="seminar01.html"><a href="seminar01.html#value-types"><i class="fa fa-check"></i><b>1.4</b> Value types</a></li>
+<li class="chapter" data-level="1.5" data-path="seminar01.html"><a href="seminar01.html#printing-output"><i class="fa fa-check"></i><b>1.5</b> Printing output</a></li>
+<li class="chapter" data-level="1.6" data-path="seminar01.html"><a href="seminar01.html#string-formatting"><i class="fa fa-check"></i><b>1.6</b> String formatting</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="seminar02.html"><a href="seminar02.html"><i class="fa fa-check"></i><b>2</b> Guess the Number</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="seminar02.html"><a href="seminar02.html#game-description"><i class="fa fa-check"></i><b>2.1</b> Game description</a></li>
 <li class="chapter" data-level="2.2" data-path="seminar02.html"><a href="seminar02.html#lets-pick-the-number-exercise-1"><i class="fa fa-check"></i><b>2.2</b> Let’s pick the number (Exercise 1)</a></li>
 <li class="chapter" data-level="2.3" data-path="seminar02.html"><a href="seminar02.html#input-function"><i class="fa fa-check"></i><b>2.3</b> Asking user for a guess (Exercise 2)</a></li>
-<li class="chapter" data-level="2.4" data-path="seminar02.html"><a href="seminar02.html#comparing-two-numbers-exercises-3-x"><i class="fa fa-check"></i><b>2.4</b> Comparing two numbers (Exercises 3-X)</a></li>
+<li class="chapter" data-level="2.4" data-path="seminar02.html"><a href="seminar02.html#conditional-if-statement"><i class="fa fa-check"></i><b>2.4</b> Conditional <em>if</em> statement</a></li>
+<li class="chapter" data-level="2.5" data-path="seminar02.html"><a href="seminar02.html#conditions-and-comparisons-exercises-3-7"><i class="fa fa-check"></i><b>2.5</b> Conditions and comparisons (exercises 3-7)</a></li>
+<li class="chapter" data-level="2.6" data-path="seminar02.html"><a href="seminar02.html#grouping-statements-via-identation-exercise-9"><i class="fa fa-check"></i><b>2.6</b> Grouping statements via identation (exercise #9)</a></li>
+<li class="chapter" data-level="2.7" data-path="seminar02.html"><a href="seminar02.html#checking-the-answer"><i class="fa fa-check"></i><b>2.7</b> Checking the answer</a></li>
+<li class="chapter" data-level="2.8" data-path="seminar02.html"><a href="seminar02.html#picking-number-randomly"><i class="fa fa-check"></i><b>2.8</b> Picking number randomly</a></li>
+<li class="chapter" data-level="2.9" data-path="seminar02.html"><a href="seminar02.html#one-armed-bandit"><i class="fa fa-check"></i><b>2.9</b> One-armed bandit</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="cross-references.html"><a href="cross-references.html"><i class="fa fa-check"></i>Cross references</a></li>
 <li class="divider"></li>
@@ -188,23 +194,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1>Getting Started</h1>
 <div id="install-anaconda" class="section level2 unnumbered">
 <h2>Installing Anaconda environment</h2>
-<p>First, install <a href="https://www.anaconda.com">Anaconda</a>, a Python distribution that includes many packages and tools out-of-the-box, makes it easy to install new packages and keep them updated. Follow this <a href="https://www.anaconda.com/products/individual">link</a> and download the installer suitable for your platform. You can pick either 32- or 64-bit version but I would recommend the latter, so that we all have maximally similar setup (it won’t really make a difference in practice, though). Follow the installer instructions and use defaults, unless you have reasons to modify them (e.g. folder location, as the drive for the default choice may have limited available space, as in my case).</p>
-<p>After installation you will have a new <em>Anaconda3 (64-bit)</em> folder that contains links to programs.
-<img src="images/anaconda-shortcuts.png" width="126" /></p>
-<p>You can use <em>Anaconda Navigator</em> that allows you to choose a specific programming environment, including <a href="https://jupyter.org/">Jupyter Notebook</a> that we will use (not JupyterLab, it more versatile but we want to keep things simple at the beginning!). Alternatively, you can start <em>Jupyter Notebook</em> directly from the start menu. Please read the <a href="https://jupyter-notebook.readthedocs.io/en/stable/examples/Notebook/examples_index.html">online documentation</a> to familiarize yourself with Jupyter Notebook basic interface, e.g. how to create a new cell, run it, etc.</p>
+<p>First, install <a href="https://www.anaconda.com">Anaconda</a>, a Python distribution that includes many packages and tools out-of-the-box, makes it easy to install new packages and keep them updated. Follow this <a href="https://www.anaconda.com/products/individual">link</a> and download the installer suitable for your platform. You can pick either 32- or 64-bit version. I would recommend the latter, so that we all have maximally similar setup (it won’t really make a difference in practice, though). Follow the installer instructions and use defaults, unless you have reasons to modify them (e.g. folder location, as the drive for the default choice may have limited available space, as in my case).</p>
+<p>After installation you will have a new <em>Anaconda3 (64-bit)</em> folder that contains links to programs.</p>
+<p>You can use <em>Anaconda Navigator</em> that allows you to choose a specific programming environment, including <a href="https://jupyter.org/">Jupyter Notebook</a> that we will use (not JupyterLab, it is more versatile but we want to keep things simple at the beginning!). Alternatively, you can start <em>Jupyter Notebook</em> directly from the start menu. Please read the <a href="https://jupyter-notebook.readthedocs.io/en/stable/examples/Notebook/examples_index.html">online documentation</a> to familiarize yourself with Jupyter Notebook basic interface, e.g. how to create a new cell, run it, etc.</p>
 </div>
 <div id="install-vs-code" class="section level2 unnumbered">
 <h2>Installing Visual Studio Code</h2>
-<p><a href="https://code.visualstudio.com/">Visual Studio Code</a> is a lightweight free open-source editor with strong support for Python. We will start use it in earnest, once our programs grow to be sufficiently long and complex. At the early stages, we will mostly use Jupyter notebooks and I would recommend using Jupyter notebooks using the default browser-based editor you installed as part of <a href="getting-started.html#install-anaconda">Anaconda</a>. However, you can also work with Jupyter notebooks in VS Code <a href="https://code.visualstudio.com/docs/python/jupyter-support">directly</a>.</p>
-<p>As in case of <a href="getting-started.html#install-anaconda">Anaconda</a>, download the installer for your platform and follow the instructions. Start VS Code and open any Python file, for example <a href="other/empty.py">this one</a> (use <code>Alt+click</code> to download it, ignore warnings, it is has only comments, so cannot harm you). When you open Python file for the first time, VS Code will suggest to install a Python extension. Do just that andinstall a linter as well when VS Code suggests that (<a href="https://code.visualstudio.com/docs/python/linting">linting</a> highlights syntactical and stylistic problems in your code, making it easier to write consistent clear code).</p>
-<p>Once the Python extension is activated, you will see which Python interpreter is used (you can have more than one or you may use have multiple <a href="https://docs.python.org/3/tutorial/venv.html">virtual environments</a>).
-<img src="images/vscode-python-interpreter.png" width="250" />
-If the selected environment is the wrong one or you are simply not sure, click on it and it will open a drop-down list with all interpreters and environments you have. Consult VS Code <a href="https://code.visualstudio.com/docs/python/environments">online documentation</a> on environments, if you need to change/add/delete environment (the exact settings may change, so looking at constantly updated online documentation is wiser than copying it here, so it would be outdated quite soon).</p>
+<p><a href="https://code.visualstudio.com/">Visual Studio Code</a> is a free lightweight open-source editor with strong support for Python. We will start use it in earnest, once our programs grow to be sufficiently long and complex. At the early stages, we will mostly use Jupyter notebooks and I would recommend using Jupyter notebooks using the default browser-based editor you installed as part of <a href="getting-started.html#install-anaconda">Anaconda</a>. However, you can also work with Jupyter notebooks in VS Code <a href="https://code.visualstudio.com/docs/python/jupyter-support">directly</a>.</p>
+<p>As in case of <a href="getting-started.html#install-anaconda">Anaconda</a>, download the installer for your platform and follow the instructions. Start VS Code and open any Python file, for example <a href="other/empty.py">this one</a> (use <code>Alt+click</code> to download it, ignore warnings, it is has only comments, so cannot harm you). When you open Python file for the first time, VS Code will suggest to install a Python extension. Do that and install a linter when VS Code suggests that (<a href="https://code.visualstudio.com/docs/python/linting">linting</a> highlights syntactical and stylistic problems in your code, making it easier to write consistent clear code).</p>
+<p>Once the Python extension is activated, you will see which Python interpreter is used (you can have more than one or you may have multiple <a href="https://docs.python.org/3/tutorial/venv.html">virtual environments</a>).</p>
+<p>If the selected environment is the wrong one or you are simply not sure, click on it and it will open a drop-down list with all interpreters and environments you have. Consult VS Code <a href="https://code.visualstudio.com/docs/python/environments">online documentation</a> on environments, if you need to change/add/delete environment (the exact settings may change, so looking at constantly updated online documentation is wiser than copying it here).</p>
 </div>
 <div id="install-psychopy" class="section level2 unnumbered">
 <h2>Installing PsychoPy</h2>
 <p>This step can wait until the first <a href="#memory-game-01">Memory Game</a> seminar.</p>
-<p>Download and install <a href="https://www.psychopy.org/download.html">Standalone PsychoPy</a> version. You can install PsychoPy as a conda package or via pip but using it as a standalone would ensure that you have all necessary additional libraries and a builder interface for the future use. We will use PsychoPy’s python environment in <a href="getting-started.html#install-vs-code">VS Code</a>.</p>
+<p>Download and install <a href="https://www.psychopy.org/download.html">Standalone PsychoPy</a> version. You can install PsychoPy as a conda package or via pip. However, using it as a standalone would ensure that you have all necessary additional libraries and a builder interface for the future use. We will use prepackaged PsychoPy’s python environment in <a href="getting-started.html#install-vs-code">VS Code</a>.</p>
 
 </div>
 </div>

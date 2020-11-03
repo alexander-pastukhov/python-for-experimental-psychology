@@ -21,10 +21,10 @@
   <meta name="twitter:description" content="Material and exercises for ‘Python for social and experimental psychology’ seminar." />
   
 
-<meta name="author" content="Alexander Pastukhov" />
+<meta name="author" content="Alexander (Sasha) Pastukhov" />
 
 
-<meta name="date" content="2020-10-28" />
+<meta name="date" content="2020-11-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -151,17 +151,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1" data-path="seminar01.html"><a href="seminar01.html"><i class="fa fa-check"></i><b>1</b> Python basics</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="seminar01.html"><a href="seminar01.html#variables"><i class="fa fa-check"></i><b>1.1</b> Variables</a></li>
-<li class="chapter" data-level="1.2" data-path="seminar01.html"><a href="seminar01.html#constants"><i class="fa fa-check"></i><b>1.2</b> Constants</a></li>
-<li class="chapter" data-level="1.3" data-path="seminar01.html"><a href="seminar01.html#value-types"><i class="fa fa-check"></i><b>1.3</b> Value types</a></li>
-<li class="chapter" data-level="1.4" data-path="seminar01.html"><a href="seminar01.html#printing-output"><i class="fa fa-check"></i><b>1.4</b> Printing output</a></li>
-<li class="chapter" data-level="1.5" data-path="seminar01.html"><a href="seminar01.html#string-formatting"><i class="fa fa-check"></i><b>1.5</b> String formatting</a></li>
+<li class="chapter" data-level="1.2" data-path="seminar01.html"><a href="seminar01.html#assignments-are-not-equations"><i class="fa fa-check"></i><b>1.2</b> Assignments are not equations!</a></li>
+<li class="chapter" data-level="1.3" data-path="seminar01.html"><a href="seminar01.html#constants"><i class="fa fa-check"></i><b>1.3</b> Constants</a></li>
+<li class="chapter" data-level="1.4" data-path="seminar01.html"><a href="seminar01.html#value-types"><i class="fa fa-check"></i><b>1.4</b> Value types</a></li>
+<li class="chapter" data-level="1.5" data-path="seminar01.html"><a href="seminar01.html#printing-output"><i class="fa fa-check"></i><b>1.5</b> Printing output</a></li>
+<li class="chapter" data-level="1.6" data-path="seminar01.html"><a href="seminar01.html#string-formatting"><i class="fa fa-check"></i><b>1.6</b> String formatting</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="seminar02.html"><a href="seminar02.html"><i class="fa fa-check"></i><b>2</b> Guess the Number</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="seminar02.html"><a href="seminar02.html#game-description"><i class="fa fa-check"></i><b>2.1</b> Game description</a></li>
 <li class="chapter" data-level="2.2" data-path="seminar02.html"><a href="seminar02.html#lets-pick-the-number-exercise-1"><i class="fa fa-check"></i><b>2.2</b> Let’s pick the number (Exercise 1)</a></li>
 <li class="chapter" data-level="2.3" data-path="seminar02.html"><a href="seminar02.html#input-function"><i class="fa fa-check"></i><b>2.3</b> Asking user for a guess (Exercise 2)</a></li>
-<li class="chapter" data-level="2.4" data-path="seminar02.html"><a href="seminar02.html#comparing-two-numbers-exercises-3-x"><i class="fa fa-check"></i><b>2.4</b> Comparing two numbers (Exercises 3-X)</a></li>
+<li class="chapter" data-level="2.4" data-path="seminar02.html"><a href="seminar02.html#conditional-if-statement"><i class="fa fa-check"></i><b>2.4</b> Conditional <em>if</em> statement</a></li>
+<li class="chapter" data-level="2.5" data-path="seminar02.html"><a href="seminar02.html#conditions-and-comparisons-exercises-3-7"><i class="fa fa-check"></i><b>2.5</b> Conditions and comparisons (exercises 3-7)</a></li>
+<li class="chapter" data-level="2.6" data-path="seminar02.html"><a href="seminar02.html#grouping-statements-via-identation-exercise-9"><i class="fa fa-check"></i><b>2.6</b> Grouping statements via identation (exercise #9)</a></li>
+<li class="chapter" data-level="2.7" data-path="seminar02.html"><a href="seminar02.html#checking-the-answer"><i class="fa fa-check"></i><b>2.7</b> Checking the answer</a></li>
+<li class="chapter" data-level="2.8" data-path="seminar02.html"><a href="seminar02.html#picking-number-randomly"><i class="fa fa-check"></i><b>2.8</b> Picking number randomly</a></li>
+<li class="chapter" data-level="2.9" data-path="seminar02.html"><a href="seminar02.html#one-armed-bandit"><i class="fa fa-check"></i><b>2.9</b> One-armed bandit</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="cross-references.html"><a href="cross-references.html"><i class="fa fa-check"></i>Cross references</a></li>
 <li class="divider"></li>
@@ -186,47 +192,134 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="seminar02" class="section level1" number="2">
 <h1><span class="header-section-number">Seminar 2</span> Guess the Number</h1>
-<p>Our seminar 1 covered Python basics, so now you are ready to start developing you first game! We will build it step by and there will be a lot to learn about input, libraries, conditional statements, indentation, and loops. As before, download <a href="notebooks/Seminar%2002.%20Guess%20the%20number.ipynb">exercise notebook</a>, copy it in your designated folder, and open it in Jupyter Notebook.</p>
+<p>Seminar #1 covered Python basics, so now you are ready to start developing you first game! We will build it step by step and there will be a lot to learn about input, libraries, conditional statements, and indentation. As before, download <a href="notebooks/Seminar%2002.%20Guess%20the%20number%2001.ipynb">exercise notebook</a>, copy it in your designated folder, and open it in Jupyter Notebook.</p>
 <div id="game-description" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> Game description</h2>
-<p>We will program a game in which one participant (computer) picks the number within a certain range, say, between 1 and 10 and the other participant (player) is trying to guess it. After every guess, the first participant (computer) responds whether the actual number is lower than a guess, higher than a guess, or matches it. The game is over when the player correctly guess the number or (in the later version of the game) runs out of attempts.</p>
+<p>We will program a game in which one participant (computer) picks the number within a certain range (say, between 1 and 10) and the other participant (player) is trying to guess it. After every guess, the first participant (computer) responds whether the actual number is lower than a guess, higher than a guess, or matches it. The game is over when the player correctly guess the number or (in the later version of the game) runs out of attempts.</p>
 <p>Our first version will allow just one attempt (will make it more fun later on) and the overall game algorithm will look like this:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb30-1"><a href="seminar02.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. computer generates a random number</span></span>
-<span id="cb30-2"><a href="seminar02.html#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. prints it out for debug purposes</span></span>
-<span id="cb30-3"><a href="seminar02.html#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. prompts user to enter a guess</span></span>
-<span id="cb30-4"><a href="seminar02.html#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. compares two number and print outs the outcome </span></span>
-<span id="cb30-5"><a href="seminar02.html#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="co">#    &quot;My number is lower&quot;, &quot;My number is higher&quot;, or &quot;Spot on!&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="seminar02.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. computer generates a random number</span></span>
+<span id="cb24-2"><a href="seminar02.html#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. prints it out for debug purposes</span></span>
+<span id="cb24-3"><a href="seminar02.html#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. prompts user to enter a guess</span></span>
+<span id="cb24-4"><a href="seminar02.html#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. compares two numbers and print outs the outcome</span></span>
+<span id="cb24-5"><a href="seminar02.html#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co">#    &quot;My number is lower&quot;, &quot;My number is higher&quot;, or &quot;Spot on!&quot;</span></span></code></pre></div>
 </div>
 <div id="lets-pick-the-number-exercise-1" class="section level2" number="2.2">
 <h2><span class="header-section-number">2.2</span> Let’s pick the number (Exercise 1)</h2>
-<p>Let us start by creating a variable that will hold a number that computer “picked”. Let us name it <code>number_picked</code> (or some other meaningful name) and, to make things a bit simpler, let us assign some hardcoded arbitrary number between 1 and 10 to it (whatever you fill like). Then, let us print it out, so that we know the number ourselves (we know it now but that won’t be the case when computer will generate it randomly). Use string formatting to make things user-friendly, e.g. print out something like “The number I’ve picked is …”. Your code should be a two-liner:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a href="seminar02.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. create variable and set it value</span></span>
-<span id="cb31-2"><a href="seminar02.html#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. print out the value</span></span></code></pre></div>
-<p>Switch to exercise #1 and make sure your code works!</p>
+<p>Let us start by creating a variable that will hold a number that computer “picked”. Let us name it <code>number_picked</code> (you can some other meaningful name as well but it might be easier if we all stick to the same name). To make things a bit simpler at the beginning, let us assign some hard=coded arbitrary number between 1 and 10 to it (whatever you fill like). Then, let us print it out, so that we know the number ourselves (we know it now but that won’t be the case when computer will generate it randomly). Use string formatting to make things user-friendly, e.g., print out something like “The number I’ve picked is …”. Your code should be a two-liner:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="seminar02.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. create variable and set it value</span></span>
+<span id="cb25-2"><a href="seminar02.html#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. print out the value</span></span></code></pre></div>
+<p><strong>Switch to exercise #1 and make sure your code works!</strong></p>
 </div>
 <div id="input-function" class="section level2" number="2.3">
 <h2><span class="header-section-number">2.3</span> Asking user for a guess (Exercise 2)</h2>
-<p>Now we need to ask the player to enter their guess. For this, we will use function <a href="https://docs.python.org/3/library/functions.html#input">input([prompt])</a> (here and below links lead to the official documentation). It prints out <code>prompt</code> (a value string) if it is supplied, reads the input (key presses) until the user presses <code>Enter</code>, and returns it <strong>as a string</strong>. For a moment, let us assume that the input is always an integer number, so we can simply convert it to an integer and assign this value to a new variable called <code>guess</code>. Thus, you need to write a single line assignment statement with <code>guess</code> variable on the left side, whereas on the right should be a call to the <code>input(...)</code> function (think of a nice prompt message) wrapped by the type-conversion to <code>int(...)</code>. Switch to exercise 2 and, for the moment, only enter valid integers when running the code, so that the conversion works without an error.</p>
+<p>Now we need to ask the player to enter their guess. For this, we will use <a href="https://docs.python.org/3/library/functions.html#input">input([prompt])</a> function (here and below the links lead to the official documentation). It prints out <code>prompt</code> (a string) if you supplied it, reads the input (key presses) until the user presses <code>Enter</code>, and returns it <strong>as a string</strong>. For a moment, let us assume that the input is always an valid integer number (so, type only valid integers!), so we can convert it to an integer without extra checks (will add them later) and assign this value to a new variable called <code>guess</code>. Thus, you need to write a single line assignment statement with <code>guess</code> variable on the left side, whereas on the right should be a call to the <code>input(...)</code> function (think of a nice prompt message) wrapped by the type-conversion to <code>int(...)</code>. Switch to exercise 2 and, for the moment, only enter valid integers when running the code, so that the conversion works without an error.</p>
 </div>
-<div id="comparing-two-numbers-exercises-3-x" class="section level2" number="2.4">
-<h2><span class="header-section-number">2.4</span> Comparing two numbers (Exercises 3-X)</h2>
-<p>Now we have numbers one that computer picked and one that player guessed. Next, we need to compare them to provide correct output. For this, we will use conditional <a href="https://docs.python.org/3/tutorial/controlflow.html#if-statements">if statement</a>:</p>
+<div id="conditional-if-statement" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> Conditional <em>if</em> statement</h2>
+<p>Now we have two numbers: One that computer picked and one that is player’s guess. Now, we need to compare them to provide correct output message. For this, we will use conditional <a href="https://docs.python.org/3/tutorial/controlflow.html#if-statements">if statement</a>:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="seminar02.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> some_condition_is_true:</span>
+<span id="cb26-2"><a href="seminar02.html#cb26-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># do something</span></span>
+<span id="cb26-3"><a href="seminar02.html#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> some_other_condition_is_true:</span>
+<span id="cb26-4"><a href="seminar02.html#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># do something else</span></span>
+<span id="cb26-5"><a href="seminar02.html#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> yet_another_condition_is_true:</span>
+<span id="cb26-6"><a href="seminar02.html#cb26-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># do yet something else</span></span>
+<span id="cb26-7"><a href="seminar02.html#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb26-8"><a href="seminar02.html#cb26-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># do something only if all conditions above are false.</span></span></code></pre></div>
+<p>Only the <code>if</code> part is required, whereas <code>elif</code> (short for “else, if”) and <code>else</code> are optional. Thus you can do something, only if a condition is true:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="seminar02.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> some_condition_is_true:</span>
+<span id="cb27-2"><a href="seminar02.html#cb27-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># do something, but OTHERWISE DO NOT DO ANYTHING </span></span>
+<span id="cb27-3"><a href="seminar02.html#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># and continue with code execution</span></span>
+<span id="cb27-4"><a href="seminar02.html#cb27-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb27-5"><a href="seminar02.html#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># some code that is executed after the if-statement,</span></span>
+<span id="cb27-6"><a href="seminar02.html#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co"># irrespective of whether the condition was true or not.</span></span></code></pre></div>
+<p>Before we can properly use conditional statements, you need to understand (1) the conditions themselves and (2) use of indentation as a mean of grouping statements together.</p>
+</div>
+<div id="conditions-and-comparisons-exercises-3-7" class="section level2" number="2.5">
+<h2><span class="header-section-number">2.5</span> Conditions and comparisons (exercises 3-7)</h2>
+<p>Condition is any expression that can be evaluated to see whether it is <code>True</code> or <code>False</code>. A straightforward example of such expression are comparisons, in human language expressed as “is today Thursday?”, “is the answer equal to 42”, “is it raining and I have an umbrella?”. We will concentrate on them here but later you will see that in Python <strong>any</strong> expression is either <code>True</code> or <code>False</code>, even when it does not look like a comparison.</p>
+<p>For the comparison, you can use the following operators:</p>
+<ul>
+<li><em>“A is equal B”</em> is written as <code>A == B</code>.</li>
+<li><em>“A is not equal B”</em> is written as <code>A != B</code>.</li>
+<li><em>“A is greater than B”</em> and <em>“A is smaller than B”</em> are, respectively, <code>A &gt; B</code> and <code>A &lt; B</code>.</li>
+<li><em>“A is greater than or equal to B”</em> and <em>“A is smaller than or equal to B”</em> are, respectively, <code>A &gt;= B</code> and <code>A &lt;= B</code> (please note the order of symbols!).</li>
+</ul>
+<p><strong>Go to exercise #3 to solve some comparisons.</strong></p>
+<p>You can <em>invert</em> the logical value using <code>not</code> operator, as <code>not True</code> is <code>False</code> and <code>not False</code> is <code>True</code>. This means that <code>A != B</code> is the same as <code>not A == B</code> and, correspondingly, <code>A == B</code> is <code>not A != B</code>. To see how that works, consider both cases when <code>A</code> is indeed equal <code>B</code> and when it is not.</p>
+<ul>
+<li>If A is equal B then <code>A == B</code> evaluates to <code>True</code>. The <code>A != B</code> is then <code>False</code>, so <code>not A != B</code> → <code>not False</code> → <code>True</code>.</li>
+<li>If A is not equal B then <code>A == B</code> evaluates to <code>False</code>. The <code>A != B</code> is then <code>True</code>, so <code>not A != B</code> → <code>not True</code> → <code>False</code>.</li>
+</ul>
+<p><strong>Go to exercise #4 to explore this inversion yourself.</strong></p>
+<p>You can also combine several comparisons using <code>and</code> and/or <code>or</code> operators. As in human language, <code>and</code> means that both parts must be true: <code>True and True</code> → <code>True</code> but <code>True and False</code> → <code>False</code>, <code>False and True</code> → <code>False</code>, and <code>False and False</code> → <code>False</code>. Same holds if you have more have than two conditions/comparisons, <strong>all</strong> of them must be true. In case of <code>or</code> only one of the statements must be true, e.g. <code>True and True</code> → <code>True</code>, <code>True and False</code> → <code>True</code>, <code>False and True</code> → <code>True</code>, but <code>False and False</code> → <code>False</code>. Again, for more than two comparisons/conditions at least one of them should be true for the entire expression to be true. <strong>Go to exercises #5 and #6.</strong></p>
+<p>Subtle but important point: conditions are evaluated from left to right until the whole expression can be definitely resolved. This means that if the first expression in a <code>and</code> pair is <code>False</code>, the second one is <strong>never evaluated</strong>. I.e., if <code>first and second</code> expressions both need to be <code>True</code> and you know that already <code>first</code> expression is false, the whole expression will be <code>False</code> in any case. This means that in the code below there will be no error, even though evaluating <code>int("e123")</code> raises <code>ValueError</code>.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb28-1"><a href="seminar02.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="op">*</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">5</span> <span class="kw">and</span> <span class="bu">int</span>(<span class="st">&quot;e123&quot;</span>) <span class="op">==</span> <span class="dv">123</span></span></code></pre></div>
+<p>However, reverse the order, so that <code>int("e123") == 123</code> needs to be evaluated first and you get the error message</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb29-1"><a href="seminar02.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="bu">int</span>(<span class="st">&quot;e123&quot;</span>) <span class="op">==</span> <span class="dv">123</span> <span class="kw">and</span> <span class="dv">2</span> <span class="op">*</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">4</span></span>
+<span id="cb29-2"><a href="seminar02.html#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Generates ValueError: invalid literal for int() with base 10: &#39;e123&#39;</span></span></code></pre></div>
+<p>Similarly, if <em>any</em> expression in <code>or</code> is <code>True</code>, you do not need to check the rest.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb30-1"><a href="seminar02.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="op">*</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">4</span> <span class="kw">or</span> <span class="bu">int</span>(<span class="st">&quot;e123&quot;</span>) <span class="op">==</span> <span class="dv">123</span></span></code></pre></div>
+<p>However, if the first condition is <code>False</code>, we do need to continue (and stumble into an error):</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a href="seminar02.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="op">*</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">5</span> <span class="kw">or</span> <span class="bu">int</span>(<span class="st">&quot;e123&quot;</span>) <span class="op">==</span> <span class="dv">123</span></span>
+<span id="cb31-2"><a href="seminar02.html#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Generates ValueError: invalid literal for int() with base 10: &#39;e123&#39;</span></span></code></pre></div>
+<p><strong>Go to exercise #7.</strong></p>
+<p>Finally, like in simple arithmetic, you can use brackets <code>()</code> to group conditions together. Thus a statement “I always eat chocolate but I eat spinach only when I am hungry” can be written as <code>food == "chocolate" or (food == "spinach" and hungry)</code>. Here, <code>the food == "chocolate"</code> and <code>food == "spinach" and hungry</code> are evaluated independently, their values are substituted in their place and then the <code>and</code> condition is evaluated. <strong>Go to exercise #8.</strong></p>
+</div>
+<div id="grouping-statements-via-identation-exercise-9" class="section level2" number="2.6">
+<h2><span class="header-section-number">2.6</span> Grouping statements via identation (exercise #9)</h2>
+<p>Let us go back to the conditional if-statement. Take a look at following code example, in which statement #1 is executed only if some condition is true, whereas statement #2 is executed after that irrespective of the condition.</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb32-1"><a href="seminar02.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> some_condition_is_true:</span>
-<span id="cb32-2"><a href="seminar02.html#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># do something</span></span>
-<span id="cb32-3"><a href="seminar02.html#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> some_other_condition_is_true:</span>
-<span id="cb32-4"><a href="seminar02.html#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># do something else</span></span>
-<span id="cb32-5"><a href="seminar02.html#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> yet_another_condition_is_true:</span>
-<span id="cb32-6"><a href="seminar02.html#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># do yet something else</span></span>
-<span id="cb32-7"><a href="seminar02.html#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb32-8"><a href="seminar02.html#cb32-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># do something only if all conditions above are false.</span></span></code></pre></div>
-<p>Only the <code>if</code> part is required, whereas <code>elif</code> (short form of “else, if”) and <code>else</code> are optional. Thus you can do something, only if a condition is true:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb33-1"><a href="seminar02.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> some_condition_is_true:</span>
-<span id="cb33-2"><a href="seminar02.html#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># do something, but OTHERWISE DO NOT DO ANYTHING </span></span>
-<span id="cb33-3"><a href="seminar02.html#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># and continue with code execution</span></span>
-<span id="cb33-4"><a href="seminar02.html#cb33-4" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb33-5"><a href="seminar02.html#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="co"># some code that is executed after the if-statement,</span></span>
-<span id="cb33-6"><a href="seminar02.html#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="co"># irrespective of whether the condition was true or not.</span></span></code></pre></div>
-<p>Before we can properly use the condition statements, you need to understand the conditions themselves and use of indentation as a mean of grouping statements together.</p>
+<span id="cb32-2"><a href="seminar02.html#cb32-2" aria-hidden="true" tabindex="-1"></a>    statement <span class="co">#1</span></span>
+<span id="cb32-3"><a href="seminar02.html#cb32-3" aria-hidden="true" tabindex="-1"></a>statement <span class="co">#2 </span></span></code></pre></div>
+<p>Both statements #1 and #2 appear after the if-statement, so how does Python now that the first one is executed only if condition is true but the other one always runs? The answer is indentation (the <strong>4 (four!)</strong> spaces, they are automatically added whenever you press <code>Tab</code> and removed whenever you press <code>Shift + Tab</code>) that puts statement #1 <em>inside</em> the if-statement. Thus, indentation shows whether statements belong to the same group (same indentation as for <code>if</code> and <code>statement #2</code>) or are inside conditional statement, loop, or function (<code>statement #1</code>). For more complex code that will have, for example, if-statement inside an if-statement inside a loop, you will express this by adding more levels of indentation. E.g.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb33-1"><a href="seminar02.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># some statements outside of the loop (0 indentation)</span></span>
+<span id="cb33-2"><a href="seminar02.html#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> game_is_not_over: <span class="co"># (0 indentation)</span></span>
+<span id="cb33-3"><a href="seminar02.html#cb33-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># statements inside of the loop </span></span>
+<span id="cb33-4"><a href="seminar02.html#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> key_pressed: <span class="co"># (indentation of 4)</span></span>
+<span id="cb33-5"><a href="seminar02.html#cb33-5" aria-hidden="true" tabindex="-1"></a>        <span class="co"># inside loop and if-statement </span></span>
+<span id="cb33-6"><a href="seminar02.html#cb33-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> key <span class="op">==</span> <span class="st">&quot;Space&quot;</span>: <span class="co"># (indentation of 8)</span></span>
+<span id="cb33-7"><a href="seminar02.html#cb33-7" aria-hidden="true" tabindex="-1"></a>            <span class="co"># inside the loop, and if-statement, and another if-statement</span></span>
+<span id="cb33-8"><a href="seminar02.html#cb33-8" aria-hidden="true" tabindex="-1"></a>            jump() <span class="co"># (indentation of 12)</span></span>
+<span id="cb33-9"><a href="seminar02.html#cb33-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>: <span class="co"># (indentation of 4)</span></span>
+<span id="cb33-10"><a href="seminar02.html#cb33-10" aria-hidden="true" tabindex="-1"></a>            <span class="co"># inside the loop, and if-statement, and else part of another if-statement</span></span>
+<span id="cb33-11"><a href="seminar02.html#cb33-11" aria-hidden="true" tabindex="-1"></a>            stand() <span class="co"># (indentation of 12)</span></span>
+<span id="cb33-12"><a href="seminar02.html#cb33-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb33-13"><a href="seminar02.html#cb33-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># statements inside of the loop but outside of the outermost if-statement</span></span>
+<span id="cb33-14"><a href="seminar02.html#cb33-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(key) <span class="co"># (indentation of 4)</span></span>
+<span id="cb33-15"><a href="seminar02.html#cb33-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb33-16"><a href="seminar02.html#cb33-16" aria-hidden="true" tabindex="-1"></a><span class="co"># some statements outside of the loop (0 indentation)</span></span></code></pre></div>
+<p>Pay very close attention to the indentation as it determines which statements are executed together! Let us do exercise #9.</p>
+</div>
+<div id="checking-the-answer" class="section level2" number="2.7">
+<h2><span class="header-section-number">2.7</span> Checking the answer</h2>
+<p>Now you have all necessary instruments to finish the first version of our game. Go to exercise #10 and, first, copy-paste your solutions to exercise #1 (settings computer pick and printing it out) and #2 (getting player input as an integer). Now, add conditional statements below, so that</p>
+<ul>
+<li>if the computer pick is smaller than player’s guess, it will print <code>"My number is lower!"</code></li>
+<li>if the computer pick is larger than player’s guess, it will print <code>"My number is higher!"</code></li>
+<li>if two numbers are identical, it will print <code>"Spot on!"</code></li>
+</ul>
+</div>
+<div id="picking-number-randomly" class="section level2" number="2.8">
+<h2><span class="header-section-number">2.8</span> Picking number randomly</h2>
+<p>Our game is “feature-complete”: computer picks a number, player makes a guess, computer responds appropriately. However, currently we are playing for both sides, as we hand pick the number for computer. Now, we will let computer pick this number itself using <a href="https://docs.python.org/3/library/random.html#random.randint">randint(a, b)</a> function. It is part of the <a href="https://docs.python.org/3/library/random.html">random</a> library, so you will need to <em>import</em> it first. We will talk about libraries and importing them in greater detail later. For now, it suffices that the top line of your code is</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb34-1"><a href="seminar02.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> random <span class="im">import</span> randint</span></code></pre></div>
+<p>Function <code>randint(a, b)</code> generates a random integer on the interval <code>a..b</code>. In our case, this interval is <code>1..10</code>. Go to exercise #11. First copy-paste your solution for exercise #10. Add the <code>from random import randint</code> as the first line. Then, replace the hard-coded value you used for computer’s pick with a call to <code>randint()</code> function. Run the code several times to check that computer does pick different random values.</p>
+<p>Congratulations, you just programmed your first computer game! Yes, it is very simple but it has key ingredients: a random decision by computer, user input, and feedback. Next time, you will learn about loops to allow for multiple attempts and about functions to make your code modular and reliable. In the meantime, let us solidify your knowledge by programming yet another game!</p>
+</div>
+<div id="one-armed-bandit" class="section level2" number="2.9">
+<h2><span class="header-section-number">2.9</span> One-armed bandit</h2>
+<p>You know everything you need to program a simple version of an “one-armed bandit” game (exercise #12). Here is the game logic:</p>
+<ol style="list-style-type: decimal">
+<li><code>from random import randint</code></li>
+<li>Generate three random integers (say, between 1 and 5) and store them in three variables <code>slot1</code>, <code>slot2</code>, and <code>slot3</code>.</li>
+<li>Print out the numbers, use string formatting to make it look nice.</li>
+<li>In addition,
+<ul>
+<li>if all three values are the same, print <code>"Three of a kind!"</code>.</li>
+<li>If only two numbers match, print <code>"Pair!"</code>.</li>
+<li>Print nothing, if all numbers are different.</li>
+</ul></li>
+</ol>
 
 </div>
 </div>

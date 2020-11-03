@@ -1,5 +1,6 @@
 seminar01
 variables
+assignments-are-not-equations
 constants
 value-types
 printing-output
@@ -8,4 +9,9 @@ seminar02
 game-description
 lets-pick-the-number-exercise-1
 input-function
-comparing-two-numbers-exercises-3-x
+conditional-if-statement
+conditions-and-comparisons-exercises-3-7
+grouping-statements-via-identation-exercise-9
+checking-the-answer
+picking-number-randomly
+one-armed-bandit
