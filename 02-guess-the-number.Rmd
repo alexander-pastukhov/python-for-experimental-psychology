@@ -51,7 +51,7 @@ if some_condition_is_true:
 
 Before we can properly use conditional statements, you need to understand (1) the conditions themselves and (2) use of indentation as a mean of grouping statements together.
 
-## Conditions and comparisons (exercises 3-7)
+## Conditions and comparisons (exercises 3-8)
 Condition is any expression that can be evaluated to see whether it is `True` or `False`. A straightforward example of such expression are comparisons, in human language expressed as "is today Thursday?", "is the answer equal to 42", "is it raining and I have an umbrella?". We will concentrate on them here but later you will see that in Python **any** expression is either `True` or `False`, even when it does not look like a comparison.
 
 For the comparison, you can use the following operators:
@@ -96,7 +96,6 @@ However, if the first condition is `False`, we do need to continue (and stumble 
 
 **Go to exercise #7.**
 
-
 Finally, like in simple arithmetic, you can use brackets `()` to group conditions together. Thus a statement "I always eat chocolate but I eat spinach only when I am hungry" can be written as `food == "chocolate" or (food == "spinach" and hungry)`. Here, `the food == "chocolate"` and `food == "spinach" and hungry` are evaluated independently, their values are substituted in their place and then the `and` condition is evaluated. **Go to exercise #8.**
 
 ## Grouping statements via identation (exercise #9)
@@ -126,26 +125,28 @@ while game_is_not_over: # (0 indentation)
     
 # some statements outside of the loop (0 indentation)
 ```
-Pay very close attention to the indentation as it determines which statements are executed together! Let us do exercise #9.
+Pay very close attention to the indentation as it determines which statements are executed together! **Let us do exercise #9.**
 
-## Checking the answer
-Now you have all necessary instruments to finish the first version of our game. Go to exercise #10 and, first, copy-paste your solutions to exercise #1 (settings computer pick and printing it out) and #2 (getting player input as an integer). Now, add  conditional statements below, so that 
+The `if` and `ifelse` statements are evaluated until one of them turns out to be `True`. After that any following `ifelse` and `else` statements are simply ignored. **Do exercise #10.**
+
+## Checking the answer (Exercise 11)
+Now you have all necessary instruments to finish the first version of our game. Go to exercise #11 and, first, copy-paste your solutions to exercise #1 (settings computer pick and printing it out) and #2 (getting player input as an integer). Now, add  conditional statements below, so that 
 
 * if the computer pick is smaller than player's guess, it will print `"My number is lower!"`
 * if the computer pick is larger than player's guess, it will print `"My number is higher!"`
 * if two numbers are identical, it will print `"Spot on!"`
 
-## Picking number randomly
+## Picking number randomly (Exercise 12)
 Our game is "feature-complete": computer picks a number, player makes a guess, computer responds appropriately. However, currently we are playing for both sides, as we hand pick the number for computer. Now, we will let computer pick this number itself using [randint(a, b)](https://docs.python.org/3/library/random.html#random.randint) function. It is part of the [random](https://docs.python.org/3/library/random.html) library, so you will need to _import_ it first. We will talk about libraries and importing them in greater detail later. For now, it suffices that the top line of your code is 
 ```{python eval=FALSE}
 from random import randint
 ```
-Function `randint(a, b)` generates a random integer on the interval `a..b`. In our case, this interval is `1..10`. Go to exercise #11. First copy-paste your solution for exercise #10. Add the `from random import randint` as the first line. Then, replace the hard-coded value you used for computer's pick with a call to `randint()` function. Run the code several times to check that computer does pick different random values.
+Function `randint(a, b)` generates a random integer on the interval `a..b`. In our case, this interval is `1..10`. Go to exercise #11. First copy-paste your solution for exercise #12. Add the `from random import randint` as the first line. Then, replace the hard-coded value you used for computer's pick with a call to `randint()` function. Run the code several times to check that computer does pick different random values.
 
 Congratulations, you just programmed your first computer game! Yes, it is very simple but it has key ingredients: a random decision by computer, user input, and feedback. Next time, you will learn about loops to allow for multiple attempts and about functions to make your code modular and reliable. In the meantime, let us solidify your knowledge by programming yet another game!
 
-## One-armed bandit
-You know everything you need to program a simple version of an "one-armed bandit" game (exercise #12). Here is the game logic:
+## One-armed bandit (Exercise 13)
+You know everything you need to program a simple version of an "one-armed bandit" game (exercise #13). Here is the game logic:
 
 1. `from random import randint`
 2. Generate three random integers (say, between 1 and 5) and store them in three variables `slot1`, `slot2`, and `slot3`.
