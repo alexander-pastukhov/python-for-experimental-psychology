@@ -5,7 +5,7 @@
 First, install [Anaconda](https://www.anaconda.com), a Python distribution that includes many packages and tools out-of-the-box, makes it easy to install new packages and keep them updated. Follow this [link](https://www.anaconda.com/products/individual) and download the installer suitable for your platform. You can pick either 32- or 64-bit version. I would recommend the latter, so that we all have maximally similar setup (it won't really make a difference in practice, though). Follow the installer instructions and use defaults, unless you have reasons to modify them (e.g. folder location, as the drive for the default choice may have limited available space, as in my case).
 
 After installation you will have a new _Anaconda3 (64-bit)_ folder that contains links to programs.
-```{r echo=FALSE, out.width = "100%", fig.align = 'center'}
+```{r echo=FALSE, out.width = "50%", fig.align = 'center'}
 knitr::include_graphics("images/anaconda-shortcuts.png")
 ```
 
