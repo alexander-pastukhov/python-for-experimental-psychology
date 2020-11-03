@@ -172,6 +172,8 @@ First, install \href{https://www.anaconda.com}{Anaconda}, a Python distribution 
 
 After installation you will have a new \emph{Anaconda3 (64-bit)} folder that contains links to programs.
 
+\begin{center}\includegraphics[width=0.5\linewidth]{images/anaconda-shortcuts} \end{center}
+
 You can use \emph{Anaconda Navigator} that allows you to choose a specific programming environment, including \href{https://jupyter.org/}{Jupyter Notebook} that we will use (not JupyterLab, it is more versatile but we want to keep things simple at the beginning!). Alternatively, you can start \emph{Jupyter Notebook} directly from the start menu. Please read the \href{https://jupyter-notebook.readthedocs.io/en/stable/examples/Notebook/examples_index.html}{online documentation} to familiarize yourself with Jupyter Notebook basic interface, e.g.~how to create a new cell, run it, etc.
 
 \hypertarget{install-vs-code}{%
@@ -183,6 +185,8 @@ You can use \emph{Anaconda Navigator} that allows you to choose a specific progr
 As in case of \protect\hyperlink{install-anaconda}{Anaconda}, download the installer for your platform and follow the instructions. Start VS Code and open any Python file, for example \href{other/empty.py}{this one} (use \texttt{Alt+click} to download it, ignore warnings, it is has only comments, so cannot harm you). When you open Python file for the first time, VS Code will suggest to install a Python extension. Do that and install a linter when VS Code suggests that (\href{https://code.visualstudio.com/docs/python/linting}{linting} highlights syntactical and stylistic problems in your code, making it easier to write consistent clear code).
 
 Once the Python extension is activated, you will see which Python interpreter is used (you can have more than one or you may have multiple \href{https://docs.python.org/3/tutorial/venv.html}{virtual environments}).
+
+\begin{center}\includegraphics[width=1\linewidth]{images/vscode-python-interpreter} \end{center}
 
 If the selected environment is the wrong one or you are simply not sure, click on it and it will open a drop-down list with all interpreters and environments you have. Consult VS Code \href{https://code.visualstudio.com/docs/python/environments}{online documentation} on environments, if you need to change/add/delete environment (the exact settings may change, so looking at constantly updated online documentation is wiser than copying it here).
 
@@ -203,6 +207,8 @@ Before we start, create a folder called \emph{python-for-experiments} (or with s
 \section{Variables}\label{variables}}
 
 The first fundamental concept that we need to be acquainted with is \textbf{variable}. Variables are used to store information and you can think of it as a box with a name tag, so that you can put something into it. The name tag on that box is the name of the variable and its value what you store in it. For example, we can create a variable that stores the number of legs a game character has. We begin with a number typical for a human being.
+
+\begin{center}\includegraphics[width=0.5\linewidth]{images/variable-as-box} \end{center}
 
 In Python, you would write
 
@@ -396,6 +402,10 @@ To print the value, you need you use \texttt{print()} function (we will talk abo
 \end{Highlighting}
 \end{Shaded}
 
+\begin{verbatim}
+## 5
+\end{verbatim}
+
 or
 
 \begin{Shaded}
@@ -403,6 +413,10 @@ or
 \BuiltInTok{print}\NormalTok{(}\StringTok{"five"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+## five
+\end{verbatim}
 
 Of course, you already know about the variables, so rather than putting a value directly, you can pass a variable instead and its value will be printed out.
 
@@ -413,6 +427,10 @@ Of course, you already know about the variables, so rather than putting a value 
 \end{Highlighting}
 \end{Shaded}
 
+\begin{verbatim}
+## 10
+\end{verbatim}
+
 or
 
 \begin{Shaded}
@@ -421,6 +439,10 @@ or
 \BuiltInTok{print}\NormalTok{(breakfast)}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+## pancakes
+\end{verbatim}
 
 You can also pass more than one value/variable to the print function and all the values will be printed one after another. For example, if we want to tell the user what did I had for breakfast and just how many of those, we can do
 
@@ -431,6 +453,10 @@ You can also pass more than one value/variable to the print function and all the
 \BuiltInTok{print}\NormalTok{(breakfast, number\_of\_items)}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+## pancakes 10
+\end{verbatim}
 
 \textbf{Go to exercise \#8 and figure out what will be printed by the code below:}
 
@@ -484,6 +510,10 @@ Here is an example of formatting a string using an integer:
 \BuiltInTok{print}\NormalTok{(}\StringTok{"I had }\SpecialCharTok{\%d}\StringTok{ pancakes for breakfast"}\OperatorTok{\%}\NormalTok{(}\DecValTok{10}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+## I had 10 pancakes for breakfast
+\end{verbatim}
 
 You are not limited to a single value that you can put into a string. You can specify more locations via \texttt{\%} but you must make sure that you pass the right number of values. Before running it, can you figure out which call will actually work (and what will be the output ) and which will produce an error (\textbf{go to exercise \#9})?
 
@@ -747,7 +777,7 @@ You know everything you need to program a simple version of an ``one-armed bandi
 \addcontentsline{toc}{chapter}{Cross references}
 
 \hypertarget{a}{%
-\section*{A}\label{a}}
+\subsubsection*{A}\label{a}}
 
 \begin{itemize}
 \tightlist
@@ -756,7 +786,7 @@ You know everything you need to program a simple version of an ``one-armed bandi
 \end{itemize}
 
 \hypertarget{c}{%
-\section*{C}\label{c}}
+\subsubsection*{C}\label{c}}
 
 \begin{itemize}
 \tightlist
@@ -765,7 +795,7 @@ You know everything you need to program a simple version of an ``one-armed bandi
 \end{itemize}
 
 \hypertarget{i}{%
-\section*{I}\label{i}}
+\subsubsection*{I}\label{i}}
 
 \begin{itemize}
 \tightlist
@@ -774,7 +804,7 @@ You know everything you need to program a simple version of an ``one-armed bandi
 \end{itemize}
 
 \hypertarget{p}{%
-\section*{P}\label{p}}
+\subsubsection*{P}\label{p}}
 
 \begin{itemize}
 \tightlist
@@ -783,7 +813,7 @@ You know everything you need to program a simple version of an ``one-armed bandi
 \end{itemize}
 
 \hypertarget{s}{%
-\section*{S}\label{s}}
+\subsubsection*{S}\label{s}}
 
 \begin{itemize}
 \tightlist
@@ -792,7 +822,7 @@ You know everything you need to program a simple version of an ``one-armed bandi
 \end{itemize}
 
 \hypertarget{t}{%
-\section*{T}\label{t}}
+\subsubsection*{T}\label{t}}
 
 \begin{itemize}
 \tightlist
@@ -801,7 +831,7 @@ You know everything you need to program a simple version of an ``one-armed bandi
 \end{itemize}
 
 \hypertarget{v}{%
-\section*{V}\label{v}}
+\subsubsection*{V}\label{v}}
 
 \begin{itemize}
 \item

@@ -1,24 +1,24 @@
 # Cross references {-}
 
-## A{.unlisted .unnumbered}
+#### A{.unlisted .unnumbered}
 * [Anaconda](https://www.anaconda.com), a scientific Python distribution, see also [installation notes](#install-anaconda). 
 
-## C{- .unlisted}
+#### C{- .unlisted}
 * [Constants](#constants)
 
-## I{- .unlisted}
+#### I{- .unlisted}
 * [input([prompt]) function](#input-function), see also [official manual](https://docs.python.org/3/library/functions.html#input)
 
-## P{- .unlisted}
+#### P{- .unlisted}
 * [PsychoPy](https://www.psychopy.org/) PsychoPy standalone application and library, see also [installation notes](#install-psychopy).
 
-## S{- .unlisted}
+#### S{- .unlisted}
 * [String formatting](#string-formatting), see also [PyFormat](https://pyformat.info/) for information on new string formatting and practical examples.
 
-## T{- .unlisted}
+#### T{- .unlisted}
 * [Types](#value-types)
 
-## V{- .unlisted}
+#### V{- .unlisted}
 * [Value types (simple)](#value-types)
 * [Variables](#variables)
 
