@@ -56,6 +56,69 @@
 <script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 
 
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -106,16 +169,7 @@
 <li class="chapter" data-level="2.8" data-path="seminar02.html"><a href="seminar02.html#picking-number-randomly"><i class="fa fa-check"></i><b>2.8</b> Picking number randomly</a></li>
 <li class="chapter" data-level="2.9" data-path="seminar02.html"><a href="seminar02.html#one-armed-bandit"><i class="fa fa-check"></i><b>2.9</b> One-armed bandit</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="cross-references.html"><a href="cross-references.html"><i class="fa fa-check"></i>Cross references</a>
-<ul>
-<li class="chapter" data-level="" data-path="cross-references.html"><a href="cross-references.html#a"><i class="fa fa-check"></i>A</a></li>
-<li class="chapter" data-level="" data-path="cross-references.html"><a href="cross-references.html#c"><i class="fa fa-check"></i>C</a></li>
-<li class="chapter" data-level="" data-path="cross-references.html"><a href="cross-references.html#i"><i class="fa fa-check"></i>I</a></li>
-<li class="chapter" data-level="" data-path="cross-references.html"><a href="cross-references.html#p"><i class="fa fa-check"></i>P</a></li>
-<li class="chapter" data-level="" data-path="cross-references.html"><a href="cross-references.html#s"><i class="fa fa-check"></i>S</a></li>
-<li class="chapter" data-level="" data-path="cross-references.html"><a href="cross-references.html#t"><i class="fa fa-check"></i>T</a></li>
-<li class="chapter" data-level="" data-path="cross-references.html"><a href="cross-references.html#v"><i class="fa fa-check"></i>V</a></li>
-</ul></li>
+<li class="chapter" data-level="" data-path="cross-references.html"><a href="cross-references.html"><i class="fa fa-check"></i>Cross references</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -136,24 +190,22 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="getting-started" class="section level1 unnumbered" number="">
+<div id="getting-started" class="section level1 unnumbered">
 <h1>Getting Started</h1>
-<div id="install-anaconda" class="section level2 unnumbered" number="">
+<div id="install-anaconda" class="section level2 unnumbered">
 <h2>Installing Anaconda environment</h2>
 <p>First, install <a href="https://www.anaconda.com">Anaconda</a>, a Python distribution that includes many packages and tools out-of-the-box, makes it easy to install new packages and keep them updated. Follow this <a href="https://www.anaconda.com/products/individual">link</a> and download the installer suitable for your platform. You can pick either 32- or 64-bit version. I would recommend the latter, so that we all have maximally similar setup (it won’t really make a difference in practice, though). Follow the installer instructions and use defaults, unless you have reasons to modify them (e.g. folder location, as the drive for the default choice may have limited available space, as in my case).</p>
-<p>After installation you will have a new <em>Anaconda3 (64-bit)</em> folder that contains links to programs.
-<img src="images/anaconda-shortcuts.png" width="50%" style="display: block; margin: auto;" /></p>
+<p>After installation you will have a new <em>Anaconda3 (64-bit)</em> folder that contains links to programs.</p>
 <p>You can use <em>Anaconda Navigator</em> that allows you to choose a specific programming environment, including <a href="https://jupyter.org/">Jupyter Notebook</a> that we will use (not JupyterLab, it is more versatile but we want to keep things simple at the beginning!). Alternatively, you can start <em>Jupyter Notebook</em> directly from the start menu. Please read the <a href="https://jupyter-notebook.readthedocs.io/en/stable/examples/Notebook/examples_index.html">online documentation</a> to familiarize yourself with Jupyter Notebook basic interface, e.g. how to create a new cell, run it, etc.</p>
 </div>
-<div id="install-vs-code" class="section level2 unnumbered" number="">
+<div id="install-vs-code" class="section level2 unnumbered">
 <h2>Installing Visual Studio Code</h2>
 <p><a href="https://code.visualstudio.com/">Visual Studio Code</a> is a free lightweight open-source editor with strong support for Python. We will start use it in earnest, once our programs grow to be sufficiently long and complex. At the early stages, we will mostly use Jupyter notebooks and I would recommend using Jupyter notebooks using the default browser-based editor you installed as part of <a href="getting-started.html#install-anaconda">Anaconda</a>. However, you can also work with Jupyter notebooks in VS Code <a href="https://code.visualstudio.com/docs/python/jupyter-support">directly</a>.</p>
 <p>As in case of <a href="getting-started.html#install-anaconda">Anaconda</a>, download the installer for your platform and follow the instructions. Start VS Code and open any Python file, for example <a href="other/empty.py">this one</a> (use <code>Alt+click</code> to download it, ignore warnings, it is has only comments, so cannot harm you). When you open Python file for the first time, VS Code will suggest to install a Python extension. Do that and install a linter when VS Code suggests that (<a href="https://code.visualstudio.com/docs/python/linting">linting</a> highlights syntactical and stylistic problems in your code, making it easier to write consistent clear code).</p>
 <p>Once the Python extension is activated, you will see which Python interpreter is used (you can have more than one or you may have multiple <a href="https://docs.python.org/3/tutorial/venv.html">virtual environments</a>).</p>
-<p><img src="images/vscode-python-interpreter.png" width="100%" style="display: block; margin: auto;" /></p>
 <p>If the selected environment is the wrong one or you are simply not sure, click on it and it will open a drop-down list with all interpreters and environments you have. Consult VS Code <a href="https://code.visualstudio.com/docs/python/environments">online documentation</a> on environments, if you need to change/add/delete environment (the exact settings may change, so looking at constantly updated online documentation is wiser than copying it here).</p>
 </div>
-<div id="install-psychopy" class="section level2 unnumbered" number="">
+<div id="install-psychopy" class="section level2 unnumbered">
 <h2>Installing PsychoPy</h2>
 <p>This step can wait until the first <a href="#memory-game-01">Memory Game</a> seminar.</p>
 <p>Download and install <a href="https://www.psychopy.org/download.html">Standalone PsychoPy</a> version. You can install PsychoPy as a conda package or via pip. However, using it as a standalone would ensure that you have all necessary additional libraries and a builder interface for the future use. We will use prepackaged PsychoPy’s python environment in <a href="getting-started.html#install-vs-code">VS Code</a>.</p>
