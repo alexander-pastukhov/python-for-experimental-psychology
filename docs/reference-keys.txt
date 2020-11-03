@@ -10,8 +10,8 @@ game-description
 lets-pick-the-number-exercise-1
 input-function
 conditional-if-statement
-conditions-and-comparisons-exercises-3-7
+conditions-and-comparisons-exercises-3-8
 grouping-statements-via-identation-exercise-9
-checking-the-answer
-picking-number-randomly
-one-armed-bandit
+checking-the-answer-exercise-11
+picking-number-randomly-exercise-12
+one-armed-bandit-exercise-13

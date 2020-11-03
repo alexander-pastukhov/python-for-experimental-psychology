@@ -234,7 +234,7 @@ Using variables means that you can concentrate what corresponding values \textbf
 \end{Highlighting}
 \end{Shaded}
 
-Variables also gives you flexibility. Their values can change during the program run: player's score is increasing, number of lives decreasing, number of spells it can cast grows or falls depending on their use, etc. Yet, you can always use the value in the variable to perform necessary computations. For example, here is a slightly extended \texttt{number\_of\_shoes} example.
+Variables also give you flexibility. Their values can change during the program run: player's score is increasing, number of lives decreasing, number of spells it can cast grows or falls depending on their use, etc. Yet, you can always use the value in the variable to perform necessary computations. For example, here is a slightly extended \texttt{number\_of\_shoes} example.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -313,7 +313,7 @@ Switch to the notebook and \textbf{do exercise \#3} to make sure you understand 
 \hypertarget{constants}{%
 \section{Constants}\label{constants}}
 
-Although the real power of variables is that you can change their value, you should use them even if the value remains constant. There are no true constants in Python, rather the agreement is that their names should be all \texttt{UPPER\_CASE}. Accordingly, when you see \texttt{SUCH\_A\_VARIABLE} you know that you should not change its value. Technically, this is just a recommendation, as no one can stop you from modifying value of a \texttt{CONSTANT}. However, much of Python's ease-of-use comes from such ``gentlemen's agreements'', which you should respect. We will encounter more of them when learning about objects.
+Although the real power of variables is that you can change their value, you should use them even if the value remains constant. There are no true constants in Python, rather the agreement is that their names should be all \texttt{UPPER\_CASE}. Accordingly, when you see \texttt{SUCH\_A\_VARIABLE} you know that you should not change its value. Technically, this is just a recommendation, as no one can stop you from modifying value of a \texttt{CONSTANT}. However, much of Python's ease-of-use comes from such ``gentlemen's agreements'' (such as \texttt{snake\_case} convention above), which you should respect. We will encounter more of them when learning about objects.
 
 Taking all this into account, if number of legs stays constant throughout the game, you should highlight that constancy and write
 
@@ -323,7 +323,9 @@ Taking all this into account, if number of legs stays constant throughout the ga
 \end{Highlighting}
 \end{Shaded}
 
-I strongly recommend using constants and avoid hardcoding the values. First, if you have several identical values that mean different things (2 legs, 2 eyes, 2 ears, 2 vehicles per character, etc.), seeing a \texttt{2} in the code will not tell you what does this \texttt{2} mean (the legs? the ears? the score multiplier?). You can, of course, figure it out based on the code that uses this number but you could spare yourself that extra effort and use a constant instead. Then, you just read its name and the meaning of the value becomes apparent (and it is the meaning not the actual value that you mostly interested in). Second, if you decide to \emph{change} that value (say, our main character is now a tripod), when using a constant means you have only one place to worry about, the rest of the code stays as is. If you hard-coded that number, you are in for an exciting (not really) and long search-and-replace throughout the entire code.
+I strongly recommend using constants and avoid hardcoding the values. First, if you have several identical values that mean different things (2 legs, 2 eyes, 2 ears, 2 vehicles per character, etc.), seeing a \texttt{2} in the code will not tell you what does this \texttt{2} mean (the legs? the ears? the score multiplier?). You can, of course, figure it out based on the code that uses this number but you could spare yourself that extra effort and use a constant instead. Then, you just read its name and the meaning of the value becomes apparent (and it is the meaning not the actual value that you are mostly interested in). Second, if you decide to \emph{change} that value (say, our main character is now a tripod), when using a constant means you have only one place to worry about, the rest of the code stays as is. If you hard-coded that number, you are in for an exciting (not really) but definitely long search-and-replace throughout the entire code.
+
+\textbf{Do exercise \#4.}
 
 \hypertarget{value-types}{%
 \section{Value types}\label{value-types}}
@@ -342,7 +344,7 @@ So far, we only used integer numeric values (1, 2, 5, 1000\ldots). Although, Pyt
   logical / Boolean values that are either \texttt{True} or \texttt{False}.
 \end{itemize}
 
-When using a variable it is important that you know what type of value it stores and this is mostly on you. Python will raise an error, if you try doing a computation using incompatible. In some cases, Python will automatically convert values between certain types, e.g.~any integer value is also a real value, so conversion from \texttt{1} to \texttt{1.0} is mostly trivial and automatic. However, in other cases you may need to use explicit conversion. \textbf{Go to exercise \#4} and try guessing which code will run and which will throw an error due to incompatible types?
+When using a variable it is important that you know what type of value it stores and this is mostly on you. Python will raise an error, if you try doing a computation using incompatible. In some cases, Python will automatically convert values between certain types, e.g.~any integer value is also a real value, so conversion from \texttt{1} to \texttt{1.0} is mostly trivial and automatic. However, in other cases you may need to use explicit conversion. \textbf{Go to exercise \#5} and try guessing which code will run and which will throw an error due to incompatible types?
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -356,7 +358,7 @@ When using a variable it is important that you know what type of value it stores
 
 Surprised by the last one? This is because internally, \texttt{True} is also \texttt{1} and \texttt{False} is \texttt{0}!
 
-You can explicitly convert from one type to another using special functions. For example, to turn a number or a logical value into a string, you simply write \texttt{str(\textless{}value\textgreater{})}. In examples below, what would be the result (\textbf{go to exercise \#5 in the notebook})?
+You can explicitly convert from one type to another using special functions. For example, to turn a number or a logical value into a string, you simply write \texttt{str(\textless{}value\textgreater{})}. In examples below, what would be the result (\textbf{go to exercise \#6 in the notebook})?
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -366,7 +368,7 @@ You can explicitly convert from one type to another using special functions. For
 \end{Highlighting}
 \end{Shaded}
 
-Similarly, you can convert to a logical/Boolean variable using \texttt{bool(\textless{}value\textgreater{})} function. The rules are simple, for numeric values \texttt{0} is \texttt{False}, any other non-zero value is converted to \texttt{True}. For string, an empty string \texttt{\textquotesingle{}\textquotesingle{}} is evaluated to \texttt{False} and non-empty string is converted to \texttt{True}. What would be the output in the examples below (\textbf{go to exercise \#6 in the notebook})?
+Similarly, you can convert to a logical/Boolean variable using \texttt{bool(\textless{}value\textgreater{})} function. The rules are simple, for numeric values \texttt{0} is \texttt{False}, any other non-zero value is converted to \texttt{True}. For string, an empty string \texttt{\textquotesingle{}\textquotesingle{}} is evaluated to \texttt{False} and non-empty string is converted to \texttt{True}. What would be the output in the examples below (\textbf{go to exercise \#7 in the notebook})?
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -380,7 +382,7 @@ Similarly, you can convert to a logical/Boolean variable using \texttt{bool(\tex
 \end{Highlighting}
 \end{Shaded}
 
-Converting to integer or float numbers is trickier. The simplest case is from logical to integer/float, as \texttt{True} gives you \texttt{int(True)} is \texttt{1} and \texttt{float(True)} is \texttt{1.0} and \texttt{False} gives you \texttt{0}/\texttt{0.0}. When converting from float to integer, Python simply drops the fractional part (not rounding!). When converting a string, it must be a valid number of the corresponding type or the error is generated. E.g., you can convert a string like \texttt{"123"} to and integer or a float but this won't work for \texttt{"a123"}. Moreover, you can convert \texttt{"123.4"} to floating-point number but not to an integer, as it has fractional part in it. Given all this, which cells would work and what output would they produce (\textbf{go to exercise \#7 in the notebook})?
+Converting to integer or float numbers is trickier. The simplest case is from logical to integer/float, as \texttt{True} gives you \texttt{int(True)} is \texttt{1} and \texttt{float(True)} is \texttt{1.0} and \texttt{False} gives you \texttt{0}/\texttt{0.0}. When converting from float to integer, Python simply drops the fractional part (not rounding!). When converting a string, it must be a valid number of the corresponding type or the error is generated. E.g., you can convert a string like \texttt{"123"} to and integer or a float but this won't work for \texttt{"a123"}. Moreover, you can convert \texttt{"123.4"} to floating-point number but not to an integer, as it has fractional part in it. Given all this, which cells would work and what output would they produce (\textbf{go to exercise \#8 in the notebook})?
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -458,7 +460,7 @@ You can also pass more than one value/variable to the print function and all the
 ## pancakes 10
 \end{verbatim}
 
-\textbf{Go to exercise \#8 and figure out what will be printed by the code below:}
+\textbf{Go to exercise \#9 and figure out what will be printed by the code below:}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -515,7 +517,7 @@ Here is an example of formatting a string using an integer:
 ## I had 10 pancakes for breakfast
 \end{verbatim}
 
-You are not limited to a single value that you can put into a string. You can specify more locations via \texttt{\%} but you must make sure that you pass the right number of values. Before running it, can you figure out which call will actually work (and what will be the output ) and which will produce an error (\textbf{go to exercise \#9})?
+You are not limited to a single value that you can put into a string. You can specify more locations via \texttt{\%} but you must make sure that you pass the right number of values. Before running it, can you figure out which call will actually work (and what will be the output ) and which will produce an error? \textbf{Go to exercise \#10.}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -525,7 +527,7 @@ You are not limited to a single value that you can put into a string. You can sp
 \end{Highlighting}
 \end{Shaded}
 
-In case of real values you have two options: \texttt{\%f} and \texttt{\%g}. The latter uses scientific notation (e.g.~\texttt{1e10} for \texttt{10000000000}) to make a representation more compact. To get a better feeling for the difference \textbf{do exercise \#10}.
+In case of real values you have two options: \texttt{\%f} and \texttt{\%g}. The latter uses scientific notation (e.g.~\texttt{1e10} for \texttt{10000000000}) to make a representation more compact. To get a better feeling for the difference \textbf{do exercise \#11}.
 
 These is much more to formatting and you can read about it at \href{https://pyformat.info/}{pyformat.info}. However, these basics are sufficient for us to start programming our first game during the next seminar. Don't forget to submit your exercise notebook and see you next time!
 
@@ -603,8 +605,8 @@ Only the \texttt{if} part is required, whereas \texttt{elif} (short for ``else, 
 
 Before we can properly use conditional statements, you need to understand (1) the conditions themselves and (2) use of indentation as a mean of grouping statements together.
 
-\hypertarget{conditions-and-comparisons-exercises-3-7}{%
-\section{Conditions and comparisons (exercises 3-7)}\label{conditions-and-comparisons-exercises-3-7}}
+\hypertarget{conditions-and-comparisons-exercises-3-8}{%
+\section{Conditions and comparisons (exercises 3-8)}\label{conditions-and-comparisons-exercises-3-8}}
 
 Condition is any expression that can be evaluated to see whether it is \texttt{True} or \texttt{False}. A straightforward example of such expression are comparisons, in human language expressed as ``is today Thursday?'', ``is the answer equal to 42'', ``is it raining and I have an umbrella?''. We will concentrate on them here but later you will see that in Python \textbf{any} expression is either \texttt{True} or \texttt{False}, even when it does not look like a comparison.
 
@@ -712,12 +714,14 @@ Both statements \#1 and \#2 appear after the if-statement, so how does Python no
 \end{Highlighting}
 \end{Shaded}
 
-Pay very close attention to the indentation as it determines which statements are executed together! Let us do exercise \#9.
+Pay very close attention to the indentation as it determines which statements are executed together! \textbf{Let us do exercise \#9.}
 
-\hypertarget{checking-the-answer}{%
-\section{Checking the answer}\label{checking-the-answer}}
+The \texttt{if} and \texttt{ifelse} statements are evaluated until one of them turns out to be \texttt{True}. After that any following \texttt{ifelse} and \texttt{else} statements are simply ignored. \textbf{Do exercise \#10.}
 
-Now you have all necessary instruments to finish the first version of our game. Go to exercise \#10 and, first, copy-paste your solutions to exercise \#1 (settings computer pick and printing it out) and \#2 (getting player input as an integer). Now, add conditional statements below, so that
+\hypertarget{checking-the-answer-exercise-11}{%
+\section{Checking the answer (Exercise 11)}\label{checking-the-answer-exercise-11}}
+
+Now you have all necessary instruments to finish the first version of our game. Go to exercise \#11 and, first, copy-paste your solutions to exercise \#1 (settings computer pick and printing it out) and \#2 (getting player input as an integer). Now, add conditional statements below, so that
 
 \begin{itemize}
 \tightlist
@@ -729,8 +733,8 @@ Now you have all necessary instruments to finish the first version of our game. 
   if two numbers are identical, it will print \texttt{"Spot\ on!"}
 \end{itemize}
 
-\hypertarget{picking-number-randomly}{%
-\section{Picking number randomly}\label{picking-number-randomly}}
+\hypertarget{picking-number-randomly-exercise-12}{%
+\section{Picking number randomly (Exercise 12)}\label{picking-number-randomly-exercise-12}}
 
 Our game is ``feature-complete'': computer picks a number, player makes a guess, computer responds appropriately. However, currently we are playing for both sides, as we hand pick the number for computer. Now, we will let computer pick this number itself using \href{https://docs.python.org/3/library/random.html\#random.randint}{randint(a, b)} function. It is part of the \href{https://docs.python.org/3/library/random.html}{random} library, so you will need to \emph{import} it first. We will talk about libraries and importing them in greater detail later. For now, it suffices that the top line of your code is
 
@@ -740,14 +744,14 @@ Our game is ``feature-complete'': computer picks a number, player makes a guess,
 \end{Highlighting}
 \end{Shaded}
 
-Function \texttt{randint(a,\ b)} generates a random integer on the interval \texttt{a..b}. In our case, this interval is \texttt{1..10}. Go to exercise \#11. First copy-paste your solution for exercise \#10. Add the \texttt{from\ random\ import\ randint} as the first line. Then, replace the hard-coded value you used for computer's pick with a call to \texttt{randint()} function. Run the code several times to check that computer does pick different random values.
+Function \texttt{randint(a,\ b)} generates a random integer on the interval \texttt{a..b}. In our case, this interval is \texttt{1..10}. Go to exercise \#11. First copy-paste your solution for exercise \#12. Add the \texttt{from\ random\ import\ randint} as the first line. Then, replace the hard-coded value you used for computer's pick with a call to \texttt{randint()} function. Run the code several times to check that computer does pick different random values.
 
 Congratulations, you just programmed your first computer game! Yes, it is very simple but it has key ingredients: a random decision by computer, user input, and feedback. Next time, you will learn about loops to allow for multiple attempts and about functions to make your code modular and reliable. In the meantime, let us solidify your knowledge by programming yet another game!
 
-\hypertarget{one-armed-bandit}{%
-\section{One-armed bandit}\label{one-armed-bandit}}
+\hypertarget{one-armed-bandit-exercise-13}{%
+\section{One-armed bandit (Exercise 13)}\label{one-armed-bandit-exercise-13}}
 
-You know everything you need to program a simple version of an ``one-armed bandit'' game (exercise \#12). Here is the game logic:
+You know everything you need to program a simple version of an ``one-armed bandit'' game (exercise \#13). Here is the game logic:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
