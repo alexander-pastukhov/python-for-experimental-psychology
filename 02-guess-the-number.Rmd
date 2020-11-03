@@ -1,32 +1,33 @@
 # Guess the Number {#seminar02}
 
-Our seminar 1 covered Python basics, so now you are ready to start developing you first game! We will build it step by and there will be a lot to learn about input, libraries, conditional statements, indentation, and loops. As before, download [exercise notebook](notebooks/Seminar 02. Guess the number.ipynb), copy it in your designated folder, and open it in Jupyter Notebook.
+Seminar #1 covered Python basics, so now you are ready to start developing you first game! We will build it step by step and there will be a lot to learn about input, libraries, conditional statements, and indentation. As before, download [exercise notebook](notebooks/Seminar 02. Guess the number 01.ipynb), copy it in your designated folder, and open it in Jupyter Notebook.
 
 ## Game description
-We will program a game in which one participant (computer) picks the number within a certain range, say, between 1 and 10 and the other participant (player) is trying to guess it. After every guess, the first participant (computer) responds whether the actual number is lower than a guess, higher than a guess, or matches it. The game is over when the player correctly guess the number or (in the later version of the game) runs out of attempts.
+We will program a game in which one participant (computer) picks the number within a certain range (say, between 1 and 10) and the other participant (player) is trying to guess it. After every guess, the first participant (computer) responds whether the actual number is lower than a guess, higher than a guess, or matches it. The game is over when the player correctly guess the number or (in the later version of the game) runs out of attempts.
 
 Our first version will allow just one attempt (will make it more fun later on) and the overall game algorithm will look like this:
 ```{python eval=FALSE}
 # 1. computer generates a random number
 # 2. prints it out for debug purposes
 # 3. prompts user to enter a guess
-# 4. compares two number and print outs the outcome 
+# 4. compares two numbers and print outs the outcome
 #    "My number is lower", "My number is higher", or "Spot on!"
 ```
 
 ## Let's pick the number (Exercise 1)
-Let us start by creating a variable that will hold a number that computer "picked". Let us name it `number_picked` (or some other meaningful name) and, to make things a bit simpler, let us assign some hardcoded arbitrary number between 1 and 10 to it (whatever you fill like). Then, let us print it out, so that we know the number ourselves (we know it now but that won't be the case when computer will generate it randomly). Use string formatting to make things user-friendly, e.g. print out something like "The number I've picked is ...". Your code should be a two-liner:
+Let us start by creating a variable that will hold a number that computer "picked". Let us name it `number_picked` (you can some other meaningful name as well but it might be easier if we all stick to the same name).  To make things a bit simpler at the beginning, let us assign some hard=coded arbitrary number between 1 and 10 to it (whatever you fill like). Then, let us print it out, so that we know the number ourselves (we know it now but that won't be the case when computer will generate it randomly). Use string formatting to make things user-friendly, e.g., print out something like "The number I've picked is ...". Your code should be a two-liner:
 ```{python eval=FALSE}
 # 1. create variable and set it value
 # 2. print out the value
 ```
-Switch to exercise #1 and make sure your code works!
+
+**Switch to exercise #1 and make sure your code works!**
 
 ## Asking user for a guess (Exercise 2) {#input-function}
-Now we need to ask the player to enter their guess. For this, we will use function [input([prompt])](https://docs.python.org/3/library/functions.html#input) (here and below links lead to the official documentation). It prints out `prompt` (a value string) if it is supplied, reads the input (key presses) until the user presses `Enter`, and returns it **as a string**. For a moment, let us assume that the input is always an integer number, so we can simply convert it to an integer and assign this value to a new variable called `guess`. Thus, you need to write a single line assignment statement with `guess` variable on the left side, whereas on the right should be a call to the `input(...)` function (think of a nice prompt message) wrapped by the type-conversion to `int(...)`. Switch to exercise 2 and, for the moment, only enter valid integers when running the code, so that the conversion works without an error.
+Now we need to ask the player to enter their guess. For this, we will use [input([prompt])](https://docs.python.org/3/library/functions.html#input) function (here and below the links lead to the official documentation). It prints out `prompt` (a string) if you supplied it, reads the input (key presses) until the user presses `Enter`, and returns it **as a string**. For a moment, let us assume that the input is always an valid integer number (so, type only valid integers!), so we can convert it to an integer without extra checks (will add them later) and assign this value to a new variable called `guess`. Thus, you need to write a single line assignment statement with `guess` variable on the left side, whereas on the right should be a call to the `input(...)` function (think of a nice prompt message) wrapped by the type-conversion to `int(...)`. Switch to exercise 2 and, for the moment, only enter valid integers when running the code, so that the conversion works without an error.
 
 ## Conditional _if_ statement
-Now we have numbers one that computer picked and one that player guessed. Next, we need to compare them to provide correct output. For this, we will use conditional [if statement](https://docs.python.org/3/tutorial/controlflow.html#if-statements):
+Now we have two numbers: One that computer picked and one that is player's guess. Now, we need to compare them to provide correct output message. For this, we will use conditional [if statement](https://docs.python.org/3/tutorial/controlflow.html#if-statements):
 ```{python eval=FALSE}
 if some_condition_is_true:
     # do something
@@ -37,7 +38,8 @@ elif yet_another_condition_is_true:
 else:
     # do something only if all conditions above are false.
 ```
-Only the `if` part is required, whereas `elif` (short form of "else, if") and `else` are optional. Thus you can do something, only if a condition is true:
+
+Only the `if` part is required, whereas `elif` (short for "else, if") and `else` are optional. Thus you can do something, only if a condition is true:
 ```{python eval=FALSE}
 if some_condition_is_true:
     # do something, but OTHERWISE DO NOT DO ANYTHING 
@@ -46,50 +48,66 @@ if some_condition_is_true:
 # some code that is executed after the if-statement,
 # irrespective of whether the condition was true or not.
 ```
-Also note that conditions are checked one-by-one in the order you formulated them and later `elif` are checked only if previous conditions were `False`. Take a look at this example:
-```{python eval = FALSE}
-if 2 * 2 == 4:
-  print("4!")
-elif 3 * 3 == 9:
-  print("9!")
-else:
-  print("I don't know!")
-```
-Here, even thought the second condition is true (`3 * 3 == 9` → `True`), it is never evaluated because the prior comparison `2 * 2 == 4` is also true.
 
-Before we can properly use conditional statements, you need to understand the conditions themselves and use of indentation as a mean of grouping statements together.
+Before we can properly use conditional statements, you need to understand (1) the conditions themselves and (2) use of indentation as a mean of grouping statements together.
 
 ## Conditions and comparisons (exercises 3-7)
-Condition is any expression that can be evaluated to see whether it is `True` or `False`. A straightforward example of such expression are comparisons, in human language expressed as "is today Thursday?", "is the number of sighted UFOs larger than 42", "is it raining and I have an umbrella?". We will concentrate on them here but later you will see that in Python **any** expression is either `True` or `False`, even when it does not look like a comparison.
+Condition is any expression that can be evaluated to see whether it is `True` or `False`. A straightforward example of such expression are comparisons, in human language expressed as "is today Thursday?", "is the answer equal to 42", "is it raining and I have an umbrella?". We will concentrate on them here but later you will see that in Python **any** expression is either `True` or `False`, even when it does not look like a comparison.
 
 For the comparison, you can use the following operators:
 
 * _"A is equal B"_ is written as `A == B`.
-* _"A is not equal B"_ can be written either as `A != B`.
+* _"A is not equal B"_ is written as `A != B`.
 * _"A is greater than B"_ and _"A is smaller than B"_ are, respectively, `A > B` and `A < B`.
 * _"A is greater than or equal to B"_ and _"A is smaller than or equal to B"_ are, respectively, `A >= B` and `A <= B` (please note the order of symbols!).
 
-Go to exercise #3 to solve some comparisons.
+**Go to exercise #3 to solve some comparisons.**
 
-You can _invert_ the logical value using `not` operator, so that `not True` is `False` and `not False` is `True`. This means that `A != B` is the same as `not A == B` and, correspondingly, `A == B` is `not A != B`. To see how that works, consider both cases when `A` is indeed equal `B` and when it is not.
+You can _invert_ the logical value using `not` operator, as `not True` is `False` and `not False` is `True`. This means that `A != B` is the same as `not A == B` and, correspondingly, `A == B` is `not A != B`. To see how that works, consider both cases when `A` is indeed equal `B` and when it is not.
 
 * If A is equal B then `A == B` evaluates to `True`. The `A != B` is then `False`, so `not A != B` → `not False` → `True`.
 * If A is not equal B then `A == B` evaluates to `False`. The `A != B` is then `True`, so `not A != B` → `not True` → `False`.
 
-Go to exercise #4 to explore this inversion yourself.
+**Go to exercise #4 to explore this inversion yourself.**
 
-You can also combine several comparisons using `and` and `or` operators. As in human language, `and` means that both parts must be true: `True and True` → `True` but `True and False` → `False`, `False and True` → `False`, and `False and False` → `False`. Same holds if you have more have two conditions/comparisons, **all** of them must be true. In case of `or` at least one of the statements must be true, e.g. `True and True` → `True`, `True and False` → `True`, `False and True` → `True`, but `False and False` → `False`. Again, for more than two comparisons/conditions at least one of them should be true for the entire expression to be true. Go to exercises #5 and #6.
+You can also combine several comparisons using `and` and/or `or` operators. As in human language, `and` means that both parts must be true: `True and True` → `True` but `True and False` → `False`, `False and True` → `False`, and `False and False` → `False`. Same holds if you have more have than two conditions/comparisons, **all** of them must be true. In case of `or` only one of the statements must be true, e.g. `True and True` → `True`, `True and False` → `True`, `False and True` → `True`, but `False and False` → `False`. Again, for more than two comparisons/conditions at least one of them should be true for the entire expression to be true. **Go to exercises #5 and #6.**
 
-Finally, like in simple arithmetic, you can use brackets `()` to group conditions together. Thus a statement "I always eat chocolate but I eat spinach only when I am hungry" can be written as `food == "chocolate" or (food == "spinach" and hungry)`. Here, `the food == "chocolate"` and `food == "spinach" and hungry` are evaluated independently, their values are substituted in their place and then the `and` condition is evaluated. Go to exercise #7.
+Subtle but important point: conditions are evaluated from left to right until the whole expression can be definitely resolved. This means that if the first expression in a `and` pair is `False`, the second one is **never evaluated**. I.e., if `first and second` expressions both need to be `True` and you know that already `first` expression is false, the whole expression will be `False` in any case. This means that in the code below there will be no error, even though evaluating `int("e123")` raises `ValueError`.
+```{python eval=FALSE}
+2 * 2 == 5 and int("e123") == 123
+```
 
-## Grouping statements via identation (exercise #8)
+However, reverse the order, so that `int("e123") == 123` needs to be evaluated first and you get the error message
+```{python eval=FALSE}
+int("e123") == 123 and 2 * 2 == 4
+# Generates ValueError: invalid literal for int() with base 10: 'e123'
+```
+
+Similarly, if _any_ expression in `or` is `True`, you do not need to check the rest.
+```{python eval=FALSE}
+2 * 2 == 4 or int("e123") == 123
+```
+
+However, if the first condition is `False`, we do need to continue (and stumble into an error):
+```{python eval=FALSE}
+2 * 2 == 5 or int("e123") == 123
+# Generates ValueError: invalid literal for int() with base 10: 'e123'
+```
+
+**Go to exercise #7.**
+
+
+Finally, like in simple arithmetic, you can use brackets `()` to group conditions together. Thus a statement "I always eat chocolate but I eat spinach only when I am hungry" can be written as `food == "chocolate" or (food == "spinach" and hungry)`. Here, `the food == "chocolate"` and `food == "spinach" and hungry` are evaluated independently, their values are substituted in their place and then the `and` condition is evaluated. **Go to exercise #8.**
+
+## Grouping statements via identation (exercise #9)
 Let us go back to the conditional if-statement. Take a look at following code example, in which statement #1 is executed only if some condition is true, whereas statement #2 is executed after that irrespective of the condition.
 ```{python eval=FALSE}
 if some_condition_is_true:
     statement #1
 statement #2 
 ```
-Both statements #1 and #2 appear after the if-statement, so how does Python now that the first one is executed if condition is true but the other one always runs? The answer is the indentation (the **4 (four!)** spaces, they are automatically added whenever you press `Tab` and removed whenever you press `Shift + Tab`) that puts statement #1 _inside_ the if-statement. Thus, indentation shows whether statements belong to the same group (same indentation as of `if` and `statement #2`) or are inside conditional statement, loop, or function. For more complex code, which will have, for example, if-statement inside an if-statement inside a loop, you will express this by adding more levels of indentation. E.g.
+
+Both statements #1 and #2 appear after the if-statement, so how does Python now that the first one is executed only if condition is true but the other one always runs? The answer is indentation (the **4 (four!)** spaces, they are automatically added whenever you press `Tab` and removed whenever you press `Shift + Tab`) that puts statement #1 _inside_ the if-statement. Thus, indentation shows whether statements belong to the same group (same indentation as for `if` and `statement #2`) or are inside conditional statement, loop, or function (`statement #1`). For more complex code that will have, for example, if-statement inside an if-statement inside a loop, you will express this by adding more levels of indentation. E.g.
 ```{python eval=FALSE}
 # some statements outside of the loop (0 indentation)
 while game_is_not_over: # (0 indentation)
@@ -108,28 +126,31 @@ while game_is_not_over: # (0 indentation)
     
 # some statements outside of the loop (0 indentation)
 ```
-Pay very close attention to the indentation as it determines which statements are executed together! Go to exercise #8.
+Pay very close attention to the indentation as it determines which statements are executed together! Let us do exercise #9.
 
 ## Checking the answer
-Now you have all necessary instruments to finish the first version of our game. Go to exercise #9 and, first, copy-paste your solutions to exercise #1 (settings computer pick and printing it out) and #2 (getting player input as an integer). Now, add  conditional statements below, so that 
+Now you have all necessary instruments to finish the first version of our game. Go to exercise #10 and, first, copy-paste your solutions to exercise #1 (settings computer pick and printing it out) and #2 (getting player input as an integer). Now, add  conditional statements below, so that 
 
-* if the computer pick is smaller than player's guess, it will print "My number is lower!"
-* if the computer pick is larger than player's guess, it will print "My number is higher!"
-* if two numbers are identical, it will print "Spot on!"
+* if the computer pick is smaller than player's guess, it will print `"My number is lower!"`
+* if the computer pick is larger than player's guess, it will print `"My number is higher!"`
+* if two numbers are identical, it will print `"Spot on!"`
 
 ## Picking number randomly
 Our game is "feature-complete": computer picks a number, player makes a guess, computer responds appropriately. However, currently we are playing for both sides, as we hand pick the number for computer. Now, we will let computer pick this number itself using [randint(a, b)](https://docs.python.org/3/library/random.html#random.randint) function. It is part of the [random](https://docs.python.org/3/library/random.html) library, so you will need to _import_ it first. We will talk about libraries and importing them in greater detail later. For now, it suffices that the top line of your code is 
 ```{python eval=FALSE}
 from random import randint
 ```
-Function `randint(a, b)` generates a random integer on the interval `a..b`. In our case, this interval is `1..10`. Go to exercise #9. First copy-paste your solution for exercise #8. Add the `from random import randint` as the first line. Then, replace the hard-coded value you used for computer's pick with a call to `randint()` function. Run the code several times to check that computer does pick different random values.
+Function `randint(a, b)` generates a random integer on the interval `a..b`. In our case, this interval is `1..10`. Go to exercise #11. First copy-paste your solution for exercise #10. Add the `from random import randint` as the first line. Then, replace the hard-coded value you used for computer's pick with a call to `randint()` function. Run the code several times to check that computer does pick different random values.
 
 Congratulations, you just programmed your first computer game! Yes, it is very simple but it has key ingredients: a random decision by computer, user input, and feedback. Next time, you will learn about loops to allow for multiple attempts and about functions to make your code modular and reliable. In the meantime, let us solidify your knowledge by programming yet another game!
 
 ## One-armed bandit
-You know everything you need to program a simple version of an "one-armed bandit" game (exercise #11). Here is the game logic:
+You know everything you need to program a simple version of an "one-armed bandit" game (exercise #12). Here is the game logic:
 
 1. `from random import randint`
 2. Generate three random integers (say, between 1 and 5) and store them in three variables `slot1`, `slot2`, and `slot3`.
-3. Print out the numbers, use string formatting to make it look nice.`
-4. In addition, if all three values are the same, print `"Three of a kind!"`. If only two numbers match, print `"Pair!"`. Print nothing, if all numbers are different.
+3. Print out the numbers, use string formatting to make it look nice.
+4. In addition, 
+    * if all three values are the same, print `"Three of a kind!"`. 
+    * If only two numbers match, print `"Pair!"`. 
+    * Print nothing, if all numbers are different.
