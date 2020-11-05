@@ -49,7 +49,7 @@ _While_ loop is continuously executed while the condition is `True` and, importa
 **Do exercise #4 to build the intuition.**
 
 ## Limiting number of attempts via break (Exercise 5)
-Let's put the player under some pressure! Decide on maximal number of attempts allowed and stores in a constant. Pick an appropriate name (e.g. `MAX_ATTEMPTS`) and REMEMBER, ALL CAPITAL LETTERS for a constant name! Now, use `break` to quit the `while` loop, if current attempt number is greater than `MAX_ATTEMPTS`. 
+Let's put the player under some pressure! Decide on maximal number of attempts allowed and stores in a constant. Pick an appropriate name (e.g. `MAX_ATTEMPTS`) and REMEMBER, ALL CAPITAL LETTERS for a constant name! Now, use `break` to quit the `while` loop, if current attempt number is greater than `MAX_ATTEMPTS`.
 
 **Put your code into exercise #5**
 
