@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Cross references | Python for social and experimental psychology</title>
+  <title>Seminar 3 Guess the Number, the Sequel | Python for social and experimental psychology</title>
   <meta name="description" content="Material and exercises for ‘Python for social and experimental psychology’ seminar." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Cross references | Python for social and experimental psychology" />
+  <meta property="og:title" content="Seminar 3 Guess the Number, the Sequel | Python for social and experimental psychology" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Cross references | Python for social and experimental psychology" />
+  <meta name="twitter:title" content="Seminar 3 Guess the Number, the Sequel | Python for social and experimental psychology" />
   
   <meta name="twitter:description" content="Material and exercises for ‘Python for social and experimental psychology’ seminar." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="seminar03.html"/>
-
+<link rel="prev" href="seminar02.html"/>
+<link rel="next" href="cross-references.html"/>
 <script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -203,51 +203,102 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="cross-references" class="section level1 unnumbered">
-<h1>Cross references</h1>
-<div id="a" class="section level4 unlisted unnumbered">
-<h4>A</h4>
-<ul>
-<li><a href="https://www.anaconda.com">Anaconda</a>, a scientific Python distribution, see also <a href="getting-started.html#install-anaconda">installation notes</a>.</li>
-</ul>
+<div id="seminar03" class="section level1" number="3">
+<h1><span class="header-section-number">Seminar 3</span> Guess the Number, the Sequel</h1>
+<p>During our previous seminar, you programmed a single-attempt-only “Guess the Number” game. Now, you will expand to multiple attempts and will add other bells-and-whistles to make it more fun. Download the <a href="notebooks/Seminar%2003.%20Guess%20the%20number,%20part%202.ipynb">exercise notebook</a> before we start!</p>
+<div id="while-loop" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> While loop (Exercises 1-2)</h2>
+<p>If you want to repeat something, you need to use loops. There are two types of loops: <a href="https://wiki.python.org/moin/WhileLoop">while</a> loop, which is repeated <em>while</em> a condition is true, and <a href="https://wiki.python.org/moin/ForLoop">for</a> loop that iterates over items (we will use it later).</p>
+<p>The basic structure of a <em>while</em> loop is</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb41-1"><a href="seminar03.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># statements before the loop</span></span>
+<span id="cb41-2"><a href="seminar03.html#cb41-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-3"><a href="seminar03.html#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="op">&lt;</span>condition<span class="op">&gt;</span>:</span>
+<span id="cb41-4"><a href="seminar03.html#cb41-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># statements inside are executed</span></span>
+<span id="cb41-5"><a href="seminar03.html#cb41-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># repeatedly for as long as</span></span>
+<span id="cb41-6"><a href="seminar03.html#cb41-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># the condition is True</span></span>
+<span id="cb41-7"><a href="seminar03.html#cb41-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb41-8"><a href="seminar03.html#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="co"># statements after the loop</span></span></code></pre></div>
+<p>The <code>&lt;condition&gt;</code> here is any expression that is evaluated to be either <code>True</code> or <code>False</code>, just like in an <em>if-elif-else</em> conditional statement.</p>
+<p><strong>Do exercise #1</strong></p>
+<p>Let us use <em>while</em> loop, so that the player keeps guessing until finally getting it right. You can copy-paste the code you programmed during the last seminar or could redo it from scratch (I would strongly recommend you doing the latter!). The overall program structure should be the following</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb42-1"><a href="seminar03.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> random <span class="im">import</span> randint</span>
+<span id="cb42-2"><a href="seminar03.html#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-3"><a href="seminar03.html#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="co"># generated random number and store in computer_pick variable</span></span>
+<span id="cb42-4"><a href="seminar03.html#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="co"># print it out for debugging purposes</span></span>
+<span id="cb42-5"><a href="seminar03.html#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="co"># get player input, convert it to an integer, and store</span></span>
+<span id="cb42-6"><a href="seminar03.html#cb42-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-7"><a href="seminar03.html#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="co"># while &lt;players guess is not equal to the value the computer picked&gt;:</span></span>
+<span id="cb42-8"><a href="seminar03.html#cb42-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># print out &quot;my number is smaller&quot; or &quot;my number is larger&quot; using if-else statement</span></span>
+<span id="cb42-9"><a href="seminar03.html#cb42-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb42-10"><a href="seminar03.html#cb42-10" aria-hidden="true" tabindex="-1"></a><span class="co"># print &quot;Spot on!&quot; (because if we got here that means guess is equal to the computer&#39;s pick)</span></span></code></pre></div>
+<p><strong>Put your code into exercise #2</strong></p>
 </div>
-<div id="c" class="section level4 unnumbered unlisted">
-<h4>C</h4>
-<ul>
-<li><a href="seminar01.html#constants">Constants</a></li>
-</ul>
+<div id="counting-attempts-exercise-3" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Counting attempts (Exercise #3)</h2>
+<p>Now let us add a variable that will count the total number of attempts the player required. For this, create a new variable (call it <code>attempts</code> or something similar) <em>before the loop</em> and initialize it <code>0</code>. Add <code>1</code> to it every time the player inputs the guess. After the loop, expand the <code>"Spot on!"</code> message you print out by adding information about the attempts count. Use string formatting to make things look nice, e.g. <code>"Spot on, you needed 5 attempts"</code>.</p>
+<p><strong>Put your code into exercise #3</strong></p>
 </div>
-<div id="i" class="section level4 unnumbered unlisted">
-<h4>I</h4>
-<ul>
-<li><a href="seminar02.html#input-function">input([prompt]) function</a>, see also <a href="https://docs.python.org/3/library/functions.html#input">official manual</a></li>
-</ul>
+<div id="breaking-and-exiting-exercise-4" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Breaking (and exiting, Exercise #4)</h2>
+<p><em>While</em> loop is continuously executed while the condition is <code>True</code> and, importantly, all code inside is executed before the condition is evaluated again. However, sometimes you may need to abort sooner without executing the remaining code. For this, Python gives you a <code>break</code> statement that causes the program to exit the loop (of <code>if-elif-else</code> statement) immediately and to continue with the code after the loop.</p>
+<p><strong>Do exercise #4 to build the intuition.</strong></p>
 </div>
-<div id="p" class="section level4 unnumbered unlisted">
-<h4>P</h4>
-<ul>
-<li><a href="https://www.psychopy.org/">PsychoPy</a> PsychoPy standalone application and library, see also <a href="getting-started.html#install-psychopy">installation notes</a>.</li>
-</ul>
+<div id="limiting-number-of-attempts-via-break-exercise-5" class="section level2" number="3.4">
+<h2><span class="header-section-number">3.4</span> Limiting number of attempts via break (Exercise 5)</h2>
+<p>Let’s put the player under some pressure! Decide on maximal number of attempts allowed and stores in a constant. Pick an appropriate name (e.g. <code>MAX_ATTEMPTS</code>) and REMEMBER, ALL CAPITAL LETTERS for a constant name! Now, use <code>break</code> to quit the <code>while</code> loop, if current attempt number is greater than <code>MAX_ATTEMPTS</code>.</p>
+<p><strong>Put your code into exercise #5</strong></p>
 </div>
-<div id="s" class="section level4 unnumbered unlisted">
-<h4>S</h4>
-<ul>
-<li><a href="seminar01.html#string-formatting">String formatting</a>, see also <a href="https://pyformat.info/">PyFormat</a> for information on new string formatting and practical examples.</li>
-</ul>
+<div id="correct-end-of-game-message-exercise-6" class="section level2" number="3.5">
+<h2><span class="header-section-number">3.5</span> Correct end-of-game message (Exercise 6)</h2>
+<p>Think about the final message. Currently it says “Spot on…” because we assumed that you exited the loop because you gave the correct answer. With limited attempts that is not the case, as the player could out of the loop because</p>
+<ol style="list-style-type: decimal">
+<li>They answered correctly</li>
+<li>They ran out of attempts.</li>
+</ol>
+<p>Use <code>if-else</code> conditional statement to print out an appropriate message (e.g., <code>"Better luck next time!</code>, if the player lost).</p>
+<p><strong>Put your code into exercise #6</strong></p>
 </div>
-<div id="t" class="section level4 unnumbered unlisted">
-<h4>T</h4>
-<ul>
-<li><a href="seminar01.html#value-types">Types</a></li>
-</ul>
+<div id="limiting-number-of-attempts-with-a-break-exercise-7" class="section level2" number="3.6">
+<h2><span class="header-section-number">3.6</span> Limiting number of attempts with a break (Exercise 7)</h2>
+<p>Modify your code to work without <code>break</code> statement. Modify your condition so that loop repeats while player’s guess is incorrect and the number of attempts is still less than the maximally allowed.</p>
+<p><strong>Put your code into exercise #7</strong></p>
 </div>
-<div id="v" class="section level4 unnumbered unlisted">
-<h4>V</h4>
-<ul>
-<li><p><a href="seminar01.html#value-types">Value types (simple)</a></p></li>
-<li><p><a href="seminar01.html#variables">Variables</a></p></li>
-<li><p><a href="https://code.visualstudio.com/">Visual Studio Code</a>, a lightweight free open-source editor with strong support for Python. See also <a href="getting-started.html#install-vs-code">installation notes</a>.</p></li>
-</ul>
+<div id="show-remaining-attempts-exercise-8" class="section level2" number="3.7">
+<h2><span class="header-section-number">3.7</span> Show remaining attempts (Exercise 8)</h2>
+<p>Modify the <code>input</code> prompt message to include number of <em>remaining</em> attempts. E.g. <code>"Please enter the guess, you have X attempts remaining"</code>.</p>
+<p><strong>Put your code into exercise #8</strong></p>
+</div>
+<div id="repeating-the-game-exercise-9" class="section level2" number="3.8">
+<h2><span class="header-section-number">3.8</span> Repeating the game (Exercise 9)</h2>
+<p>Let us an option for the player to play again. This means putting <em>all</em> the current code inside of another <code>while</code> loop that is repeated for as long as the player wants to play. The code should look following:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb43-1"><a href="seminar03.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> random <span class="im">import</span> randint</span>
+<span id="cb43-2"><a href="seminar03.html#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-3"><a href="seminar03.html#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="co"># define MAX_ATTEMPTS</span></span>
+<span id="cb43-4"><a href="seminar03.html#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-5"><a href="seminar03.html#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="co"># define a variable called &quot;want_to_play&quot; and set to True</span></span>
+<span id="cb43-6"><a href="seminar03.html#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> want_to_play:</span>
+<span id="cb43-7"><a href="seminar03.html#cb43-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># your working game code goes here ()</span></span>
+<span id="cb43-8"><a href="seminar03.html#cb43-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb43-9"><a href="seminar03.html#cb43-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ask user whether via input function. E.g. &quot;Want to play again? Y/N&quot;</span></span>
+<span id="cb43-10"><a href="seminar03.html#cb43-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># want_to_play should be True if user input is equal to &quot;Y&quot;</span></span>
+<span id="cb43-11"><a href="seminar03.html#cb43-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb43-12"><a href="seminar03.html#cb43-12" aria-hidden="true" tabindex="-1"></a><span class="co"># very final message, e.g. &quot;Thank you for playing the game!&quot;</span></span></code></pre></div>
+<p><strong>Pay extra attention to indentation to group the code properly!</strong></p>
+<p><strong>Put your code into exercise #9</strong></p>
+</div>
+<div id="best-score-exercise-10" class="section level2" number="3.9">
+<h2><span class="header-section-number">3.9</span> Best score (Exercise 10)</h2>
+<p>A “proper” game typically keeps the track of players’ performance. Let us record what was the fewest number of attempts that the player needed to guess the number. For this, create a new variable <code>fewest_attempts</code> and set it to <code>MAX_ATTEMPTS</code> (this is as bad as the player can be). Think, where do you need to create it? Once a game round is over and you know how many attempts the player required, update it if the number of attempts that the player used was <em>less</em> than the current value. You can add the information about “Best so far” into the game-round-over message.</p>
+<p><strong>Put your code into exercise #10</strong></p>
+</div>
+<div id="counting-game-rounds-exercise-11" class="section level2" number="3.10">
+<h2><span class="header-section-number">3.10</span> Counting game rounds (Exercise 11)</h2>
+<p>Let us count how many rounds the player played. The idea and implementation is the same as with counting the attempts. Create a new variable, initialize it to 0, increment by 1 whenever a new round starts. Include the total number of rounds into the very final message, e.g. “Thank you for playing the game X times!”</p>
+<p><strong>Put your code into exercise #11</strong></p>
+</div>
+<div id="wrap-up" class="section level2" number="3.11">
+<h2><span class="header-section-number">3.11</span> Wrap up</h2>
+<p>Most excellent, you now have a proper working computer game with game rounds, limited attempts, best score, and what not!</p>
 
 </div>
 </div>
@@ -256,8 +307,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="seminar03.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="seminar02.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="cross-references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
