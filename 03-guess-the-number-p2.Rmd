@@ -1,4 +1,4 @@
-# Guess the Number, part 2 {#seminar03}
+# Guess the Number, the Sequel {#seminar03}
 
 During our previous seminar, you programmed a single-attempt-only "Guess the Number" game. Now, you will expand to multiple attempts and will add other bells-and-whistles to make it more fun. Download the [exercise notebook](notebooks/Seminar 03. Guess the number, part 2.ipynb) before we start!
 
@@ -37,19 +37,25 @@ from random import randint
 
 **Do exercise #2.**
 
-## Counting attempts
+## Counting attempts (Exercise #3)
 
 Now let us add a variable that will count the total number of attempts the player required. For this, create a new variable (call it `attempts` or something similar) _before the loop_ and initialize it `0`. Add `1` to it every time the player inputs the guess. After the loop, expand the `"Spot on!"` message you print out by adding information about the attempts count. Use string formatting to make things look nice, e.g. `"Spot on, you needed 5 attempts"`.
 
 **Do exercise #3.**
 
+## Breaking (and exiting, Exercise #4)
+_While_ loop is continuously executed while the condition is `True` and, importantly, all code inside is executed before the condition is evaluated again. However, sometimes you may need to abort sooner without executing the remaining code. For this, Python  gives you a `break` statement that causes the program to exit the loop (of `if-elif-else` statement) immediately and to continue with the code after the loop. 
+
+**Do exercise #4 to get the intuition.**
+
 ## Limiting number of attempts via _while_ loop
+Let's put the player under some pressure! 
 
-## For loop {#for-loop}
-
-## Limiting number of attempts via _for_ loop
 
 ## Limiting number of attempts via _while_ loop (no break)
+
+
+## For loop {#for-loop}
 
 ## Show remaining attempts
 
