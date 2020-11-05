@@ -1,18 +1,53 @@
 # Guess the Number, part 2 {#seminar03}
 
-During our previous seminar, you programmed a single-attempt "Guess the Number" game. Now, you will learn about loops to allow for repeated attempts and about function to make your code modular and reliable.
+During our previous seminar, you programmed a single-attempt-only "Guess the Number" game. Now, you will expand to multiple attempts and will add other bells-and-whistles to make it more fun. Download the [exercise notebook](notebooks/Seminar 03. Guess the number, part 2.ipynb) before we start!
 
-## While loop {#while-loop}
+## While loop (Exercises 1-2) {#while-loop}
+If you want to repeat something, you need to use loops. There are two types of loops: [while](https://wiki.python.org/moin/WhileLoop) loop, which is repeated _while_ a condition is true, and [for](https://wiki.python.org/moin/ForLoop) loop that iterates over items (we will use it later).
 
-## Playing until you win
+The basic structure of a _while_ loop is
+```{python eval=FALSE}
+# statements before the loop
+
+while <condition>:
+    # statements inside are executed
+    # repeatedly for as long as
+    # the condition is True
+    
+# statements after the loop
+```
+
+The `<condition>` here is any expression that is evaluated to be either `True` or `False`, just like in an _if-elif-else_ conditional statement. 
+
+**Do exercise #1**
+
+Let us use _while_ loop, so that the player keeps guessing until finally getting it right. You can copy-paste the code you programmed during the last seminar or could redo it from scratch (I would strongly recommend you doing the latter!). The overall program structure should be the following
+```{python eval=FALSE}
+from random import randint
+
+# generated random number and store in computer_pick variable
+# print it out for debugging purposes
+# get player input, convert it to an integer, and store
+
+# while <players guess is not equal to the value the computer picked>:
+    # print out "my number is smaller" or "my number is larger" using if-else statement
+    
+# print "Spot on!" (because if we got here that means guess is equal to the computer's pick)
+```
+
+**Do exercise #2.**
 
 ## Counting attempts
+
+Now let us add a variable that will count the total number of attempts the player required. For this, create a new variable (call it `attempts` or something similar) _before the loop_ and initialize it `0`. Add `1` to it every time the player inputs the guess. After the loop, expand the `"Spot on!"` message you print out by adding information about the attempts count. Use string formatting to make things look nice, e.g. `"Spot on, you needed 5 attempts"`.
+
+**Do exercise #3.**
+
+## Limiting number of attempts via _while_ loop
 
 ## For loop {#for-loop}
 
 ## Limiting number of attempts via _for_ loop
-
-## Limiting number of attempts via _while_ loop
 
 ## Limiting number of attempts via _while_ loop (no break)
 
