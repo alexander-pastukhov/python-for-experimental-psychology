@@ -1,0 +1,28 @@
+# Guess the Number, part 2 {#seminar03}
+
+During our previous seminar, you programmed a single-attempt "Guess the Number" game. Now, you will learn about loops to allow for repeated attempts and about function to make your code modular and reliable.
+
+## While loop {#while-loop}
+
+## Playing until you win
+
+## Counting attempts
+
+## For loop {#for-loop}
+
+## Limiting number of attempts via _for_ loop
+
+## Limiting number of attempts via _while_ loop
+
+## Limiting number of attempts via _while_ loop (no break)
+
+## Show remaining attempts
+
+## Repeting the game
+
+## Best score
+
+## Lie, lie lie
+Computer tells truth only with some probability.
+
+
