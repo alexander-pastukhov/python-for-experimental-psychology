@@ -221,11 +221,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Let us start by creating a variable that will hold a number that computer “picked”. Let us name it <code>number_picked</code> (you can some other meaningful name as well but it might be easier if we all stick to the same name). To make things a bit simpler at the beginning, let us assign some hard=coded arbitrary number between 1 and 10 to it (whatever you fill like). Then, let us print it out, so that we know the number ourselves (we know it now but that won’t be the case when computer will generate it randomly). Use string formatting to make things user-friendly, e.g., print out something like “The number I’ve picked is …”. Your code should be a two-liner:</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a href="seminar02.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. create variable and set it value</span></span>
 <span id="cb31-2"><a href="seminar02.html#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. print out the value</span></span></code></pre></div>
-<p><strong>Switch to exercise #1 and make sure your code works!</strong></p>
+<div class="infobox program">
+<p>Put your code into exercise #1 and make sure your code works!.</p>
+</div>
 </div>
 <div id="input-function" class="section level2" number="2.3">
 <h2><span class="header-section-number">2.3</span> Asking user for a guess (Exercise 2)</h2>
 <p>Now we need to ask the player to enter their guess. For this, we will use <a href="https://docs.python.org/3/library/functions.html#input">input([prompt])</a> function (here and below the links lead to the official documentation). It prints out <code>prompt</code> (a string) if you supplied it, reads the input (key presses) until the user presses <code>Enter</code>, and returns it <strong>as a string</strong>. For a moment, let us assume that the input is always an valid integer number (so, type only valid integers!), so we can convert it to an integer without extra checks (will add them later) and assign this value to a new variable called <code>guess</code>. Thus, you need to write a single line assignment statement with <code>guess</code> variable on the left side, whereas on the right should be a call to the <code>input(...)</code> function (think of a nice prompt message) wrapped by the type-conversion to <code>int(...)</code>. Switch to exercise 2 and, for the moment, only enter valid integers when running the code, so that the conversion works without an error.</p>
+<div class="infobox program">
+<p>Put your code into exercise #2.</p>
+</div>
 </div>
 <div id="conditional-if-statement" class="section level2" number="2.4">
 <h2><span class="header-section-number">2.4</span> Conditional <em>if</em> statement</h2>
@@ -257,14 +262,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><em>“A is greater than B”</em> and <em>“A is smaller than B”</em> are, respectively, <code>A &gt; B</code> and <code>A &lt; B</code>.</li>
 <li><em>“A is greater than or equal to B”</em> and <em>“A is smaller than or equal to B”</em> are, respectively, <code>A &gt;= B</code> and <code>A &lt;= B</code> (please note the order of symbols!).</li>
 </ul>
-<p><strong>Go to exercise #3 to solve some comparisons.</strong></p>
+<div class="infobox practice">
+<p>Go to exercise #3 to solve some comparisons.</p>
+</div>
 <p>You can <em>invert</em> the logical value using <code>not</code> operator, as <code>not True</code> is <code>False</code> and <code>not False</code> is <code>True</code>. This means that <code>A != B</code> is the same as <code>not A == B</code> and, correspondingly, <code>A == B</code> is <code>not A != B</code>. To see how that works, consider both cases when <code>A</code> is indeed equal <code>B</code> and when it is not.</p>
 <ul>
 <li>If A is equal B then <code>A == B</code> evaluates to <code>True</code>. The <code>A != B</code> is then <code>False</code>, so <code>not A != B</code> → <code>not False</code> → <code>True</code>.</li>
 <li>If A is not equal B then <code>A == B</code> evaluates to <code>False</code>. The <code>A != B</code> is then <code>True</code>, so <code>not A != B</code> → <code>not True</code> → <code>False</code>.</li>
 </ul>
-<p><strong>Go to exercise #4 to explore this inversion yourself.</strong></p>
-<p>You can also combine several comparisons using <code>and</code> and/or <code>or</code> operators. As in human language, <code>and</code> means that both parts must be true: <code>True and True</code> → <code>True</code> but <code>True and False</code> → <code>False</code>, <code>False and True</code> → <code>False</code>, and <code>False and False</code> → <code>False</code>. Same holds if you have more have than two conditions/comparisons, <strong>all</strong> of them must be true. In case of <code>or</code> only one of the statements must be true, e.g. <code>True and True</code> → <code>True</code>, <code>True and False</code> → <code>True</code>, <code>False and True</code> → <code>True</code>, but <code>False and False</code> → <code>False</code>. Again, for more than two comparisons/conditions at least one of them should be true for the entire expression to be true. <strong>Go to exercises #5 and #6.</strong></p>
+<div class="infobox practice">
+<p>Go to exercise #4 to explore this inversion yourself.</p>
+</div>
+<p>You can also combine several comparisons using <code>and</code> and/or <code>or</code> operators. As in human language, <code>and</code> means that both parts must be true: <code>True and True</code> → <code>True</code> but <code>True and False</code> → <code>False</code>, <code>False and True</code> → <code>False</code>, and <code>False and False</code> → <code>False</code>. Same holds if you have more have than two conditions/comparisons, <strong>all</strong> of them must be true. In case of <code>or</code> only one of the statements must be true, e.g. <code>True and True</code> → <code>True</code>, <code>True and False</code> → <code>True</code>, <code>False and True</code> → <code>True</code>, but <code>False and False</code> → <code>False</code>. Again, for more than two comparisons/conditions at least one of them should be true for the entire expression to be true.</p>
+<div class="infobox practice">
+<p>Do exercises #5 and #6.</p>
+</div>
 <p>Subtle but important point: conditions are evaluated from left to right until the whole expression can be definitely resolved. This means that if the first expression in a <code>and</code> pair is <code>False</code>, the second one is <strong>never evaluated</strong>. I.e., if <code>first and second</code> expressions both need to be <code>True</code> and you know that already <code>first</code> expression is false, the whole expression will be <code>False</code> in any case. This means that in the code below there will be no error, even though evaluating <code>int("e123")</code> raises <code>ValueError</code>.</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb34-1"><a href="seminar02.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="op">*</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">5</span> <span class="kw">and</span> <span class="bu">int</span>(<span class="st">&quot;e123&quot;</span>) <span class="op">==</span> <span class="dv">123</span></span></code></pre></div>
 <p>However, reverse the order, so that <code>int("e123") == 123</code> needs to be evaluated first and you get the error message</p>
@@ -275,8 +287,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>However, if the first condition is <code>False</code>, we do need to continue (and stumble into an error):</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb37-1"><a href="seminar02.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="op">*</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">5</span> <span class="kw">or</span> <span class="bu">int</span>(<span class="st">&quot;e123&quot;</span>) <span class="op">==</span> <span class="dv">123</span></span>
 <span id="cb37-2"><a href="seminar02.html#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Generates ValueError: invalid literal for int() with base 10: &#39;e123&#39;</span></span></code></pre></div>
-<p><strong>Go to exercise #7.</strong></p>
-<p>Finally, like in simple arithmetic, you can use brackets <code>()</code> to group conditions together. Thus a statement “I always eat chocolate but I eat spinach only when I am hungry” can be written as <code>food == "chocolate" or (food == "spinach" and hungry)</code>. Here, <code>the food == "chocolate"</code> and <code>food == "spinach" and hungry</code> are evaluated independently, their values are substituted in their place and then the <code>and</code> condition is evaluated. <strong>Go to exercise #8.</strong></p>
+<div class="infobox practice">
+<p>Do exercise #7.</p>
+</div>
+<p>Finally, like in simple arithmetic, you can use brackets <code>()</code> to group conditions together. Thus a statement “I always eat chocolate but I eat spinach only when I am hungry” can be written as <code>food == "chocolate" or (food == "spinach" and hungry)</code>. Here, <code>the food == "chocolate"</code> and <code>food == "spinach" and hungry</code> are evaluated independently, their values are substituted in their place and then the <code>and</code> condition is evaluated.</p>
+<div class="infobox practice">
+<p>Do exercise #8.</p>
+</div>
 </div>
 <div id="grouping-statements-via-identation-exercise-9" class="section level2" number="2.6">
 <h2><span class="header-section-number">2.6</span> Grouping statements via identation (exercise #9)</h2>
@@ -301,8 +318,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb39-14"><a href="seminar02.html#cb39-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(key) <span class="co"># (indentation of 4)</span></span>
 <span id="cb39-15"><a href="seminar02.html#cb39-15" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb39-16"><a href="seminar02.html#cb39-16" aria-hidden="true" tabindex="-1"></a><span class="co"># some statements outside of the loop (0 indentation)</span></span></code></pre></div>
-<p>Pay very close attention to the indentation as it determines which statements are executed together! <strong>Let us do exercise #9.</strong></p>
-<p>The <code>if</code> and <code>ifelse</code> statements are evaluated until one of them turns out to be <code>True</code>. After that any following <code>ifelse</code> and <code>else</code> statements are simply ignored. <strong>Do exercise #10.</strong></p>
+<p>Pay very close attention to the indentation as it determines which statements are executed together!</p>
+<div class="infobox practice">
+<p>Do exercise #9.</p>
+</div>
+<p>The <code>if</code> and <code>ifelse</code> statements are evaluated until one of them turns out to be <code>True</code>. After that any following <code>ifelse</code> and <code>else</code> statements are simply ignored.</p>
+<div class="infobox practice">
+<p>Do exercise #10.</p>
+</div>
 </div>
 <div id="checking-the-answer-exercise-11" class="section level2" number="2.7">
 <h2><span class="header-section-number">2.7</span> Checking the answer (Exercise 11)</h2>
@@ -312,12 +335,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>if the computer pick is larger than player’s guess, it will print <code>"My number is higher!"</code></li>
 <li>if two numbers are identical, it will print <code>"Spot on!"</code></li>
 </ul>
+<div class="infobox program">
+<p>Put your code into exercise #11.</p>
+</div>
 </div>
 <div id="picking-number-randomly-exercise-12" class="section level2" number="2.8">
 <h2><span class="header-section-number">2.8</span> Picking number randomly (Exercise 12)</h2>
 <p>Our game is “feature-complete”: computer picks a number, player makes a guess, computer responds appropriately. However, currently we are playing for both sides, as we hand pick the number for computer. Now, we will let computer pick this number itself using <a href="https://docs.python.org/3/library/random.html#random.randint">randint(a, b)</a> function. It is part of the <a href="https://docs.python.org/3/library/random.html">random</a> library, so you will need to <em>import</em> it first. We will talk about libraries and importing them in greater detail later. For now, it suffices that the top line of your code is</p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb40-1"><a href="seminar02.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> random <span class="im">import</span> randint</span></code></pre></div>
 <p>Function <code>randint(a, b)</code> generates a random integer on the interval <code>a..b</code>. In our case, this interval is <code>1..10</code>. Go to exercise #11. First copy-paste your solution for exercise #12. Add the <code>from random import randint</code> as the first line. Then, replace the hard-coded value you used for computer’s pick with a call to <code>randint()</code> function. Run the code several times to check that computer does pick different random values.</p>
+<div class="infobox program">
+<p>Put your code into exercise #12.</p>
+</div>
 <p>Congratulations, you just programmed your first computer game! Yes, it is very simple but it has key ingredients: a random decision by computer, user input, and feedback. Next time, you will learn about loops to allow for multiple attempts and about functions to make your code modular and reliable. In the meantime, let us solidify your knowledge by programming yet another game!</p>
 </div>
 <div id="one-armed-bandit-exercise-13" class="section level2" number="2.9">
@@ -334,6 +363,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Print nothing, if all numbers are different.</li>
 </ul></li>
 </ol>
+<div class="infobox program">
+<p>Put your code into exercise #13.</p>
+</div>
 
 </div>
 </div>

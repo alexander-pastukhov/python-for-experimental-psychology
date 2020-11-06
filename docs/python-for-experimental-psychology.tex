@@ -250,7 +250,7 @@ Variables also give you flexibility. Their values can change during the program 
 \end{Highlighting}
 \end{Shaded}
 
-As noted above, you can think about a variable as a labeled box you can store something in. That means that you can always ``throw away'' the old value and put something new. In case of variables, the ``throwing away'' part happens automatically, as the new value overwrites the old one. Check yourself, what will be final value of the variable in the code below? \textbf{Go to exercise \#1 in the notebook.}
+As noted above, you can think about a variable as a labeled box you can store something in. That means that you can always ``throw away'' the old value and put something new. In case of variables, the ``throwing away'' part happens automatically, as the new value overwrites the old one. Check yourself, what will be final value of the variable in the code below?
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -261,7 +261,9 @@ As noted above, you can think about a variable as a labeled box you can store so
 \end{Highlighting}
 \end{Shaded}
 
-As you have already seen, you can \emph{compute} a value instead of specifying it. What would be the answer here? \textbf{Do exercise \#2 in the notebook.}
+Do exercise \#1.
+
+As you have already seen, you can \emph{compute} a value instead of specifying it. What would be the answer here?
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -270,6 +272,8 @@ As you have already seen, you can \emph{compute} a value instead of specifying i
 \NormalTok{number\_of\_legs}
 \end{Highlighting}
 \end{Shaded}
+
+Do exercise \#2.
 
 \hypertarget{assignments-are-not-equations}{%
 \section{Assignments are not equations!}\label{assignments-are-not-equations}}
@@ -308,12 +312,12 @@ Then, it computes the expression on the right side and, \textbf{once the computa
 \end{Highlighting}
 \end{Shaded}
 
-Switch to the notebook and \textbf{do exercise \#3} to make sure you understand this.
+Do exercise \#3 to make sure you understand this.
 
 \hypertarget{constants}{%
 \section{Constants}\label{constants}}
 
-Although the real power of variables is that you can change their value, you should use them even if the value remains constant. There are no true constants in Python, rather the agreement is that their names should be all \texttt{UPPER\_CASE}. Accordingly, when you see \texttt{SUCH\_A\_VARIABLE} you know that you should not change its value. Technically, this is just a recommendation, as no one can stop you from modifying value of a \texttt{CONSTANT}. However, much of Python's ease-of-use comes from such ``gentlemen's agreements'' (such as \texttt{snake\_case} convention above), which you should respect. We will encounter more of them when learning about objects.
+Although the real power of variables is that you can change their value, you should use them even if the value remains constant. There are no true constants in Python, rather an agreement that their names should be all \texttt{UPPER\_CASE}. Accordingly, when you see \texttt{SUCH\_A\_VARIABLE} you know that you should not change its value. Technically, this is just a recommendation, as no one can stop you from modifying value of a \texttt{CONSTANT}. However, much of Python's ease-of-use comes from such ``gentlemen's agreements'' (such as \texttt{snake\_case} convention above), which you should respect. We will encounter more of them when learning about objects.
 
 Taking all this into account, if number of legs stays constant throughout the game, you should highlight that constancy and write
 
@@ -325,7 +329,7 @@ Taking all this into account, if number of legs stays constant throughout the ga
 
 I strongly recommend using constants and avoid hardcoding the values. First, if you have several identical values that mean different things (2 legs, 2 eyes, 2 ears, 2 vehicles per character, etc.), seeing a \texttt{2} in the code will not tell you what does this \texttt{2} mean (the legs? the ears? the score multiplier?). You can, of course, figure it out based on the code that uses this number but you could spare yourself that extra effort and use a constant instead. Then, you just read its name and the meaning of the value becomes apparent (and it is the meaning not the actual value that you are mostly interested in). Second, if you decide to \emph{change} that value (say, our main character is now a tripod), when using a constant means you have only one place to worry about, the rest of the code stays as is. If you hard-coded that number, you are in for an exciting (not really) but definitely long search-and-replace throughout the entire code.
 
-\textbf{Do exercise \#4.}
+Do exercise \#4.
 
 \hypertarget{value-types}{%
 \section{Value types}\label{value-types}}
@@ -344,7 +348,7 @@ So far, we only used integer numeric values (1, 2, 5, 1000\ldots). Although, Pyt
   logical / Boolean values that are either \texttt{True} or \texttt{False}.
 \end{itemize}
 
-When using a variable it is important that you know what type of value it stores and this is mostly on you. Python will raise an error, if you try doing a computation using incompatible. In some cases, Python will automatically convert values between certain types, e.g.~any integer value is also a real value, so conversion from \texttt{1} to \texttt{1.0} is mostly trivial and automatic. However, in other cases you may need to use explicit conversion. \textbf{Go to exercise \#5} and try guessing which code will run and which will throw an error due to incompatible types?
+When using a variable it is important that you know what type of value it stores and this is mostly on you. Python will raise an error, if you try doing a computation using incompatible. In some cases, Python will automatically convert values between certain types, e.g.~any integer value is also a real value, so conversion from \texttt{1} to \texttt{1.0} is mostly trivial and automatic. However, in other cases you may need to use explicit conversion. Go to exercise \#5 and try guessing which code will run and which will throw an error due to incompatible types?
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -356,9 +360,11 @@ When using a variable it is important that you know what type of value it stores
 \end{Highlighting}
 \end{Shaded}
 
+Do exercise \#5.
+
 Surprised by the last one? This is because internally, \texttt{True} is also \texttt{1} and \texttt{False} is \texttt{0}!
 
-You can explicitly convert from one type to another using special functions. For example, to turn a number or a logical value into a string, you simply write \texttt{str(\textless{}value\textgreater{})}. In examples below, what would be the result (\textbf{go to exercise \#6 in the notebook})?
+You can explicitly convert from one type to another using special functions. For example, to turn a number or a logical value into a string, you simply write \texttt{str(\textless{}value\textgreater{})}. In examples below, what would be the result?
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -368,7 +374,9 @@ You can explicitly convert from one type to another using special functions. For
 \end{Highlighting}
 \end{Shaded}
 
-Similarly, you can convert to a logical/Boolean variable using \texttt{bool(\textless{}value\textgreater{})} function. The rules are simple, for numeric values \texttt{0} is \texttt{False}, any other non-zero value is converted to \texttt{True}. For string, an empty string \texttt{\textquotesingle{}\textquotesingle{}} is evaluated to \texttt{False} and non-empty string is converted to \texttt{True}. What would be the output in the examples below (\textbf{go to exercise \#7 in the notebook})?
+Do exercise \#6.
+
+Similarly, you can convert to a logical/Boolean variable using \texttt{bool(\textless{}value\textgreater{})} function. The rules are simple, for numeric values \texttt{0} is \texttt{False}, any other non-zero value is converted to \texttt{True}. For string, an empty string \texttt{\textquotesingle{}\textquotesingle{}} is evaluated to \texttt{False} and non-empty string is converted to \texttt{True}. What would be the output in the examples below?
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -382,7 +390,9 @@ Similarly, you can convert to a logical/Boolean variable using \texttt{bool(\tex
 \end{Highlighting}
 \end{Shaded}
 
-Converting to integer or float numbers is trickier. The simplest case is from logical to integer/float, as \texttt{True} gives you \texttt{int(True)} is \texttt{1} and \texttt{float(True)} is \texttt{1.0} and \texttt{False} gives you \texttt{0}/\texttt{0.0}. When converting from float to integer, Python simply drops the fractional part (not rounding!). When converting a string, it must be a valid number of the corresponding type or the error is generated. E.g., you can convert a string like \texttt{"123"} to and integer or a float but this won't work for \texttt{"a123"}. Moreover, you can convert \texttt{"123.4"} to floating-point number but not to an integer, as it has fractional part in it. Given all this, which cells would work and what output would they produce (\textbf{go to exercise \#8 in the notebook})?
+Do exercise \#7.
+
+Converting to integer or float numbers is trickier. The simplest case is from logical to integer/float, as \texttt{True} gives you \texttt{int(True)} is \texttt{1} and \texttt{float(True)} is \texttt{1.0} and \texttt{False} gives you \texttt{0}/\texttt{0.0}. When converting from float to integer, Python simply drops the fractional part (not rounding!). When converting a string, it must be a valid number of the corresponding type or the error is generated. E.g., you can convert a string like \texttt{"123"} to and integer or a float but this won't work for \texttt{"a123"}. Moreover, you can convert \texttt{"123.4"} to floating-point number but not to an integer, as it has fractional part in it. Given all this, which cells would work and what output would they produce?
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -392,6 +402,8 @@ Converting to integer or float numbers is trickier. The simplest case is from lo
 \BuiltInTok{int}\NormalTok{(}\StringTok{"123+3"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+
+Do exercise \#8.
 
 \hypertarget{printing-output}{%
 \section{Printing output}\label{printing-output}}
@@ -460,7 +472,7 @@ You can also pass more than one value/variable to the print function and all the
 ## pancakes 10
 \end{verbatim}
 
-\textbf{Go to exercise \#9 and figure out what will be printed by the code below:}
+What will be printed by the code below?
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -471,6 +483,8 @@ You can also pass more than one value/variable to the print function and all the
 \BuiltInTok{print}\NormalTok{(count, dinner, count, desert)}
 \end{Highlighting}
 \end{Shaded}
+
+Do exercise \#9.
 
 However, you probably would want to be more explicit, when you print out the information. For example, imagine you have these three variables:
 
@@ -517,7 +531,7 @@ Here is an example of formatting a string using an integer:
 ## I had 10 pancakes for breakfast
 \end{verbatim}
 
-You are not limited to a single value that you can put into a string. You can specify more locations via \texttt{\%} but you must make sure that you pass the right number of values. Before running it, can you figure out which call will actually work (and what will be the output ) and which will produce an error? \textbf{Go to exercise \#10.}
+You are not limited to a single value that you can put into a string. You can specify more locations via \texttt{\%} but you must make sure that you pass the right number of values. Before running it, can you figure out which call will actually work (and what will be the output ) and which will produce an error?
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -527,7 +541,11 @@ You are not limited to a single value that you can put into a string. You can sp
 \end{Highlighting}
 \end{Shaded}
 
-In case of real values you have two options: \texttt{\%f} and \texttt{\%g}. The latter uses scientific notation (e.g.~\texttt{1e10} for \texttt{10000000000}) to make a representation more compact. To get a better feeling for the difference \textbf{do exercise \#11}.
+Do exercise \#10.
+
+In case of real values you have two options: \texttt{\%f} and \texttt{\%g}. The latter uses scientific notation (e.g.~\texttt{1e10} for \texttt{10000000000}) to make a representation more compact.
+
+Do exercise \#11 to get a better feeling for the difference.
 
 These is much more to formatting and you can read about it at \href{https://pyformat.info/}{pyformat.info}. However, these basics are sufficient for us to start programming our first game during the next seminar. Don't forget to submit your exercise notebook and see you next time!
 
@@ -565,12 +583,14 @@ Let us start by creating a variable that will hold a number that computer ``pick
 \end{Highlighting}
 \end{Shaded}
 
-\textbf{Switch to exercise \#1 and make sure your code works!}
+Put your code into exercise \#1 and make sure your code works!.
 
 \hypertarget{input-function}{%
 \section{Asking user for a guess (Exercise 2)}\label{input-function}}
 
 Now we need to ask the player to enter their guess. For this, we will use \href{https://docs.python.org/3/library/functions.html\#input}{input({[}prompt{]})} function (here and below the links lead to the official documentation). It prints out \texttt{prompt} (a string) if you supplied it, reads the input (key presses) until the user presses \texttt{Enter}, and returns it \textbf{as a string}. For a moment, let us assume that the input is always an valid integer number (so, type only valid integers!), so we can convert it to an integer without extra checks (will add them later) and assign this value to a new variable called \texttt{guess}. Thus, you need to write a single line assignment statement with \texttt{guess} variable on the left side, whereas on the right should be a call to the \texttt{input(...)} function (think of a nice prompt message) wrapped by the type-conversion to \texttt{int(...)}. Switch to exercise 2 and, for the moment, only enter valid integers when running the code, so that the conversion works without an error.
+
+Put your code into exercise \#2.
 
 \hypertarget{conditional-if-statement}{%
 \section{\texorpdfstring{Conditional \emph{if} statement}{Conditional if statement}}\label{conditional-if-statement}}
@@ -624,7 +644,7 @@ For the comparison, you can use the following operators:
   \emph{``A is greater than or equal to B''} and \emph{``A is smaller than or equal to B''} are, respectively, \texttt{A\ \textgreater{}=\ B} and \texttt{A\ \textless{}=\ B} (please note the order of symbols!).
 \end{itemize}
 
-\textbf{Go to exercise \#3 to solve some comparisons.}
+Go to exercise \#3 to solve some comparisons.
 
 You can \emph{invert} the logical value using \texttt{not} operator, as \texttt{not\ True} is \texttt{False} and \texttt{not\ False} is \texttt{True}. This means that \texttt{A\ !=\ B} is the same as \texttt{not\ A\ ==\ B} and, correspondingly, \texttt{A\ ==\ B} is \texttt{not\ A\ !=\ B}. To see how that works, consider both cases when \texttt{A} is indeed equal \texttt{B} and when it is not.
 
@@ -636,9 +656,11 @@ You can \emph{invert} the logical value using \texttt{not} operator, as \texttt{
   If A is not equal B then \texttt{A\ ==\ B} evaluates to \texttt{False}. The \texttt{A\ !=\ B} is then \texttt{True}, so \texttt{not\ A\ !=\ B} → \texttt{not\ True} → \texttt{False}.
 \end{itemize}
 
-\textbf{Go to exercise \#4 to explore this inversion yourself.}
+Go to exercise \#4 to explore this inversion yourself.
 
-You can also combine several comparisons using \texttt{and} and/or \texttt{or} operators. As in human language, \texttt{and} means that both parts must be true: \texttt{True\ and\ True} → \texttt{True} but \texttt{True\ and\ False} → \texttt{False}, \texttt{False\ and\ True} → \texttt{False}, and \texttt{False\ and\ False} → \texttt{False}. Same holds if you have more have than two conditions/comparisons, \textbf{all} of them must be true. In case of \texttt{or} only one of the statements must be true, e.g.~\texttt{True\ and\ True} → \texttt{True}, \texttt{True\ and\ False} → \texttt{True}, \texttt{False\ and\ True} → \texttt{True}, but \texttt{False\ and\ False} → \texttt{False}. Again, for more than two comparisons/conditions at least one of them should be true for the entire expression to be true. \textbf{Go to exercises \#5 and \#6.}
+You can also combine several comparisons using \texttt{and} and/or \texttt{or} operators. As in human language, \texttt{and} means that both parts must be true: \texttt{True\ and\ True} → \texttt{True} but \texttt{True\ and\ False} → \texttt{False}, \texttt{False\ and\ True} → \texttt{False}, and \texttt{False\ and\ False} → \texttt{False}. Same holds if you have more have than two conditions/comparisons, \textbf{all} of them must be true. In case of \texttt{or} only one of the statements must be true, e.g.~\texttt{True\ and\ True} → \texttt{True}, \texttt{True\ and\ False} → \texttt{True}, \texttt{False\ and\ True} → \texttt{True}, but \texttt{False\ and\ False} → \texttt{False}. Again, for more than two comparisons/conditions at least one of them should be true for the entire expression to be true.
+
+Do exercises \#5 and \#6.
 
 Subtle but important point: conditions are evaluated from left to right until the whole expression can be definitely resolved. This means that if the first expression in a \texttt{and} pair is \texttt{False}, the second one is \textbf{never evaluated}. I.e., if \texttt{first\ and\ second} expressions both need to be \texttt{True} and you know that already \texttt{first} expression is false, the whole expression will be \texttt{False} in any case. This means that in the code below there will be no error, even though evaluating \texttt{int("e123")} raises \texttt{ValueError}.
 
@@ -674,9 +696,11 @@ However, if the first condition is \texttt{False}, we do need to continue (and s
 \end{Highlighting}
 \end{Shaded}
 
-\textbf{Go to exercise \#7.}
+Do exercise \#7.
 
-Finally, like in simple arithmetic, you can use brackets \texttt{()} to group conditions together. Thus a statement ``I always eat chocolate but I eat spinach only when I am hungry'' can be written as \texttt{food\ ==\ "chocolate"\ or\ (food\ ==\ "spinach"\ and\ hungry)}. Here, \texttt{the\ food\ ==\ "chocolate"} and \texttt{food\ ==\ "spinach"\ and\ hungry} are evaluated independently, their values are substituted in their place and then the \texttt{and} condition is evaluated. \textbf{Go to exercise \#8.}
+Finally, like in simple arithmetic, you can use brackets \texttt{()} to group conditions together. Thus a statement ``I always eat chocolate but I eat spinach only when I am hungry'' can be written as \texttt{food\ ==\ "chocolate"\ or\ (food\ ==\ "spinach"\ and\ hungry)}. Here, \texttt{the\ food\ ==\ "chocolate"} and \texttt{food\ ==\ "spinach"\ and\ hungry} are evaluated independently, their values are substituted in their place and then the \texttt{and} condition is evaluated.
+
+Do exercise \#8.
 
 \hypertarget{grouping-statements-via-identation-exercise-9}{%
 \section{Grouping statements via identation (exercise \#9)}\label{grouping-statements-via-identation-exercise-9}}
@@ -714,9 +738,13 @@ Both statements \#1 and \#2 appear after the if-statement, so how does Python no
 \end{Highlighting}
 \end{Shaded}
 
-Pay very close attention to the indentation as it determines which statements are executed together! \textbf{Let us do exercise \#9.}
+Pay very close attention to the indentation as it determines which statements are executed together!
 
-The \texttt{if} and \texttt{ifelse} statements are evaluated until one of them turns out to be \texttt{True}. After that any following \texttt{ifelse} and \texttt{else} statements are simply ignored. \textbf{Do exercise \#10.}
+Do exercise \#9.
+
+The \texttt{if} and \texttt{ifelse} statements are evaluated until one of them turns out to be \texttt{True}. After that any following \texttt{ifelse} and \texttt{else} statements are simply ignored.
+
+Do exercise \#10.
 
 \hypertarget{checking-the-answer-exercise-11}{%
 \section{Checking the answer (Exercise 11)}\label{checking-the-answer-exercise-11}}
@@ -733,6 +761,8 @@ Now you have all necessary instruments to finish the first version of our game. 
   if two numbers are identical, it will print \texttt{"Spot\ on!"}
 \end{itemize}
 
+Put your code into exercise \#11.
+
 \hypertarget{picking-number-randomly-exercise-12}{%
 \section{Picking number randomly (Exercise 12)}\label{picking-number-randomly-exercise-12}}
 
@@ -745,6 +775,8 @@ Our game is ``feature-complete'': computer picks a number, player makes a guess,
 \end{Shaded}
 
 Function \texttt{randint(a,\ b)} generates a random integer on the interval \texttt{a..b}. In our case, this interval is \texttt{1..10}. Go to exercise \#11. First copy-paste your solution for exercise \#12. Add the \texttt{from\ random\ import\ randint} as the first line. Then, replace the hard-coded value you used for computer's pick with a call to \texttt{randint()} function. Run the code several times to check that computer does pick different random values.
+
+Put your code into exercise \#12.
 
 Congratulations, you just programmed your first computer game! Yes, it is very simple but it has key ingredients: a random decision by computer, user input, and feedback. Next time, you will learn about loops to allow for multiple attempts and about functions to make your code modular and reliable. In the meantime, let us solidify your knowledge by programming yet another game!
 
@@ -776,6 +808,8 @@ You know everything you need to program a simple version of an ``one-armed bandi
   \end{itemize}
 \end{enumerate}
 
+Put your code into exercise \#13.
+
 \hypertarget{seminar03}{%
 \chapter{Guess the Number, the Sequel}\label{seminar03}}
 
@@ -803,7 +837,7 @@ The basic structure of a \emph{while} loop is
 
 The \texttt{\textless{}condition\textgreater{}} here is any expression that is evaluated to be either \texttt{True} or \texttt{False}, just like in an \emph{if-elif-else} conditional statement.
 
-\textbf{Do exercise \#1}
+Do exercise \#1.
 
 Let us use \emph{while} loop, so that the player keeps guessing until finally getting it right. You can copy-paste the code you programmed during the last seminar or could redo it from scratch (I would strongly recommend you doing the latter!). The overall program structure should be the following
 
@@ -822,28 +856,44 @@ Let us use \emph{while} loop, so that the player keeps guessing until finally ge
 \end{Highlighting}
 \end{Shaded}
 
-\textbf{Put your code into exercise \#2}
+Put your code into exercise \#2.
 
 \hypertarget{counting-attempts-exercise-3}{%
 \section{Counting attempts (Exercise \#3)}\label{counting-attempts-exercise-3}}
 
 Now let us add a variable that will count the total number of attempts the player required. For this, create a new variable (call it \texttt{attempts} or something similar) \emph{before the loop} and initialize it \texttt{0}. Add \texttt{1} to it every time the player inputs the guess. After the loop, expand the \texttt{"Spot\ on!"} message you print out by adding information about the attempts count. Use string formatting to make things look nice, e.g.~\texttt{"Spot\ on,\ you\ needed\ 5\ attempts"}.
 
-\textbf{Put your code into exercise \#3}
+Put your code into exercise \#3.
 
 \hypertarget{breaking-and-exiting-exercise-4}{%
 \section{Breaking (and exiting, Exercise \#4)}\label{breaking-and-exiting-exercise-4}}
 
-\emph{While} loop is continuously executed while the condition is \texttt{True} and, importantly, all code inside is executed before the condition is evaluated again. However, sometimes you may need to abort sooner without executing the remaining code. For this, Python gives you a \texttt{break} statement that causes the program to exit the loop (of \texttt{if-elif-else} statement) immediately and to continue with the code after the loop.
+\emph{While} loop is continuously executed while the condition is \texttt{True} and, importantly, all code inside is executed before the condition is evaluated again. However, sometimes you may need to abort sooner without executing the remaining code. For this, Python gives you a \texttt{break} statement that causes the program to exit the loop immediately and to continue with the code after the loop.
 
-\textbf{Do exercise \#4 to build the intuition.}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# this code runs before the loop}
+
+\ControlFlowTok{while} \OperatorTok{\textless{}}\NormalTok{somecondition}\OperatorTok{\textgreater{}}\NormalTok{:}
+  \CommentTok{\# this code runs on every iteration}
+  
+    \ControlFlowTok{if} \OperatorTok{\textless{}}\NormalTok{someothercondition}\OperatorTok{\textgreater{}}\NormalTok{:}
+        \ControlFlowTok{break}
+  
+  \CommentTok{\# this code runs on every iteration but not when you break out of the loop}
+
+\CommentTok{\# this code runs after the loop}
+\end{Highlighting}
+\end{Shaded}
+
+Do exercise \#4 to build the intuition.
 
 \hypertarget{limiting-number-of-attempts-via-break-exercise-5}{%
 \section{Limiting number of attempts via break (Exercise 5)}\label{limiting-number-of-attempts-via-break-exercise-5}}
 
 Let's put the player under some pressure! Decide on maximal number of attempts allowed and stores in a constant. Pick an appropriate name (e.g.~\texttt{MAX\_ATTEMPTS}) and REMEMBER, ALL CAPITAL LETTERS for a constant name! Now, use \texttt{break} to quit the \texttt{while} loop, if current attempt number is greater than \texttt{MAX\_ATTEMPTS}.
 
-\textbf{Put your code into exercise \#5}
+Put your code into exercise \#5.
 
 \hypertarget{correct-end-of-game-message-exercise-6}{%
 \section{Correct end-of-game message (Exercise 6)}\label{correct-end-of-game-message-exercise-6}}
@@ -861,21 +911,21 @@ Think about the final message. Currently it says ``Spot on\ldots{}'' because we 
 
 Use \texttt{if-else} conditional statement to print out an appropriate message (e.g., \texttt{"Better\ luck\ next\ time!}, if the player lost).
 
-\textbf{Put your code into exercise \#6}
+Put your code into exercise \#6.
 
 \hypertarget{limiting-number-of-attempts-with-a-break-exercise-7}{%
 \section{Limiting number of attempts with a break (Exercise 7)}\label{limiting-number-of-attempts-with-a-break-exercise-7}}
 
 Modify your code to work without \texttt{break} statement. Modify your condition so that loop repeats while player's guess is incorrect and the number of attempts is still less than the maximally allowed.
 
-\textbf{Put your code into exercise \#7}
+Put your code into exercise \#7.
 
 \hypertarget{show-remaining-attempts-exercise-8}{%
 \section{Show remaining attempts (Exercise 8)}\label{show-remaining-attempts-exercise-8}}
 
 Modify the \texttt{input} prompt message to include number of \emph{remaining} attempts. E.g. \texttt{"Please\ enter\ the\ guess,\ you\ have\ X\ attempts\ remaining"}.
 
-\textbf{Put your code into exercise \#8}
+Put your code into exercise \#8.
 
 \hypertarget{repeating-the-game-exercise-9}{%
 \section{Repeating the game (Exercise 9)}\label{repeating-the-game-exercise-9}}
@@ -901,21 +951,21 @@ Let us an option for the player to play again. This means putting \emph{all} the
 
 \textbf{Pay extra attention to indentation to group the code properly!}
 
-\textbf{Put your code into exercise \#9}
+Put your code into exercise \#9.
 
 \hypertarget{best-score-exercise-10}{%
 \section{Best score (Exercise 10)}\label{best-score-exercise-10}}
 
 A ``proper'' game typically keeps the track of players' performance. Let us record what was the fewest number of attempts that the player needed to guess the number. For this, create a new variable \texttt{fewest\_attempts} and set it to \texttt{MAX\_ATTEMPTS} (this is as bad as the player can be). Think, where do you need to create it? Once a game round is over and you know how many attempts the player required, update it if the number of attempts that the player used was \emph{less} than the current value. You can add the information about ``Best so far'' into the game-round-over message.
 
-\textbf{Put your code into exercise \#10}
+Put your code into exercise \#10.
 
 \hypertarget{counting-game-rounds-exercise-11}{%
 \section{Counting game rounds (Exercise 11)}\label{counting-game-rounds-exercise-11}}
 
 Let us count how many rounds the player played. The idea and implementation is the same as with counting the attempts. Create a new variable, initialize it to 0, increment by 1 whenever a new round starts. Include the total number of rounds into the very final message, e.g.~``Thank you for playing the game X times!''
 
-\textbf{Put your code into exercise \#11}
+Put your code into exercise \#11.
 
 \hypertarget{wrap-up}{%
 \section{Wrap up}\label{wrap-up}}

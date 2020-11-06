@@ -231,15 +231,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-7"><a href="seminar01.html#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-8"><a href="seminar01.html#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># the same code still works and we still can compute the correct number of pairs of shoes</span></span>
 <span id="cb3-9"><a href="seminar01.html#cb3-9" aria-hidden="true" tabindex="-1"></a>pairs_of_shoes <span class="op">=</span> number_of_legs <span class="op">/</span> <span class="dv">2</span></span></code></pre></div>
-<p>As noted above, you can think about a variable as a labeled box you can store something in. That means that you can always “throw away” the old value and put something new. In case of variables, the “throwing away” part happens automatically, as the new value overwrites the old one. Check yourself, what will be final value of the variable in the code below? <strong>Go to exercise #1 in the notebook.</strong></p>
+<p>As noted above, you can think about a variable as a labeled box you can store something in. That means that you can always “throw away” the old value and put something new. In case of variables, the “throwing away” part happens automatically, as the new value overwrites the old one. Check yourself, what will be final value of the variable in the code below?</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="seminar01.html#cb4-1" aria-hidden="true" tabindex="-1"></a>number_of_legs <span class="op">=</span> <span class="dv">2</span></span>
 <span id="cb4-2"><a href="seminar01.html#cb4-2" aria-hidden="true" tabindex="-1"></a>number_of_legs <span class="op">=</span> <span class="dv">5</span></span>
 <span id="cb4-3"><a href="seminar01.html#cb4-3" aria-hidden="true" tabindex="-1"></a>number_of_legs <span class="op">=</span> <span class="dv">1</span></span>
 <span id="cb4-4"><a href="seminar01.html#cb4-4" aria-hidden="true" tabindex="-1"></a>number_of_legs</span></code></pre></div>
-<p>As you have already seen, you can <em>compute</em> a value instead of specifying it. What would be the answer here? <strong>Do exercise #2 in the notebook.</strong></p>
+<div class="infobox practice">
+<p>Do exercise #1.</p>
+</div>
+<p>As you have already seen, you can <em>compute</em> a value instead of specifying it. What would be the answer here?</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="seminar01.html#cb5-1" aria-hidden="true" tabindex="-1"></a>number_of_legs <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> <span class="dv">2</span></span>
 <span id="cb5-2"><a href="seminar01.html#cb5-2" aria-hidden="true" tabindex="-1"></a>number_of_legs <span class="op">=</span> <span class="dv">7</span> <span class="op">-</span> <span class="dv">2</span></span>
 <span id="cb5-3"><a href="seminar01.html#cb5-3" aria-hidden="true" tabindex="-1"></a>number_of_legs</span></code></pre></div>
+<div class="infobox practice">
+<p>Do exercise #2.</p>
+</div>
 </div>
 <div id="assignments-are-not-equations" class="section level2" number="1.2">
 <h2><span class="header-section-number">1.2</span> Assignments are not equations!</h2>
@@ -253,15 +259,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="seminar01.html#cb8-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">5</span> <span class="op">-</span> <span class="dv">4</span></span></code></pre></div>
 <p>Then, it computes the expression on the right side and, <strong>once the computation is completed</strong>, stores that new value in <code>x</code></p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="seminar01.html#cb9-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">3</span></span></code></pre></div>
-<p>Switch to the notebook and <strong>do exercise #3</strong> to make sure you understand this.</p>
+<div class="infobox practice">
+<p>Do exercise #3 to make sure you understand this.</p>
+</div>
 </div>
 <div id="constants" class="section level2" number="1.3">
 <h2><span class="header-section-number">1.3</span> Constants</h2>
-<p>Although the real power of variables is that you can change their value, you should use them even if the value remains constant. There are no true constants in Python, rather the agreement is that their names should be all <code>UPPER_CASE</code>. Accordingly, when you see <code>SUCH_A_VARIABLE</code> you know that you should not change its value. Technically, this is just a recommendation, as no one can stop you from modifying value of a <code>CONSTANT</code>. However, much of Python’s ease-of-use comes from such “gentlemen’s agreements” (such as <code>snake_case</code> convention above), which you should respect. We will encounter more of them when learning about objects.</p>
+<p>Although the real power of variables is that you can change their value, you should use them even if the value remains constant. There are no true constants in Python, rather an agreement that their names should be all <code>UPPER_CASE</code>. Accordingly, when you see <code>SUCH_A_VARIABLE</code> you know that you should not change its value. Technically, this is just a recommendation, as no one can stop you from modifying value of a <code>CONSTANT</code>. However, much of Python’s ease-of-use comes from such “gentlemen’s agreements” (such as <code>snake_case</code> convention above), which you should respect. We will encounter more of them when learning about objects.</p>
 <p>Taking all this into account, if number of legs stays constant throughout the game, you should highlight that constancy and write</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="seminar01.html#cb10-1" aria-hidden="true" tabindex="-1"></a>NUMBER_OF_LEGS <span class="op">=</span> <span class="dv">2</span></span></code></pre></div>
 <p>I strongly recommend using constants and avoid hardcoding the values. First, if you have several identical values that mean different things (2 legs, 2 eyes, 2 ears, 2 vehicles per character, etc.), seeing a <code>2</code> in the code will not tell you what does this <code>2</code> mean (the legs? the ears? the score multiplier?). You can, of course, figure it out based on the code that uses this number but you could spare yourself that extra effort and use a constant instead. Then, you just read its name and the meaning of the value becomes apparent (and it is the meaning not the actual value that you are mostly interested in). Second, if you decide to <em>change</em> that value (say, our main character is now a tripod), when using a constant means you have only one place to worry about, the rest of the code stays as is. If you hard-coded that number, you are in for an exciting (not really) but definitely long search-and-replace throughout the entire code.</p>
-<p><strong>Do exercise #4.</strong></p>
+<div class="infobox practice">
+<p>Do exercise #4.</p>
+</div>
 </div>
 <div id="value-types" class="section level2" number="1.4">
 <h2><span class="header-section-number">1.4</span> Value types</h2>
@@ -272,18 +282,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>strings that can store text. The text is enclosed between either paired quotes <code>"some text"</code> or apostrophes <code>'some text'</code>. This means that you can use quotes or apostrophes inside the string, as long as its is enclosed by the alternative. E.g., <code>"students' homework"</code> (enclosed in <code>"</code>, apostrophe <code>'</code> inside) or <code>'"All generalizations are false, including this one." Mark Twain'</code> (quotation enclosed by apostrophes). There is much much more to strings and we will cover that material throughout the course.</li>
 <li>logical / Boolean values that are either <code>True</code> or <code>False</code>.</li>
 </ul>
-<p>When using a variable it is important that you know what type of value it stores and this is mostly on you. Python will raise an error, if you try doing a computation using incompatible. In some cases, Python will automatically convert values between certain types, e.g. any integer value is also a real value, so conversion from <code>1</code> to <code>1.0</code> is mostly trivial and automatic. However, in other cases you may need to use explicit conversion. <strong>Go to exercise #5</strong> and try guessing which code will run and which will throw an error due to incompatible types?</p>
+<p>When using a variable it is important that you know what type of value it stores and this is mostly on you. Python will raise an error, if you try doing a computation using incompatible. In some cases, Python will automatically convert values between certain types, e.g. any integer value is also a real value, so conversion from <code>1</code> to <code>1.0</code> is mostly trivial and automatic. However, in other cases you may need to use explicit conversion. Go to exercise #5 and try guessing which code will run and which will throw an error due to incompatible types?</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="seminar01.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> <span class="op">+</span> <span class="fl">2.0</span></span>
 <span id="cb11-2"><a href="seminar01.html#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">&#39;5&#39;</span> <span class="op">+</span> <span class="dv">2</span></span>
 <span id="cb11-3"><a href="seminar01.html#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">&#39;5&#39;</span> <span class="op">+</span> <span class="st">&#39;2&#39;</span></span>
 <span id="cb11-4"><a href="seminar01.html#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">&#39;5&#39;</span> <span class="op">+</span> <span class="va">True</span></span>
 <span id="cb11-5"><a href="seminar01.html#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> <span class="op">+</span> <span class="va">True</span></span></code></pre></div>
+<div class="infobox practice">
+<p>Do exercise #5.</p>
+</div>
 <p>Surprised by the last one? This is because internally, <code>True</code> is also <code>1</code> and <code>False</code> is <code>0</code>!</p>
-<p>You can explicitly convert from one type to another using special functions. For example, to turn a number or a logical value into a string, you simply write <code>str(&lt;value&gt;)</code>. In examples below, what would be the result (<strong>go to exercise #6 in the notebook</strong>)?</p>
+<p>You can explicitly convert from one type to another using special functions. For example, to turn a number or a logical value into a string, you simply write <code>str(&lt;value&gt;)</code>. In examples below, what would be the result?</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="seminar01.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">str</span>(<span class="dv">10</span> <span class="op">/</span> <span class="dv">2</span>)</span>
 <span id="cb12-2"><a href="seminar01.html#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">str</span>(<span class="fl">2.5</span> <span class="op">+</span> <span class="va">True</span>)</span>
 <span id="cb12-3"><a href="seminar01.html#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="bu">str</span>(<span class="va">True</span>)</span></code></pre></div>
-<p>Similarly, you can convert to a logical/Boolean variable using <code>bool(&lt;value&gt;)</code> function. The rules are simple, for numeric values <code>0</code> is <code>False</code>, any other non-zero value is converted to <code>True</code>. For string, an empty string <code>''</code> is evaluated to <code>False</code> and non-empty string is converted to <code>True</code>. What would be the output in the examples below (<strong>go to exercise #7 in the notebook</strong>)?</p>
+<div class="infobox practice">
+<p>Do exercise #6.</p>
+</div>
+<p>Similarly, you can convert to a logical/Boolean variable using <code>bool(&lt;value&gt;)</code> function. The rules are simple, for numeric values <code>0</code> is <code>False</code>, any other non-zero value is converted to <code>True</code>. For string, an empty string <code>''</code> is evaluated to <code>False</code> and non-empty string is converted to <code>True</code>. What would be the output in the examples below?</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="seminar01.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">bool</span>(<span class="op">-</span><span class="dv">10</span>)</span>
 <span id="cb13-2"><a href="seminar01.html#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">bool</span>(<span class="fl">0.0</span>)</span>
 <span id="cb13-3"><a href="seminar01.html#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -291,11 +307,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb13-5"><a href="seminar01.html#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="bu">bool</span>(secret_message)</span>
 <span id="cb13-6"><a href="seminar01.html#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-7"><a href="seminar01.html#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="bu">bool</span>(<span class="st">&#39;False&#39;</span>)</span></code></pre></div>
-<p>Converting to integer or float numbers is trickier. The simplest case is from logical to integer/float, as <code>True</code> gives you <code>int(True)</code> is <code>1</code> and <code>float(True)</code> is <code>1.0</code> and <code>False</code> gives you <code>0</code>/<code>0.0</code>. When converting from float to integer, Python simply drops the fractional part (not rounding!). When converting a string, it must be a valid number of the corresponding type or the error is generated. E.g., you can convert a string like <code>"123"</code> to and integer or a float but this won’t work for <code>"a123"</code>. Moreover, you can convert <code>"123.4"</code> to floating-point number but not to an integer, as it has fractional part in it. Given all this, which cells would work and what output would they produce (<strong>go to exercise #8 in the notebook</strong>)?</p>
+<div class="infobox practice">
+<p>Do exercise #7.</p>
+</div>
+<p>Converting to integer or float numbers is trickier. The simplest case is from logical to integer/float, as <code>True</code> gives you <code>int(True)</code> is <code>1</code> and <code>float(True)</code> is <code>1.0</code> and <code>False</code> gives you <code>0</code>/<code>0.0</code>. When converting from float to integer, Python simply drops the fractional part (not rounding!). When converting a string, it must be a valid number of the corresponding type or the error is generated. E.g., you can convert a string like <code>"123"</code> to and integer or a float but this won’t work for <code>"a123"</code>. Moreover, you can convert <code>"123.4"</code> to floating-point number but not to an integer, as it has fractional part in it. Given all this, which cells would work and what output would they produce?</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="seminar01.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="bu">float</span>(<span class="va">False</span>)</span>
 <span id="cb14-2"><a href="seminar01.html#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="bu">int</span>(<span class="op">-</span><span class="fl">3.3</span>)</span>
 <span id="cb14-3"><a href="seminar01.html#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="bu">float</span>(<span class="st">&quot;67.8&quot;</span>)</span>
 <span id="cb14-4"><a href="seminar01.html#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="bu">int</span>(<span class="st">&quot;123+3&quot;</span>)</span></code></pre></div>
+<div class="infobox practice">
+<p>Do exercise #8.</p>
+</div>
 </div>
 <div id="printing-output" class="section level2" number="1.5">
 <h2><span class="header-section-number">1.5</span> Printing output</h2>
@@ -318,12 +340,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb23-2"><a href="seminar01.html#cb23-2" aria-hidden="true" tabindex="-1"></a>number_of_items <span class="op">=</span> <span class="dv">10</span></span>
 <span id="cb23-3"><a href="seminar01.html#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(breakfast, number_of_items)</span></code></pre></div>
 <pre><code>## pancakes 10</code></pre>
-<p><strong>Go to exercise #9 and figure out what will be printed by the code below:</strong></p>
+<p>What will be printed by the code below?</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="seminar01.html#cb25-1" aria-hidden="true" tabindex="-1"></a>dinner <span class="op">=</span> <span class="st">&quot;stake&quot;</span></span>
 <span id="cb25-2"><a href="seminar01.html#cb25-2" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> <span class="dv">4</span></span>
 <span id="cb25-3"><a href="seminar01.html#cb25-3" aria-hidden="true" tabindex="-1"></a>desert <span class="op">=</span> <span class="st">&quot;cupcakes&quot;</span></span>
 <span id="cb25-4"><a href="seminar01.html#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-5"><a href="seminar01.html#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(count, dinner, count, desert)</span></code></pre></div>
+<div class="infobox practice">
+<p>Do exercise #9.</p>
+</div>
 <p>However, you probably would want to be more explicit, when you print out the information. For example, imagine you have these three variables:</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="seminar01.html#cb26-1" aria-hidden="true" tabindex="-1"></a>meal <span class="op">=</span> <span class="st">&quot;breakfast&quot;</span></span>
 <span id="cb26-2"><a href="seminar01.html#cb26-2" aria-hidden="true" tabindex="-1"></a>dish <span class="op">=</span> <span class="st">&quot;pancakes&quot;</span></span>
@@ -344,11 +369,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Here is an example of formatting a string using an integer:</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="seminar01.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;I had </span><span class="sc">%d</span><span class="st"> pancakes for breakfast&quot;</span><span class="op">%</span>(<span class="dv">10</span>))</span></code></pre></div>
 <pre><code>## I had 10 pancakes for breakfast</code></pre>
-<p>You are not limited to a single value that you can put into a string. You can specify more locations via <code>%</code> but you must make sure that you pass the right number of values. Before running it, can you figure out which call will actually work (and what will be the output ) and which will produce an error? <strong>Go to exercise #10.</strong></p>
+<p>You are not limited to a single value that you can put into a string. You can specify more locations via <code>%</code> but you must make sure that you pass the right number of values. Before running it, can you figure out which call will actually work (and what will be the output ) and which will produce an error?</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb29-1"><a href="seminar01.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;I had </span><span class="sc">%d</span><span class="st"> pancakes and either </span><span class="sc">%d</span><span class="st">  or </span><span class="sc">%d</span><span class="st"> stakes for dinner&#39;</span><span class="op">%</span>(<span class="dv">2</span>))</span>
 <span id="cb29-2"><a href="seminar01.html#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;I had </span><span class="sc">%d</span><span class="st"> pancakes and </span><span class="sc">%d</span><span class="st"> stakes for dinner&#39;</span><span class="op">%</span>(<span class="dv">7</span>, <span class="dv">10</span>))</span>
 <span id="cb29-3"><a href="seminar01.html#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;I had </span><span class="sc">%d</span><span class="st"> pancakes and </span><span class="sc">%d</span><span class="st"> stakes for dinner&#39;</span><span class="op">%</span>(<span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">10</span>))</span></code></pre></div>
-<p>In case of real values you have two options: <code>%f</code> and <code>%g</code>. The latter uses scientific notation (e.g. <code>1e10</code> for <code>10000000000</code>) to make a representation more compact. To get a better feeling for the difference <strong>do exercise #11</strong>.</p>
+<div class="infobox practice">
+<p>Do exercise #10.</p>
+</div>
+<p>In case of real values you have two options: <code>%f</code> and <code>%g</code>. The latter uses scientific notation (e.g. <code>1e10</code> for <code>10000000000</code>) to make a representation more compact.</p>
+<div class="infobox practice">
+<p>Do exercise #11 to get a better feeling for the difference.</p>
+</div>
 <p>These is much more to formatting and you can read about it at <a href="https://pyformat.info/">pyformat.info</a>. However, these basics are sufficient for us to start programming our first game during the next seminar. Don’t forget to submit your exercise notebook and see you next time!</p>
 
 </div>
