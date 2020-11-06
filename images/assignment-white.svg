@@ -13,7 +13,10 @@
    version="1.1"
    id="svg6"
    sodipodi:docname="assignment-white.svg"
-   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)">
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+   inkscape:export-filename="C:\Users\pastu\Teaching\python-for-experimental-psychology\images\assignment-white.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
   <metadata
      id="metadata12">
     <rdf:RDF>
@@ -41,19 +44,28 @@
      inkscape:window-height="1017"
      id="namedview8"
      showgrid="false"
-     inkscape:zoom="35.416667"
-     inkscape:cx="9"
-     inkscape:cy="11"
+     inkscape:zoom="12.521683"
+     inkscape:cx="-25.436714"
+     inkscape:cy="16.591165"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg6"
+     inkscape:current-layer="g24"
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0" />
-  <path
-     d="M 16,2 H 11.82 C 11.4,0.84 10.3,0 9,0 7.7,0 6.6,0.84 6.18,2 H 2 C 0.9,2 0,2.9 0,4 v 14 c 0,1.1 0.9,2 2,2 h 14 c 1.1,0 2,-0.9 2,-2 V 4 C 18,2.9 17.1,2 16,2 Z M 9,2 C 9.55,2 10,2.45 10,3 10,3.55 9.55,4 9,4 8.45,4 8,3.55 8,3 8,2.45 8.45,2 9,2 Z M 7,16 3,12 4.41,10.59 7,13.17 13.59,6.58 15,8 Z"
-     id="path4"
-     style="fill:#ffffff" />
+  <g
+     id="g24"
+     transform="translate(26.908121,-9.9444848)">
+    <path
+       d="m -10.908121,11.944485 h -4.18 c -0.42,-1.16 -1.52,-2.0000002 -2.82,-2.0000002 -1.3,0 -2.4,0.8400002 -2.82,2.0000002 h -4.18 c -1.1,0 -2,0.9 -2,2 v 14 c 0,1.1 0.9,2 2,2 h 14 c 1.1,0 2,-0.9 2,-2 v -14 c 0,-1.1 -0.9,-2 -2,-2 z"
+       id="path18"
+       sodipodi:nodetypes="scscssssssss"
+       style="fill:#ffffff" />
+    <path
+       id="path14"
+       style="fill:#214868;fill-opacity:1"
+       d="m -17.908203,11.945312 c -0.55,0 -1,0.45 -1,1 0,0.55 0.45,1 1,1 0.55,0 1,-0.449999 1,-1 0,-0.549999 -0.45,-1 -1,-1 z m 4.589844,4.580079 -6.589844,6.589843 -2.589844,-2.580078 -1.410156,1.410156 4,4 8,-8 z" />
+  </g>
 </svg>
