@@ -42,8 +42,7 @@ number_of_legs = 8
 pairs_of_shoes = number_of_legs / 2
 ```
 
-As noted above, you can think about a variable as a labeled box you can store something in. That means that you can always "throw away" the old value and put something new. In case of variables, the "throwing away" part happens automatically, as the new value overwrites the old one. Check yourself, what will be final value of the variable in the code below? **Go to exercise #1 in the notebook.**
-
+As noted above, you can think about a variable as a labeled box you can store something in. That means that you can always "throw away" the old value and put something new. In case of variables, the "throwing away" part happens automatically, as the new value overwrites the old one. Check yourself, what will be final value of the variable in the code below? 
 ```{python eval=FALSE}
 number_of_legs = 2
 number_of_legs = 5
@@ -51,12 +50,21 @@ number_of_legs = 1
 number_of_legs
 ```
 
-As you have already seen, you can _compute_ a value instead of specifying it. What would be the answer here? **Do exercise #2 in the notebook.**
+::: {.infobox .practice}
+Do exercise #1.
+:::
+
+As you have already seen, you can _compute_ a value instead of specifying it. What would be the answer here? 
 ```{python eval=FALSE}
 number_of_legs = 2 * 2
 number_of_legs = 7 - 2
 number_of_legs
 ```
+
+::: {.infobox .practice}
+Do exercise #2.
+:::
+
 
 ## Assignments are not equations!
 
@@ -82,10 +90,12 @@ Then, it computes the expression on the right side and, **once the computation i
 x = 3
 ```
 
-Switch to the notebook and **do exercise #3** to make sure you understand this.
+::: {.infobox .practice}
+Do exercise #3 to make sure you understand this.
+:::
 
 ## Constants {#constants}
-Although the real power of variables is that you can change their value, you should use them even if the value remains constant. There are no true constants in Python, rather the agreement is that their names should be all `UPPER_CASE`. Accordingly, when you see `SUCH_A_VARIABLE` you know that you should not change its value. Technically, this is just a recommendation, as no one can stop you from modifying value of a `CONSTANT`. However, much of Python's ease-of-use comes from such "gentlemen's agreements" (such as `snake_case` convention above), which you should respect. We will encounter more of them when learning about objects.
+Although the real power of variables is that you can change their value, you should use them even if the value remains constant. There are no true constants in Python, rather an agreement that their names should be all `UPPER_CASE`. Accordingly, when you see `SUCH_A_VARIABLE` you know that you should not change its value. Technically, this is just a recommendation, as no one can stop you from modifying value of a `CONSTANT`. However, much of Python's ease-of-use comes from such "gentlemen's agreements" (such as `snake_case` convention above), which you should respect. We will encounter more of them when learning about objects.
 
 Taking all this into account, if number of legs stays constant throughout the game, you should highlight that constancy and write
 ```{python eval=FALSE}
@@ -93,7 +103,10 @@ NUMBER_OF_LEGS = 2
 ```
 I strongly recommend using constants and avoid hardcoding the values. First, if you have several identical values that mean different things (2 legs, 2 eyes, 2 ears, 2 vehicles per character, etc.), seeing a `2` in the code will not tell you what does this `2` mean (the legs? the ears? the score multiplier?). You can, of course, figure it out based on the code that uses this number but you could spare yourself that extra effort and use a constant instead. Then, you just read its name and the meaning of the value becomes apparent (and it is the meaning not the actual value that you are mostly interested in). Second, if you decide to _change_ that value (say, our main character is now a tripod), when using a constant means you have only one place to worry about, the rest of the code stays as is. If you hard-coded that number, you are in for an exciting (not really) but definitely long search-and-replace throughout the entire code.
 
-**Do exercise #4.**
+::: {.infobox .practice}
+Do exercise #4.
+:::
+
 
 ## Value types {#value-types}
 So far, we only used integer numeric values (1, 2, 5, 1000...). Although, Python supports [many different value types](https://docs.python.org/3/library/stdtypes.html), at first we will concentrate on a small subset of them:
@@ -103,8 +116,7 @@ So far, we only used integer numeric values (1, 2, 5, 1000...). Although, Python
 * strings that can store text. The text is enclosed between either paired quotes `"some text"` or apostrophes `'some text'`. This means that you can use quotes or apostrophes inside the string, as long as its is enclosed by the alternative. E.g., `"students' homework"` (enclosed in `"`, apostrophe `'` inside) or `'"All generalizations are false, including this one." Mark Twain'` (quotation enclosed by apostrophes). There is much much more to strings and we will cover that material throughout the course.
 * logical / Boolean values that are either `True` or `False`.
 
-When using a variable it is important that you know what type of value it stores and this is mostly on you. Python will raise an error, if you try doing a computation using incompatible. In some cases, Python will automatically convert values between certain types, e.g. any integer value is also a real value, so conversion from `1` to `1.0` is mostly trivial and automatic. However, in other cases you may need to use explicit conversion. **Go to exercise #5** and try guessing which code will run and which will throw an error due to incompatible types? 
-
+When using a variable it is important that you know what type of value it stores and this is mostly on you. Python will raise an error, if you try doing a computation using incompatible. In some cases, Python will automatically convert values between certain types, e.g. any integer value is also a real value, so conversion from `1` to `1.0` is mostly trivial and automatic. However, in other cases you may need to use explicit conversion. Go to exercise #5 and try guessing which code will run and which will throw an error due to incompatible types? 
 ```{python eval=FALSE}
 5 + 2.0
 '5' + 2
@@ -112,16 +124,25 @@ When using a variable it is important that you know what type of value it stores
 '5' + True
 5 + True
 ```
+
+::: {.infobox .practice}
+Do exercise #5.
+:::
+
 Surprised by the last one? This is because internally, `True` is also `1` and `False` is `0`!
 
-You can explicitly convert from one type to another using special functions. For example, to turn a number or a logical value into a string, you simply write `str(<value>)`. In examples below, what would be the result (**go to exercise #6 in the notebook**)?
+You can explicitly convert from one type to another using special functions. For example, to turn a number or a logical value into a string, you simply write `str(<value>)`. In examples below, what would be the result?
 ```{python eval=FALSE}
 str(10 / 2)
 str(2.5 + True)
 str(True)
 ```
 
-Similarly, you can convert to a logical/Boolean variable using `bool(<value>)` function. The rules are simple, for numeric values `0` is `False`, any other non-zero value is converted to `True`. For string, an empty string `''` is evaluated to `False` and non-empty string is converted to `True`. What would be the output in the examples below (**go to exercise #7 in the notebook**)?
+::: {.infobox .practice}
+Do exercise #6.
+:::
+
+Similarly, you can convert to a logical/Boolean variable using `bool(<value>)` function. The rules are simple, for numeric values `0` is `False`, any other non-zero value is converted to `True`. For string, an empty string `''` is evaluated to `False` and non-empty string is converted to `True`. What would be the output in the examples below?
 
 ```{python eval=FALSE}
 bool(-10)
@@ -133,7 +154,11 @@ bool(secret_message)
 bool('False')
 ```
 
-Converting to integer or float numbers is trickier. The simplest case is from logical to integer/float, as `True` gives you `int(True)` is `1` and `float(True)` is `1.0` and `False` gives you `0`/`0.0`. When converting from float to integer, Python simply drops the fractional part (not rounding!). When converting a string, it must be a valid number of the corresponding type or the error is generated. E.g., you can convert a string like `"123"` to and integer or a float but this won't work for `"a123"`. Moreover, you can convert `"123.4"` to floating-point number but not to an integer, as it has fractional part in it. Given all this, which cells would work and what output would they produce (**go to exercise #8 in the notebook**)?
+::: {.infobox .practice}
+Do exercise #7.
+:::
+
+Converting to integer or float numbers is trickier. The simplest case is from logical to integer/float, as `True` gives you `int(True)` is `1` and `float(True)` is `1.0` and `False` gives you `0`/`0.0`. When converting from float to integer, Python simply drops the fractional part (not rounding!). When converting a string, it must be a valid number of the corresponding type or the error is generated. E.g., you can convert a string like `"123"` to and integer or a float but this won't work for `"a123"`. Moreover, you can convert `"123.4"` to floating-point number but not to an integer, as it has fractional part in it. Given all this, which cells would work and what output would they produce?
 
 ```{python eval=FALSE}
 float(False)
@@ -141,6 +166,10 @@ int(-3.3)
 float("67.8")
 int("123+3")
 ```
+
+::: {.infobox .practice}
+Do exercise #8.
+:::
 
 ## Printing output
 To print the value, you need you use `print()` function (we will talk about functions in general later). In the simplest case, you pass the value and it will be printed out.
@@ -172,7 +201,7 @@ number_of_items = 10
 print(breakfast, number_of_items)
 ```
 
-**Go to exercise #9 and figure out what will be printed by the code below:**
+What will be printed by the code below?
 ```{python eval=FALSE}
 dinner = "stake"
 count = 4
@@ -180,6 +209,11 @@ desert = "cupcakes"
 
 print(count, dinner, count, desert)
 ```
+
+::: {.infobox .practice}
+Do exercise #9.
+:::
+
 
 However, you probably would want to be more explicit, when you print out the information. For example, imagine you have these three variables:
 ```{python}
@@ -206,7 +240,7 @@ Here is an example of formatting a string using an integer:
 print("I had %d pancakes for breakfast"%(10))
 ```
 
-You are not limited to a single value that you can put into a string. You can specify more locations via `%` but you must make sure that you pass the right number of values. Before running it, can you figure out which call will actually work (and what will be the output ) and which will produce an error? **Go to exercise #10.**
+You are not limited to a single value that you can put into a string. You can specify more locations via `%` but you must make sure that you pass the right number of values. Before running it, can you figure out which call will actually work (and what will be the output ) and which will produce an error?
 
 ```{python eval=FALSE}
 print('I had %d pancakes and either %d  or %d stakes for dinner'%(2))
@@ -214,7 +248,15 @@ print('I had %d pancakes and %d stakes for dinner'%(7, 10))
 print('I had %d pancakes and %d stakes for dinner'%(1, 7, 10))
 ```
 
-In case of real values you have two options: `%f` and `%g`. The latter uses scientific notation (e.g. `1e10` for `10000000000`) to make a representation more compact. To get a better feeling for the difference **do exercise #11**.
+::: {.infobox .practice}
+Do exercise #10.
+:::
+
+In case of real values you have two options: `%f` and `%g`. The latter uses scientific notation (e.g. `1e10` for `10000000000`) to make a representation more compact. 
+
+::: {.infobox .practice}
+Do exercise #11 to get a better feeling for the difference.
+:::
 
 These is much more to formatting and you can read about it at [pyformat.info](https://pyformat.info/). However, these basics are sufficient for us to start programming our first game during the next seminar. Don't forget to submit your exercise notebook and see you next time!
 
