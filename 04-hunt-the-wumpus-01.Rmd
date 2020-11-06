@@ -1,0 +1,7 @@
+# Hunt the Wumpus, part 1 {#seminar04}
+
+We will program text adventure computer game [Hunt the Wumpus](https://en.wikipedia.org/wiki/Hunt_the_Wumpus): "In the game, the player moves through a series of connected caves, arranged in a dodecahedron, as they hunt a monster named the Wumpus. The turn-based game has the player trying to avoid fatal bottomless pits and "super bats" that will move them around the cave system; the goal is to fire one of their "crooked arrows" through the caves to kill the Wumpus..."
+
+As before, we will start with a very basic program and will build it step-by-step towards the final version.
+
+
