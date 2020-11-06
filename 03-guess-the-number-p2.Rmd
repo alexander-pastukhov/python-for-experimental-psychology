@@ -19,7 +19,10 @@ while <condition>:
 
 The `<condition>` here is any expression that is evaluated to be either `True` or `False`, just like in an _if-elif-else_ conditional statement. 
 
-**Do exercise #1**
+::: {.infobox .practice}
+Do exercise #1.
+:::
+
 
 Let us use _while_ loop, so that the player keeps guessing until finally getting it right. You can copy-paste the code you programmed during the last seminar or could redo it from scratch (I would strongly recommend you doing the latter!). The overall program structure should be the following
 ```{python eval=FALSE}
@@ -35,23 +38,46 @@ from random import randint
 # print "Spot on!" (because if we got here that means guess is equal to the computer's pick)
 ```
 
-**Put your code into exercise #2**
+::: {.infobox .program}
+Put your code into exercise #2.
+:::
 
 ## Counting attempts (Exercise #3)
 
 Now let us add a variable that will count the total number of attempts the player required. For this, create a new variable (call it `attempts` or something similar) _before the loop_ and initialize it `0`. Add `1` to it every time the player inputs the guess. After the loop, expand the `"Spot on!"` message you print out by adding information about the attempts count. Use string formatting to make things look nice, e.g. `"Spot on, you needed 5 attempts"`.
 
-**Put your code into exercise #3**
+::: {.infobox .program}
+Put your code into exercise #3.
+:::
 
 ## Breaking (and exiting, Exercise #4)
-_While_ loop is continuously executed while the condition is `True` and, importantly, all code inside is executed before the condition is evaluated again. However, sometimes you may need to abort sooner without executing the remaining code. For this, Python  gives you a `break` statement that causes the program to exit the loop (of `if-elif-else` statement) immediately and to continue with the code after the loop. 
+_While_ loop is continuously executed while the condition is `True` and, importantly, all code inside is executed before the condition is evaluated again. However, sometimes you may need to abort sooner without executing the remaining code. For this, Python  gives you a `break` statement that causes the program to exit the loop immediately and to continue with the code after the loop. 
 
-**Do exercise #4 to build the intuition.**
+```{python eval=FALSE}
+# this code runs before the loop
+
+while <somecondition>:
+  # this code runs on every iteration
+  
+    if <someothercondition>:
+        break
+  
+  # this code runs on every iteration but not when you break out of the loop
+
+# this code runs after the loop
+```
+
+
+::: {.infobox .practice}
+Do exercise #4 to build the intuition.
+:::
 
 ## Limiting number of attempts via break (Exercise 5)
 Let's put the player under some pressure! Decide on maximal number of attempts allowed and stores in a constant. Pick an appropriate name (e.g. `MAX_ATTEMPTS`) and REMEMBER, ALL CAPITAL LETTERS for a constant name! Now, use `break` to quit the `while` loop, if current attempt number is greater than `MAX_ATTEMPTS`.
 
-**Put your code into exercise #5**
+::: {.infobox .program}
+Put your code into exercise #5.
+:::
 
 ## Correct end-of-game message (Exercise 6)
 Think about the final message. Currently it says "Spot on..." because we assumed that you exited the loop because you gave the correct answer. With limited attempts that is not the case, as the player could out of the loop because
@@ -61,17 +87,23 @@ Think about the final message. Currently it says "Spot on..." because we assumed
 
 Use `if-else` conditional statement to print out an appropriate message (e.g., `"Better luck next time!`, if the player lost).
 
-**Put your code into exercise #6**
+::: {.infobox .program}
+Put your code into exercise #6.
+:::
 
 ## Limiting number of attempts with a break (Exercise 7)
 Modify your code to work without `break` statement. Modify your condition so that loop repeats while player's guess is incorrect and the number of attempts is still less than the maximally allowed.
 
-**Put your code into exercise #7**
+::: {.infobox .program}
+Put your code into exercise #7.
+:::
 
 ## Show remaining attempts (Exercise 8)
 Modify the `input` prompt message to include number of _remaining_ attempts. E.g. `"Please enter the guess, you have X attempts remaining"`.
 
-**Put your code into exercise #8**
+::: {.infobox .program}
+Put your code into exercise #8.
+:::
 
 ## Repeating the game (Exercise 9)
 Let us an option for the player to play again. This means putting _all_ the current code inside of another `while` loop that is repeated for as long as the player wants to play. The code should look following:
@@ -92,17 +124,23 @@ while want_to_play:
 
 **Pay extra attention to indentation to group the code properly!**
 
-**Put your code into exercise #9**
+::: {.infobox .program}
+Put your code into exercise #9.
+:::
 
 ## Best score (Exercise 10)
 A "proper" game typically keeps the track of players' performance. Let us record what was the fewest number of attempts that the player needed to guess the number. For this, create a new variable `fewest_attempts` and set it to `MAX_ATTEMPTS` (this is as bad as the player can be). Think, where do you need to create it? Once a game round is over and you know how many attempts the player required, update it if the number of attempts that the player used was _less_ than the current value. You can add the information about "Best so far" into the game-round-over message.
 
-**Put your code into exercise #10**
+::: {.infobox .program}
+Put your code into exercise #10.
+:::
 
 ## Counting game rounds (Exercise 11)
 Let us count how many rounds the player played. The idea and implementation is the same as with counting the attempts. Create a new variable, initialize it to 0, increment by 1 whenever a new round starts. Include the total number of rounds into the very final message, e.g. "Thank you for playing the game X times!"
 
-**Put your code into exercise #11**
+::: {.infobox .program}
+Put your code into exercise #11.
+:::
 
 ## Wrap up
 Most excellent, you now have a proper working computer game with game rounds, limited attempts, best score, and what not! 
