@@ -10,7 +10,8 @@
 * [Constants](#constants)
 
 #### I{- .unlisted}
-* [input([prompt]) function](#input-function), see also [official manual](https://docs.python.org/3/library/functions.html#input)
+* [importing](#import) libraries.
+* [input([prompt]) function](#input-function), see also [official manual](https://docs.python.org/3/library/functions.html#input).
 
 #### P{- .unlisted}
 * [PsychoPy](https://www.psychopy.org/) PsychoPy standalone application and library, see also [installation notes](#install-psychopy).
