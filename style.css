@@ -18,16 +18,16 @@ pre code {
   padding: 1em 1em 1em 4em;
   margin-bottom: 10px;
   border-radius: 10px;
-  color: white;
-  background: #72ABDB 5px center/3em no-repeat;
+  color: #234A6C;
+  background: #C6E5FF 5px center/3em no-repeat;
 }
 
 .practice {
-  background-image: url("images/assignment-white.svg");
+  background-image: url("images/assignment.svg");
 }
 
 .program {
-  background-image: url("images/laptop-white.svg");
+  background-image: url("images/laptop.svg");
 }
 
 .programb {
