@@ -3,6 +3,9 @@
 #### A{.unlisted .unnumbered}
 * [Anaconda](https://www.anaconda.com), a scientific Python distribution, see also [installation notes](#install-anaconda). 
 
+#### B{.unlisted .unnumbered}
+* [Breaking](#break) out of the loop.
+
 #### C{- .unlisted}
 * [Constants](#constants)
 
@@ -23,3 +26,6 @@
 * [Variables](#variables)
 
 * [Visual Studio Code](https://code.visualstudio.com/), a  lightweight free open-source editor with strong support for Python. See also [installation notes](#install-vs-code).
+
+#### W{- .unlisted}}
+* [While](#while-loop) loop.

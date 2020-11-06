@@ -50,7 +50,7 @@ Now let us add a variable that will count the total number of attempts the playe
 Put your code into exercise #3.
 :::
 
-## Breaking (and exiting, Exercise #4)
+## Breaking (and exiting, Exercise #4){#break}
 _While_ loop is continuously executed while the condition is `True` and, importantly, all code inside is executed before the condition is evaluated again. However, sometimes you may need to abort sooner without executing the remaining code. For this, Python  gives you a `break` statement that causes the program to exit the loop immediately and to continue with the code after the loop. 
 
 ```{python eval=FALSE}
