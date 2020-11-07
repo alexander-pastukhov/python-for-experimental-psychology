@@ -18,7 +18,7 @@ one-armed-bandit-exercise-13
 seminar03
 while-loop
 counting-attempts-exercise-3
-breaking-and-exiting-exercise-4
+break
 limiting-number-of-attempts-via-break-exercise-5
 correct-end-of-game-message-exercise-6
 limiting-number-of-attempts-with-a-break-exercise-7
@@ -27,3 +27,13 @@ repeating-the-game-exercise-9
 best-score-exercise-10
 counting-game-rounds-exercise-11
 wrap-up
+seminar04
+lists
+caves
+wandering-around
+checking-whether-a-value-is-in-the-list
+checking-valid-cave-index
+checking-that-string-can-be-converted-to-an-integer
+checking-valid-integer-input
+wrap-up-1
+w--.unlisted

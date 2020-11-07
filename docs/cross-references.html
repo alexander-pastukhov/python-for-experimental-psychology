@@ -24,14 +24,14 @@
 <meta name="author" content="Alexander (Sasha) Pastukhov" />
 
 
-<meta name="date" content="2020-11-06" />
+<meta name="date" content="2020-11-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="seminar03.html"/>
+<link rel="prev" href="seminar04.html"/>
 
 <script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
@@ -51,6 +51,7 @@
 
 
 
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 
@@ -172,7 +173,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="3.1" data-path="seminar03.html"><a href="seminar03.html#while-loop"><i class="fa fa-check"></i><b>3.1</b> While loop (Exercises 1-2)</a></li>
 <li class="chapter" data-level="3.2" data-path="seminar03.html"><a href="seminar03.html#counting-attempts-exercise-3"><i class="fa fa-check"></i><b>3.2</b> Counting attempts (Exercise #3)</a></li>
-<li class="chapter" data-level="3.3" data-path="seminar03.html"><a href="seminar03.html#breaking-and-exiting-exercise-4"><i class="fa fa-check"></i><b>3.3</b> Breaking (and exiting, Exercise #4)</a></li>
+<li class="chapter" data-level="3.3" data-path="seminar03.html"><a href="seminar03.html#break"><i class="fa fa-check"></i><b>3.3</b> Breaking (and exiting, Exercise #4)</a></li>
 <li class="chapter" data-level="3.4" data-path="seminar03.html"><a href="seminar03.html#limiting-number-of-attempts-via-break-exercise-5"><i class="fa fa-check"></i><b>3.4</b> Limiting number of attempts via break (Exercise 5)</a></li>
 <li class="chapter" data-level="3.5" data-path="seminar03.html"><a href="seminar03.html#correct-end-of-game-message-exercise-6"><i class="fa fa-check"></i><b>3.5</b> Correct end-of-game message (Exercise 6)</a></li>
 <li class="chapter" data-level="3.6" data-path="seminar03.html"><a href="seminar03.html#limiting-number-of-attempts-with-a-break-exercise-7"><i class="fa fa-check"></i><b>3.6</b> Limiting number of attempts with a break (Exercise 7)</a></li>
@@ -181,6 +182,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.9" data-path="seminar03.html"><a href="seminar03.html#best-score-exercise-10"><i class="fa fa-check"></i><b>3.9</b> Best score (Exercise 10)</a></li>
 <li class="chapter" data-level="3.10" data-path="seminar03.html"><a href="seminar03.html#counting-game-rounds-exercise-11"><i class="fa fa-check"></i><b>3.10</b> Counting game rounds (Exercise 11)</a></li>
 <li class="chapter" data-level="3.11" data-path="seminar03.html"><a href="seminar03.html#wrap-up"><i class="fa fa-check"></i><b>3.11</b> Wrap up</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="seminar04.html"><a href="seminar04.html"><i class="fa fa-check"></i><b>4</b> Hunt the Wumpus, part 1</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="seminar04.html"><a href="seminar04.html#lists"><i class="fa fa-check"></i><b>4.1</b> Lists</a></li>
+<li class="chapter" data-level="4.2" data-path="seminar04.html"><a href="seminar04.html#caves"><i class="fa fa-check"></i><b>4.2</b> Caves</a></li>
+<li class="chapter" data-level="4.3" data-path="seminar04.html"><a href="seminar04.html#wandering-around"><i class="fa fa-check"></i><b>4.3</b> Wandering around</a></li>
+<li class="chapter" data-level="4.4" data-path="seminar04.html"><a href="seminar04.html#checking-whether-a-value-is-in-the-list"><i class="fa fa-check"></i><b>4.4</b> Checking whether a value is <em>in</em> the list</a></li>
+<li class="chapter" data-level="4.5" data-path="seminar04.html"><a href="seminar04.html#checking-valid-cave-index"><i class="fa fa-check"></i><b>4.5</b> Checking valid cave index</a></li>
+<li class="chapter" data-level="4.6" data-path="seminar04.html"><a href="seminar04.html#checking-that-string-can-be-converted-to-an-integer"><i class="fa fa-check"></i><b>4.6</b> Checking that string can be converted to an integer</a></li>
+<li class="chapter" data-level="4.7" data-path="seminar04.html"><a href="seminar04.html#checking-valid-integer-input"><i class="fa fa-check"></i><b>4.7</b> Checking valid integer input</a></li>
+<li class="chapter" data-level="4.8" data-path="seminar04.html"><a href="seminar04.html#wrap-up-1"><i class="fa fa-check"></i><b>4.8</b> Wrap up</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="cross-references.html"><a href="cross-references.html"><i class="fa fa-check"></i>Cross references</a></li>
 <li class="divider"></li>
@@ -211,6 +223,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="https://www.anaconda.com">Anaconda</a>, a scientific Python distribution, see also <a href="getting-started.html#install-anaconda">installation notes</a>.</li>
 </ul>
 </div>
+<div id="b" class="section level4 unlisted unnumbered">
+<h4>B</h4>
+<ul>
+<li><a href="seminar03.html#break">Breaking</a> out of the loop.</li>
+</ul>
+</div>
 <div id="c" class="section level4 unnumbered unlisted">
 <h4>C</h4>
 <ul>
@@ -220,7 +238,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="i" class="section level4 unnumbered unlisted">
 <h4>I</h4>
 <ul>
-<li><a href="seminar02.html#input-function">input([prompt]) function</a>, see also <a href="https://docs.python.org/3/library/functions.html#input">official manual</a></li>
+<li><a href="#import">importing</a> libraries.</li>
+<li><a href="seminar02.html#input-function">input([prompt]) function</a>, see also <a href="https://docs.python.org/3/library/functions.html#input">official manual</a>.</li>
+</ul>
+</div>
+<div id="l" class="section level4 unnumbered unlisted">
+<h4>L</h4>
+<ul>
+<li><a href="seminar04.html#lists">lists</a></li>
 </ul>
 </div>
 <div id="p" class="section level4 unnumbered unlisted">
@@ -232,6 +257,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="s" class="section level4 unnumbered unlisted">
 <h4>S</h4>
 <ul>
+<li><a href="seminar04.html#lists">Slicing</a></li>
 <li><a href="seminar01.html#string-formatting">String formatting</a>, see also <a href="https://pyformat.info/">PyFormat</a> for information on new string formatting and practical examples.</li>
 </ul>
 </div>
@@ -248,15 +274,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p><a href="seminar01.html#variables">Variables</a></p></li>
 <li><p><a href="https://code.visualstudio.com/">Visual Studio Code</a>, a lightweight free open-source editor with strong support for Python. See also <a href="getting-started.html#install-vs-code">installation notes</a>.</p></li>
 </ul>
+</div>
+<div id="w--.unlisted" class="section level4" number="4.8.0.1">
+<h4><span class="header-section-number">4.8.0.1</span> W{- .unlisted}}</h4>
+<ul>
+<li><a href="seminar03.html#while-loop">While</a> loop.</li>
+</ul>
 
 </div>
 </div>
+
+
+
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-<a href="seminar03.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="seminar04.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
     </div>
   </div>
@@ -307,6 +345,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>
