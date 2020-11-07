@@ -1,0 +1,32 @@
+## Importing and using libraries {#import}
+As I told you in the introduction, you can do almost anything with Python: work with excel-style tables, classify images via machine learning, build a website, etc. This functionality is supplied by various libraries, some come with Python, others must be installed via conda or [pip](https://pip.pypa.io/en/stable/quickstart/)). However, you must explicitly [import](https://wiki.pythonde.pysv.org/Import) a library in your code, before being able to use it.
+
+You already encountered this in "Guess the Number" game, when we imported a function that generated a random integer: `from random import randint`. There are several ways you can import libraries. First, you can import an entire library (such as _random_) and then use its functions as `<library>.<function>`. For `randint` this would be
+```{python eval=FALSE}
+import random
+
+computer_pick = random.randint(1, 5)
+```
+
+This should be your preferred way of using libraries as it forces you to explicitly mention the name of the library when calling a function, i.e. `random.randint()` instead of just `randint()`. This may not look like an issue with one imported library but even in a modestly-sized project you will import many libraries, so figuring out which library the function belongs to will be tricky. Even more importantly, different libraries may have functions with _the same name_. In this case, the function you are using will come from the _last_ library you imported. But you may not realize this and this is a sort of mistake that is really hard to track down. Thus, unless you have a very good reason, always import the entire library!
+
+  Another (less explicit) option is to import _some_ of the functions, as we did it with `randint`. You can import more than one function by listing them all
+```{python eval=FALSE}
+from random import randint, randrange
+```
+
+You can also _rename_ a library or a function while importing it. You should not use this too often, as using a different name for a library would make it harder for others (and even for future-you) to understand your code. However, there are some "standard" renaming patterns that are used universally and which you are likely to encounter.
+```{python eval=FALSE}
+# this is a standard way to import these two libraries
+import numpy as np
+import pandas as pd
+
+np.abs(1)
+
+# you can rename individual functions as well, if you really have to
+from random import randint as random_integer
+
+computer_pick = random_integer(1, 5)
+```
+
+Finally, there is a **very bad way** to import functions from a library: `from random import *`. The asterisk means that you want to import _all_ the functions from the library and you want to use them by their names without `random.` prefix. Never, never, never (did I already say never? never!) do this! This fills your environment with functions that you are possibly not aware of, potentially overwriting some other functions, creating conflicts, etc. Never ever! I am showing you this only because you will, at some point, see a code that uses this approach and you might think it is a good idea. It is not! Import the library, not the functions, so you can explicitly show which library you are relying on when calling a function. Always remember the [Zen of Python](https://www.python.org/dev/peps/pep-0020/): "Explicit is better than implicit."
