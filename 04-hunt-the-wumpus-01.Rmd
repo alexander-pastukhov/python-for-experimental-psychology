@@ -4,58 +4,47 @@ We will program text adventure computer game [Hunt the Wumpus](https://en.wikipe
 
 As before, we will start with a very basic program and will build it step-by-step towards the final version. Don't forget to download the [exercise notebook](notebooks/Seminar 04. Hunt the Wumpus, part 1.ipynb).
 
-## Importing and using libraries {#import}
-As I told you in the introduction, you can do almost anything with Python: work with excel-style tables, classify images via machine learning, build a website, etc. This functionality is supplied by various libraries, some come with Python, others must be installed via conda or [pip](https://pip.pypa.io/en/stable/quickstart/)). However, you must explicitly [import](https://wiki.pythonde.pysv.org/Import) a library in your code, before being able to use it.
-
-You already encountered this in "Guess the Number" game, when we imported a function that generated a random integer: `from random import randint`. There are several ways you can import libraries. First, you can import an entire library (such as _random_) and then use its functions as `<library>.<function>`. For `randint` this would be
-```{python eval=FALSE}
-import random
-
-computer_pick = random.randint(1, 5)
-```
-
-This should be your preferred way of using libraries as it forces you to explicitly mention the name of the library when calling a function, i.e. `random.randint()` instead of just `randint()`. This may not look like an issue with one imported library but even in a modestly-sized project you will import many libraries, so figuring out which library the function belongs to will be tricky. Even more importantly, different libraries may have functions with _the same name_. In this case, the function you are using will come from the _last_ library you imported. But you may not realize this and this is a sort of mistake that is really hard to track down. Thus, unless you have a very good reason, always import the entire library!
-
-Another (less explicit) option is to import _some_ of the functions, as we did it with `randint`. You can import more than one function by listing them all
-```{python eval=FALSE}
-from random import randint, randrange
-```
-
-You can also _rename_ a library or a function while importing it. You should not use this too often, as using a different name for a library would make it harder for others (and even for future-you) to understand your code. However, there are some "standard" renaming patterns that are used universally and which you are likely to encounter.
-```{python eval=FALSE}
-# this is a standard way to import these two libraries
-import numpy as np
-import pandas as pd
-
-np.abs(1)
-
-# you can rename individual functions as well, if you really have to
-from random import randint as random_integer
-
-computer_pick = random_integer(1, 5)
-```
-
-Finally, there is a **very bad way** to import functions from a library: `from random import *`. The asterisk means that you want to import _all_ the functions from the library and you want to use them by their names without `random.` prefix. Never, never, never (did I already say never? never!) do this! This fills your environment with functions that you are possibly not aware of, potentially overwriting some other functions, creating conflicts, etc. Never ever! I am showing you this only because you will, at some point, see a code that uses this approach and you might think it is a good idea. It is not! Import the library, not the functions, so you can explicitly show which library you are relying on when calling a function. Always remember the [Zen of Python](https://www.python.org/dev/peps/pep-0020/): "Explicit is better than implicit."
-
 ## Lists
 So far, we were using variables to store single values: computer's pick, player's guess, number of attempts, etc. However, you can store multiple values in a variable using [lists](https://docs.python.org/3/library/stdtypes.html#list). The idea is fairly straightforward, a variable is not a simple box but a box with slots for values numbered from `0` to `len(variable)-1`.
 
-The list is defined via square brackets `<variable> = [<value1>, <value2>, ... <valueN>]` and an individual value can be accessed also via square brackets `<variable>[<index>]` where index goes from `0` to `len(<variable>)-1`, so if you have five values in the list, the index of the first one is `0` (not `1`) and the index of the last one is `4` (not `5`)!
+The list is defined via square brackets `<variable> = [<value1>, <value2>, ... <valueN>]` and an individual value can be accessed also via square brackets `<variable>[<index>]` where index goes from `0` to `len(<variable>)-1` ([`len(<object>)`](https://docs.python.org/3/library/functions.html#len) function returns number of items in an object, in our case, it would be a list). Thus, if you have five values in the list, the index of the first one is `0` (not `1`) and the index of the last one is `4` (not `5`)!
 
 ::: {.infobox .practice}
 Do exercise #1 see how lists are defined and indexed.
 :::
 
-You can also get many values from the list via so called _slicing_ when you specify index of many elements via `<start>:<stop>`. Here is a catch though and this is recurrent theme in Python, so pay close attention: the index slicing builds will go from `start` up to **but not including** `stop`, in mathematical notation $[start, stop)$. So, if you have a list `my_pretty_numbers` that holds five values and you want to get values from second (index `1`) till fourth (index `3`) you need to write the slice as `1:4` (not `1:3`!). This "including the start but excluding the stop" is both fairly counterintuitive (I still have to consciously remind myself about this) and widely used in Python.
+You can also get many values from the list via so called _slicing_ when you specify index of many elements via `<start>:<stop>`. There is a catch though and, as this is a recurrent theme in Python, pay close attention: The index slicing builds goes from `start` up to **but not including** `stop`, in mathematical notation $[start, stop)$. So, if you have a list `my_pretty_numbers` that holds five values and you want to get values from second (index `1`) till fourth (index `3`) you need to write the slice as `1:4` (not `1:3`!). This _including the start but excluding the stop_ is both fairly counterintuitive (I still have to consciously remind myself about this) and widely used in Python.
 
 ::: {.infobox .practice}
 Do exercise #2 to build the intuition.
 :::
 
-You can also omit either `start` or `stop` (or actually, even, both!). In this case, Python will assume that a missing `start` means `0` (the index of the first element) and missing `stop` means `len(<list>)`.
+You can also omit either `start` or `stop`. In this case, Python will assume that a missing `start` means `0` (the index of the first element) and missing `stop` means `len(<list>)`. If you omit _both_, e.g., `my_pretty_numbers[:]` it will return all values, as this is equivalent to `my_pretty_numbers[0:len(my_pretty_numbers)]`.^[Note, that this is almost but not quite the same thing as just writing `my_pretty_numbers`, the difference is subtle but important and we will look into it later when talking about mutable versus immutable types.]
 
 ::: {.infobox .practice}
 Do exercise #3.
+:::
+
+You can also use _negative_ indexes that are relative to length of the list. Thus, if you want to get the _last_ element of the list, you can say `my_pretty_numbers[len(my_pretty_numbers)-1]` or just `my_pretty_numbers[-1]`. The last-but-one element would be `my_pretty_numbers[-2]`, etc. You can use negative indexes for slicing but keep in mind _including the start but excluding the stop_: `my_pretty_numbers[:-1]` will return all but last element of the list not the entire list.
+
+::: {.infobox .practice}
+Do exercise #4.
+:::
+
+The slicing can be extended by specifying a `step`, so that `stop:start:step`. This can be combined with omitted and negative indexes. To get every _odd_ element of the list, you write `my_pretty_numbers[::2]`:
+```{python}
+my_pretty_numbers = [1, 2, 3, 4, 5, 6, 7]
+my_pretty_numbers[::2]
+```
+
+::: {.infobox .practice}
+Do exercise #5.
+:::
+
+Finally, for those who are familiar with R, the good news is that Python does not allow you to use indexes outside of the range, so trying to get 6^th^ element (index `5`) of a five-element-long list will generate a simple and straightforward error (a so-called [fail-fast](https://en.wikipedia.org/wiki/Fail-fast) principle). The bad news is that if your _slice_ is larger than the range, it will truncated to the range without an extra warning or an error. So, for a five-element list `my_pretty_numbers[:6]` will return all numbers of to the maximal possible index (thus, effectively, this is equivalent to `my_pretty_numbers[:]`). Moreover, if the slice is empty (`2:2`, cannot include `2`, even though it starts from it) or the entire slice is outside of the range, Python will return an empty list, again, neither warning or error is generated.
+
+::: {.infobox .practice}
+Do exercise #6.
 :::
 
 
