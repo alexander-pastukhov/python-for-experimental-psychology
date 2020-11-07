@@ -104,11 +104,66 @@ Now that the player can "see" where they are, let them wander! Use `input()` fun
 Put your code into exercise #9.
 :::
 
-## Checking if value is _in_ the list
+## Checking whether a value is _in_ the list
+Right now we trust the player (well, you) to enter the correct index for the cave. Thus, the program will move a player to a new cave even if you enter an index of the cave that is not connected to the current one. Even worse, it will try to move the player to an undefined cave, if you enter an index larger than 19. To check whether an entered index matches one of the connected cave, you need to use [<value> in <list>](https://docs.python.org/3/tutorial/datastructures.html#more-on-conditions) conditional statement. The idea is straightforward, if the value is in the list, the statement is `True`, if not, it is `False`. 
+
+```{python}
+x = [1, 2, 3]
+print(1 in x)
+print(4 in x)
+```
+
+Note that you can check _one_ value/object at a time. Because a list is also a single object, you will be checking whether it is an element of the other list, not whether all or some of it elements are in it.
+
+```{python}
+x = [1, 2, [3, 4]]
+# This is False because x has no element [1, 2], only 1, and 2 (separately)
+print([1, 2] in x)
+
+# This is True because x has [3, 4] element
+print([3, 4] in x)
+```
+
+::: {.infobox .practice}
+Do exercise #10.
+:::
 
 ## Checking valid cave index
+Now that you know how to check whether a value is in the list, let's use it to validate cave index. Before moving the player, you now need to check whether the entered index is in the list of the connected caves. If this is `True`, you move the player as before. Otherwise, print out an error message, e.g. "Wrong cave index!" without moving a player. Loop ensure that the player will be prompted for the input again.
+
+```{python eval=FALSE}
+# import randint function from the random library
+
+# define CAVES (simply copy-paste the definition)
+
+# create `player` variable and set it to a random number between 0 and 19, 
+# putting player into a random cave
+
+# while player is not in the cave #5 (index 4):
+    # print out the list of the connecting caves. Use string formatting.
+    # get input about the cave the player want to move to, store it in a variable `move_to`
+    # if `move_to` matches on of the connected caves:
+      # "move" the `player` to the cave they wanted to `move_to`
+    # else:
+      # print out an error message
+    
+# print a nice game-over message
+```
+
+::: {.infobox .program}
+Put your code into exercise #11.
+:::
 
 ## Checking that string can be converted to an integer
+There is another danger with out input: The player is not guaranteed to enter a valid integer! So far we relied on you to behave but in real life, even when people do not deliberately try to break your program, they will occasionally press the wrong button. Thus, we need to check that the _string_ that they entered can be converted to an _integer_.
 
-## Checking valid input
+Python string is an object (more on that in a few seminars) with different methods that allow to perform various operations on them. On subset of methods allows you to make a rough check of its content. The one we are interested is [str.isdigit()](https://docs.python.org/3/library/stdtypes.html#str.isdigit) that checks whether all symbols are digits and that the string is not empty (it has at least one symbol). You can follow the link above to check other alternatives such as `str.islower()`, `str.isalpha()`, etc.
+
+::: {.infobox .practice}
+Do exercise #12.
+:::
+
+## Checking valid integer input
+
+## Wrap up
 
