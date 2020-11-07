@@ -164,6 +164,34 @@ Do exercise #12.
 :::
 
 ## Checking valid integer input
+Modify the code that gets the input from the user. First, store the raw string (not converted to an integer) into an intermediate variable, e.g. `move_to_str`. Then, if `move_to_str` is all digits, convert it to an integer, and do the check that it is a valid connected cave index (moving player or printing an error message). However, if `move_to_str` is not all digits, only print the error message. This means you need to have an if-statement inside the if-statement. The outline is below, watch you indentations!
+
+```{python eval=FALSE}
+# import randint function from the random library
+
+# define CAVES (simply copy-paste the definition)
+
+# create `player` variable and set it to a random number between 0 and 19, 
+# putting player into a random cave
+
+# while player is not in the cave #5 (index 4):
+    # print out the list of the connecting caves. Use string formatting.
+    # get input into a variable `move_to_str`
+    # if move_to_str can be converted to an integer:
+        # convert move_to_str to integer and store value in move_to
+        # if `move_to` matches on of the connected caves:
+            # "move" the `player` to the cave they wanted to `move_to`
+        # else:
+            # print out an error message
+    # else:
+        # print error message that user must enter a number
+    
+# print a nice game-over message
+```
+
+::: {.infobox .program}
+Put your code into exercise #13.
+:::
 
 ## Wrap up
-
+You now have a player in a system of the caves and they can navigate around. Next time, you will learn how to make your code modular by using functions and the game will have more thrills to it once we add bottomless pits and excitable bats.
