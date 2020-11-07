@@ -13,10 +13,14 @@
 * [importing](#import) libraries.
 * [input([prompt]) function](#input-function), see also [official manual](https://docs.python.org/3/library/functions.html#input).
 
+#### L{- .unlisted}
+* [lists](#lists)
+
 #### P{- .unlisted}
 * [PsychoPy](https://www.psychopy.org/) PsychoPy standalone application and library, see also [installation notes](#install-psychopy).
 
 #### S{- .unlisted}
+* [Slicing](#lists)
 * [String formatting](#string-formatting), see also [PyFormat](https://pyformat.info/) for information on new string formatting and practical examples.
 
 #### T{- .unlisted}
