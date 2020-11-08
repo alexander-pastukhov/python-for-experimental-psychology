@@ -1,0 +1,41 @@
+# Hunt the Wumpus, part 1 {#seminar05}
+
+During our previous seminar, we defined a system of interconnected caves, placed a player into a random cave, and allowed them to wander around. Now, we will make the code modular by using functions and, then, and some thrills, allowing the player to fall into bottomless pits and be carried around by bats.
+
+## Functions {#function}
+
+In programming, purpose of a function is to isolate certain code that performs a single computation making it testable and reusable. Let us go through the first sentence bit by bit using examples.
+
+### Function performs a single computation {-}
+I told you that reading code is easy because every action has to be spelled-out for computers in simple and clear way. However, a lot of simple things can be very overwhelming and confusing. Think about the final code for the previous seminar: we had a loop with two conditional statements nested inside the loop and each other. Add a few more of those and you have so many brunches to trace, you will never be quite sure what will happen. This is because our cognition and working memory, which you use to trace all brunches, are limited to just about four items (the official magic number is [7±2](https://en.wikipedia.org/wiki/The_Magical_Number_Seven,_Plus_or_Minus_Two) but reading the original paper tells you that this is more like four for most of us).
+
+Thus, a function should perform one computation that is conceptually clear and those purpose should be understood directly from its name or, at most, from a single sentence that describes it^[This is similar to scientific writing, where a single paragraph conveys a single idea. So, for me, it helps to first write the idea of the paragraph in a single sentence before writing the paragraph itself. If one sentence is not enough, I need to split the text into more paragraphs.]. If you need more than once sentence to explain what function does, you should consider splitting the code further. This does not mean that entire description / documentation must fit into a single sentence. The full description can be lengthy, particularly if underlying computation is complex and there are many parameters to consider. However, these are optional details that tell the reader about _how_ the function is doing its job. Again, they should be able to understand _what_ the job is just from the name or from a single sentence. I am repeating myself and stressing it so much because conceptually simple single job functions are a foundation of a clear robust reusable code. And, trust me on this one, future-you will be very grateful that it has to work with easy-to-understand isolated reliable code you wrote.
+
+### Function isolates certain code {-}
+Isolation means that your code is run in a separate scope where the only things that exist are function arguments (limited number values with fixed meaning you pass to it from outside) and local variables that you define inside the function. You have no access to variables defined in the outside script or to variables defined inside of other functions. Conversely, neither global script nor other function have access to variables and values you compute inside. This means that you only need to study the code _inside_ the function to understand how it works. Accordingly, when you write the code it should be _independent_ of any global context the function can be used in. Thus, isolation is both practical (no run-time access to variables from outside means fewer chance that things go terribly wrong) and conceptual (no further context is required to understand the code).
+
+### Functions make code easier to test {-}
+You can build even moderately complex programs only if you can be certain what individual chunks of code are doing under every possible condition. Do they give the correct results? Do the fail clearly raising an error, if the inputs are wrong? Do they use defaults when required? However, testing all chunks together means running extreme number of runs as you need to test all possible combinations of conditions for one chunk given all possible conditions for other chunk, etc. Functions make your life much easier. Because they have a single point of entry, fixed number of parameters, a single return value, and are isolated (see above), you can test them one at a time independent of other functions of the rest of the code. This is called _unit testing_ and it is heavy use of [automatic unit testing](https://docs.python.org/3/library/unittest.html) (it is normal to have more code devoted to testing than to the actual program) that ensures reliable code for absolute majority of programs and apps that you use.
+
+### Function make code reusable {-}
+Sometimes this reason is given as the primary reason to use functions. Turning code into a function means that you can call the function instead of copy-pasting the code. The latter is a terrible idea as it means that you have to maintain the same code at many places (sometimes you might not be even sure in just how many). This is a problem even if the code is extremely simple. Here, we have a standard way to compute an initial by taking the first symbol from a string. The code is as simple as it gets.
+```python
+...
+initial = "test"[0]
+...
+initial_for_file = filename[0]
+...
+initial_for_website = first_name[0]
+...
+```
+Imagine that you decided to change it and use first _two_ symbols. Again, the computation is hardly complicated, use just replace `[0]` with `[:2]`. But you have to do it for _all_ the code that does this computation. And you cannot use _Replace All_ option because sometimes you might use the first element for some other purposes. And when you edit the code, you are bound to forget about some locations (at least, I do it all the time) making things even less consistent and more confusing. Thus, turning the code into function is particularly useful when the reused code is complex but it pays off even if computation is as simple and trivial as in example above. With a function you have a single code to worry about and you can be sure that same computation is performed whenever you call the function (not the copy of the code that should be identical but may be not).
+
+Note that I put reusable code as the last reason to use functions. This is because the other three are far more important. Having a conceptually clear isolated and testable code is advantages even if you call this function only once. It still makes code easier to understand and to test and helps you to reduce the complexity by replacing code with its meaning. Take a look at the example below. The first code takes the first symbol but this action (taking the first symbol) does not _mean_ anything by itself, it is just a mechanical computation. It is only the original context `initial_for_file = filename[0]` or additional comments that give it its meaning. In contrast, calling a function called _compete_initial_ tells you what is happening, as it disambiguates the purpose of the computation. I suspect that future-you is very pro-disambiguation and anti-confusion.
+```python
+if filename[0] == "A":
+    ...
+    
+if compute_initial(filename) == "A":
+    ...
+```
+
