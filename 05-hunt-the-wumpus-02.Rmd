@@ -12,7 +12,7 @@ I told you that reading code is easy because every action has to be spelled-out 
 Thus, a function should perform one computation that is conceptually clear and those purpose should be understood directly from its name or, at most, from a single sentence that describes it^[This is similar to scientific writing, where a single paragraph conveys a single idea. So, for me, it helps to first write the idea of the paragraph in a single sentence before writing the paragraph itself. If one sentence is not enough, I need to split the text into more paragraphs.]. If you need more than once sentence to explain what function does, you should consider splitting the code further. This does not mean that entire description / documentation must fit into a single sentence. The full description can be lengthy, particularly if underlying computation is complex and there are many parameters to consider. However, these are optional details that tell the reader about _how_ the function is doing its job. Again, they should be able to understand _what_ the job is just from the name or from a single sentence. I am repeating myself and stressing it so much because conceptually simple single job functions are a foundation of a clear robust reusable code. And, trust me on this one, future-you will be very grateful that it has to work with easy-to-understand isolated reliable code you wrote.
 
 ### Function isolates certain code {-}
-Isolation means that your code is run in a separate scope where the only things that exist are function arguments (limited number values with fixed meaning you pass to it from outside) and local variables that you define inside the function. You have no access to variables defined in the outside script or to variables defined inside of other functions. Conversely, neither global script nor other function have access to variables and values you compute inside. This means that you only need to study the code _inside_ the function to understand how it works. Accordingly, when you write the code it should be _independent_ of any global context the function can be used in. Thus, isolation is both practical (no run-time access to variables from outside means fewer chance that things go terribly wrong) and conceptual (no further context is required to understand the code).
+Isolation means that your code is run in a separate scope where the only things that exist are function arguments (limited number of values you pass to it from outside with fixed meaning) and local variables that you define inside the function. You have no access to variables defined in the outside script or to variables defined inside of other functions. Conversely, neither global script nor other function have access to variables and values you compute inside. This means that you only need to study the code _inside_ the function to understand how it works. Accordingly, when you write the code it should be _independent_ of any global context the function can be used in. Thus, isolation is both practical (no run-time access to variables from outside means fewer chance that things go terribly wrong) and conceptual (no further context is required to understand the code).
 
 ### Function makes code easier to test {-}
 You can build even moderately complex programs only if you can be certain what individual chunks of code are doing under every possible condition. Do they give the correct results? Do the fail clearly raising an error, if the inputs are wrong? Do they use defaults when required? However, testing all chunks together means running extreme number of runs as you need to test all possible combinations of conditions for one chunk given all possible conditions for other chunk, etc. Functions make your life much easier. Because they have a single point of entry, fixed number of parameters, a single return value, and are isolated (see above), you can test them one at a time independent of other functions of the rest of the code. This is called _unit testing_ and it is heavy use of [automatic unit testing](https://docs.python.org/3/library/unittest.html) (it is normal to have more code devoted to testing than to the actual program) that ensures reliable code for absolute majority of programs and apps that you use.
@@ -38,16 +38,46 @@ if filename[0] == "A":
 if compute_initial(filename) == "A":
     ...
 ```
+
 ## Defining a function in Python
-A minimal function in Python must 
-
-
+A function in Python looks like this
 ```python
-def <function name>(a list of parameters ):
+def <function name>(param1, param2, ...):
     some internal computation
-    
     if somecondition:
         return some value
-      
     return some other value
 ```
+The parameters are optional, so is the return value. Thus the minimal function would be
+```python
+def minimal_function():
+    pass # pass means "do nothing"
+```
+
+## Create input_int()
+Let us create the first function called `input_int`. It will take have no arguments and will return an integer value. Inside, it will reimplement the code that you created during the last seminar:
+
+```python
+def input_int():
+  get user input and store it in a local variable
+  while it cannot be converted to an integer:
+    remind the player that it must enter an integer
+    get user input and store it in a local variable
+    
+  return input as an integer
+```
+
+I would recommend implementing the code in a separate cell without function header. Once it works, you can indent it and add the function header. Test it, to see that it works reliably.
+::: {.infobox .program}
+Put your code into exercise #1.
+:::
+
+## Document input_int()
+Writing a function is only half-the-job. You need to document it. This may feel excessive but it does not take much time and it is a good habit that makes your code easy to use and reuse. Document even a function (or class, or module) even if you just trying things out. Remember, "there is nothing more permanent than a temporary solution." There are different ways to document the code but we will use [NumPy docstring convention](https://numpydoc.readthedocs.io/en/latest/format.html#docstring-standard). Take the look at the manual and document the function NumPy style. You will only need one-line summary and return value information.
+
+::: {.infobox .program}
+Put your code into exercise #2.
+:::
+
+## Adding prompt
+So far the input function you called inside our `input_int()` function either had no prompt or had some fixed prompt that you picked. However, we will use this function for two different actions: moving (the only thing player can do now) and shooting an arrow (we are hunting Wumpus, after all!). These two actions require two different prompts, so it makes 
