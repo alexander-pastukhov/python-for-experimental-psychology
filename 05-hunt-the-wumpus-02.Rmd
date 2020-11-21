@@ -48,11 +48,13 @@ def <function name>(param1, param2, ...):
         return some value
     return some other value
 ```
+
 The parameters are optional, so is the return value. Thus the minimal function would be
 ```python
 def minimal_function():
     pass # pass means "do nothing"
 ```
+An example of function that does not return anything would be `print()`: It prints to the console but does not return anything. However, in most cases functions return the value. You can use this value either directly or assign it to a variable. E.g., you already use function `random.rand_int()` and assigned the value that it returned to a `pick` variable in Guess the Number game.
 
 ## Create input_int()
 Let us create the first function called `input_int`. It will take have no arguments and will return an integer value. Inside, it will reimplement the code that you created during the last seminar:
@@ -64,10 +66,10 @@ def input_int():
     remind the player that it must enter an integer
     get user input and store it in a local variable
     
-  return input as an integer
+  return input-as-an-integer
 ```
 
-I would recommend implementing the code in a separate cell without function header. Once it works, you can indent it and add the function header. Test it, to see that it works reliably.
+In general, this is the same code, the only difference is that you `return` the user input instead of using the variable directly. I would recommend implementing the code in a separate cell without the function header (`def input():`) and the `return` statements first. Once it works, you can indent it and add the function header. Next, test it by calling the function (e.g. `guess = input_int()` or just `input_int()`), to see that it works reliably.
 ::: {.infobox .program}
 Put your code into exercise #1.
 :::
