@@ -171,7 +171,7 @@ Modify the code that gets the input from the user. First, store the raw string (
 
 # define CAVES (simply copy-paste the definition)
 
-# create `player` variable and set it to a random number between 0 and 19, 
+# create `player` variable and set it to a random number between 0 and len(CAVES)-1, 
 # putting player into a random cave
 
 # while player is not in the cave #5 (index 4):
@@ -179,7 +179,7 @@ Modify the code that gets the input from the user. First, store the raw string (
     # get input into a variable `move_to_str`
     # if move_to_str can be converted to an integer:
         # convert move_to_str to integer and store value in move_to
-        # if `move_to` matches on of the connected caves:
+        # if `move_to` matches one of the connected caves:
             # "move" the `player` to the cave they wanted to `move_to`
         # else:
             # print out an error message
