@@ -1,6 +1,6 @@
-# Hunt the Wumpus, part 1 {#seminar05}
+# Hunt the Wumpus, part 2 {#seminar05}
 
-During our previous seminar, we defined a system of interconnected caves, placed a player into a random cave, and allowed them to wander around. Now, we will make the code modular by using functions and, then, and some thrills, allowing the player to fall into bottomless pits and be carried around by bats.
+During our previous seminar, we defined a system of interconnected caves, placed a player into a random cave, and allowed them to wander around. Now, we will make the code modular by using functions.
 
 ## Functions {#function}
 
@@ -9,16 +9,16 @@ In programming, purpose of a function is to isolate certain code that performs a
 ### Function performs a single computation {-}
 I told you that reading code is easy because every action has to be spelled-out for computers in simple and clear way. However, a lot of simple things can be very overwhelming and confusing. Think about the final code for the previous seminar: we had a loop with two conditional statements nested inside the loop and each other. Add a few more of those and you have so many brunches to trace, you will never be quite sure what will happen. This is because our cognition and working memory, which you use to trace all brunches, are limited to just about four items (the official magic number is [7±2](https://en.wikipedia.org/wiki/The_Magical_Number_Seven,_Plus_or_Minus_Two) but reading the original paper tells you that this is more like four for most of us).
 
-Thus, a function should perform one computation that is conceptually clear and those purpose should be understood directly from its name or, at most, from a single sentence that describes it^[This is similar to scientific writing, where a single paragraph conveys a single idea. So, for me, it helps to first write the idea of the paragraph in a single sentence before writing the paragraph itself. If one sentence is not enough, I need to split the text into more paragraphs.]. If you need more than once sentence to explain what function does, you should consider splitting the code further. This does not mean that entire description / documentation must fit into a single sentence. The full description can be lengthy, particularly if underlying computation is complex and there are many parameters to consider. However, these are optional details that tell the reader about _how_ the function is doing its job. Again, they should be able to understand _what_ the job is just from the name or from a single sentence. I am repeating myself and stressing it so much because conceptually simple single job functions are a foundation of a clear robust reusable code. And, trust me on this one, future-you will be very grateful that it has to work with easy-to-understand isolated reliable code you wrote.
+Thus, a function should perform one computation that is conceptually clear and those purpose should be understood directly from its name or, at most, from a single sentence that describes it^[This is similar to scientific writing, where a single paragraph conveys a single idea. So, for me, it helps to first write the idea of the paragraph in a single sentence before writing the paragraph itself. If one sentence is not enough, I need to split the text into more paragraphs.]. If you need more than once sentence to explain what function does, you should consider splitting the code further. This does not mean that entire description / documentation must fit into a single sentence. The full description can be lengthy, particularly if underlying computation is complex and there are many parameters to consider. However, these are optional details that tell the reader _how_ the function is doing its job. Again, they should be able to understand _what_ the job is just from the name or from a single sentence. I am repeating myself and stressing it so much because conceptually simple single job functions are a foundation of a clear robust reusable code. And, trust me on this one, future-you will be very grateful that it has to work with easy-to-understand isolated reliable code you wrote.
 
-### Function isolates certain code {-}
+### Function isolates code from the rest of the program {-}
 Isolation means that your code is run in a separate scope where the only things that exist are function arguments (limited number of values you pass to it from outside with fixed meaning) and local variables that you define inside the function. You have no access to variables defined in the outside script or to variables defined inside of other functions. Conversely, neither global script nor other function have access to variables and values you compute inside. This means that you only need to study the code _inside_ the function to understand how it works. Accordingly, when you write the code it should be _independent_ of any global context the function can be used in. Thus, isolation is both practical (no run-time access to variables from outside means fewer chance that things go terribly wrong) and conceptual (no further context is required to understand the code).
 
 ### Function makes code easier to test {-}
 You can build even moderately complex programs only if you can be certain what individual chunks of code are doing under every possible condition. Do they give the correct results? Do the fail clearly raising an error, if the inputs are wrong? Do they use defaults when required? However, testing all chunks together means running extreme number of runs as you need to test all possible combinations of conditions for one chunk given all possible conditions for other chunk, etc. Functions make your life much easier. Because they have a single point of entry, fixed number of parameters, a single return value, and are isolated (see above), you can test them one at a time independent of other functions of the rest of the code. This is called _unit testing_ and it is heavy use of [automatic unit testing](https://docs.python.org/3/library/unittest.html) (it is normal to have more code devoted to testing than to the actual program) that ensures reliable code for absolute majority of programs and apps that you use.
 
 ### Function makes code reusable {-}
-Sometimes this reason is given as the primary reason to use functions. Turning code into a function means that you can call the function instead of copy-pasting the code. The latter is a terrible idea as it means that you have to maintain the same code at many places (sometimes you might not be even sure in just how many). This is a problem even if the code is extremely simple. Here, we have a standard way to compute an initial by taking the first symbol from a string. The code is as simple as it gets.
+Sometimes this reason is given as the primary reason to use functions. Turning code into a function means that you can call the function instead of copy-pasting the code. The latter is a terrible idea as it means that you have to maintain the same code at many places (sometimes you might not be even sure in just how many). This is a problem even if the code is extremely simple. Here, we define a _standard_ way to compute an initial by taking the first symbol from a string. The code is as simple as it gets.
 ```python
 ...
 initial = "test"[0]
@@ -28,7 +28,55 @@ initial_for_file = filename[0]
 initial_for_website = first_name[0]
 ...
 ```
-Imagine that you decided to change it and use first _two_ symbols. Again, the computation is hardly complicated, use just replace `[0]` with `[:2]`. But you have to do it for _all_ the code that does this computation. And you cannot use _Replace All_ option because sometimes you might use the first element for some other purposes. And when you edit the code, you are bound to forget about some locations (at least, I do it all the time) making things even less consistent and more confusing. Thus, turning the code into function is particularly useful when the reused code is complex but it pays off even if computation is as simple and trivial as in example above. With a function you have a single code to worry about and you can be sure that same computation is performed whenever you call the function (not the copy of the code that should be identical but may be not).
+Imagine that you decided to change it and use first _two_ symbols. Again, the computation is hardly complicated, use just replace `[0]` with `[:2]`. But you have to do it for _all_ the code that does this computation. And you cannot use _Replace All_ option because sometimes you might use the first element for some other purposes. And when you edit the code, you are bound to forget about some locations (at least, I do it all the time) making things even less consistent and more confusing. Turning code into a function means you need to modify and test just everything at just one location. Here is the original code implemented via a function.
+```python
+def generate_initial(full_string):
+    """Generates an initial using first symbol.
+    
+    Parameters
+    ----------
+    full_string : str
+    
+    Returns
+    ----------
+    str : single symbol
+    """
+    return full_string[0]
+
+...
+initial = generate_initial("test")
+...
+initial_for_file = generate_initial(filename)
+...
+initial_for_website = generate_initial(first_name)
+...
+```
+
+and here is the "alternative" initial computation. Note that the code that uses the function _stays the same_
+```python
+def generate_initial(full_string):
+    """Generates an initial using first TWO symbols.
+    
+    Parameters
+    ----------
+    full_string : str
+    
+    Returns
+    ----------
+    str : two symbols long
+    """
+    return full_string[:2]
+
+...
+initial = generate_initial("test")
+...
+initial_for_file = generate_initial(filename)
+...
+initial_for_website = generate_initial(first_name)
+...
+```
+
+Thus, turning the code into function is particularly useful when the reused code is complex but it pays off even if computation is as simple and trivial as in example above. With a function you have a single code to worry about and you can be sure that same computation is performed whenever you call the function (not the copy of the code that should be identical but may be not).
 
 Note that I put reusable code as the last reason to use functions. This is because the other three reasons are far more important. Having a conceptually clear isolated and testable code is advantages even if you call this function only once. It still makes code easier to understand and to test and helps you to reduce the complexity by replacing code with its meaning. Take a look at the example below. The first code takes the first symbol but this action (taking the first symbol) does not _mean_ anything by itself, it is just a mechanical computation. It is only the original context `initial_for_file = filename[0]` or additional comments that give it its meaning. In contrast, calling a function called _compete_initial_ tells you what is happening, as it disambiguates the purpose of the computation. I suspect that future-you is very pro-disambiguation and anti-confusion.
 ```python
@@ -40,7 +88,7 @@ if compute_initial(filename) == "A":
 ```
 
 ## Defining a function in Python
-A function in Python looks like this
+A function in Python looks like this (note the indentation)
 ```python
 def <function name>(param1, param2, ...):
     some internal computation
@@ -54,10 +102,157 @@ The parameters are optional, so is the return value. Thus the minimal function w
 def minimal_function():
     pass # pass means "do nothing"
 ```
-An example of function that does not return anything would be `print()`: It prints to the console but does not return anything. However, in most cases functions return the value. You can use this value either directly or assign it to a variable. E.g., you already use function `random.rand_int()` and assigned the value that it returned to a `pick` variable in Guess the Number game.
 
-## Create input_int()
-Let us create the first function called `input_int`. It will take have no arguments and will return an integer value. Inside, it will reimplement the code that you created during the last seminar:
+You must defined your function (once!) before calling it (one or more times). Thus, you should create functions _before_ the code that uses it (main script or other functions).
+
+```python
+def do_something():
+    """
+    This is a function called "do_something". It actually does nothing.
+    It requires no input and returns no value.
+    """
+    return
+    
+    
+def another_function():
+    ...
+    # We call it in another function.
+    do_something()
+    ...
+    
+    
+# This is a function call (we use this function)
+do_something()
+
+# And we use it again!
+do_something()
+```
+::: {.infobox .practice}
+Do exercise #1.
+:::
+
+You must also keep in mind that redefining a function (or defining a different function that has the same name) overwrites the original definition, so that only the latest version of it is retained and can be used.
+
+::: {.infobox .practice}
+Do exercise #2.
+:::
+
+Although example in the exercise makes the problem look very obvious, in a large code that spans multiple files and uses various libraries, the issue may not be so straightforward!
+
+## Function arguments
+Some function may not need arguments (also called parameters), as they perform a fixed action:
+```python
+def ping():
+    """
+    Machine that goes "ping!"
+    """
+    print("ping!")
+```
+
+However, typically, you need to pass information to the function, which then affects how the function performs its action. In Python, you simply list arguments within the round brackets after the function name (there are more bells and whistles but we will keep it simple for now). For example, we could write a function that computes and prints person's age given two parameters 1) their birth year, 2) current year:
+```python
+def print_age(birth_year, current_year):
+    """
+    Prints age given birth year and current year.
+    
+    Parameters
+    ----------
+    birth_year : int
+    current_year : int
+    """
+    print(current_year - birth_year)
+```
+
+It is a **very good idea** to give meaningful names to functions, parameters, and variables. The following code will produce exactly the same result but understanding _why_ and _what for_ it is doing what it is doing would be much harder (so **always** use meaningful names!):
+```python
+def x(a, b):
+    print(b - a)
+```
+
+When calling a function, you must pass the correct number of parameters and pass them in a _correct order_, another reason for a function arguments to have meaningful names.
+
+::: {.infobox .practice}
+Do exercise #3.
+:::
+
+When you call the function, the values you _pass_ to the function are assigned to the parameters and they are used as _local_ variables (more on _local_ bit later). However, it does not matter _how_ you came up with this values, whether they were in a variable, hard-coded, or returned by another function. If you are using numeric, logical, or string values (_immutable_ types), you can assume that any link to the original variable or function that produced it is gone (we'll deal with _mutable_ types, like lists, later). Thus, when writing a function or reading its code, you just assume that it has been set to some value during the call and you can ignore the context in which this call was made
+```python
+# hardcoded
+print_age(1976, 2020)
+
+# using values from variables
+i_was_born = 1976
+today_is = 2020
+print_age(i_was_born, today_is)
+
+# using value from a function
+def get_current_year():
+    return 2020
+
+print_age(1976, get_current_year())
+```
+
+## Functions' returned value (output)
+Your function may perform an action without returning any value to the caller (this is what out `print_age` function was doing). However, you may need to return the value instead. For example, to make things more general, we might want write a new function called `compute_age` that return the age instead of printing it (we can always print ourselves).
+```python
+def compute_age(birth_year, current_year):
+    """
+    Computes age given birth year and current year.
+
+    Parameters
+    ----------
+    birth_year : int
+    current_year : int
+    
+    Returns
+    ----------
+    int : age
+    """
+    return current_year - birth_year
+```
+
+Note that even if a function returns the value, it is retained only if it is actually used (stored in a variable, used as a value, etc.). Thus, just calling it will not by itself store the returned value anywhere!
+
+::: {.infobox .practice}
+Do exercise #4.
+:::
+
+## Scopes (for immutable values)
+
+As we have discussed above, turning code into a function _isolates_ it, so makes it run in it own _scope_. In Python, each variable exists in the _scope_ it has been defined in. If it was defined in the _global_ script, it exists in that _global_ scope as a _global_ variable. However, it is not accessible (at least not without special effort via a `global` operator) from within a function. Conversely, function's parameters and any variable defined _inside a function_, exists and is accessible only **inside that function**. It is fully invisible for the outside world and cannot be accessed from a global script or from another function. Conversely, any changes you make to the function parameter or local variable have no effect on the outside world (well, almost, _mutable_ objects list lists are more complicated, more on that later).
+
+The purpose of scopes is to isolate individual code segments from each other, so that modifying variables within one scope has no effect on all other scopes. This means that when writing or debugging the code, you do not need to worry about code in other scopes and concentrate only on the code you working on. Because scopes are isolated, they may have _identically named variables_ that, however, have no relationship to each other as they  exists in their own parallel universes. Thus, if you want to know which value a variable has, you must look only within the scope and ignore all other scopes (even if the names match!).
+
+```python
+# this is variable `x` in the global scope
+x  = 5 
+
+def f1():
+  # This is variable `x` in the scope of function f1
+  # It has the same name as the global variable but
+  # has no relation to it: many people are called Sasha 
+  # but they are still different people. Whatever you
+  # happens to `x` in f1, stays in f1's scope.
+  x = 3
+  
+  
+def f2(x):
+  # This is parameter `x` in the scope of function f2.
+  # Again, no relation to other global or local variables.
+  # It is a completely separate object, it just happens to 
+  # have the same name (again, just namesakes)
+  print(x)
+```
+
+
+::: {.infobox .practice}
+Do exercise #5.
+:::
+
+## Create _input_int()_
+Let us create the first function called `input_int`. It will take have no arguments (yet) and will return an integer value. This will encapsulate the checks and repeated prompts inside the function, making it easier to maintain the code. It will also make your top-level code cleaner as multiple lines are now replaced with a single call to a function `input_int()`, so you know that in this line you get an integer input from the user. This helps you to concentrate on what is happening ("I am getting an integer input") not how it is happening.
+
+So let us re-implement the code that you created during the last seminar as a function with the only difference is that you `return` the user input instead of using the variable's value directly. I would recommend implementing the code in a separate cell without the function header (`def input():`) and the `return` statements first. Once it works, you can indent it and add the function header. Next, test it by calling the function (e.g. `guess = input_int()` or just `input_int()`), to see that it works reliably, i.e. keeps prompting you until you enter a valid integer.
 
 ```python
 def input_int():
@@ -69,17 +264,97 @@ def input_int():
   return input-as-an-integer
 ```
 
-In general, this is the same code, the only difference is that you `return` the user input instead of using the variable directly. I would recommend implementing the code in a separate cell without the function header (`def input():`) and the `return` statements first. Once it works, you can indent it and add the function header. Next, test it by calling the function (e.g. `guess = input_int()` or just `input_int()`), to see that it works reliably.
 ::: {.infobox .program}
-Put your code into exercise #1.
+Put your code into exercise #6.
 :::
 
-## Document input_int()
-Writing a function is only half-the-job. You need to document it. This may feel excessive but it does not take much time and it is a good habit that makes your code easy to use and reuse. Document even a function (or class, or module) even if you just trying things out. Remember, "there is nothing more permanent than a temporary solution." There are different ways to document the code but we will use [NumPy docstring convention](https://numpydoc.readthedocs.io/en/latest/format.html#docstring-standard). Take the look at the manual and document the function NumPy style. You will only need one-line summary and return value information.
+## Documenting _input_int()_
+Writing a function is only half the job. You need to document it! This may feel excessive but it does not take much time and it is a good habit that makes your code easy to use and reuse. Document your code (a function, or a class, or a module) even if you just trying things out. Remember, "there is nothing more permanent than a temporary solution." Not documenting code is a false economy: a few minutes you save on not documenting it, will translate into dozens of them when you try to understand and debug undocumented code later on.
+
+There are different ways to document the code but we will use [NumPy docstring convention](https://numpydoc.readthedocs.io/en/latest/format.html#docstring-standard). Here is an example of such documented function
+
+```python
+def generate_initial(full_string):
+    """Generates an initial using first symbol.
+    
+    Parameters
+    ----------
+    full_string : str
+    
+    Returns
+    ----------
+    str : single symbol
+    """
+    return full_string[0]
+```
+Take the look at the [manual](https://numpydoc.readthedocs.io/en/latest/format.html#docstring-standard) and document the function NumPy style. You will only need one-line summary and return value information.
 
 ::: {.infobox .program}
-Put your code into exercise #2.
+Put your code into exercise #7.
 :::
 
-## Adding prompt
-So far the input function you called inside our `input_int()` function either had no prompt or had some fixed prompt that you picked. However, we will use this function for two different actions: moving (the only thing player can do now) and shooting an arrow (we are hunting Wumpus, after all!). These two actions require two different prompts, so it makes 
+## Adding prompt parameter to _input_int()_
+So far the input function you called inside our `input_int()` function either had no prompt or had some fixed prompt that you hard-coded. However, we will use this function for two different actions: moving (the only thing player can do now) and shooting an arrow (we are hunting the Wumpus, after all!). These two actions require two different prompts, so it makes sense to add an _argument_ `prompt` to our `input_int()` function.
+
+You assume that this argument is a string that you need to pass on to the `input()` function you are using inside. Thus, you would be able to call your function (almost) the same way as you called `input()`, e.g. `input_int("Please enter the cave index")`, but are guaranteed to get an integer value, as all the check and repeated prompts occur inside of the function.
+
+::: {.infobox .program}
+Put your code into exercise #8.
+:::
+
+## Using the function in the code
+Now we have a function that makes our code cleaner and easier to understand, so let us use it! Copy-paste your final game code for the previous seminar and alter it to use `input_int()` in place of `input()` + checks + type-conversion. In this modified code, put the function declaration after the import and a constant definition but before the rest of the code.
+
+::: {.infobox .program}
+Put your code into exercise #9.
+:::
+
+## Create _input_cave()_ function
+You implemented a function that get an _integer_ input from the player. This is a good first step, as it takes care of all the checks that the value is of the correct type. However, we are not interested in getting an integer per se, we are interested in getting the index of the cave the player wants to move to and this index must be _correct_, as in match the index of accessible caves.
+
+Let us implement a function that does just that. We will call it `input_cave`, it will have a single argument `accesible_caves` (the assumed value is the list of accessible caves), and it will return a integer: the index of the cave the player picked. In the function, you need to print the cave indexes and ask about which cave the player wants to go to until they give a valid answer. Note that you do not need to re-implement the `input_int()` functionality inside, you use that function to get an integer and perform additional checks that integer is `in` the list.  Don't forget to document and test it!
+
+::: {.infobox .program}
+Put your code into exercise #10.
+:::
+
+Now copy-paste the code from exercise #9 and alter it to use `input_cave` in place of `input_int()` + checks code.
+
+::: {.infobox .program}
+Put your code into exercise #11.
+:::
+
+
+## Create _find_empty_cave()_ function
+As final modification for today, let us spin-off the code that places the player into a random cave into a separate function. We will call it `find_empty_cave` and, currently, it will have just one parameter `caves_number` (the total number of caves), and it will generate and return a random number between `0` and `caves_number - 1`. Its functionality will be identical to the simple call you are already making in your code, so this may feel unnecessary. However, later we will be placing other objects (bottomless pits, bats, the Wumpus), so we will need a function that can find an empty (unoccupied) cave with all the necessary lack-of-conflict checks. The current function, however limited, will serve as a foundation for our development during the next seminar.
+
+Do not forget to document and test the function.
+::: {.infobox .program}
+Put your code into exercise #12.
+:::
+
+Now copy-paste the code from exercise #11 and alter it to use `find_empty_cave` function.
+
+::: {.infobox .program}
+Put your code into exercise #13.
+:::
+
+Your final code should look roughly as follows and, as you can see, the main script is now slim and easy to follow.
+```python
+# import randint function from the random library
+
+# define CAVES (simply copy-paste the definition)
+
+# define input_int function
+# define input_cave function
+# define find_empty_cave function
+
+# create `player` variable and put him into an empty (unoccupied) cave
+
+# while player is not in the cave #5 (index 4):
+    # get input on which cave the player wants to move to
+    # move the player to that cave
+
+# print a nice game-over message
+```
+
