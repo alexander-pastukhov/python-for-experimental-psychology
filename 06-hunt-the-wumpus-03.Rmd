@@ -1,0 +1,128 @@
+# Hunt the Wumpus, part 3 {#seminar06}
+During the last seminar, we used functions to make out code modular. Now, let us add more bells-and-whistles to the game: bottomless pits, crazy bats, and the Wumpus itself. Don't forget to download the [exercise notebook](notebooks/Seminar 06. Hunt the Wumpus, part 3.ipynb).
+
+## Keeping track of occupied caves
+
+So far, we had only the player to keep the track of and we were doing it by storing their location in the `player` variable. However, as we will add more game objects (bottomless pits, bats, the Wumpus), we need to keep the track of who-is-where, so that we don't place them in an already occupied cave. For this, we will keep a _list_ of occupied caves (let's call the variable `occupied_caves`). We will initialize it an empty list (you can make an empty list via either `[]` or `list()`) and then [append](https://docs.python.org/3.8/tutorial/datastructures.html#more-on-lists) to it. E.g., `list.append(new_value)`. We will pass this list to `find_empty_cave` function as a second argument and we will modify the function to generate an index of the cave _not_ in that list.
+
+Let us start with the function, add a second argument to it (call it `caves_taken` or something along these lines) and modify the code so the it keeps randomly generating cave index until it is _not_ in the `caves_taken` list. Remember document the code and test the code by passing a list of hard-coded values to see that it never returns value from the list (e.g., `find_empty_cave(len(CAVES), [2, 5, 7])`).
+
+::: {.infobox .program}
+Put your code into exercise #1.
+:::
+
+Now we need to modify the main script to take advantage of the update `find_empty_cave()`. Here is the outline
+```python
+# import randint function from the random library
+
+# define CAVES
+
+# define input_int function
+# define input_cave function
+# define find_empty_cave function
+
+# create `occupied_caves` variable and initialize it to an empty list
+# create `player` variable and put him into an empty (unoccupied) cave (use `occupied_caves` when calling the function)
+# append player location to the `occupied_caves` list for future use
+
+# while player is not in the cave #5 (index 4):
+    # get input on which cave the player wants to move to
+    # move the player to that cave
+
+# print a nice game-over message
+```
+
+::: {.infobox .program}
+Put your code into exercise #2.
+:::
+
+Now that we have the scaffolding in place, let us add bottomless pits. But before that, you need to learn about [for](https://docs.python.org/3/tutorial/controlflow.html#for-statements) loops and [range](https://docs.python.org/3/tutorial/controlflow.html#the-range-function).
+
+## For loop {#for-loop}
+The [for](https://docs.python.org/3/tutorial/controlflow.html#for-statements) loop iterates over sequence of items. Generally speaking, for loop loops over items that are in _iterable_ containers or yielded by _generators_. We won't go into exact details of what these are and how their are implemented. For now, you just need to know that there are two kinds of things a for loop can iterate over and that they differ in whether they produce a finite number of elements to loop over (iterable containers) or a potentially endless number of elements to iterate over (generators). An example of the former is a list (an iterable container that holds a finite number of items), an example of the latter is a `range()` function, which we will discuss separately below.
+
+To iterate over items in the list, you simply write
+```python
+for item in list:
+  ...
+  do something with an item or just do something
+  ...
+```
+
+For example, you can print every item of the list one-by-one. The loop will be executed three times (there are three items in the list) and on each iteration the `item` variable will take the value of the corresponding element: `"A"` on the first iteration, `"B"` on the second, `"C"` on the third.
+```{python}
+for item in ["A", "C", "K"]:
+    print("Item is %s"%(item))
+```
+
+::: {.infobox .practice}
+Do exercise #3.
+:::
+
+## range() {#range}
+Sometimes you need to repeat an action several times (e.g., in our code below, we will need to add two bottomless pits) or iterate over sequence of numbers. You can write down such list by hand, e.g. `[0, 1, 2]`, but an easier way is to use [range(start, stop, step)](https://docs.python.org/3/library/stdtypes.html#range) function that generates a sequence of numbers from `start` until-but-not-including `stop` with a given `step`. If you omit the `step`, it is assumed to be `1`. You can also pass just one value that is interpreted as `stop` with `start=0` and `step=1`. Thus, `range(3)` is the same as `range(0, 3)` and `range(0, 3, 1)`.
+
+Important note, `range()` function does not produce a list of values but a _generator_ that yields values one at a time. You can see it by calling this function in isolation
+```{python}
+range(3)
+```
+
+The generators are functions (or objects) that yield items on at a time upon request that makes them "lazy" but more memory efficient. E.g., if you want to iterate over 10000 numbers, you do not need to generate a 10000 number long list (take memory), you just need to get numbers from that sequence one a time. You can convert a generator into a list via `list()` function
+```{python}
+list(range(3))
+```
+
+The reason for distinction between generators and iterable containers like lists, is that generator sequences can be unlimited. For example, you can have a generator that yields a new random number on each iteration (upon each request). It will never run out of items and trying to convert it to a list would be a bad idea as infinitely long lists require infinite amount of memory!
+
+::: {.infobox .practice}
+Do exercise #4.
+:::
+
+## Placing bottomless pits
+
+Now we can add bottomless pits to the game. The idea is simple, we place two of those in random caves, so when the player wanders into a cave with a bottomless pit, they fall down and, eventually, die (game over). We will, however, warn the player, their current cave is next to it, without telling them which cave it is in specifically. 
+
+First thing first, let us add them. For this, we will create a new constant `NUMBER_OF_BOTTOMLESS_PITS` (I suggest that we set it to two but you can have more or less of them) and a new variable (`bottomless_pits`) with a list of indexes of caves with the bottomless pits in them. Add bottomless pits in a for loop by getting a cave index from `find_empty_cave` function (think about its parameters). Here is the code outline for the initialization part (do not copy paste the main loop just yet). See if numbers makes sense (number of caves is what you expected them to be, value are within the range, there are no duplicates, etc.)
+
+```python
+# import randint function from the random library
+
+# define CAVES
+-> # define NUMBER_OF_BOTTOMLESS_PITS
+
+# define input_int function
+# define input_cave function
+# define find_empty_cave function
+
+# create `occupied_caves` variable and initialize it to an empty list
+# create `player` variable and put him into an empty (unoccupied) cave (use `occupied_caves` when calling the function)
+# append player location to the `occupied_caves` list for future use
+
+-> # create `bottomless_pits` variable and initialize it to an empty list
+-> # use for loop and range function to repeat the for loop NUMBER_OF_BOTTOMLESS_PITS times
+-> #     generate a new location for the bottomless pit via find_empty_cave() function
+-> #     append this location to `occupied_caves` variable
+-> #     append this location to `bottomless_pits` variable
+
+
+-> # print out both player and bottomless_pits variables for diagnostics
+```
+::: {.infobox .program}
+Put your code into exercise #5.
+:::
+
+## Warning about a bottomless pit
+
+## Falling into a bottomless pit
+
+
+
+## Placing bats
+
+## Transported by bats
+
+## Was I just transported to a bottomless pit?
+
+
+
+## Boxes versus Post-it notes: Mutuable versus Immutable types
