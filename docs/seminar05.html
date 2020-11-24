@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Seminar 5 Hunt the Wumpus, part 2 | Python for social and experimental psychology</title>
+  <meta name="description" content="Material and exercises for ‘Python for social and experimental psychology’ seminar." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Seminar 5 Hunt the Wumpus, part 2 | Python for social and experimental psychology" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Material and exercises for ‘Python for social and experimental psychology’ seminar." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Seminar 5 Hunt the Wumpus, part 2 | Python for social and experimental psychology" />
+  
+  <meta name="twitter:description" content="Material and exercises for ‘Python for social and experimental psychology’ seminar." />
+  
+
+<meta name="author" content="Alexander (Sasha) Pastukhov" />
+
+
+<meta name="date" content="2020-11-24" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="seminar04.html"/>
+<link rel="next" href="cross-references.html"/>
+<script src="libs/header-attrs-2.5/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Python for social and experimental psychology</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#about-the-seminar"><i class="fa fa-check"></i>About the seminar</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#note-on-exercises"><i class="fa fa-check"></i>Note on exercises</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#why-python"><i class="fa fa-check"></i>Why Python?</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="getting-started.html"><a href="getting-started.html"><i class="fa fa-check"></i>Getting Started</a>
+<ul>
+<li class="chapter" data-level="" data-path="getting-started.html"><a href="getting-started.html#install-anaconda"><i class="fa fa-check"></i>Installing Anaconda environment</a></li>
+<li class="chapter" data-level="" data-path="getting-started.html"><a href="getting-started.html#install-vs-code"><i class="fa fa-check"></i>Installing Visual Studio Code</a></li>
+<li class="chapter" data-level="" data-path="getting-started.html"><a href="getting-started.html#install-psychopy"><i class="fa fa-check"></i>Installing PsychoPy</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="seminar01.html"><a href="seminar01.html"><i class="fa fa-check"></i><b>1</b> Python basics</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="seminar01.html"><a href="seminar01.html#variables"><i class="fa fa-check"></i><b>1.1</b> Variables</a></li>
+<li class="chapter" data-level="1.2" data-path="seminar01.html"><a href="seminar01.html#assignments-are-not-equations"><i class="fa fa-check"></i><b>1.2</b> Assignments are not equations!</a></li>
+<li class="chapter" data-level="1.3" data-path="seminar01.html"><a href="seminar01.html#constants"><i class="fa fa-check"></i><b>1.3</b> Constants</a></li>
+<li class="chapter" data-level="1.4" data-path="seminar01.html"><a href="seminar01.html#value-types"><i class="fa fa-check"></i><b>1.4</b> Value types</a></li>
+<li class="chapter" data-level="1.5" data-path="seminar01.html"><a href="seminar01.html#printing-output"><i class="fa fa-check"></i><b>1.5</b> Printing output</a></li>
+<li class="chapter" data-level="1.6" data-path="seminar01.html"><a href="seminar01.html#string-formatting"><i class="fa fa-check"></i><b>1.6</b> String formatting</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="seminar02.html"><a href="seminar02.html"><i class="fa fa-check"></i><b>2</b> Guess the Number</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="seminar02.html"><a href="seminar02.html#game-description"><i class="fa fa-check"></i><b>2.1</b> Game description</a></li>
+<li class="chapter" data-level="2.2" data-path="seminar02.html"><a href="seminar02.html#lets-pick-the-number-exercise-1"><i class="fa fa-check"></i><b>2.2</b> Let’s pick the number (Exercise 1)</a></li>
+<li class="chapter" data-level="2.3" data-path="seminar02.html"><a href="seminar02.html#input-function"><i class="fa fa-check"></i><b>2.3</b> Asking user for a guess (Exercise 2)</a></li>
+<li class="chapter" data-level="2.4" data-path="seminar02.html"><a href="seminar02.html#conditional-if-statement"><i class="fa fa-check"></i><b>2.4</b> Conditional <em>if</em> statement</a></li>
+<li class="chapter" data-level="2.5" data-path="seminar02.html"><a href="seminar02.html#conditions-and-comparisons-exercises-3-8"><i class="fa fa-check"></i><b>2.5</b> Conditions and comparisons (exercises 3-8)</a></li>
+<li class="chapter" data-level="2.6" data-path="seminar02.html"><a href="seminar02.html#grouping-statements-via-identation-exercise-9"><i class="fa fa-check"></i><b>2.6</b> Grouping statements via identation (exercise #9)</a></li>
+<li class="chapter" data-level="2.7" data-path="seminar02.html"><a href="seminar02.html#checking-the-answer-exercise-11"><i class="fa fa-check"></i><b>2.7</b> Checking the answer (Exercise 11)</a></li>
+<li class="chapter" data-level="2.8" data-path="seminar02.html"><a href="seminar02.html#picking-number-randomly-exercise-12"><i class="fa fa-check"></i><b>2.8</b> Picking number randomly (Exercise 12)</a></li>
+<li class="chapter" data-level="2.9" data-path="seminar02.html"><a href="seminar02.html#one-armed-bandit-exercise-13"><i class="fa fa-check"></i><b>2.9</b> One-armed bandit (Exercise 13)</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="seminar03.html"><a href="seminar03.html"><i class="fa fa-check"></i><b>3</b> Guess the Number, the Sequel</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="seminar03.html"><a href="seminar03.html#while-loop"><i class="fa fa-check"></i><b>3.1</b> While loop (Exercises 1-2)</a></li>
+<li class="chapter" data-level="3.2" data-path="seminar03.html"><a href="seminar03.html#counting-attempts-exercise-3"><i class="fa fa-check"></i><b>3.2</b> Counting attempts (Exercise #3)</a></li>
+<li class="chapter" data-level="3.3" data-path="seminar03.html"><a href="seminar03.html#break"><i class="fa fa-check"></i><b>3.3</b> Breaking (and exiting, Exercise #4)</a></li>
+<li class="chapter" data-level="3.4" data-path="seminar03.html"><a href="seminar03.html#limiting-number-of-attempts-via-break-exercise-5"><i class="fa fa-check"></i><b>3.4</b> Limiting number of attempts via break (Exercise 5)</a></li>
+<li class="chapter" data-level="3.5" data-path="seminar03.html"><a href="seminar03.html#correct-end-of-game-message-exercise-6"><i class="fa fa-check"></i><b>3.5</b> Correct end-of-game message (Exercise 6)</a></li>
+<li class="chapter" data-level="3.6" data-path="seminar03.html"><a href="seminar03.html#limiting-number-of-attempts-with-a-break-exercise-7"><i class="fa fa-check"></i><b>3.6</b> Limiting number of attempts with a break (Exercise 7)</a></li>
+<li class="chapter" data-level="3.7" data-path="seminar03.html"><a href="seminar03.html#show-remaining-attempts-exercise-8"><i class="fa fa-check"></i><b>3.7</b> Show remaining attempts (Exercise 8)</a></li>
+<li class="chapter" data-level="3.8" data-path="seminar03.html"><a href="seminar03.html#repeating-the-game-exercise-9"><i class="fa fa-check"></i><b>3.8</b> Repeating the game (Exercise 9)</a></li>
+<li class="chapter" data-level="3.9" data-path="seminar03.html"><a href="seminar03.html#best-score-exercise-10"><i class="fa fa-check"></i><b>3.9</b> Best score (Exercise 10)</a></li>
+<li class="chapter" data-level="3.10" data-path="seminar03.html"><a href="seminar03.html#counting-game-rounds-exercise-11"><i class="fa fa-check"></i><b>3.10</b> Counting game rounds (Exercise 11)</a></li>
+<li class="chapter" data-level="3.11" data-path="seminar03.html"><a href="seminar03.html#wrap-up"><i class="fa fa-check"></i><b>3.11</b> Wrap up</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="seminar04.html"><a href="seminar04.html"><i class="fa fa-check"></i><b>4</b> Hunt the Wumpus, part 1</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="seminar04.html"><a href="seminar04.html#lists"><i class="fa fa-check"></i><b>4.1</b> Lists</a></li>
+<li class="chapter" data-level="4.2" data-path="seminar04.html"><a href="seminar04.html#caves"><i class="fa fa-check"></i><b>4.2</b> Caves</a></li>
+<li class="chapter" data-level="4.3" data-path="seminar04.html"><a href="seminar04.html#wandering-around"><i class="fa fa-check"></i><b>4.3</b> Wandering around</a></li>
+<li class="chapter" data-level="4.4" data-path="seminar04.html"><a href="seminar04.html#checking-whether-a-value-is-in-the-list"><i class="fa fa-check"></i><b>4.4</b> Checking whether a value is <em>in</em> the list</a></li>
+<li class="chapter" data-level="4.5" data-path="seminar04.html"><a href="seminar04.html#checking-valid-cave-index"><i class="fa fa-check"></i><b>4.5</b> Checking valid cave index</a></li>
+<li class="chapter" data-level="4.6" data-path="seminar04.html"><a href="seminar04.html#checking-that-string-can-be-converted-to-an-integer"><i class="fa fa-check"></i><b>4.6</b> Checking that string can be converted to an integer</a></li>
+<li class="chapter" data-level="4.7" data-path="seminar04.html"><a href="seminar04.html#checking-valid-integer-input"><i class="fa fa-check"></i><b>4.7</b> Checking valid integer input</a></li>
+<li class="chapter" data-level="4.8" data-path="seminar04.html"><a href="seminar04.html#wrap-up-1"><i class="fa fa-check"></i><b>4.8</b> Wrap up</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="seminar05.html"><a href="seminar05.html"><i class="fa fa-check"></i><b>5</b> Hunt the Wumpus, part 2</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="seminar05.html"><a href="seminar05.html#function"><i class="fa fa-check"></i><b>5.1</b> Functions</a>
+<ul>
+<li class="chapter" data-level="" data-path="seminar05.html"><a href="seminar05.html#function-performs-a-single-computation"><i class="fa fa-check"></i>Function performs a single computation</a></li>
+<li class="chapter" data-level="" data-path="seminar05.html"><a href="seminar05.html#function-isolates-code-from-the-rest-of-the-program"><i class="fa fa-check"></i>Function isolates code from the rest of the program</a></li>
+<li class="chapter" data-level="" data-path="seminar05.html"><a href="seminar05.html#function-makes-code-easier-to-test"><i class="fa fa-check"></i>Function makes code easier to test</a></li>
+<li class="chapter" data-level="" data-path="seminar05.html"><a href="seminar05.html#function-makes-code-reusable"><i class="fa fa-check"></i>Function makes code reusable</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="seminar05.html"><a href="seminar05.html#defining-a-function-in-python"><i class="fa fa-check"></i><b>5.2</b> Defining a function in Python</a></li>
+<li class="chapter" data-level="5.3" data-path="seminar05.html"><a href="seminar05.html#function-arguments"><i class="fa fa-check"></i><b>5.3</b> Function arguments</a></li>
+<li class="chapter" data-level="5.4" data-path="seminar05.html"><a href="seminar05.html#functions-returned-value-output"><i class="fa fa-check"></i><b>5.4</b> Functions’ returned value (output)</a></li>
+<li class="chapter" data-level="5.5" data-path="seminar05.html"><a href="seminar05.html#scopes-for-immutable-values"><i class="fa fa-check"></i><b>5.5</b> Scopes (for immutable values)</a></li>
+<li class="chapter" data-level="5.6" data-path="seminar05.html"><a href="seminar05.html#create-input_int"><i class="fa fa-check"></i><b>5.6</b> Create <em>input_int()</em></a></li>
+<li class="chapter" data-level="5.7" data-path="seminar05.html"><a href="seminar05.html#documenting-input_int"><i class="fa fa-check"></i><b>5.7</b> Documenting <em>input_int()</em></a></li>
+<li class="chapter" data-level="5.8" data-path="seminar05.html"><a href="seminar05.html#adding-prompt-parameter-to-input_int"><i class="fa fa-check"></i><b>5.8</b> Adding prompt parameter to <em>input_int()</em></a></li>
+<li class="chapter" data-level="5.9" data-path="seminar05.html"><a href="seminar05.html#using-the-function-in-the-code"><i class="fa fa-check"></i><b>5.9</b> Using the function in the code</a></li>
+<li class="chapter" data-level="5.10" data-path="seminar05.html"><a href="seminar05.html#create-input_cave-function"><i class="fa fa-check"></i><b>5.10</b> Create <em>input_cave()</em> function</a></li>
+<li class="chapter" data-level="5.11" data-path="seminar05.html"><a href="seminar05.html#create-find_empty_cave-function"><i class="fa fa-check"></i><b>5.11</b> Create <em>find_empty_cave()</em> function</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="cross-references.html"><a href="cross-references.html"><i class="fa fa-check"></i>Cross references</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Python for social and experimental psychology</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="seminar05" class="section level1" number="5">
+<h1><span class="header-section-number">Seminar 5</span> Hunt the Wumpus, part 2</h1>
+<p>During our previous seminar, we defined a system of interconnected caves, placed a player into a random cave, and allowed them to wander around. Now, we will make the code modular by using functions.</p>
+<div id="function" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Functions</h2>
+<p>In programming, purpose of a function is to isolate certain code that performs a single computation making it testable and reusable. Let us go through the first sentence bit by bit using examples.</p>
+<div id="function-performs-a-single-computation" class="section level3 unnumbered">
+<h3>Function performs a single computation</h3>
+<p>I told you that reading code is easy because every action has to be spelled-out for computers in simple and clear way. However, a lot of simple things can be very overwhelming and confusing. Think about the final code for the previous seminar: we had a loop with two conditional statements nested inside the loop and each other. Add a few more of those and you have so many brunches to trace, you will never be quite sure what will happen. This is because our cognition and working memory, which you use to trace all brunches, are limited to just about four items (the official magic number is <a href="https://en.wikipedia.org/wiki/The_Magical_Number_Seven,_Plus_or_Minus_Two">7±2</a> but reading the original paper tells you that this is more like four for most of us).</p>
+<p>Thus, a function should perform one computation that is conceptually clear and those purpose should be understood directly from its name or, at most, from a single sentence that describes it<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. If you need more than once sentence to explain what function does, you should consider splitting the code further. This does not mean that entire description / documentation must fit into a single sentence. The full description can be lengthy, particularly if underlying computation is complex and there are many parameters to consider. However, these are optional details that tell the reader <em>how</em> the function is doing its job. Again, they should be able to understand <em>what</em> the job is just from the name or from a single sentence. I am repeating myself and stressing it so much because conceptually simple single job functions are a foundation of a clear robust reusable code. And, trust me on this one, future-you will be very grateful that it has to work with easy-to-understand isolated reliable code you wrote.</p>
+</div>
+<div id="function-isolates-code-from-the-rest-of-the-program" class="section level3 unnumbered">
+<h3>Function isolates code from the rest of the program</h3>
+<p>Isolation means that your code is run in a separate scope where the only things that exist are function arguments (limited number of values you pass to it from outside with fixed meaning) and local variables that you define inside the function. You have no access to variables defined in the outside script or to variables defined inside of other functions. Conversely, neither global script nor other function have access to variables and values you compute inside. This means that you only need to study the code <em>inside</em> the function to understand how it works. Accordingly, when you write the code it should be <em>independent</em> of any global context the function can be used in. Thus, isolation is both practical (no run-time access to variables from outside means fewer chance that things go terribly wrong) and conceptual (no further context is required to understand the code).</p>
+</div>
+<div id="function-makes-code-easier-to-test" class="section level3 unnumbered">
+<h3>Function makes code easier to test</h3>
+<p>You can build even moderately complex programs only if you can be certain what individual chunks of code are doing under every possible condition. Do they give the correct results? Do the fail clearly raising an error, if the inputs are wrong? Do they use defaults when required? However, testing all chunks together means running extreme number of runs as you need to test all possible combinations of conditions for one chunk given all possible conditions for other chunk, etc. Functions make your life much easier. Because they have a single point of entry, fixed number of parameters, a single return value, and are isolated (see above), you can test them one at a time independent of other functions of the rest of the code. This is called <em>unit testing</em> and it is heavy use of <a href="https://docs.python.org/3/library/unittest.html">automatic unit testing</a> (it is normal to have more code devoted to testing than to the actual program) that ensures reliable code for absolute majority of programs and apps that you use.</p>
+</div>
+<div id="function-makes-code-reusable" class="section level3 unnumbered">
+<h3>Function makes code reusable</h3>
+<p>Sometimes this reason is given as the primary reason to use functions. Turning code into a function means that you can call the function instead of copy-pasting the code. The latter is a terrible idea as it means that you have to maintain the same code at many places (sometimes you might not be even sure in just how many). This is a problem even if the code is extremely simple. Here, we define a <em>standard</em> way to compute an initial by taking the first symbol from a string. The code is as simple as it gets.</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb60-1"><a href="seminar05.html#cb60-1" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb60-2"><a href="seminar05.html#cb60-2" aria-hidden="true" tabindex="-1"></a>initial <span class="op">=</span> <span class="st">&quot;test&quot;</span>[<span class="dv">0</span>]</span>
+<span id="cb60-3"><a href="seminar05.html#cb60-3" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb60-4"><a href="seminar05.html#cb60-4" aria-hidden="true" tabindex="-1"></a>initial_for_file <span class="op">=</span> filename[<span class="dv">0</span>]</span>
+<span id="cb60-5"><a href="seminar05.html#cb60-5" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb60-6"><a href="seminar05.html#cb60-6" aria-hidden="true" tabindex="-1"></a>initial_for_website <span class="op">=</span> first_name[<span class="dv">0</span>]</span>
+<span id="cb60-7"><a href="seminar05.html#cb60-7" aria-hidden="true" tabindex="-1"></a>...</span></code></pre></div>
+<p>Imagine that you decided to change it and use first <em>two</em> symbols. Again, the computation is hardly complicated, use just replace <code>[0]</code> with <code>[:2]</code>. But you have to do it for <em>all</em> the code that does this computation. And you cannot use <em>Replace All</em> option because sometimes you might use the first element for some other purposes. And when you edit the code, you are bound to forget about some locations (at least, I do it all the time) making things even less consistent and more confusing. Turning code into a function means you need to modify and test just everything at just one location. Here is the original code implemented via a function.</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb61-1"><a href="seminar05.html#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_initial(full_string):</span>
+<span id="cb61-2"><a href="seminar05.html#cb61-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Generates an initial using first symbol.</span></span>
+<span id="cb61-3"><a href="seminar05.html#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb61-4"><a href="seminar05.html#cb61-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="cb61-5"><a href="seminar05.html#cb61-5" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb61-6"><a href="seminar05.html#cb61-6" aria-hidden="true" tabindex="-1"></a><span class="co">    full_string : str</span></span>
+<span id="cb61-7"><a href="seminar05.html#cb61-7" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb61-8"><a href="seminar05.html#cb61-8" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
+<span id="cb61-9"><a href="seminar05.html#cb61-9" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb61-10"><a href="seminar05.html#cb61-10" aria-hidden="true" tabindex="-1"></a><span class="co">    str : single symbol</span></span>
+<span id="cb61-11"><a href="seminar05.html#cb61-11" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb61-12"><a href="seminar05.html#cb61-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> full_string[<span class="dv">0</span>]</span>
+<span id="cb61-13"><a href="seminar05.html#cb61-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-14"><a href="seminar05.html#cb61-14" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb61-15"><a href="seminar05.html#cb61-15" aria-hidden="true" tabindex="-1"></a>initial <span class="op">=</span> generate_initial(<span class="st">&quot;test&quot;</span>)</span>
+<span id="cb61-16"><a href="seminar05.html#cb61-16" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb61-17"><a href="seminar05.html#cb61-17" aria-hidden="true" tabindex="-1"></a>initial_for_file <span class="op">=</span> generate_initial(filename)</span>
+<span id="cb61-18"><a href="seminar05.html#cb61-18" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb61-19"><a href="seminar05.html#cb61-19" aria-hidden="true" tabindex="-1"></a>initial_for_website <span class="op">=</span> generate_initial(first_name)</span>
+<span id="cb61-20"><a href="seminar05.html#cb61-20" aria-hidden="true" tabindex="-1"></a>...</span></code></pre></div>
+<p>and here is the “alternative” initial computation. Note that the code that uses the function <em>stays the same</em></p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb62-1"><a href="seminar05.html#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_initial(full_string):</span>
+<span id="cb62-2"><a href="seminar05.html#cb62-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Generates an initial using first TWO symbols.</span></span>
+<span id="cb62-3"><a href="seminar05.html#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb62-4"><a href="seminar05.html#cb62-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="cb62-5"><a href="seminar05.html#cb62-5" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb62-6"><a href="seminar05.html#cb62-6" aria-hidden="true" tabindex="-1"></a><span class="co">    full_string : str</span></span>
+<span id="cb62-7"><a href="seminar05.html#cb62-7" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb62-8"><a href="seminar05.html#cb62-8" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
+<span id="cb62-9"><a href="seminar05.html#cb62-9" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb62-10"><a href="seminar05.html#cb62-10" aria-hidden="true" tabindex="-1"></a><span class="co">    str : two symbols long</span></span>
+<span id="cb62-11"><a href="seminar05.html#cb62-11" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb62-12"><a href="seminar05.html#cb62-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> full_string[:<span class="dv">2</span>]</span>
+<span id="cb62-13"><a href="seminar05.html#cb62-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-14"><a href="seminar05.html#cb62-14" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb62-15"><a href="seminar05.html#cb62-15" aria-hidden="true" tabindex="-1"></a>initial <span class="op">=</span> generate_initial(<span class="st">&quot;test&quot;</span>)</span>
+<span id="cb62-16"><a href="seminar05.html#cb62-16" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb62-17"><a href="seminar05.html#cb62-17" aria-hidden="true" tabindex="-1"></a>initial_for_file <span class="op">=</span> generate_initial(filename)</span>
+<span id="cb62-18"><a href="seminar05.html#cb62-18" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb62-19"><a href="seminar05.html#cb62-19" aria-hidden="true" tabindex="-1"></a>initial_for_website <span class="op">=</span> generate_initial(first_name)</span>
+<span id="cb62-20"><a href="seminar05.html#cb62-20" aria-hidden="true" tabindex="-1"></a>...</span></code></pre></div>
+<p>Thus, turning the code into function is particularly useful when the reused code is complex but it pays off even if computation is as simple and trivial as in example above. With a function you have a single code to worry about and you can be sure that same computation is performed whenever you call the function (not the copy of the code that should be identical but may be not).</p>
+<p>Note that I put reusable code as the last reason to use functions. This is because the other three reasons are far more important. Having a conceptually clear isolated and testable code is advantages even if you call this function only once. It still makes code easier to understand and to test and helps you to reduce the complexity by replacing code with its meaning. Take a look at the example below. The first code takes the first symbol but this action (taking the first symbol) does not <em>mean</em> anything by itself, it is just a mechanical computation. It is only the original context <code>initial_for_file = filename[0]</code> or additional comments that give it its meaning. In contrast, calling a function called <em>compete_initial</em> tells you what is happening, as it disambiguates the purpose of the computation. I suspect that future-you is very pro-disambiguation and anti-confusion.</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb63-1"><a href="seminar05.html#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> filename[<span class="dv">0</span>] <span class="op">==</span> <span class="st">&quot;A&quot;</span>:</span>
+<span id="cb63-2"><a href="seminar05.html#cb63-2" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb63-3"><a href="seminar05.html#cb63-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb63-4"><a href="seminar05.html#cb63-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> compute_initial(filename) <span class="op">==</span> <span class="st">&quot;A&quot;</span>:</span>
+<span id="cb63-5"><a href="seminar05.html#cb63-5" aria-hidden="true" tabindex="-1"></a>    ...</span></code></pre></div>
+</div>
+</div>
+<div id="defining-a-function-in-python" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Defining a function in Python</h2>
+<p>A function in Python looks like this (note the indentation)</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb64-1"><a href="seminar05.html#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> <span class="op">&lt;</span>function name<span class="op">&gt;</span>(param1, param2, ...):</span>
+<span id="cb64-2"><a href="seminar05.html#cb64-2" aria-hidden="true" tabindex="-1"></a>    some internal computation</span>
+<span id="cb64-3"><a href="seminar05.html#cb64-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> somecondition:</span>
+<span id="cb64-4"><a href="seminar05.html#cb64-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> some value</span>
+<span id="cb64-5"><a href="seminar05.html#cb64-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> some other value</span></code></pre></div>
+<p>The parameters are optional, so is the return value. Thus the minimal function would be</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb65-1"><a href="seminar05.html#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> minimal_function():</span>
+<span id="cb65-2"><a href="seminar05.html#cb65-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span> <span class="co"># pass means &quot;do nothing&quot;</span></span></code></pre></div>
+<p>You must defined your function (once!) before calling it (one or more times). Thus, you should create functions <em>before</em> the code that uses it (main script or other functions).</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb66-1"><a href="seminar05.html#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> do_something():</span>
+<span id="cb66-2"><a href="seminar05.html#cb66-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb66-3"><a href="seminar05.html#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="co">    This is a function called &quot;do_something&quot;. It actually does nothing.</span></span>
+<span id="cb66-4"><a href="seminar05.html#cb66-4" aria-hidden="true" tabindex="-1"></a><span class="co">    It requires no input and returns no value.</span></span>
+<span id="cb66-5"><a href="seminar05.html#cb66-5" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb66-6"><a href="seminar05.html#cb66-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span></span>
+<span id="cb66-7"><a href="seminar05.html#cb66-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb66-8"><a href="seminar05.html#cb66-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb66-9"><a href="seminar05.html#cb66-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> another_function():</span>
+<span id="cb66-10"><a href="seminar05.html#cb66-10" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb66-11"><a href="seminar05.html#cb66-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># We call it in another function.</span></span>
+<span id="cb66-12"><a href="seminar05.html#cb66-12" aria-hidden="true" tabindex="-1"></a>    do_something()</span>
+<span id="cb66-13"><a href="seminar05.html#cb66-13" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb66-14"><a href="seminar05.html#cb66-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb66-15"><a href="seminar05.html#cb66-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb66-16"><a href="seminar05.html#cb66-16" aria-hidden="true" tabindex="-1"></a><span class="co"># This is a function call (we use this function)</span></span>
+<span id="cb66-17"><a href="seminar05.html#cb66-17" aria-hidden="true" tabindex="-1"></a>do_something()</span>
+<span id="cb66-18"><a href="seminar05.html#cb66-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-19"><a href="seminar05.html#cb66-19" aria-hidden="true" tabindex="-1"></a><span class="co"># And we use it again!</span></span>
+<span id="cb66-20"><a href="seminar05.html#cb66-20" aria-hidden="true" tabindex="-1"></a>do_something()</span></code></pre></div>
+<div class="infobox practice">
+<p>Do exercise #1.</p>
+</div>
+<p>You must also keep in mind that redefining a function (or defining a different function that has the same name) overwrites the original definition, so that only the latest version of it is retained and can be used.</p>
+<div class="infobox practice">
+<p>Do exercise #2.</p>
+</div>
+<p>Although example in the exercise makes the problem look very obvious, in a large code that spans multiple files and uses various libraries, the issue may not be so straightforward!</p>
+</div>
+<div id="function-arguments" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> Function arguments</h2>
+<p>Some function may not need arguments (also called parameters), as they perform a fixed action:</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb67-1"><a href="seminar05.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ping():</span>
+<span id="cb67-2"><a href="seminar05.html#cb67-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb67-3"><a href="seminar05.html#cb67-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Machine that goes &quot;ping!&quot;</span></span>
+<span id="cb67-4"><a href="seminar05.html#cb67-4" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb67-5"><a href="seminar05.html#cb67-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;ping!&quot;</span>)</span></code></pre></div>
+<p>However, typically, you need to pass information to the function, which then affects how the function performs its action. In Python, you simply list arguments within the round brackets after the function name (there are more bells and whistles but we will keep it simple for now). For example, we could write a function that computes and prints person’s age given two parameters 1) their birth year, 2) current year:</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb68-1"><a href="seminar05.html#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_age(birth_year, current_year):</span>
+<span id="cb68-2"><a href="seminar05.html#cb68-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb68-3"><a href="seminar05.html#cb68-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Prints age given birth year and current year.</span></span>
+<span id="cb68-4"><a href="seminar05.html#cb68-4" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb68-5"><a href="seminar05.html#cb68-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="cb68-6"><a href="seminar05.html#cb68-6" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb68-7"><a href="seminar05.html#cb68-7" aria-hidden="true" tabindex="-1"></a><span class="co">    birth_year : int</span></span>
+<span id="cb68-8"><a href="seminar05.html#cb68-8" aria-hidden="true" tabindex="-1"></a><span class="co">    current_year : int</span></span>
+<span id="cb68-9"><a href="seminar05.html#cb68-9" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb68-10"><a href="seminar05.html#cb68-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(current_year <span class="op">-</span> birth_year)</span></code></pre></div>
+<p>It is a <strong>very good idea</strong> to give meaningful names to functions, parameters, and variables. The following code will produce exactly the same result but understanding <em>why</em> and <em>what for</em> it is doing what it is doing would be much harder (so <strong>always</strong> use meaningful names!):</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb69-1"><a href="seminar05.html#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> x(a, b):</span>
+<span id="cb69-2"><a href="seminar05.html#cb69-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(b <span class="op">-</span> a)</span></code></pre></div>
+<p>When calling a function, you must pass the correct number of parameters and pass them in a <em>correct order</em>, another reason for a function arguments to have meaningful names.</p>
+<div class="infobox practice">
+<p>Do exercise #3.</p>
+</div>
+<p>When you call the function, the values you <em>pass</em> to the function are assigned to the parameters and they are used as <em>local</em> variables (more on <em>local</em> bit later). However, it does not matter <em>how</em> you came up with this values, whether they were in a variable, hard-coded, or returned by another function. If you are using numeric, logical, or string values (<em>immutable</em> types), you can assume that any link to the original variable or function that produced it is gone (we’ll deal with <em>mutable</em> types, like lists, later). Thus, when writing a function or reading its code, you just assume that it has been set to some value during the call and you can ignore the context in which this call was made</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb70-1"><a href="seminar05.html#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="co"># hardcoded</span></span>
+<span id="cb70-2"><a href="seminar05.html#cb70-2" aria-hidden="true" tabindex="-1"></a>print_age(<span class="dv">1976</span>, <span class="dv">2020</span>)</span>
+<span id="cb70-3"><a href="seminar05.html#cb70-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-4"><a href="seminar05.html#cb70-4" aria-hidden="true" tabindex="-1"></a><span class="co"># using values from variables</span></span>
+<span id="cb70-5"><a href="seminar05.html#cb70-5" aria-hidden="true" tabindex="-1"></a>i_was_born <span class="op">=</span> <span class="dv">1976</span></span>
+<span id="cb70-6"><a href="seminar05.html#cb70-6" aria-hidden="true" tabindex="-1"></a>today_is <span class="op">=</span> <span class="dv">2020</span></span>
+<span id="cb70-7"><a href="seminar05.html#cb70-7" aria-hidden="true" tabindex="-1"></a>print_age(i_was_born, today_is)</span>
+<span id="cb70-8"><a href="seminar05.html#cb70-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-9"><a href="seminar05.html#cb70-9" aria-hidden="true" tabindex="-1"></a><span class="co"># using value from a function</span></span>
+<span id="cb70-10"><a href="seminar05.html#cb70-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_current_year():</span>
+<span id="cb70-11"><a href="seminar05.html#cb70-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">2020</span></span>
+<span id="cb70-12"><a href="seminar05.html#cb70-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-13"><a href="seminar05.html#cb70-13" aria-hidden="true" tabindex="-1"></a>print_age(<span class="dv">1976</span>, get_current_year())</span></code></pre></div>
+</div>
+<div id="functions-returned-value-output" class="section level2" number="5.4">
+<h2><span class="header-section-number">5.4</span> Functions’ returned value (output)</h2>
+<p>Your function may perform an action without returning any value to the caller (this is what out <code>print_age</code> function was doing). However, you may need to return the value instead. For example, to make things more general, we might want write a new function called <code>compute_age</code> that return the age instead of printing it (we can always print ourselves).</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb71-1"><a href="seminar05.html#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_age(birth_year, current_year):</span>
+<span id="cb71-2"><a href="seminar05.html#cb71-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb71-3"><a href="seminar05.html#cb71-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Computes age given birth year and current year.</span></span>
+<span id="cb71-4"><a href="seminar05.html#cb71-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-5"><a href="seminar05.html#cb71-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="cb71-6"><a href="seminar05.html#cb71-6" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb71-7"><a href="seminar05.html#cb71-7" aria-hidden="true" tabindex="-1"></a><span class="co">    birth_year : int</span></span>
+<span id="cb71-8"><a href="seminar05.html#cb71-8" aria-hidden="true" tabindex="-1"></a><span class="co">    current_year : int</span></span>
+<span id="cb71-9"><a href="seminar05.html#cb71-9" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb71-10"><a href="seminar05.html#cb71-10" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
+<span id="cb71-11"><a href="seminar05.html#cb71-11" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb71-12"><a href="seminar05.html#cb71-12" aria-hidden="true" tabindex="-1"></a><span class="co">    int : age</span></span>
+<span id="cb71-13"><a href="seminar05.html#cb71-13" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb71-14"><a href="seminar05.html#cb71-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> current_year <span class="op">-</span> birth_year</span></code></pre></div>
+<p>Note that even if a function returns the value, it is retained only if it is actually used (stored in a variable, used as a value, etc.). Thus, just calling it will not by itself store the returned value anywhere!</p>
+<div class="infobox practice">
+<p>Do exercise #4.</p>
+</div>
+</div>
+<div id="scopes-for-immutable-values" class="section level2" number="5.5">
+<h2><span class="header-section-number">5.5</span> Scopes (for immutable values)</h2>
+<p>As we have discussed above, turning code into a function <em>isolates</em> it, so makes it run in it own <em>scope</em>. In Python, each variable exists in the <em>scope</em> it has been defined in. If it was defined in the <em>global</em> script, it exists in that <em>global</em> scope as a <em>global</em> variable. However, it is not accessible (at least not without special effort via a <code>global</code> operator) from within a function. Conversely, function’s parameters and any variable defined <em>inside a function</em>, exists and is accessible only <strong>inside that function</strong>. It is fully invisible for the outside world and cannot be accessed from a global script or from another function. Conversely, any changes you make to the function parameter or local variable have no effect on the outside world (well, almost, <em>mutable</em> objects list lists are more complicated, more on that later).</p>
+<p>The purpose of scopes is to isolate individual code segments from each other, so that modifying variables within one scope has no effect on all other scopes. This means that when writing or debugging the code, you do not need to worry about code in other scopes and concentrate only on the code you working on. Because scopes are isolated, they may have <em>identically named variables</em> that, however, have no relationship to each other as they exists in their own parallel universes. Thus, if you want to know which value a variable has, you must look only within the scope and ignore all other scopes (even if the names match!).</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb72-1"><a href="seminar05.html#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="co"># this is variable `x` in the global scope</span></span>
+<span id="cb72-2"><a href="seminar05.html#cb72-2" aria-hidden="true" tabindex="-1"></a>x  <span class="op">=</span> <span class="dv">5</span> </span>
+<span id="cb72-3"><a href="seminar05.html#cb72-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-4"><a href="seminar05.html#cb72-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f1():</span>
+<span id="cb72-5"><a href="seminar05.html#cb72-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># This is variable `x` in the scope of function f1</span></span>
+<span id="cb72-6"><a href="seminar05.html#cb72-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># It has the same name as the global variable but</span></span>
+<span id="cb72-7"><a href="seminar05.html#cb72-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># has no relation to it: many people are called Sasha </span></span>
+<span id="cb72-8"><a href="seminar05.html#cb72-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># but they are still different people. Whatever you</span></span>
+<span id="cb72-9"><a href="seminar05.html#cb72-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># happens to `x` in f1, stays in f1&#39;s scope.</span></span>
+<span id="cb72-10"><a href="seminar05.html#cb72-10" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb72-11"><a href="seminar05.html#cb72-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb72-12"><a href="seminar05.html#cb72-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb72-13"><a href="seminar05.html#cb72-13" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f2(x):</span>
+<span id="cb72-14"><a href="seminar05.html#cb72-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># This is parameter `x` in the scope of function f2.</span></span>
+<span id="cb72-15"><a href="seminar05.html#cb72-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Again, no relation to other global or local variables.</span></span>
+<span id="cb72-16"><a href="seminar05.html#cb72-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># It is a completely separate object, it just happens to </span></span>
+<span id="cb72-17"><a href="seminar05.html#cb72-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># have the same name (again, just namesakes)</span></span>
+<span id="cb72-18"><a href="seminar05.html#cb72-18" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(x)</span></code></pre></div>
+<div class="infobox practice">
+<p>Do exercise #5.</p>
+</div>
+</div>
+<div id="create-input_int" class="section level2" number="5.6">
+<h2><span class="header-section-number">5.6</span> Create <em>input_int()</em></h2>
+<p>Let us create the first function called <code>input_int</code>. It will take have no arguments (yet) and will return an integer value. This will encapsulate the checks and repeated prompts inside the function, making it easier to maintain the code. It will also make your top-level code cleaner as multiple lines are now replaced with a single call to a function <code>input_int()</code>, so you know that in this line you get an integer input from the user. This helps you to concentrate on what is happening (“I am getting an integer input”) not how it is happening.</p>
+<p>So let us re-implement the code that you created during the last seminar as a function with the only difference is that you <code>return</code> the user input instead of using the variable’s value directly. I would recommend implementing the code in a separate cell without the function header (<code>def input():</code>) and the <code>return</code> statements first. Once it works, you can indent it and add the function header. Next, test it by calling the function (e.g. <code>guess = input_int()</code> or just <code>input_int()</code>), to see that it works reliably, i.e. keeps prompting you until you enter a valid integer.</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb73-1"><a href="seminar05.html#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> input_int():</span>
+<span id="cb73-2"><a href="seminar05.html#cb73-2" aria-hidden="true" tabindex="-1"></a>  get user <span class="bu">input</span> <span class="kw">and</span> store it <span class="kw">in</span> a local variable</span>
+<span id="cb73-3"><a href="seminar05.html#cb73-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> it cannot be converted to an integer:</span>
+<span id="cb73-4"><a href="seminar05.html#cb73-4" aria-hidden="true" tabindex="-1"></a>    remind the player that it must enter an integer</span>
+<span id="cb73-5"><a href="seminar05.html#cb73-5" aria-hidden="true" tabindex="-1"></a>    get user <span class="bu">input</span> <span class="kw">and</span> store it <span class="kw">in</span> a local variable</span>
+<span id="cb73-6"><a href="seminar05.html#cb73-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb73-7"><a href="seminar05.html#cb73-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="bu">input</span><span class="op">-</span><span class="im">as</span><span class="op">-</span>an<span class="op">-</span>integer</span></code></pre></div>
+<div class="infobox program">
+<p>Put your code into exercise #6.</p>
+</div>
+</div>
+<div id="documenting-input_int" class="section level2" number="5.7">
+<h2><span class="header-section-number">5.7</span> Documenting <em>input_int()</em></h2>
+<p>Writing a function is only half the job. You need to document it! This may feel excessive but it does not take much time and it is a good habit that makes your code easy to use and reuse. Document your code (a function, or a class, or a module) even if you just trying things out. Remember, “there is nothing more permanent than a temporary solution.” Not documenting code is a false economy: a few minutes you save on not documenting it, will translate into dozens of them when you try to understand and debug undocumented code later on.</p>
+<p>There are different ways to document the code but we will use <a href="https://numpydoc.readthedocs.io/en/latest/format.html#docstring-standard">NumPy docstring convention</a>. Here is an example of such documented function</p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb74-1"><a href="seminar05.html#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_initial(full_string):</span>
+<span id="cb74-2"><a href="seminar05.html#cb74-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Generates an initial using first symbol.</span></span>
+<span id="cb74-3"><a href="seminar05.html#cb74-3" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb74-4"><a href="seminar05.html#cb74-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="cb74-5"><a href="seminar05.html#cb74-5" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb74-6"><a href="seminar05.html#cb74-6" aria-hidden="true" tabindex="-1"></a><span class="co">    full_string : str</span></span>
+<span id="cb74-7"><a href="seminar05.html#cb74-7" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb74-8"><a href="seminar05.html#cb74-8" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
+<span id="cb74-9"><a href="seminar05.html#cb74-9" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb74-10"><a href="seminar05.html#cb74-10" aria-hidden="true" tabindex="-1"></a><span class="co">    str : single symbol</span></span>
+<span id="cb74-11"><a href="seminar05.html#cb74-11" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb74-12"><a href="seminar05.html#cb74-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> full_string[<span class="dv">0</span>]</span></code></pre></div>
+<p>Take the look at the <a href="https://numpydoc.readthedocs.io/en/latest/format.html#docstring-standard">manual</a> and document the function NumPy style. You will only need one-line summary and return value information.</p>
+<div class="infobox program">
+<p>Put your code into exercise #7.</p>
+</div>
+</div>
+<div id="adding-prompt-parameter-to-input_int" class="section level2" number="5.8">
+<h2><span class="header-section-number">5.8</span> Adding prompt parameter to <em>input_int()</em></h2>
+<p>So far the input function you called inside our <code>input_int()</code> function either had no prompt or had some fixed prompt that you hard-coded. However, we will use this function for two different actions: moving (the only thing player can do now) and shooting an arrow (we are hunting the Wumpus, after all!). These two actions require two different prompts, so it makes sense to add an <em>argument</em> <code>prompt</code> to our <code>input_int()</code> function.</p>
+<p>You assume that this argument is a string that you need to pass on to the <code>input()</code> function you are using inside. Thus, you would be able to call your function (almost) the same way as you called <code>input()</code>, e.g. <code>input_int("Please enter the cave index")</code>, but are guaranteed to get an integer value, as all the check and repeated prompts occur inside of the function.</p>
+<div class="infobox program">
+<p>Put your code into exercise #8.</p>
+</div>
+</div>
+<div id="using-the-function-in-the-code" class="section level2" number="5.9">
+<h2><span class="header-section-number">5.9</span> Using the function in the code</h2>
+<p>Now we have a function that makes our code cleaner and easier to understand, so let us use it! Copy-paste your final game code for the previous seminar and alter it to use <code>input_int()</code> in place of <code>input()</code> + checks + type-conversion. In this modified code, put the function declaration after the import and a constant definition but before the rest of the code.</p>
+<div class="infobox program">
+<p>Put your code into exercise #9.</p>
+</div>
+</div>
+<div id="create-input_cave-function" class="section level2" number="5.10">
+<h2><span class="header-section-number">5.10</span> Create <em>input_cave()</em> function</h2>
+<p>You implemented a function that get an <em>integer</em> input from the player. This is a good first step, as it takes care of all the checks that the value is of the correct type. However, we are not interested in getting an integer per se, we are interested in getting the index of the cave the player wants to move to and this index must be <em>correct</em>, as in match the index of accessible caves.</p>
+<p>Let us implement a function that does just that. We will call it <code>input_cave</code>, it will have a single argument <code>accesible_caves</code> (the assumed value is the list of accessible caves), and it will return a integer: the index of the cave the player picked. In the function, you need to print the cave indexes and ask about which cave the player wants to go to until they give a valid answer. Note that you do not need to re-implement the <code>input_int()</code> functionality inside, you use that function to get an integer and perform additional checks that integer is <code>in</code> the list. Don’t forget to document and test it!</p>
+<div class="infobox program">
+<p>Put your code into exercise #10.</p>
+</div>
+<p>Now copy-paste the code from exercise #9 and alter it to use <code>input_cave</code> in place of <code>input_int()</code> + checks code.</p>
+<div class="infobox program">
+<p>Put your code into exercise #11.</p>
+</div>
+</div>
+<div id="create-find_empty_cave-function" class="section level2" number="5.11">
+<h2><span class="header-section-number">5.11</span> Create <em>find_empty_cave()</em> function</h2>
+<p>As final modification for today, let us spin-off the code that places the player into a random cave into a separate function. We will call it <code>find_empty_cave</code> and, currently, it will have just one parameter <code>caves_number</code> (the total number of caves), and it will generate and return a random number between <code>0</code> and <code>caves_number - 1</code>. Its functionality will be identical to the simple call you are already making in your code, so this may feel unnecessary. However, later we will be placing other objects (bottomless pits, bats, the Wumpus), so we will need a function that can find an empty (unoccupied) cave with all the necessary lack-of-conflict checks. The current function, however limited, will serve as a foundation for our development during the next seminar.</p>
+<p>Do not forget to document and test the function.
+::: {.infobox .program}
+Put your code into exercise #12.
+:::</p>
+<p>Now copy-paste the code from exercise #11 and alter it to use <code>find_empty_cave</code> function.</p>
+<div class="infobox program">
+<p>Put your code into exercise #13.</p>
+</div>
+<p>Your final code should look roughly as follows and, as you can see, the main script is now slim and easy to follow.</p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb75-1"><a href="seminar05.html#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import randint function from the random library</span></span>
+<span id="cb75-2"><a href="seminar05.html#cb75-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-3"><a href="seminar05.html#cb75-3" aria-hidden="true" tabindex="-1"></a><span class="co"># define CAVES (simply copy-paste the definition)</span></span>
+<span id="cb75-4"><a href="seminar05.html#cb75-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-5"><a href="seminar05.html#cb75-5" aria-hidden="true" tabindex="-1"></a><span class="co"># define input_int function</span></span>
+<span id="cb75-6"><a href="seminar05.html#cb75-6" aria-hidden="true" tabindex="-1"></a><span class="co"># define input_cave function</span></span>
+<span id="cb75-7"><a href="seminar05.html#cb75-7" aria-hidden="true" tabindex="-1"></a><span class="co"># define find_empty_cave function</span></span>
+<span id="cb75-8"><a href="seminar05.html#cb75-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-9"><a href="seminar05.html#cb75-9" aria-hidden="true" tabindex="-1"></a><span class="co"># create `player` variable and put him into an empty (unoccupied) cave</span></span>
+<span id="cb75-10"><a href="seminar05.html#cb75-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-11"><a href="seminar05.html#cb75-11" aria-hidden="true" tabindex="-1"></a><span class="co"># while player is not in the cave #5 (index 4):</span></span>
+<span id="cb75-12"><a href="seminar05.html#cb75-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># get input on which cave the player wants to move to</span></span>
+<span id="cb75-13"><a href="seminar05.html#cb75-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># move the player to that cave</span></span>
+<span id="cb75-14"><a href="seminar05.html#cb75-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-15"><a href="seminar05.html#cb75-15" aria-hidden="true" tabindex="-1"></a><span class="co"># print a nice game-over message</span></span></code></pre></div>
+
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="2">
+<li id="fn2"><p>This is similar to scientific writing, where a single paragraph conveys a single idea. So, for me, it helps to first write the idea of the paragraph in a single sentence before writing the paragraph itself. If one sentence is not enough, I need to split the text into more paragraphs.<a href="seminar05.html#fnref2" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="seminar04.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="cross-references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["python-for-experimental-psychology.pdf", "python-for-experimental-psychology.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

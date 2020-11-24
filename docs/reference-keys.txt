@@ -36,4 +36,16 @@ checking-valid-cave-index
 checking-that-string-can-be-converted-to-an-integer
 checking-valid-integer-input
 wrap-up-1
+seminar05
+function
+defining-a-function-in-python
+function-arguments
+functions-returned-value-output
+scopes-for-immutable-values
+create-input_int
+documenting-input_int
+adding-prompt-parameter-to-input_int
+using-the-function-in-the-code
+create-input_cave-function
+create-find_empty_cave-function
 w--.unlisted

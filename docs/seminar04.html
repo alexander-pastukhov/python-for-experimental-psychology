@@ -24,7 +24,7 @@
 <meta name="author" content="Alexander (Sasha) Pastukhov" />
 
 
-<meta name="date" content="2020-11-07" />
+<meta name="date" content="2020-11-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="seminar03.html"/>
-<link rel="next" href="cross-references.html"/>
+<link rel="next" href="seminar05.html"/>
 <script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -51,6 +51,7 @@
 
 
 
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 
@@ -192,6 +193,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.6" data-path="seminar04.html"><a href="seminar04.html#checking-that-string-can-be-converted-to-an-integer"><i class="fa fa-check"></i><b>4.6</b> Checking that string can be converted to an integer</a></li>
 <li class="chapter" data-level="4.7" data-path="seminar04.html"><a href="seminar04.html#checking-valid-integer-input"><i class="fa fa-check"></i><b>4.7</b> Checking valid integer input</a></li>
 <li class="chapter" data-level="4.8" data-path="seminar04.html"><a href="seminar04.html#wrap-up-1"><i class="fa fa-check"></i><b>4.8</b> Wrap up</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="seminar05.html"><a href="seminar05.html"><i class="fa fa-check"></i><b>5</b> Hunt the Wumpus, part 2</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="seminar05.html"><a href="seminar05.html#function"><i class="fa fa-check"></i><b>5.1</b> Functions</a>
+<ul>
+<li class="chapter" data-level="" data-path="seminar05.html"><a href="seminar05.html#function-performs-a-single-computation"><i class="fa fa-check"></i>Function performs a single computation</a></li>
+<li class="chapter" data-level="" data-path="seminar05.html"><a href="seminar05.html#function-isolates-code-from-the-rest-of-the-program"><i class="fa fa-check"></i>Function isolates code from the rest of the program</a></li>
+<li class="chapter" data-level="" data-path="seminar05.html"><a href="seminar05.html#function-makes-code-easier-to-test"><i class="fa fa-check"></i>Function makes code easier to test</a></li>
+<li class="chapter" data-level="" data-path="seminar05.html"><a href="seminar05.html#function-makes-code-reusable"><i class="fa fa-check"></i>Function makes code reusable</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="seminar05.html"><a href="seminar05.html#defining-a-function-in-python"><i class="fa fa-check"></i><b>5.2</b> Defining a function in Python</a></li>
+<li class="chapter" data-level="5.3" data-path="seminar05.html"><a href="seminar05.html#function-arguments"><i class="fa fa-check"></i><b>5.3</b> Function arguments</a></li>
+<li class="chapter" data-level="5.4" data-path="seminar05.html"><a href="seminar05.html#functions-returned-value-output"><i class="fa fa-check"></i><b>5.4</b> Functions’ returned value (output)</a></li>
+<li class="chapter" data-level="5.5" data-path="seminar05.html"><a href="seminar05.html#scopes-for-immutable-values"><i class="fa fa-check"></i><b>5.5</b> Scopes (for immutable values)</a></li>
+<li class="chapter" data-level="5.6" data-path="seminar05.html"><a href="seminar05.html#create-input_int"><i class="fa fa-check"></i><b>5.6</b> Create <em>input_int()</em></a></li>
+<li class="chapter" data-level="5.7" data-path="seminar05.html"><a href="seminar05.html#documenting-input_int"><i class="fa fa-check"></i><b>5.7</b> Documenting <em>input_int()</em></a></li>
+<li class="chapter" data-level="5.8" data-path="seminar05.html"><a href="seminar05.html#adding-prompt-parameter-to-input_int"><i class="fa fa-check"></i><b>5.8</b> Adding prompt parameter to <em>input_int()</em></a></li>
+<li class="chapter" data-level="5.9" data-path="seminar05.html"><a href="seminar05.html#using-the-function-in-the-code"><i class="fa fa-check"></i><b>5.9</b> Using the function in the code</a></li>
+<li class="chapter" data-level="5.10" data-path="seminar05.html"><a href="seminar05.html#create-input_cave-function"><i class="fa fa-check"></i><b>5.10</b> Create <em>input_cave()</em> function</a></li>
+<li class="chapter" data-level="5.11" data-path="seminar05.html"><a href="seminar05.html#create-find_empty_cave-function"><i class="fa fa-check"></i><b>5.11</b> Create <em>find_empty_cave()</em> function</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="cross-references.html"><a href="cross-references.html"><i class="fa fa-check"></i>Cross references</a></li>
 <li class="divider"></li>
@@ -354,7 +375,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb59-2"><a href="seminar04.html#cb59-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb59-3"><a href="seminar04.html#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="co"># define CAVES (simply copy-paste the definition)</span></span>
 <span id="cb59-4"><a href="seminar04.html#cb59-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb59-5"><a href="seminar04.html#cb59-5" aria-hidden="true" tabindex="-1"></a><span class="co"># create `player` variable and set it to a random number between 0 and 19, </span></span>
+<span id="cb59-5"><a href="seminar04.html#cb59-5" aria-hidden="true" tabindex="-1"></a><span class="co"># create `player` variable and set it to a random number between 0 and len(CAVES)-1, </span></span>
 <span id="cb59-6"><a href="seminar04.html#cb59-6" aria-hidden="true" tabindex="-1"></a><span class="co"># putting player into a random cave</span></span>
 <span id="cb59-7"><a href="seminar04.html#cb59-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb59-8"><a href="seminar04.html#cb59-8" aria-hidden="true" tabindex="-1"></a><span class="co"># while player is not in the cave #5 (index 4):</span></span>
@@ -362,7 +383,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb59-10"><a href="seminar04.html#cb59-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># get input into a variable `move_to_str`</span></span>
 <span id="cb59-11"><a href="seminar04.html#cb59-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># if move_to_str can be converted to an integer:</span></span>
 <span id="cb59-12"><a href="seminar04.html#cb59-12" aria-hidden="true" tabindex="-1"></a>        <span class="co"># convert move_to_str to integer and store value in move_to</span></span>
-<span id="cb59-13"><a href="seminar04.html#cb59-13" aria-hidden="true" tabindex="-1"></a>        <span class="co"># if `move_to` matches on of the connected caves:</span></span>
+<span id="cb59-13"><a href="seminar04.html#cb59-13" aria-hidden="true" tabindex="-1"></a>        <span class="co"># if `move_to` matches one of the connected caves:</span></span>
 <span id="cb59-14"><a href="seminar04.html#cb59-14" aria-hidden="true" tabindex="-1"></a>            <span class="co"># &quot;move&quot; the `player` to the cave they wanted to `move_to`</span></span>
 <span id="cb59-15"><a href="seminar04.html#cb59-15" aria-hidden="true" tabindex="-1"></a>        <span class="co"># else:</span></span>
 <span id="cb59-16"><a href="seminar04.html#cb59-16" aria-hidden="true" tabindex="-1"></a>            <span class="co"># print out an error message</span></span>
@@ -392,7 +413,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 <a href="seminar03.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="cross-references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="seminar05.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
