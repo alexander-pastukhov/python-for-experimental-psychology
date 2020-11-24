@@ -1,6 +1,6 @@
 # Hunt the Wumpus, part 2 {#seminar05}
 
-During our previous seminar, we defined a system of interconnected caves, placed a player into a random cave, and allowed them to wander around. Now, we will make the code modular by using functions.
+During our previous seminar, we defined a system of interconnected caves, placed a player into a random cave, and allowed them to wander around. Now, we will make the code modular by using functions. Don't forget to download the [exercise notebook](notebooks/Seminar 05. Hunt the Wumpus, part 2.ipynb).
 
 ## Functions {#function}
 
