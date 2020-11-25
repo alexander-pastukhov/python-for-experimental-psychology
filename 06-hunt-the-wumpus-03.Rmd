@@ -1,14 +1,121 @@
 # Hunt the Wumpus, part 3 {#seminar06}
 During the last seminar, we used functions to make out code modular. Now, let us add more bells-and-whistles to the game: bottomless pits, crazy bats, and the Wumpus itself. Don't forget to download the [exercise notebook](notebooks/Seminar 06. Hunt the Wumpus, part 3.ipynb).
 
+Before we continue with the game, I would like to introduce the critical difference between _mutable_ and _immutable_ types. 
+
+## Recall, Variables as Boxes (immutable objects)
+You may remember the _variable-as-a-box_ metaphor. Just to remind you, a variable is "box" with the variable name written on it and a value is stored "inside". When you use this value or assign it to a different variable, you can assume that Python _makes a copy_ of it (not really, but this makes it easier to understand) and puts that copy into a different variable "box". When you _replace_ value of a variable, what happens is that you take out the old value, destroy it (by throwing into a nearest black hole), create a new one, and put it into the variable "box". When you _change_ the value of a variable based on its current state, the same thing happens. You take out the value, create a new value (by adding to the original one or doing some other operation), destroy the old one, and put it back into the variable "box".
+
+This metaphor works nicely and explains why the scopes work the way they do (see the Scopes part in the previous seminar). Each scope has its own set of boxes and whenever you pass information between the scopes, e.g. from a global script to a function, a copy of value is created and put into a new box (i.e., parameter) inside the function. When the function returns the value, that is copied and put in one of the boxes in the global script, etc. 
+
+Unfortunately, this is true only for _immutable_ objects (values) such as numbers, strings, logical values, but also [tuples](https://docs.python.org/3/library/stdtypes.html?highlight=tuple#tuple) (see below for what these are). As you could have guessed from the name, this means that there are other _mutable_ objects and they behave very differently.
+
+## Variables as post-it stickers (mutable objects)
+Mutable objects are lists, dictionaries, and classes. The difference is that _immutable_ objects can be thought as fixed in their size. A number takes up that many bytes to store, same goes for a given string (although a different string would require more or fewer bytes). Still, they do not change, they are created and destroyed when unneeded but never truly updated. 
+
+_Mutable_ objects can be changed. For example, you can add elements to your list, or remove them, or shuffle them. Same goes for [dictionaries](https://docs.python.org/3/tutorial/datastructures.html?highlight=dictionary#dictionaries). Making such object **immutable** would be computationally inefficient (every time you add a value a long list is destroyed and recreated with just that one additional value), which is why Python simply _updates_ the original object. For further computation efficiency, these objects are not copied but _passed by reference_. This means that the variable is no longer a "box" but a "sticker" you put on an object (a list, a dictionary). And, you can put as many stickers on an object as you want **and it still will be the same object!**
+
+What on Earth do I mean? Keeping in mind that a variable is just (one of many) stickers for a mutable object, try figuring out what will be the output below:
+
+```python
+x = [1, 2, 3]
+y = x
+y.append(4)
+print(x)
+```
+
+::: {.infobox .practice}
+Do exercise #1.
+:::
+
+What? Why? "But I didn't touch `x`, only `y`" I hear you say? That is precisely what I have meant with "stickers on the same object". Since both `x` and `y` are stickers on the _same_ object, they are, effectively, synonyms. In that specific situation, once you set `x = y`, it does not matter which variable name you use to change _the_ object, they are just two stickers hanging side-by-side on the _same_ list. Again, just a reminder, this is **not** what would happen for **immutable** values, like numbers, where things would behaved the way you expect them to behave.
+
+This variable-as-a-sticker, aka "passing value by reference", has very important implications for the function calls, as it breaks your scope without ever giving you a warning. Look at the code below and try figuring out what the output will be.
+
+```python 
+def change_it(y):
+    y.append(4)
+
+x = [1, 2, 3]
+change_it(x)
+print(x)
+```
+::: {.infobox .practice}
+Do exercise #2.
+:::
+
+How did we manage to modify a _global_ variable from inside the function? Didn't we change the _local_ parameter of the function? Yep, that is exactly the problem with passing by reference. Your function parameter is just another sticker on the _same_ object, so even though it _looks_ like you do not need to worry about global variables (that's why you wrote the function!), you still do. If you are perplexed by this, you are in a good company. This is one of the most unexpected and confusing bits in Python that routinely catches people by surprise. Let us do a few more exercises, before I show you how to solve the scope problem for the mutable objects.
+
+
+::: {.infobox .practice}
+Do exercise #3.
+:::
+
+## Tuple: a frozen list
+The wise people who created Python were acutely aware of the problem that the _variable-as-a-sticker_ creates. Which is why, they added an **immutable** version of a list, called a [tuple](https://docs.python.org/3/library/stdtypes.html?highlight=tuple#tuple). It is a "frozen" list of values, which you can loop over, access its items by index, or figure out how many items it has, but you _cannot modify it_. No appending, removing, replacing values, etc. For you this means that a frozen list is a box rather than a sticker and that it behaves just like any other "normal" **immutable** object. You can create a `tuple` by using round brackets.
+```python
+i_am_a_tuple = (1, 2, 3)
+```
+You can loop over it, _e.g._
+```{python}
+i_am_a_tuple = (1, 2, 3)
+for number in i_am_a_tuple:
+    print(number)
+```
+
+but, as I said, appending will throw a mistake (try this code in a cell)
+```python
+i_am_a_tuple = (1, 2, 3)
+
+# throws AttributeError: 'tuple' object has no attribute 'append'
+i_am_a_tuple.append(4)
+```
+
+Same goes for trying to change it
+```python
+i_am_a_tuple = (1, 2, 3)
+
+# throws TypeError: 'tuple' object does not support item assignment
+i_am_a_tuple[1] = 1 
+```
+
+This means that when you need to pass a list of values to a function, you should instead pass _a tuple of values_ to the function. The function still has a list of values but the link to the original list object is now broken. You can turn a list into a tuple using `tuple()`. Keeping in mind that `tuple()` creates a frozen copy of the list, what will happen below?
+```python
+x = [1, 2, 3]
+y = tuple(x)
+x.append(4)
+print(y)
+```
+::: {.infobox .practice}
+Do exercise #4.
+:::
+
+As you probably figured out, when `y = tuple(x)`, Python creates **a copy** of the list values, freezes them (they are immutable now), and puts them into the "y" box. Hence, whatever you do to the original list, has no effect on the immutable "y".
+
+Conversely, you "unfreeze" a tuple by turning it into a list via `list()`. Please note that it creates **a new list**, which has no relation to any other existing list, even if values  were originally taken from any of them!
+
+::: {.infobox .practice}
+Do exercise #5.
+:::
+
+Remember I just said that list() creates a new list? This means that you can use it to create a copy of a list directly, without an intermediate tuple step. You can also achieve the same results by slicing an entire list, e.g. `list(x)`, is the same as `x[:]`.
+
+::: {.infobox .practice}
+Do exercise #6.
+:::
+
+Here, y = list(x) created a new list (which was a carbon copy of the one with the "x" sticker on it) and the "y" sticker was put on that new list, while the "x" remained hanging on the original.
+
+Confusing? You bet! If you feel overwhelmed by this whole mutable/immutable, tuple/list, copy/reference mess, you are just being a normal human being. I understand the reasons for doing things this way and I am aware of this difference but it still catches me by suprise occasionally!
+
 ## Keeping track of occupied caves
 
-So far, we had only the player to keep the track of and we were doing it by storing their location in the `player` variable. However, as we will add more game objects (bottomless pits, bats, the Wumpus), we need to keep the track of who-is-where, so that we don't place them in an already occupied cave. For this, we will keep a _list_ of occupied caves (let's call the variable `occupied_caves`). We will initialize it an empty list (you can make an empty list via either `[]` or `list()`) and then [append](https://docs.python.org/3.8/tutorial/datastructures.html#more-on-lists) to it. E.g., `list.append(new_value)`. We will pass this list to `find_empty_cave` function as a second argument and we will modify the function to generate an index of the cave _not_ in that list.
+So far, we had only the player to keep the track of and we were doing it by storing their location in the `player` variable. However, as we will add more game objects (bottomless pits, bats, the Wumpus), we need to keep the track of who-is-where, so that we don't place them in an already occupied cave. For this, we will keep a _list_ of occupied caves (let's call the variable `occupied_caves`). We will initialize it as empty list (you can make an empty list via either `[]` or `list()`) and then [append](https://docs.python.org/3.8/tutorial/datastructures.html#more-on-lists) to it (e.g., `list.append(new_value)`). We will pass this list to `find_empty_cave` function as a second argument and we will modify the function to generate an index of the cave _not_ in that list.
 
-Let us start with the function, add a second argument to it (call it `caves_taken` or something along these lines) and modify the code so the it keeps randomly generating cave index until it is _not_ in the `caves_taken` list. Remember document the code and test the code by passing a list of hard-coded values to see that it never returns value from the list (e.g., `find_empty_cave(len(CAVES), [2, 5, 7])`).
+Let us start with the function, add a second argument to it (call it `caves_taken` or something along these lines) and modify the code so the it keeps randomly generating cave index until it is _not_ in the `caves_taken` list. Remember to document the code and test the code by passing a list of hard-coded values to see that it never returns value from the list (e.g., `find_empty_cave(len(CAVES), [2, 5, 7])`).
 
 ::: {.infobox .program}
-Put your code into exercise #1.
+Put your code into exercise #7.
 :::
 
 Now we need to modify the main script to take advantage of the update `find_empty_cave()`. Here is the outline
@@ -19,11 +126,11 @@ Now we need to modify the main script to take advantage of the update `find_empt
 
 # define input_int function
 # define input_cave function
-# define find_empty_cave function
+-> # define updated find_empty_cave function 
 
-# create `occupied_caves` variable and initialize it to an empty list
-# create `player` variable and put him into an empty (unoccupied) cave (use `occupied_caves` when calling the function)
-# append player location to the `occupied_caves` list for future use
+-> # create `occupied_caves` variable and initialize it to an empty list
+-> # create `player` variable and put him into an empty (unoccupied) cave (use `occupied_caves` when calling the function)
+-> # append player location to the `occupied_caves` list for future use
 
 # while player is not in the cave #5 (index 4):
     # get input on which cave the player wants to move to
@@ -33,7 +140,7 @@ Now we need to modify the main script to take advantage of the update `find_empt
 ```
 
 ::: {.infobox .program}
-Put your code into exercise #2.
+Put your code into exercise #8.
 :::
 
 Now that we have the scaffolding in place, let us add bottomless pits. But before that, you need to learn about [for](https://docs.python.org/3/tutorial/controlflow.html#for-statements) loops and [range](https://docs.python.org/3/tutorial/controlflow.html#the-range-function).
@@ -56,7 +163,7 @@ for item in ["A", "C", "K"]:
 ```
 
 ::: {.infobox .practice}
-Do exercise #3.
+Do exercise #9.
 :::
 
 ## range() {#range}
@@ -67,22 +174,22 @@ Important note, `range()` function does not produce a list of values but a _gene
 range(3)
 ```
 
-The generators are functions (or objects) that yield items on at a time upon request that makes them "lazy" but more memory efficient. E.g., if you want to iterate over 10000 numbers, you do not need to generate a 10000 number long list (take memory), you just need to get numbers from that sequence one a time. You can convert a generator into a list via `list()` function
+The generators are functions (or objects) that yield items upon request, which makes them "lazy" but more memory efficient. E.g., if you want to iterate over 1,000,000 numbers, you do not need to generate a 1,000,000 number long list (takes memory), you just need to get numbers from that sequence one a time. You can convert a generator into a list via `list()` function
 ```{python}
 list(range(3))
 ```
 
-The reason for distinction between generators and iterable containers like lists, is that generator sequences can be unlimited. For example, you can have a generator that yields a new random number on each iteration (upon each request). It will never run out of items and trying to convert it to a list would be a bad idea as infinitely long lists require infinite amount of memory!
+The reason for distinction between generators and iterable containers like lists, is that generator sequences can be unlimited. For example, you can have a generator that yields a new random number upon request. It will never run out of items to yield and trying to convert it to a list would be a bad idea as an infinitely long list requires infinite amount of memory!
 
 ::: {.infobox .practice}
-Do exercise #4.
+Do exercise #10.
 :::
 
 ## Placing bottomless pits
 
-Now we can add bottomless pits to the game. The idea is simple, we place two of those in random caves, so when the player wanders into a cave with a bottomless pit, they fall down and, eventually, die (game over). We will, however, warn the player, their current cave is next to it, without telling them which cave it is in specifically. 
+Now we can add bottomless pits to the game. The idea is simple, we place two of those in random caves, so when the player wanders into a cave with a bottomless pit, they fall down and die (game over). We will, however, warn the player, that their current cave is next to a bottomless pit, without telling them which cave it is in specifically. 
 
-First thing first, let us add them. For this, we will create a new constant `NUMBER_OF_BOTTOMLESS_PITS` (I suggest that we set it to two but you can have more or less of them) and a new variable (`bottomless_pits`) with a list of indexes of caves with the bottomless pits in them. Add bottomless pits in a for loop by getting a cave index from `find_empty_cave` function (think about its parameters). Here is the code outline for the initialization part (do not copy paste the main loop just yet). See if numbers makes sense (number of caves is what you expected them to be, value are within the range, there are no duplicates, etc.)
+First thing first, let us add them. For this, we will create a new constant `NUMBER_OF_BOTTOMLESS_PITS` (I suggest that we set it to `2` but you can have more or fewer of them) and a new variable (`bottomless_pits`) that will hold a list of indexes of caves with the bottomless pits in them. Add bottomless pits to using using a for loop: On each iteration get an index of an empty cave (via `find_empty_cave` functionm think about its parameters), append this index to both 1) `bottomless_pits` and 2) `occupied_caves` variables, so that you 1) know where bottomless pits are and 2) know which caves are occupied. Here is the code outline for the initialization part (do not copy paste the main loop just yet). See if numbers makes sense (number of caves is what you expected them to be, value are within the range, there are no duplicates, etc.)
 
 ```python
 # import randint function from the random library
@@ -108,21 +215,85 @@ First thing first, let us add them. For this, we will create a new constant `NUM
 -> # print out both player and bottomless_pits variables for diagnostics
 ```
 ::: {.infobox .program}
-Put your code into exercise #5.
+Put your code into exercise #11.
+:::
+
+## Falling into a bottomless pit
+Now we will add one of the ways for the game to be over: the player falls into a bottomless pit. For this, we just need to check whether player is currently in a cave that has a bottomless pit in on every turn. If that is the case, player's cave is indeed in the bottomless pits list, print a sad game over message and `break` out of the loop. In addition, let us modify the `while` loop condition to `while True:`, so that the only way to end the game is to fall into the pit (not exactly fair to the player, but we'll fix that later). The outline of the updated code is as follows:
+
+```python
+# import randint function from the random library
+
+# define CAVES
+# define NUMBER_OF_BOTTOMLESS_PITS
+
+# define input_int function
+# define input_cave function
+# define find_empty_cave function
+
+# create `occupied_caves` variable and initialize it to an empty list
+# create `player` variable and put him into an empty (unoccupied) cave (use `occupied_caves` when calling the function)
+# append player location to the `occupied_caves` list for future use
+
+# create `bottomless_pits` variable and initialize it to an empty list
+# use for loop and range function to repeat the for loop NUMBER_OF_BOTTOMLESS_PITS times
+#     generate a new location for the bottomless pit via find_empty_cave() function
+#     append this location to `occupied_caves` variable
+#     append this location to `bottomless_pits` variable
+
+-> # print out both player and bottomless_pits variables for diagnostics
+
+-> # while True:
+    # get input on which cave the player wants to move to
+    # move the player to that cave
+    
+    -> # if players in a cave with bottomless pit:
+    ->      # print out sad game-over message
+    ->      # break out of the loop
+```
+
+::: {.infobox .program}
+Put your code into exercise #12.
 :::
 
 ## Warning about a bottomless pit
+We need to give the player a chance to avoid the fate of falling into a bottomless pit but warning him that one (or two) are nearby. To this end, we need to print additional information before they decide to make their move. In a for loop, iterate over the connected caves and every time cave has a bottomless pit in it, print "You feel a breeze!". This informs the player that the cave is nearby and the number of messages tells them just how many bottomless pits are nearby.
 
-## Falling into a bottomless pit
-
-
+::: {.infobox .program}
+Put your code into exercise #13.
+:::
 
 ## Placing bats
+We need more thrills! Let us add bats to the fray. They live in caves, the player can hear them, if they are in a connect cave ("You hear flapping!"), but if the player inadvertently enters the cave with bats, they carry the player to a _random_ cave. 
 
-## Transported by bats
+Placing the bats is analogous to placing bottomless pits. You need a constant that determines the number of bat colonies (e.g., `NUBMER_OF_BATS` and set it `2` or some other number you prefer), a variable that holds a list with indexes of caves with bats (e.g., `bats`), and you need to pick random empty caves and store them in `bats` in exactly the same way you did it with bottomless pits. Print out location of bats for diagnostic purposes.
 
-## Was I just transported to a bottomless pit?
+::: {.infobox .program}
+Put your code into exercise #14.
+:::
+
+## Warned about bats
+In the same loop over connected caves that you use to warn the player about bottomless pits, add another check that prints out `"You hear flapping!"` every time the connected cave have bats in it.
+
+::: {.infobox .program}
+Put your code into exercise #15.
+:::
+
+## Transported by bats into a random cave
+If the player is in the cave with bats, they transport them to a _random_ cave, irrespective of whether the cave is occupied or not. Thus, bats can carry the player to a cave:
+
+1. with another bat colony and it will transport the player again.
+2. with a bottomless pit and the player will fall into it.
+3. later on, to the cave with the Wumpus (the player may not survive that one).
+
+Think about:
+
+1. _when_ you check for bats presence (before or after checking for a bottomless pit?),
+2. do you check once (using `if`) or one-or-more times (using `while`)
 
 
+::: {.infobox .program}
+Put your code into exercise #16.
+:::
 
-## Boxes versus Post-it notes: Mutuable versus Immutable types
+Next time, we will finish the game by adding the Wumpus and the arrows.
