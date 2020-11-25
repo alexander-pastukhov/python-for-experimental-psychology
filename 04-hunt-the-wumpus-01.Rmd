@@ -63,7 +63,7 @@ Let us decipher this. You have a list of twenty elements (caves). Inside each el
 Do exercise #7 to get comfortable with indexing list of lists.
 :::
 
-To allow the player to wander, we need to know where their are to begin with. Let us define a new variable called, simply, `player` and assign a random integer between `0` and `19` to it, thus putting the player into a random cave. For this, you will need a `randomint` function from the `random` library. Look at our previous seminar, if you forgot how to use it. 
+To allow the player to wander, we need to know where they are to begin with. Let us define a new variable called, simply, `player` and assign a random integer between `0` and `19` to it, thus putting the player into a random cave. For this, you will need a `randomint` function from the `random` library. Look at our previous seminar, if you forgot how to use it. 
 
 Our player needs to know where they can go, so on each turn we will need to print out the information about which cave the player is in and about the connecting caves (use string formatting to make this look nice). Let this be our first code snippet for the game. The code should look like this
 ```{python eval=FALSE}
