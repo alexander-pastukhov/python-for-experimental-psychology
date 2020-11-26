@@ -279,7 +279,7 @@ In the same loop over connected caves that you use to warn the player about bott
 Put your code into exercise #15.
 :::
 
-## Transported by bats into a random cave
+## Transported by bats to a random cave
 If the player is in the cave with bats, they transport them to a _random_ cave, irrespective of whether the cave is occupied or not. Thus, bats can carry the player to a cave:
 
 1. with another bat colony and it will transport the player again.
