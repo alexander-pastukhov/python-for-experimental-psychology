@@ -48,4 +48,17 @@ adding-prompt-parameter-to-input_int
 using-the-function-in-the-code
 create-input_cave-function
 create-find_empty_cave-function
+seminar06
+recall-variables-as-boxes-immutable-objects
+variables-as-post-it-stickers-mutable-objects
+tuple-a-frozen-list
+keeping-track-of-occupied-caves
+for-loop
+range
+placing-bottomless-pits
+falling-into-a-bottomless-pit
+warning-about-a-bottomless-pit
+placing-bats
+warned-about-bats
+transported-by-bats-to-a-random-cave
 w--.unlisted

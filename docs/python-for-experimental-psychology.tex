@@ -117,7 +117,7 @@
 
 \title{Python for social and experimental psychology}
 \author{Alexander (Sasha) Pastukhov}
-\date{2020-11-24}
+\date{2020-11-26}
 
 \begin{document}
 \maketitle
@@ -1038,7 +1038,7 @@ Let us decipher this. You have a list of twenty elements (caves). Inside each el
 
 Do exercise \#7 to get comfortable with indexing list of lists.
 
-To allow the player to wander, we need to know where their are to begin with. Let us define a new variable called, simply, \texttt{player} and assign a random integer between \texttt{0} and \texttt{19} to it, thus putting the player into a random cave. For this, you will need a \texttt{randomint} function from the \texttt{random} library. Look at our previous seminar, if you forgot how to use it.
+To allow the player to wander, we need to know where they are to begin with. Let us define a new variable called, simply, \texttt{player} and assign a random integer between \texttt{0} and \texttt{19} to it, thus putting the player into a random cave. For this, you will need a \texttt{randomint} function from the \texttt{random} library. Look at our previous seminar, if you forgot how to use it.
 
 Our player needs to know where they can go, so on each turn we will need to print out the information about which cave the player is in and about the connecting caves (use string formatting to make this look nice). Let this be our first code snippet for the game. The code should look like this
 
@@ -1623,6 +1623,371 @@ Your final code should look roughly as follows and, as you can see, the main scr
 \CommentTok{\# print a nice game{-}over message}
 \end{Highlighting}
 \end{Shaded}
+
+\hypertarget{seminar06}{%
+\chapter{Hunt the Wumpus, part 3}\label{seminar06}}
+
+During the last seminar, we used functions to make out code modular. Now, let us add more bells-and-whistles to the game: bottomless pits, crazy bats, and the Wumpus itself. Don't forget to download the \href{notebooks/Seminar\%2006.\%20Hunt\%20the\%20Wumpus,\%20part\%203.ipynb}{exercise notebook}.
+
+Before we continue with the game, I would like to introduce the critical difference between \emph{mutable} and \emph{immutable} types.
+
+\hypertarget{recall-variables-as-boxes-immutable-objects}{%
+\section{Recall, Variables as Boxes (immutable objects)}\label{recall-variables-as-boxes-immutable-objects}}
+
+You may remember the \emph{variable-as-a-box} metaphor. Just to remind you, a variable is ``box'' with the variable name written on it and a value is stored ``inside''. When you use this value or assign it to a different variable, you can assume that Python \emph{makes a copy} of it (not really, but this makes it easier to understand) and puts that copy into a different variable ``box''. When you \emph{replace} value of a variable, what happens is that you take out the old value, destroy it (by throwing into a nearest black hole), create a new one, and put it into the variable ``box''. When you \emph{change} the value of a variable based on its current state, the same thing happens. You take out the value, create a new value (by adding to the original one or doing some other operation), destroy the old one, and put it back into the variable ``box''.
+
+This metaphor works nicely and explains why the scopes work the way they do (see the Scopes part in the previous seminar). Each scope has its own set of boxes and whenever you pass information between the scopes, e.g.~from a global script to a function, a copy of value is created and put into a new box (i.e., parameter) inside the function. When the function returns the value, that is copied and put in one of the boxes in the global script, etc.
+
+Unfortunately, this is true only for \emph{immutable} objects (values) such as numbers, strings, logical values, but also \href{https://docs.python.org/3/library/stdtypes.html?highlight=tuple\#tuple}{tuples} (see below for what these are). As you could have guessed from the name, this means that there are other \emph{mutable} objects and they behave very differently.
+
+\hypertarget{variables-as-post-it-stickers-mutable-objects}{%
+\section{Variables as post-it stickers (mutable objects)}\label{variables-as-post-it-stickers-mutable-objects}}
+
+Mutable objects are lists, dictionaries, and classes. The difference is that \emph{immutable} objects can be thought as fixed in their size. A number takes up that many bytes to store, same goes for a given string (although a different string would require more or fewer bytes). Still, they do not change, they are created and destroyed when unneeded but never truly updated.
+
+\emph{Mutable} objects can be changed. For example, you can add elements to your list, or remove them, or shuffle them. Same goes for \href{https://docs.python.org/3/tutorial/datastructures.html?highlight=dictionary\#dictionaries}{dictionaries}. Making such object \textbf{immutable} would be computationally inefficient (every time you add a value a long list is destroyed and recreated with just that one additional value), which is why Python simply \emph{updates} the original object. For further computation efficiency, these objects are not copied but \emph{passed by reference}. This means that the variable is no longer a ``box'' but a ``sticker'' you put on an object (a list, a dictionary). And, you can put as many stickers on an object as you want \textbf{and it still will be the same object!}
+
+What on Earth do I mean? Keeping in mind that a variable is just (one of many) stickers for a mutable object, try figuring out what will be the output below:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{]}
+\NormalTok{y }\OperatorTok{=}\NormalTok{ x}
+\NormalTok{y.append(}\DecValTok{4}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+Do exercise \#1.
+
+What? Why? ``But I didn't touch \texttt{x}, only \texttt{y}'' I hear you say? That is precisely what I have meant with ``stickers on the same object''. Since both \texttt{x} and \texttt{y} are stickers on the \emph{same} object, they are, effectively, synonyms. In that specific situation, once you set \texttt{x\ =\ y}, it does not matter which variable name you use to change \emph{the} object, they are just two stickers hanging side-by-side on the \emph{same} list. Again, just a reminder, this is \textbf{not} what would happen for \textbf{immutable} values, like numbers, where things would behaved the way you expect them to behave.
+
+This variable-as-a-sticker, aka ``passing value by reference'', has very important implications for the function calls, as it breaks your scope without ever giving you a warning. Look at the code below and try figuring out what the output will be.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ change\_it(y):}
+\NormalTok{    y.append(}\DecValTok{4}\NormalTok{)}
+
+\NormalTok{x }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{]}
+\NormalTok{change\_it(x)}
+\BuiltInTok{print}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+Do exercise \#2.
+
+How did we manage to modify a \emph{global} variable from inside the function? Didn't we change the \emph{local} parameter of the function? Yep, that is exactly the problem with passing by reference. Your function parameter is just another sticker on the \emph{same} object, so even though it \emph{looks} like you do not need to worry about global variables (that's why you wrote the function!), you still do. If you are perplexed by this, you are in a good company. This is one of the most unexpected and confusing bits in Python that routinely catches people by surprise. Let us do a few more exercises, before I show you how to solve the scope problem for the mutable objects.
+
+Do exercise \#3.
+
+\hypertarget{tuple-a-frozen-list}{%
+\section{Tuple: a frozen list}\label{tuple-a-frozen-list}}
+
+The wise people who created Python were acutely aware of the problem that the \emph{variable-as-a-sticker} creates. Which is why, they added an \textbf{immutable} version of a list, called a \href{https://docs.python.org/3/library/stdtypes.html?highlight=tuple\#tuple}{tuple}. It is a ``frozen'' list of values, which you can loop over, access its items by index, or figure out how many items it has, but you \emph{cannot modify it}. No appending, removing, replacing values, etc. For you this means that a frozen list is a box rather than a sticker and that it behaves just like any other ``normal'' \textbf{immutable} object. You can create a \texttt{tuple} by using round brackets.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{i\_am\_a\_tuple }\OperatorTok{=}\NormalTok{ (}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+You can loop over it, \emph{e.g.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{i\_am\_a\_tuple }\OperatorTok{=}\NormalTok{ (}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{)}
+\ControlFlowTok{for}\NormalTok{ number }\KeywordTok{in}\NormalTok{ i\_am\_a\_tuple:}
+    \BuiltInTok{print}\NormalTok{(number)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 1
+## 2
+## 3
+\end{verbatim}
+
+but, as I said, appending will throw a mistake (try this code in a cell)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{i\_am\_a\_tuple }\OperatorTok{=}\NormalTok{ (}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{)}
+
+\CommentTok{\# throws AttributeError: \textquotesingle{}tuple\textquotesingle{} object has no attribute \textquotesingle{}append\textquotesingle{}}
+\NormalTok{i\_am\_a\_tuple.append(}\DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Same goes for trying to change it
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{i\_am\_a\_tuple }\OperatorTok{=}\NormalTok{ (}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{)}
+
+\CommentTok{\# throws TypeError: \textquotesingle{}tuple\textquotesingle{} object does not support item assignment}
+\NormalTok{i\_am\_a\_tuple[}\DecValTok{1}\NormalTok{] }\OperatorTok{=} \DecValTok{1} 
+\end{Highlighting}
+\end{Shaded}
+
+This means that when you need to pass a list of values to a function, you should instead pass \emph{a tuple of values} to the function. The function still has a list of values but the link to the original list object is now broken. You can turn a list into a tuple using \texttt{tuple()}. Keeping in mind that \texttt{tuple()} creates a frozen copy of the list, what will happen below?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{]}
+\NormalTok{y }\OperatorTok{=} \BuiltInTok{tuple}\NormalTok{(x)}
+\NormalTok{x.append(}\DecValTok{4}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(y)}
+\end{Highlighting}
+\end{Shaded}
+
+Do exercise \#4.
+
+As you probably figured out, when \texttt{y\ =\ tuple(x)}, Python creates \textbf{a copy} of the list values, freezes them (they are immutable now), and puts them into the ``y'' box. Hence, whatever you do to the original list, has no effect on the immutable ``y''.
+
+Conversely, you ``unfreeze'' a tuple by turning it into a list via \texttt{list()}. Please note that it creates \textbf{a new list}, which has no relation to any other existing list, even if values were originally taken from any of them!
+
+Do exercise \#5.
+
+Remember I just said that list() creates a new list? This means that you can use it to create a copy of a list directly, without an intermediate tuple step. You can also achieve the same results by slicing an entire list, e.g.~\texttt{list(x)}, is the same as \texttt{x{[}:{]}}.
+
+Do exercise \#6.
+
+Here, y = list(x) created a new list (which was a carbon copy of the one with the ``x'' sticker on it) and the ``y'' sticker was put on that new list, while the ``x'' remained hanging on the original.
+
+Confusing? You bet! If you feel overwhelmed by this whole mutable/immutable, tuple/list, copy/reference mess, you are just being a normal human being. I understand the reasons for doing things this way and I am aware of this difference but it still catches me by suprise occasionally!
+
+\hypertarget{keeping-track-of-occupied-caves}{%
+\section{Keeping track of occupied caves}\label{keeping-track-of-occupied-caves}}
+
+So far, we had only the player to keep the track of and we were doing it by storing their location in the \texttt{player} variable. However, as we will add more game objects (bottomless pits, bats, the Wumpus), we need to keep the track of who-is-where, so that we don't place them in an already occupied cave. For this, we will keep a \emph{list} of occupied caves (let's call the variable \texttt{occupied\_caves}). We will initialize it as empty list (you can make an empty list via either \texttt{{[}{]}} or \texttt{list()}) and then \href{https://docs.python.org/3.8/tutorial/datastructures.html\#more-on-lists}{append} to it (e.g., \texttt{list.append(new\_value)}). We will pass this list to \texttt{find\_empty\_cave} function as a second argument and we will modify the function to generate an index of the cave \emph{not} in that list.
+
+Let us start with the function, add a second argument to it (call it \texttt{caves\_taken} or something along these lines) and modify the code so the it keeps randomly generating cave index until it is \emph{not} in the \texttt{caves\_taken} list. Remember to document the code and test the code by passing a list of hard-coded values to see that it never returns value from the list (e.g., \texttt{find\_empty\_cave(len(CAVES),\ {[}2,\ 5,\ 7{]})}).
+
+Put your code into exercise \#7.
+
+Now we need to modify the main script to take advantage of the update \texttt{find\_empty\_cave()}. Here is the outline
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# import randint function from the random library}
+
+\CommentTok{\# define CAVES}
+
+\CommentTok{\# define input\_int function}
+\CommentTok{\# define input\_cave function}
+\OperatorTok{{-}\textgreater{}} \CommentTok{\# define updated find\_empty\_cave function }
+
+\OperatorTok{{-}\textgreater{}} \CommentTok{\# create \textasciigrave{}occupied\_caves\textasciigrave{} variable and initialize it to an empty list}
+\OperatorTok{{-}\textgreater{}} \CommentTok{\# create \textasciigrave{}player\textasciigrave{} variable and put him into an empty (unoccupied) cave (use \textasciigrave{}occupied\_caves\textasciigrave{} when calling the function)}
+\OperatorTok{{-}\textgreater{}} \CommentTok{\# append player location to the \textasciigrave{}occupied\_caves\textasciigrave{} list for future use}
+
+\CommentTok{\# while player is not in the cave \#5 (index 4):}
+    \CommentTok{\# get input on which cave the player wants to move to}
+    \CommentTok{\# move the player to that cave}
+
+\CommentTok{\# print a nice game{-}over message}
+\end{Highlighting}
+\end{Shaded}
+
+Put your code into exercise \#8.
+
+Now that we have the scaffolding in place, let us add bottomless pits. But before that, you need to learn about \href{https://docs.python.org/3/tutorial/controlflow.html\#for-statements}{for} loops and \href{https://docs.python.org/3/tutorial/controlflow.html\#the-range-function}{range}.
+
+\hypertarget{for-loop}{%
+\section{For loop}\label{for-loop}}
+
+The \href{https://docs.python.org/3/tutorial/controlflow.html\#for-statements}{for} loop iterates over sequence of items. Generally speaking, for loop loops over items that are in \emph{iterable} containers or yielded by \emph{generators}. We won't go into exact details of what these are and how their are implemented. For now, you just need to know that there are two kinds of things a for loop can iterate over and that they differ in whether they produce a finite number of elements to loop over (iterable containers) or a potentially endless number of elements to iterate over (generators). An example of the former is a list (an iterable container that holds a finite number of items), an example of the latter is a \texttt{range()} function, which we will discuss separately below.
+
+To iterate over items in the list, you simply write
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{ item }\KeywordTok{in} \BuiltInTok{list}\NormalTok{:}
+\NormalTok{  ...}
+\NormalTok{  do something }\ControlFlowTok{with}\NormalTok{ an item }\KeywordTok{or}\NormalTok{ just do something}
+\NormalTok{  ...}
+\end{Highlighting}
+\end{Shaded}
+
+For example, you can print every item of the list one-by-one. The loop will be executed three times (there are three items in the list) and on each iteration the \texttt{item} variable will take the value of the corresponding element: \texttt{"A"} on the first iteration, \texttt{"B"} on the second, \texttt{"C"} on the third.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{ item }\KeywordTok{in}\NormalTok{ [}\StringTok{"A"}\NormalTok{, }\StringTok{"C"}\NormalTok{, }\StringTok{"K"}\NormalTok{]:}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"Item is }\SpecialCharTok{\%s}\StringTok{"}\OperatorTok{\%}\NormalTok{(item))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Item is A
+## Item is C
+## Item is K
+\end{verbatim}
+
+Do exercise \#9.
+
+\hypertarget{range}{%
+\section{range()}\label{range}}
+
+Sometimes you need to repeat an action several times (e.g., in our code below, we will need to add two bottomless pits) or iterate over sequence of numbers. You can write down such list by hand, e.g.~\texttt{{[}0,\ 1,\ 2{]}}, but an easier way is to use \href{https://docs.python.org/3/library/stdtypes.html\#range}{range(start, stop, step)} function that generates a sequence of numbers from \texttt{start} until-but-not-including \texttt{stop} with a given \texttt{step}. If you omit the \texttt{step}, it is assumed to be \texttt{1}. You can also pass just one value that is interpreted as \texttt{stop} with \texttt{start=0} and \texttt{step=1}. Thus, \texttt{range(3)} is the same as \texttt{range(0,\ 3)} and \texttt{range(0,\ 3,\ 1)}.
+
+Important note, \texttt{range()} function does not produce a list of values but a \emph{generator} that yields values one at a time. You can see it by calling this function in isolation
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{range}\NormalTok{(}\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## range(0, 3)
+\end{verbatim}
+
+The generators are functions (or objects) that yield items upon request, which makes them ``lazy'' but more memory efficient. E.g., if you want to iterate over 1,000,000 numbers, you do not need to generate a 1,000,000 number long list (takes memory), you just need to get numbers from that sequence one a time. You can convert a generator into a list via \texttt{list()} function
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{list}\NormalTok{(}\BuiltInTok{range}\NormalTok{(}\DecValTok{3}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [0, 1, 2]
+\end{verbatim}
+
+The reason for distinction between generators and iterable containers like lists, is that generator sequences can be unlimited. For example, you can have a generator that yields a new random number upon request. It will never run out of items to yield and trying to convert it to a list would be a bad idea as an infinitely long list requires infinite amount of memory!
+
+Do exercise \#10.
+
+\hypertarget{placing-bottomless-pits}{%
+\section{Placing bottomless pits}\label{placing-bottomless-pits}}
+
+Now we can add bottomless pits to the game. The idea is simple, we place two of those in random caves, so when the player wanders into a cave with a bottomless pit, they fall down and die (game over). We will, however, warn the player, that their current cave is next to a bottomless pit, without telling them which cave it is in specifically.
+
+First thing first, let us add them. For this, we will create a new constant \texttt{NUMBER\_OF\_BOTTOMLESS\_PITS} (I suggest that we set it to \texttt{2} but you can have more or fewer of them) and a new variable (\texttt{bottomless\_pits}) that will hold a list of indexes of caves with the bottomless pits in them. Add bottomless pits to using using a for loop: On each iteration get an index of an empty cave (via \texttt{find\_empty\_cave} functionm think about its parameters), append this index to both 1) \texttt{bottomless\_pits} and 2) \texttt{occupied\_caves} variables, so that you 1) know where bottomless pits are and 2) know which caves are occupied. Here is the code outline for the initialization part (do not copy paste the main loop just yet). See if numbers makes sense (number of caves is what you expected them to be, value are within the range, there are no duplicates, etc.)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# import randint function from the random library}
+
+\CommentTok{\# define CAVES}
+\OperatorTok{{-}\textgreater{}} \CommentTok{\# define NUMBER\_OF\_BOTTOMLESS\_PITS}
+
+\CommentTok{\# define input\_int function}
+\CommentTok{\# define input\_cave function}
+\CommentTok{\# define find\_empty\_cave function}
+
+\CommentTok{\# create \textasciigrave{}occupied\_caves\textasciigrave{} variable and initialize it to an empty list}
+\CommentTok{\# create \textasciigrave{}player\textasciigrave{} variable and put him into an empty (unoccupied) cave (use \textasciigrave{}occupied\_caves\textasciigrave{} when calling the function)}
+\CommentTok{\# append player location to the \textasciigrave{}occupied\_caves\textasciigrave{} list for future use}
+
+\OperatorTok{{-}\textgreater{}} \CommentTok{\# create \textasciigrave{}bottomless\_pits\textasciigrave{} variable and initialize it to an empty list}
+\OperatorTok{{-}\textgreater{}} \CommentTok{\# use for loop and range function to repeat the for loop NUMBER\_OF\_BOTTOMLESS\_PITS times}
+\OperatorTok{{-}\textgreater{}} \CommentTok{\#     generate a new location for the bottomless pit via find\_empty\_cave() function}
+\OperatorTok{{-}\textgreater{}} \CommentTok{\#     append this location to \textasciigrave{}occupied\_caves\textasciigrave{} variable}
+\OperatorTok{{-}\textgreater{}} \CommentTok{\#     append this location to \textasciigrave{}bottomless\_pits\textasciigrave{} variable}
+
+
+\OperatorTok{{-}\textgreater{}} \CommentTok{\# print out both player and bottomless\_pits variables for diagnostics}
+\end{Highlighting}
+\end{Shaded}
+
+Put your code into exercise \#11.
+
+\hypertarget{falling-into-a-bottomless-pit}{%
+\section{Falling into a bottomless pit}\label{falling-into-a-bottomless-pit}}
+
+Now we will add one of the ways for the game to be over: the player falls into a bottomless pit. For this, we just need to check whether player is currently in a cave that has a bottomless pit in on every turn. If that is the case, player's cave is indeed in the bottomless pits list, print a sad game over message and \texttt{break} out of the loop. In addition, let us modify the \texttt{while} loop condition to \texttt{while\ True:}, so that the only way to end the game is to fall into the pit (not exactly fair to the player, but we'll fix that later). The outline of the updated code is as follows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# import randint function from the random library}
+
+\CommentTok{\# define CAVES}
+\CommentTok{\# define NUMBER\_OF\_BOTTOMLESS\_PITS}
+
+\CommentTok{\# define input\_int function}
+\CommentTok{\# define input\_cave function}
+\CommentTok{\# define find\_empty\_cave function}
+
+\CommentTok{\# create \textasciigrave{}occupied\_caves\textasciigrave{} variable and initialize it to an empty list}
+\CommentTok{\# create \textasciigrave{}player\textasciigrave{} variable and put him into an empty (unoccupied) cave (use \textasciigrave{}occupied\_caves\textasciigrave{} when calling the function)}
+\CommentTok{\# append player location to the \textasciigrave{}occupied\_caves\textasciigrave{} list for future use}
+
+\CommentTok{\# create \textasciigrave{}bottomless\_pits\textasciigrave{} variable and initialize it to an empty list}
+\CommentTok{\# use for loop and range function to repeat the for loop NUMBER\_OF\_BOTTOMLESS\_PITS times}
+\CommentTok{\#     generate a new location for the bottomless pit via find\_empty\_cave() function}
+\CommentTok{\#     append this location to \textasciigrave{}occupied\_caves\textasciigrave{} variable}
+\CommentTok{\#     append this location to \textasciigrave{}bottomless\_pits\textasciigrave{} variable}
+
+\OperatorTok{{-}\textgreater{}} \CommentTok{\# print out both player and bottomless\_pits variables for diagnostics}
+
+\OperatorTok{{-}\textgreater{}} \CommentTok{\# while True:}
+    \CommentTok{\# get input on which cave the player wants to move to}
+    \CommentTok{\# move the player to that cave}
+    
+    \OperatorTok{{-}\textgreater{}} \CommentTok{\# if players in a cave with bottomless pit:}
+    \OperatorTok{{-}\textgreater{}}      \CommentTok{\# print out sad game{-}over message}
+    \OperatorTok{{-}\textgreater{}}      \CommentTok{\# break out of the loop}
+\end{Highlighting}
+\end{Shaded}
+
+Put your code into exercise \#12.
+
+\hypertarget{warning-about-a-bottomless-pit}{%
+\section{Warning about a bottomless pit}\label{warning-about-a-bottomless-pit}}
+
+We need to give the player a chance to avoid the fate of falling into a bottomless pit but warning him that one (or two) are nearby. To this end, we need to print additional information before they decide to make their move. In a for loop, iterate over the connected caves and every time cave has a bottomless pit in it, print ``You feel a breeze!''. This informs the player that the cave is nearby and the number of messages tells them just how many bottomless pits are nearby.
+
+Put your code into exercise \#13.
+
+\hypertarget{placing-bats}{%
+\section{Placing bats}\label{placing-bats}}
+
+We need more thrills! Let us add bats to the fray. They live in caves, the player can hear them, if they are in a connect cave (``You hear flapping!''), but if the player inadvertently enters the cave with bats, they carry the player to a \emph{random} cave.
+
+Placing the bats is analogous to placing bottomless pits. You need a constant that determines the number of bat colonies (e.g., \texttt{NUBMER\_OF\_BATS} and set it \texttt{2} or some other number you prefer), a variable that holds a list with indexes of caves with bats (e.g., \texttt{bats}), and you need to pick random empty caves and store them in \texttt{bats} in exactly the same way you did it with bottomless pits. Print out location of bats for diagnostic purposes.
+
+Put your code into exercise \#14.
+
+\hypertarget{warned-about-bats}{%
+\section{Warned about bats}\label{warned-about-bats}}
+
+In the same loop over connected caves that you use to warn the player about bottomless pits, add another check that prints out \texttt{"You\ hear\ flapping!"} every time the connected cave have bats in it.
+
+Put your code into exercise \#15.
+
+\hypertarget{transported-by-bats-to-a-random-cave}{%
+\section{Transported by bats to a random cave}\label{transported-by-bats-to-a-random-cave}}
+
+If the player is in the cave with bats, they transport them to a \emph{random} cave, irrespective of whether the cave is occupied or not. Thus, bats can carry the player to a cave:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  with another bat colony and it will transport the player again.
+\item
+  with a bottomless pit and the player will fall into it.
+\item
+  later on, to the cave with the Wumpus (the player may not survive that one).
+\end{enumerate}
+
+Think about:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \emph{when} you check for bats presence (before or after checking for a bottomless pit?),
+\item
+  do you check once (using \texttt{if}) or one-or-more times (using \texttt{while})
+\end{enumerate}
+
+Put your code into exercise \#16.
+
+Next time, we will finish the game by adding the Wumpus and the arrows.
 
 \hypertarget{cross-references}{%
 \chapter*{Cross references}\label{cross-references}}
