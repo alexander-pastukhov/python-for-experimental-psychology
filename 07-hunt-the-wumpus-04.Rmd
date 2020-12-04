@@ -1,0 +1,46 @@
+# Hunt the Wumpus, part 4 {#seminar07}
+
+Our game is almost complete, we only need to add the Wumpus and arm the player with crooked arrows! Grab the [exercise notebook](notebooks/Seminar 07. Hunt the Wumpus, part 4.ipynb) and let get busy.
+
+## Adding Wumpus.
+By now you have added a player (single, location stored as in integer), bottomless pits (plural, locations stored in a list), and bats (plural as well). Add Wumpus! 
+
+1. Create a new variable (`wumpus`?) and place Wumpus in an occupied cave. Print out location of Wumpus for debugging purposes.
+2. Warn about Wumpus in the same code that warns about pits and bats. Canonical warning text is `"You smell a Wumpus!"`. 
+3. Check if player is in the same cave as Wumpus. If that is the case, game is over, as the player is eaten by a hungry Wumpus. This is similar to _game-over_ due to falling into a bottomless pit. Think about whether the check should before or after check for bats.
+
+::: {.infobox .program}
+Put your code into exercise #1.
+:::
+
+## Giving player a chance.
+Let us give player a chance. As they enter the cave with the Wumpus, they startle it. Then, Wumpus either runs away to a random adjacent cave (new) or stays put and eats the player. First, create a new constant that defines a probability that Wumpus runs away, e.g. `P_WUMPUS_SCARED`. In implementations I've found, it is typically 0.25, but use any value you feel is reasonable. 
+
+Thus, if the player is in the cave with Wumpus, draw a random number between 0 and 1. The function you are looking for is [random()](https://docs.python.org/3/library/random.html#random.random) and it is part of [random](https://docs.python.org/3/library/random.html) library, so the call is `random.random()`.If that number is smaller than probability that the Wumpus is scared, move it to a random adjacent cave (bats ignore Wumpus and it clings to the ceiling of the caves, so bottomless pits are not a problem for it). A useful function is [choice()](https://docs.python.org/3/library/random.html#random.choice), again, part of [random](https://docs.python.org/3/library/random.html) library. Otherwise, if Wumpus was not scared off, the player is eaten and game is over (the only outcome in exercise #1).
+
+::: {.infobox .program}
+Put your code into exercise #2.
+:::
+
+## Flight of a crooked arrow
+Our player is armed with _crooked_ arrows that can fly through caves. The rules for its flight are the following:
+
+* The player decide in which cave it shoots an arrow and how far the arrow flies (from 1 up to 5 caves).
+* Every time the arrow needs to flight into a next cave, that cave is picked randomly from adjacent caves _excluding_ the cave it came from (so, the arrow cannot make a 180° turn and there are only two out of three caves available for choosing).
+* If the arrow flies into a cave with Wumpus, it is defeated and the game is won.
+* If the arrow flies into a cave with the player, then they committed unintentional suicide and the game is lost.
+* If the arrow reached it last cave (based on how far the player wanted to shoot) and the cave is empty, it drops down on the floor.
+* Bats or bottomless pits have no effect on the arrow.
+
+To keep track of the arrow, you will need following variables:
+
+* `arrow`: current location of the arrow.
+* `arrow_previous_cave`: index of the cave the arrow came from, so that you know where it cannot flight back.
+* `shooting_distance`: remaining distance to travel.
+
+For our first exercise, initialize 
+
+* `arrow_previous_cave` to a random cave (at present, we don't care whether it is occupied, so any cave will do). 
+* `arrow` to a random cave connected to `arrow_previous_cave` (you already implement this random choice for Wumpus in exercise #2)
+* `shooting_distance` to 
+
