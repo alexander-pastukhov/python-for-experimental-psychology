@@ -32,15 +32,177 @@ Our player is armed with _crooked_ arrows that can fly through caves. The rules 
 * If the arrow reached it last cave (based on how far the player wanted to shoot) and the cave is empty, it drops down on the floor.
 * Bats or bottomless pits have no effect on the arrow.
 
+The total number of arrows the player has at the beginning should be defined in `ARROWS_NUMBER` constant (e.g., `5`).
+
 To keep track of the arrow, you will need following variables:
 
 * `arrow`: current location of the arrow.
 * `arrow_previous_cave`: index of the cave the arrow came from, so that you know where it cannot flight back.
 * `shooting_distance`: remaining distance to travel.
+* `remaining_arrows`: number of remaining arrows (set to `ARROWS_NUMBER` when the game starts).
 
-For our first exercise, initialize 
+## Random cave but no 180° turn
+You need to program a function (call it `next_arrow_cave()`) that picks a random cave but not the previous cave the arrow had been in. It should have two parameters:
 
-* `arrow_previous_cave` to a random cave (at present, we don't care whether it is occupied, so any cave will do). 
-* `arrow` to a random cave connected to `arrow_previous_cave` (you already implement this random choice for Wumpus in exercise #2)
-* `shooting_distance` to 
+* `connected_caves`: a list of connected caves.
+* `previous_cave`: cave from which the arrow came from.
 
+First, debug the code in a separate cell. Assume that `connecting_caves = CAVES[1]` (so, arrow is currently in cave 1) and `previous_cave = 0` (arrow came from cave 0). Write the code that will pick one of the remaining caves randomly (in this case, either `2` or `7`). Once the code works, turn it into a function that returns the next cave for an arrow. Document the function. Test it with for other combinations of connected and previous caves.
+
+::: {.infobox .program}
+Put your code into exercise #3.
+:::
+
+## Going distance
+Now that you have a function that flies to the next random cave, implement flying using a for loop. An arrow should fly through `shooting_distance` caves (set it to `5`, maximal distance, by hand for testing). The _first_ cave is given (it will be picked by the player), so set `arrow` to `1` and `arrow_previous_cave` to `0` (player is in the cave `0` and shot the arrow into cave `1`). For debugging purposes, print out location of the arrow on each iteration. Test the code by changing `shooting_distance`. In particular, set it to `1`. The arrow should "fall down" already in cave `1`.
+
+::: {.infobox .program}
+Put your code into exercise #4.
+:::
+
+## Hitting a target
+Implement check for hitting the Wumpus or the player in the loop. Should the check be before or after the arrow flies to the next random cave? In both cases, write an appropriate "game over" message, set variable `gameover` to `True` (we will add to the main code later), and break out of the loop. Test the code by placing Wumpus by hand into the cave the player is shooting at or the next one. Run code multiple times to check that it works.
+
+::: {.infobox .program}
+Put your code into exercise #5.
+:::
+
+## Almost where
+We are almost where but before we can start putting the code together we need a few more things. To better understand what all the functions are for, take a look at the overall program we are trying to make. You have most parts: placing player and game objects, moving player, checking for bats, bottomless pits, and wumpus. But we still need to implement asking player whether they want to shoot or move, asking for shooting distance, and for cave the player wants to shoot at.
+
+```
+import random
+
+define CAVES
+define other constants
+
+define functions 
+
+place player, bottomless pits, bats, and wumpus
+set number of remaining arrows to ARROWS_NUMBER
+
+set gameover to False
+while not gameover:
+    while player wants to shoot and has arrows:
+        ask about cave that player want to shoot at
+        ask how the far the arrow should fly
+        
+        fly arrow through caves in for loop:
+            if hit wumpus -> congrats game over message, gameover=True, and break out of the loop
+            if hit player -> oops game over message, gameover=True, and break out of the loop
+        decrease number of remaining arrows
+        
+    check if game is over, break out of the loop, if that is the case
+        
+    ask player about the cave he want to go to and move player
+    
+    check for bats, move player to a random cave, while they are in the cave with bats
+    
+    check for bottomless pits (player dies, set gameover to True, break out of the loop)
+    
+    if player is in the same cave as wumpus:
+        if wumpus is scared
+            move wumpus to a random cave
+        otherwise
+            player is dead, set gameover to True, break out of the loop
+```
+
+## Move or shoot?
+Previously, the player could only move, so we just asked for the next cave number. Now, on each turn, the player will have a choice of shooting an arrow or moving. Implement a function `input_shoot_or_move()` that has no parameters and returns `"s"` for shooting o `"m"` for moving. Inside, ask the player about their choice until they pick one of two options. Conceptually, this is very similar to your other input functions (`input_int()` and `input_cave()`) that repeatedly request input until a valid one is given. Test and document!
+
+::: {.infobox .program}
+Put your code into exercise #6.
+:::
+
+## How far?
+Implement `input_distance()` function that has no parameters and returns the desired shooting distance between `1` and `5`. Inside, repeatedly ask for an integer number input on how far the arrow should travel until valid input is given. This is very similar to your other input functions. Test and document.
+
+::: {.infobox .program}
+Put your code into exercise #7.
+:::
+
+## input_cave prompt
+Add `prompt` parameter to the `input_cave()` function you have previously. Now we can ask either about moving to or shooting at the cave, hence, the need for the prompt in place of a hard-coded message.
+
+::: {.infobox .program}
+Put your code into exercise #8.
+:::
+
+## Putting it all together
+Here is the pseudocode again. Take a look to better understand how the new bits get integrated into the old code. By now, you should have following constants (you can have other values):
+
+* `CAVES`
+* `NUMBER_OF_BATS` = 2
+* `NUMBER_OF_BOTTOMLESS_PITS` = 2
+* `P_WUMPUS_SCARED` = 0.25
+* `ARROWS_NUMBER` = 5
+
+Following functions:
+
+* `find_empty_cave(total_caves, caves_taken)`, returns an integer cave index
+* `input_int(prompt)`, returns an integer
+* `input_cave(prompt, connected_cave)`, returns an integer cave index
+* `input_shoot_or_move()`, returns `"s"` for shoot and `"m"` for move.
+* `input_distance()`, returns an integer between 1 and 5
+* `next_arrow_cave(connected_caves, previous_cave)`, return an integer cave index
+
+Following variables:
+
+* `player` : cave index
+* `bottomless_pit`: list of cave indexes
+* `bats`: list of cave indexes
+* `wumpus`: cave index
+* `remaining_arrows`: integer number of remaining arrows
+* `gameover`: `False` initially, until something good (defeated wumpus) or bad (fell into a bottomless pit, got eaten by wumpus) happens.
+
+Service/temporary variables:
+
+* `occupied_caves`: list of cave indexes
+* `arrow`: location of an arrow
+* `shooting_distance`: number of caves the arrow should fly through.
+
+```
+import random
+
+define CAVES
+define other constants
+
+define functions 
+
+place player, bottomless pits, bats, and wumpus
+set number of remaining arrows to ARROWS_NUMBER
+
+set gameover to False
+while not gameover:
+    while player wants to shoot (input_shoot_or_move function) and has arrows (remaining_arrows variable):
+        ask about cave that player want to shoot at (input_cave function), store answer in `arrow` variable
+        ask how the far the arrow should fly (input_distance function), store answer in `shooting_distance` variable
+        
+        fly arrow through caves in for loop (shooting_distance caves):
+            if hit wumpus -> congrats game over message, gameover=True, and break out of the loop
+            if hit player -> oops game over message, gameover=True, and break out of the loop
+            move arrow to the next random cave (next_arrow_cave function and arrow variable)
+        decrease number of remaining arrows (remaining_arrows variable)
+        
+    check if game is over, break out of the loop, if that is the case
+        
+    ask player about the cave he want to go to and move player (input_cave function)
+    
+    while player is in the cave with bats: 
+        move player to a random cave
+    
+    check for bottomless pits (player dies, set gameover to True, break out of the loop)
+    
+    if player is in the same cave as wumpus:
+        if wumpus is scared
+            move wumpus to a random cave
+        otherwise
+            player is dead, set gameover to True, break out of the loop
+```
+
+::: {.infobox .program}
+Put your code into exercise #9.
+:::
+
+## Wrap up
+Well done! Next time, we will put _video_ into _video game_!

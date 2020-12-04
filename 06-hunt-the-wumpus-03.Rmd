@@ -266,7 +266,7 @@ Put your code into exercise #13.
 ## Placing bats
 We need more thrills! Let us add bats to the fray. They live in caves, the player can hear them, if they are in a connect cave ("You hear flapping!"), but if the player inadvertently enters the cave with bats, they carry the player to a _random_ cave. 
 
-Placing the bats is analogous to placing bottomless pits. You need a constant that determines the number of bat colonies (e.g., `NUBMER_OF_BATS` and set it `2` or some other number you prefer), a variable that holds a list with indexes of caves with bats (e.g., `bats`), and you need to pick random empty caves and store them in `bats` in exactly the same way you did it with bottomless pits. Print out location of bats for diagnostic purposes.
+Placing the bats is analogous to placing bottomless pits. You need a constant that determines the number of bat colonies (e.g., `NUMBER_OF_BATS` and set it `2` or some other number you prefer), a variable that holds a list with indexes of caves with bats (e.g., `bats`), and you need to pick random empty caves and store them in `bats` in exactly the same way you did it with bottomless pits. Print out location of bats for diagnostic purposes.
 
 ::: {.infobox .program}
 Put your code into exercise #14.
