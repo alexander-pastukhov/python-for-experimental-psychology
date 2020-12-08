@@ -24,6 +24,24 @@ knitr::include_graphics("images/vscode-python-interpreter.png")
 
 If the selected environment is the wrong one or you are simply not sure, click on it and it will open a drop-down list with all interpreters and environments you have. Consult VS Code [online documentation](https://code.visualstudio.com/docs/python/environments) on environments, if you need to change/add/delete environment (the exact settings may change, so looking at constantly updated online documentation is wiser than copying it here).
 
+## Debugging in VIsual Studio Code {#debug-in-vs-code -}
+VS Code gives you comprehensive debugging capabilities (read [the tutorial](https://code.visualstudio.com/docs/python/python-tutorial) for detailed information about the tools you have). You can run the code in the debugging mode by pressing on debug button on the left toolbar
+```{r echo=FALSE, out.width = "5%", fig.align = 'center'}
+knitr::include_graphics("images/vscode-debug-button.png")
+```
+
+This will open the tab that initially will have the "Run and Debug" button or a suggestion to customize the setup
+```{r echo=FALSE, out.width = "100%", fig.align = 'center'}
+knitr::include_graphics("images/vscode-rundebug.png")
+```
+
+Click on "create a launch.json file", which will open a drop-down list at the top of the editor window:
+```{r echo=FALSE, out.width = "100%", fig.align = 'center'}
+knitr::include_graphics("images/vscode-debug-options.png")
+```
+
+Pick the first one (Debug the currently active python file) and this will generate a _launch.json_ configuration file, which you can close immediately. Now, in an active python file you can press _F5_ to start run and debug the program.
+
 ## Installing PsychoPy {#install-psychopy -}
 This step can wait until the first [Memory Game](#memory-game-01) seminar.
 

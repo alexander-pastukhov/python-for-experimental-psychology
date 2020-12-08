@@ -117,7 +117,7 @@
 
 \title{Python for social and experimental psychology}
 \author{Alexander (Sasha) Pastukhov}
-\date{2020-11-26}
+\date{2020-12-08}
 
 \begin{document}
 \maketitle
@@ -189,6 +189,24 @@ Once the Python extension is activated, you will see which Python interpreter is
 \begin{center}\includegraphics[width=1\linewidth]{images/vscode-python-interpreter} \end{center}
 
 If the selected environment is the wrong one or you are simply not sure, click on it and it will open a drop-down list with all interpreters and environments you have. Consult VS Code \href{https://code.visualstudio.com/docs/python/environments}{online documentation} on environments, if you need to change/add/delete environment (the exact settings may change, so looking at constantly updated online documentation is wiser than copying it here).
+
+\hypertarget{debug-in-vs-code}{%
+\section*{Debugging in VIsual Studio Code}\label{debug-in-vs-code}}
+\addcontentsline{toc}{section}{Debugging in VIsual Studio Code}
+
+VS Code gives you comprehensive debugging capabilities (read \href{https://code.visualstudio.com/docs/python/python-tutorial}{the tutorial} for detailed information about the tools you have). You can run the code in the debugging mode by pressing on debug button on the left toolbar
+
+\begin{center}\includegraphics[width=0.05\linewidth]{images/vscode-debug-button} \end{center}
+
+This will open the tab that initially will have the ``Run and Debug'' button or a suggestion to customize the setup
+
+\begin{center}\includegraphics[width=1\linewidth]{images/vscode-rundebug} \end{center}
+
+Click on ``create a launch.json file'', which will open a drop-down list at the top of the editor window:
+
+\begin{center}\includegraphics[width=1\linewidth]{images/vscode-debug-options} \end{center}
+
+Pick the first one (Debug the currently active python file) and this will generate a \emph{launch.json} configuration file, which you can close immediately. Now, in an active python file you can press \emph{F5} to start run and debug the program.
 
 \hypertarget{install-psychopy}{%
 \section*{Installing PsychoPy}\label{install-psychopy}}
@@ -1947,7 +1965,7 @@ Put your code into exercise \#13.
 
 We need more thrills! Let us add bats to the fray. They live in caves, the player can hear them, if they are in a connect cave (``You hear flapping!''), but if the player inadvertently enters the cave with bats, they carry the player to a \emph{random} cave.
 
-Placing the bats is analogous to placing bottomless pits. You need a constant that determines the number of bat colonies (e.g., \texttt{NUBMER\_OF\_BATS} and set it \texttt{2} or some other number you prefer), a variable that holds a list with indexes of caves with bats (e.g., \texttt{bats}), and you need to pick random empty caves and store them in \texttt{bats} in exactly the same way you did it with bottomless pits. Print out location of bats for diagnostic purposes.
+Placing the bats is analogous to placing bottomless pits. You need a constant that determines the number of bat colonies (e.g., \texttt{NUMBER\_OF\_BATS} and set it \texttt{2} or some other number you prefer), a variable that holds a list with indexes of caves with bats (e.g., \texttt{bats}), and you need to pick random empty caves and store them in \texttt{bats} in exactly the same way you did it with bottomless pits. Print out location of bats for diagnostic purposes.
 
 Put your code into exercise \#14.
 
@@ -1988,6 +2006,575 @@ Think about:
 Put your code into exercise \#16.
 
 Next time, we will finish the game by adding the Wumpus and the arrows.
+
+\hypertarget{seminar07}{%
+\chapter{Hunt the Wumpus, part 4}\label{seminar07}}
+
+Our game is almost complete, we only need to add the Wumpus and arm the player with crooked arrows! Grab the \href{notebooks/Seminar\%2007.\%20Hunt\%20the\%20Wumpus,\%20part\%204.ipynb}{exercise notebook} and let get busy.
+
+\hypertarget{adding-wumpus.}{%
+\section{Adding Wumpus.}\label{adding-wumpus.}}
+
+By now you have added a player (single, location stored as in integer), bottomless pits (plural, locations stored in a list), and bats (plural as well). Add Wumpus!
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Create a new variable (\texttt{wumpus}?) and place Wumpus in an occupied cave. Print out location of Wumpus for debugging purposes.
+\item
+  Warn about Wumpus in the same code that warns about pits and bats. Canonical warning text is \texttt{"You\ smell\ a\ Wumpus!"}.
+\item
+  Check if player is in the same cave as Wumpus. If that is the case, game is over, as the player is eaten by a hungry Wumpus. This is similar to \emph{game-over} due to falling into a bottomless pit. Think about whether the check should before or after check for bats.
+\end{enumerate}
+
+Put your code into exercise \#1.
+
+\hypertarget{giving-player-a-chance.}{%
+\section{Giving player a chance.}\label{giving-player-a-chance.}}
+
+Let us give player a chance. As they enter the cave with the Wumpus, they startle it. Then, Wumpus either runs away to a random adjacent cave (new) or stays put and eats the player. First, create a new constant that defines a probability that Wumpus runs away, e.g.~\texttt{P\_WUMPUS\_SCARED}. In implementations I've found, it is typically 0.25, but use any value you feel is reasonable.
+
+Thus, if the player is in the cave with Wumpus, draw a random number between 0 and 1. The function you are looking for is \href{https://docs.python.org/3/library/random.html\#random.random}{random()} and it is part of \href{https://docs.python.org/3/library/random.html}{random} library, so the call is \texttt{random.random()}.If that number is smaller than probability that the Wumpus is scared, move it to a random adjacent cave (bats ignore Wumpus and it clings to the ceiling of the caves, so bottomless pits are not a problem for it). A useful function is \href{https://docs.python.org/3/library/random.html\#random.choice}{choice()}, again, part of \href{https://docs.python.org/3/library/random.html}{random} library. Otherwise, if Wumpus was not scared off, the player is eaten and game is over (the only outcome in exercise \#1).
+
+Put your code into exercise \#2.
+
+\hypertarget{flight-of-a-crooked-arrow}{%
+\section{Flight of a crooked arrow}\label{flight-of-a-crooked-arrow}}
+
+Our player is armed with \emph{crooked} arrows that can fly through caves. The rules for its flight are the following:
+
+\begin{itemize}
+\tightlist
+\item
+  The player decide in which cave it shoots an arrow and how far the arrow flies (from 1 up to 5 caves).
+\item
+  Every time the arrow needs to flight into a next cave, that cave is picked randomly from adjacent caves \emph{excluding} the cave it came from (so, the arrow cannot make a 180° turn and there are only two out of three caves available for choosing).
+\item
+  If the arrow flies into a cave with Wumpus, it is defeated and the game is won.
+\item
+  If the arrow flies into a cave with the player, then they committed unintentional suicide and the game is lost.
+\item
+  If the arrow reached it last cave (based on how far the player wanted to shoot) and the cave is empty, it drops down on the floor.
+\item
+  Bats or bottomless pits have no effect on the arrow.
+\end{itemize}
+
+The total number of arrows the player has at the beginning should be defined in \texttt{ARROWS\_NUMBER} constant (e.g., \texttt{5}).
+
+To keep track of the arrow, you will need following variables:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{arrow}: current location of the arrow.
+\item
+  \texttt{arrow\_previous\_cave}: index of the cave the arrow came from, so that you know where it cannot flight back.
+\item
+  \texttt{shooting\_distance}: remaining distance to travel.
+\item
+  \texttt{remaining\_arrows}: number of remaining arrows (set to \texttt{ARROWS\_NUMBER} when the game starts).
+\end{itemize}
+
+\hypertarget{random-cave-but-no-180-turn}{%
+\section{Random cave but no 180° turn}\label{random-cave-but-no-180-turn}}
+
+You need to program a function (call it \texttt{next\_arrow\_cave()}) that picks a random cave but not the previous cave the arrow had been in. It should have two parameters:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{connected\_caves}: a list of connected caves.
+\item
+  \texttt{previous\_cave}: cave from which the arrow came from.
+\end{itemize}
+
+First, debug the code in a separate cell. Assume that \texttt{connecting\_caves\ =\ CAVES{[}1{]}} (so, arrow is currently in cave 1) and \texttt{previous\_cave\ =\ 0} (arrow came from cave 0). Write the code that will pick one of the remaining caves randomly (in this case, either \texttt{2} or \texttt{7}). Once the code works, turn it into a function that returns the next cave for an arrow. Document the function. Test it with for other combinations of connected and previous caves.
+
+Put your code into exercise \#3.
+
+\hypertarget{going-distance}{%
+\section{Going distance}\label{going-distance}}
+
+Now that you have a function that flies to the next random cave, implement flying using a for loop. An arrow should fly through \texttt{shooting\_distance} caves (set it to \texttt{5}, maximal distance, by hand for testing). The \emph{first} cave is given (it will be picked by the player), so set \texttt{arrow} to \texttt{1} and \texttt{arrow\_previous\_cave} to \texttt{0} (player is in the cave \texttt{0} and shot the arrow into cave \texttt{1}). For debugging purposes, print out location of the arrow on each iteration. Test the code by changing \texttt{shooting\_distance}. In particular, set it to \texttt{1}. The arrow should ``fall down'' already in cave \texttt{1}.
+
+Put your code into exercise \#4.
+
+\hypertarget{hitting-a-target}{%
+\section{Hitting a target}\label{hitting-a-target}}
+
+Implement check for hitting the Wumpus or the player in the loop. Should the check be before or after the arrow flies to the next random cave? In both cases, write an appropriate ``game over'' message, set variable \texttt{gameover} to \texttt{True} (we will add to the main code later), and break out of the loop. Test the code by placing Wumpus by hand into the cave the player is shooting at or the next one. Run code multiple times to check that it works.
+
+Put your code into exercise \#5.
+
+\hypertarget{almost-where}{%
+\section{Almost where}\label{almost-where}}
+
+We are almost where but before we can start putting the code together we need a few more things. To better understand what all the functions are for, take a look at the overall program we are trying to make. You have most parts: placing player and game objects, moving player, checking for bats, bottomless pits, and wumpus. But we still need to implement asking player whether they want to shoot or move, asking for shooting distance, and for cave the player wants to shoot at.
+
+\begin{verbatim}
+import random
+
+define CAVES
+define other constants
+
+define functions 
+
+place player, bottomless pits, bats, and wumpus
+set number of remaining arrows to ARROWS_NUMBER
+
+set gameover to False
+while not gameover:
+    while player wants to shoot and has arrows:
+        ask about cave that player want to shoot at
+        ask how the far the arrow should fly
+        
+        fly arrow through caves in for loop:
+            if hit wumpus -> congrats game over message, gameover=True, and break out of the loop
+            if hit player -> oops game over message, gameover=True, and break out of the loop
+        decrease number of remaining arrows
+        
+    check if game is over, break out of the loop, if that is the case
+        
+    ask player about the cave he want to go to and move player
+    
+    check for bats, move player to a random cave, while they are in the cave with bats
+    
+    check for bottomless pits (player dies, set gameover to True, break out of the loop)
+    
+    if player is in the same cave as wumpus:
+        if wumpus is scared
+            move wumpus to a random cave
+        otherwise
+            player is dead, set gameover to True, break out of the loop
+\end{verbatim}
+
+\hypertarget{move-or-shoot}{%
+\section{Move or shoot?}\label{move-or-shoot}}
+
+Previously, the player could only move, so we just asked for the next cave number. Now, on each turn, the player will have a choice of shooting an arrow or moving. Implement a function \texttt{input\_shoot\_or\_move()} that has no parameters and returns \texttt{"s"} for shooting o \texttt{"m"} for moving. Inside, ask the player about their choice until they pick one of two options. Conceptually, this is very similar to your other input functions (\texttt{input\_int()} and \texttt{input\_cave()}) that repeatedly request input until a valid one is given. Test and document!
+
+Put your code into exercise \#6.
+
+\hypertarget{how-far}{%
+\section{How far?}\label{how-far}}
+
+Implement \texttt{input\_distance()} function that has no parameters and returns the desired shooting distance between \texttt{1} and \texttt{5}. Inside, repeatedly ask for an integer number input on how far the arrow should travel until valid input is given. This is very similar to your other input functions. Test and document.
+
+Put your code into exercise \#7.
+
+\hypertarget{input_cave-prompt}{%
+\section{input\_cave prompt}\label{input_cave-prompt}}
+
+Add \texttt{prompt} parameter to the \texttt{input\_cave()} function you have previously. Now we can ask either about moving to or shooting at the cave, hence, the need for the prompt in place of a hard-coded message.
+
+Put your code into exercise \#8.
+
+\hypertarget{putting-it-all-together}{%
+\section{Putting it all together}\label{putting-it-all-together}}
+
+Here is the pseudocode again. Take a look to better understand how the new bits get integrated into the old code. By now, you should have following constants (you can have other values):
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{CAVES}
+\item
+  \texttt{NUMBER\_OF\_BATS} = 2
+\item
+  \texttt{NUMBER\_OF\_BOTTOMLESS\_PITS} = 2
+\item
+  \texttt{P\_WUMPUS\_SCARED} = 0.25
+\item
+  \texttt{ARROWS\_NUMBER} = 5
+\end{itemize}
+
+Following functions:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{find\_empty\_cave(total\_caves,\ caves\_taken)}, returns an integer cave index
+\item
+  \texttt{input\_int(prompt)}, returns an integer
+\item
+  \texttt{input\_cave(prompt,\ connected\_cave)}, returns an integer cave index
+\item
+  \texttt{input\_shoot\_or\_move()}, returns \texttt{"s"} for shoot and \texttt{"m"} for move.
+\item
+  \texttt{input\_distance()}, returns an integer between 1 and 5
+\item
+  \texttt{next\_arrow\_cave(connected\_caves,\ previous\_cave)}, return an integer cave index
+\end{itemize}
+
+Following variables:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{player} : cave index
+\item
+  \texttt{bottomless\_pit}: list of cave indexes
+\item
+  \texttt{bats}: list of cave indexes
+\item
+  \texttt{wumpus}: cave index
+\item
+  \texttt{remaining\_arrows}: integer number of remaining arrows
+\item
+  \texttt{gameover}: \texttt{False} initially, until something good (defeated wumpus) or bad (fell into a bottomless pit, got eaten by wumpus) happens.
+\end{itemize}
+
+Service/temporary variables:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{occupied\_caves}: list of cave indexes
+\item
+  \texttt{arrow}: location of an arrow
+\item
+  \texttt{shooting\_distance}: number of caves the arrow should fly through.
+\end{itemize}
+
+\begin{verbatim}
+import random
+
+define CAVES
+define other constants
+
+define functions 
+
+place player, bottomless pits, bats, and wumpus
+set number of remaining arrows to ARROWS_NUMBER
+
+set gameover to False
+while not gameover:
+    while player wants to shoot (input_shoot_or_move function) and has arrows (remaining_arrows variable):
+        ask about cave that player want to shoot at (input_cave function), store answer in `arrow` variable
+        ask how the far the arrow should fly (input_distance function), store answer in `shooting_distance` variable
+        
+        fly arrow through caves in for loop (shooting_distance caves):
+            if hit wumpus -> congrats game over message, gameover=True, and break out of the loop
+            if hit player -> oops game over message, gameover=True, and break out of the loop
+            move arrow to the next random cave (next_arrow_cave function and arrow variable)
+        decrease number of remaining arrows (remaining_arrows variable)
+        
+    check if game is over, break out of the loop, if that is the case
+        
+    ask player about the cave he want to go to and move player (input_cave function)
+    
+    while player is in the cave with bats: 
+        move player to a random cave
+    
+    check for bottomless pits (player dies, set gameover to True, break out of the loop)
+    
+    if player is in the same cave as wumpus:
+        if wumpus is scared
+            move wumpus to a random cave
+        otherwise
+            player is dead, set gameover to True, break out of the loop
+\end{verbatim}
+
+Put your code into exercise \#9.
+
+\hypertarget{wrap-up-2}{%
+\section{Wrap up}\label{wrap-up-2}}
+
+Well done! Next time, we will put \emph{video} into \emph{video game}!
+
+\hypertarget{seminar08}{%
+\chapter{Gettings start with PsychoPy}\label{seminar08}}
+
+Before we program our first game using \href{https://psychopy.org/}{PsychoPy}, we need to spend some time figuring out its basics. It is not the most suitable library for writing games, for that you might want to use \href{https://arcade.academy/}{Python Arcade} or \href{https://www.pygame.org/}{PyGame}). However, it is (IMHO) the best Python library for developing psychophysical experiments, which is why we will use it in our course.
+
+For this and following projects, we won't use Jupyter Notebooks but will develop a Python program using IDE environment of your choice (I would recommend \protect\hyperlink{install-vs-code}{Visual Studio Code}). You still could and should use Jupyter for playing with and testing small code snippets, though. I've added a section on setting up \protect\hyperlink{debug-in-vs-code}{debugging in VS Code} in \protect\hyperlink{getting-started}{Getting Started}, take a look once you are ready to run the code.
+
+From now on, create a separate subfolder for each seminar (e.g.~\emph{Seminar 08} for today) and create a separate file (or files, later on) for each exercise\footnote{You can ``Save as\ldots{}'' the previous exercise to avoid copy-pasting things by hand.} (e.g., \emph{exercise01.py}, \emph{exercise02.py}, etc.). This is not the most efficient implementation of a version control and will certainly clutter the folder. But it would allow me to see your solutions on every step, which will make it easier for me to write comments. For submitting the assignment, just zip the folder and submit the zip-file.
+
+\hypertarget{minimal-psychopy-code}{%
+\section{Minimal PsychoPy code}\label{minimal-psychopy-code}}
+
+In the subfolder for the current seminar, create file \emph{exercise01.py} (I would recommend using lead zero in \emph{01}, as it will ensure correct file sorting once we get to exercise 10, 11, etc.). Copy-paste the following code:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{"""}
+\CommentTok{A minimal PsychoPy code.}
+\CommentTok{"""}
+
+\CommentTok{\# this imports two modules from psychopy}
+\CommentTok{\# visual has all the visual stimuli, including the Window class}
+\CommentTok{\# that we need to create a program window}
+\CommentTok{\# event has function for working with mouse and keyboard}
+\ImportTok{from}\NormalTok{ psychopy }\ImportTok{import}\NormalTok{ visual, event}
+
+\CommentTok{\# creating a 800 x 600 window}
+\NormalTok{win }\OperatorTok{=}\NormalTok{ visual.Window(size}\OperatorTok{=}\NormalTok{(}\DecValTok{800}\NormalTok{, }\DecValTok{600}\NormalTok{))}
+
+\CommentTok{\# waiting for any key press}
+\NormalTok{event.waitKeys()}
+
+\CommentTok{\# closing the window}
+\NormalTok{win.close()}
+\end{Highlighting}
+\end{Shaded}
+
+Run it to check that PsychoPy work. You should get a gray window with \emph{PsychoPy} title. Press any key (click on the window, if you switched to another one, so that it registers the key press) and it should close. Not very exciting but does show that everything works as it should.
+
+Put your code into \emph{exercise01.py}.
+
+Let me explain what we are doing here line-by-line.
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{from\ psychopy\ import\ visual,\ event} here we import two (out of many) PsychoPy modules that give us \emph{visual} stimuli and main program window plus ability to process \emph{events}, such as keyboard presses or mouse activity.
+\item
+  \texttt{win\ =\ visual.Window(size=(800,\ 600))} we create a new PsychoPy \href{https://psychopy.org/api/visual/window.html\#psychopy.visual.Window}{Window} \emph{object} (you will learn about classes and objects soon) and define its \texttt{size} as 800 by 600 pixels (you can change that and see how the window also changes its size).
+\item
+  \texttt{event.waitKeys()} function \href{https://psychopy.org/api/event.html\#psychopy.event.waitKeys}{waitKeys()} waits for a press of a keyboard key. As we didn't specify which keys we are interested in, \emph{any} key will do. Later on, you will learn how to make it wait for specific keys.
+\item
+  \texttt{win.close()} this calls a \emph{method} \texttt{close} (function that belongs to an object, again, you'll learn about them later) that tells window \texttt{win} to close itself.
+\end{itemize}
+
+\hypertarget{adding-main-loop}{%
+\section{Adding main loop}\label{adding-main-loop}}
+
+Currently, nothing really happens in the code, so let us add the main loop. The loop goes between opening and closing the window:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{importing libraries}
+\NormalTok{opening the window}
+
+\OperatorTok{{-}{-}\textgreater{}}\NormalTok{ our main loop }\OperatorTok{\textless{}{-}{-}}
+
+\NormalTok{closing the window}
+\end{Highlighting}
+\end{Shaded}
+
+For this, you need to create a new variable \texttt{gameover} and set it too \texttt{False} (just like we did it in \emph{Hunt the Wumpus} game) and run the loop for as long as the game is \textbf{not} over. Inside the loop, use function \href{https://psychopy.org/api/event.html\#psychopy.event.getKeys}{event.getKeys()} to check whether \emph{escape} button was pressed (for this, you need to pass \texttt{keyList={[}\textquotesingle{}escape\textquotesingle{}{]}}). The function returns a list of keys, if any of them were pressed in the meantime or an empty list, if no keys from the list were pressed. Accordingly, you need to check whether the return value as an empty list. There are two ways to do this. First, you can check whether length of the list is larger than zero (so, it has elements) using function \href{https://docs.python.org/3/library/functions.html\#len}{len()}. Alternatively, an empty list evaluates to \texttt{False} when converted to a logical value either explicitly (via \texttt{bool()} type conversion) or when evaluated inside of the condition in an \texttt{if} or \texttt{while} statement:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OperatorTok{=}\NormalTok{ []}
+\ControlFlowTok{if}\NormalTok{ x:}
+  \BuiltInTok{print}\NormalTok{(}\StringTok{"List is not empty"}\NormalTok{)}
+\ControlFlowTok{else}\NormalTok{:}
+  \BuiltInTok{print}\NormalTok{(}\StringTok{"List is definitely empty"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## List is definitely empty
+\end{verbatim}
+
+If list is \emph{not} empty, you should change \texttt{gameover} to \texttt{True}. Think, how can you do it \emph{without} an \texttt{if} statement, computing the logical value directly?
+
+Put your code into \emph{exercise02.py}.
+
+\hypertarget{adding-text-message}{%
+\section{Adding text message}\label{adding-text-message}}
+
+Although we are now running a nice loop, we still have only a boring gray window to look at. Let us create a text stimulus, which would say ``Press escape to exit'' and display it during the loop. For this we will use \href{https://psychopy.org/api/visual/textstim.html}{visual.TextStim} class from PsychoPy library.
+
+First, you need to create the \texttt{press\_escape\_text} object (instance of the \texttt{TextStim} class) before the main loop. There are quite a few parameters that you can play with but minimally, you need to pass the program window (our \texttt{win} variable) and the actual text you want to display (\texttt{"Press\ escape\ to\ exit"}). For all other settings PsychoPy will use its defaults (default font family, color and size, placed right the screen center).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{press\_escape\_text }\OperatorTok{=}\NormalTok{ visual.TextStim(win, }\StringTok{"Press escape to exit"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+To show the visuals in PsychoPy, you first \emph{draw} each element by calling its \texttt{draw()} method (thus, in our case, \texttt{press\_escape\_text.draw()}) and then put the ``drawing'' on the screen by \emph{flipping} we window (\texttt{win.flip()} method). These two calls should go inside the main loop either before (my preference) or after the keyboard check.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{importing libraries}
+\NormalTok{opening the window}
+
+\OperatorTok{{-}{-}\textgreater{}}\NormalTok{ create press\_escape\_text here }\OperatorTok{\textless{}{-}{-}}
+
+\NormalTok{gameover }\OperatorTok{=} \VariableTok{False}
+\ControlFlowTok{while} \KeywordTok{not}\NormalTok{ gameover:}
+    \OperatorTok{{-}{-}\textgreater{}}\NormalTok{ draw press\_escape\_text }\OperatorTok{\textless{}{-}{-}}
+    \OperatorTok{{-}{-}\textgreater{}}\NormalTok{ flip the window  }\OperatorTok{\textless{}{-}{-}}
+\NormalTok{    check keyboard }\ControlFlowTok{for}\NormalTok{ escape button press}
+    
+\NormalTok{close the window}
+\end{Highlighting}
+\end{Shaded}
+
+Now, you should have a nice, although static, message that tells you how you can exit the game. Check out the manual page for \href{https://psychopy.org/api/visual/textstim.html}{visual.TextStim} and try changing it by passing additional parameters to the object constructor call. For example you can change its \texttt{color}, whether text is \texttt{bold} and/or \texttt{italic}, how it is aligned, etc. However, if you want to change \emph{where} the text is displayed, read on below.
+
+Put your code into \emph{exercise03.py}.
+
+\hypertarget{adding-a-square-and-placing-it-not-at-the-center-of-the-window}{%
+\section{\texorpdfstring{Adding a square and placing it \emph{not} at the center of the window}{Adding a square and placing it not at the center of the window}}\label{adding-a-square-and-placing-it-not-at-the-center-of-the-window}}
+
+Now, let us figure out how create and move visuals to an arbitrary location on the screen. In principle, this is very straightforward as every visual stimulus (including \texttt{TextStim} we used just above) has \texttt{pos} property that specifies (you guessed it!) its position. However, to make your life easier, PsychoPy first complicates it by having \href{https://psychopy.org/general/units.html}{\textbf{five} different units systems}.
+
+Before we start exploring the units, let us create a simple white square. The visual class we need is \href{https://psychopy.org/api/visual/rect.html}{visual.Rect}. Just like the \texttt{TextStim} above, it requires \texttt{win} variable (so it knows which window it belongs to), \texttt{width} (defaults to 0.5 of that mysterious units), \texttt{height} (also defaults to 0.5), \texttt{pos} (defaults to (0,0)), \texttt{lineColor} (defaults to \texttt{white}) and \texttt{fillColor} (defaults to \texttt{None}). Thus, to get a ``standard'' white square with size of \texttt{(0.5,\ 0.5)} units at \texttt{(0,\ 0)} location you only need pass the \texttt{win} variable: \texttt{white\_square\ =\ visual.Rect(win)}. You draw the square just like you drew the text stimulus, via its \texttt{draw()} method. Create the code, run it to see a very white square, and read on.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{importing libraries}
+\NormalTok{opening the window}
+
+\OperatorTok{{-}{-}\textgreater{}}\NormalTok{ create white\_square here }\OperatorTok{\textless{}{-}{-}}
+
+\NormalTok{gameover }\OperatorTok{=} \VariableTok{False}
+\ControlFlowTok{while} \KeywordTok{not}\NormalTok{ gameover:}
+    \OperatorTok{{-}{-}\textgreater{}}\NormalTok{ draw white\_square }\KeywordTok{and}\NormalTok{ flip the window here }\OperatorTok{\textless{}{-}{-}}
+\NormalTok{    check keyboard }\ControlFlowTok{for}\NormalTok{ escape button press}
+
+\NormalTok{close the window}
+\end{Highlighting}
+\end{Shaded}
+
+Put your code into \emph{exercise04.py}.
+
+What did you say, your square was not really a square? Well, I told you, \textbf{five} units systems!
+
+\hypertarget{five-units-systems}{%
+\section{Five units systems}\label{five-units-systems}}
+
+\hypertarget{height-units}{%
+\subsection{Height units}\label{height-units}}
+
+With height units everything is specified in the units of window height. The center of the window is at \texttt{(0,0)} and the window goes vertically from \texttt{-0.5} to \texttt{0.5}. However, its horizontal limits depend on the aspect ratio. For our 800×600 window, it will go from -0.666 to 0.666 (the window is 1.3333 window heights wide). For a 600×800 window from -0.375 to 0.375 (the window is 0.75 window heights wide), for a square window 600×600 from -0.5 to 0.5 (again, in all these cases it goes from -0.5 to 0.5 vertically). This means that the actual on-screen distance for the units is the same for both axes. So that a square of \texttt{size=(0.5,\ 0.5)} is actually a square (it spans the same distance vertically and horizontally). Thus, it makes \emph{sizing} objects easier but \emph{placing them on horizontal axis correctly} harder (as you need to know the aspect ratio).
+
+Modify your code by specifying the unit system when you create the window: \texttt{win\ =\ visual.Window(...,\ units="height")}. Play with your code by specifying position of the square when you create it. You just need to pass an extra parameter \texttt{pos=(\textless{}x\textgreater{},\ \textless{}y\textgreater{})}. Which was is up, when y is below or above zero?
+
+Put your code into \emph{exercise05.py}.
+
+Unfortunately, unlike x-axis, the y-axis can go both ways. For PsychoPy y-axis points up (so negative values move the square down and positive up). However, if you would use an Eyelink eye tracker to record where participants looked \emph{on the screen}, it assumes that y-axis starts at the top of the screen and points down (which could be very confusing, if you forget about this when overlaying gaze data on the image you used and wondering what on Earth the participants were doing).
+
+Now, modify the size of the square (and turn it into a non-square rectangle) by passing \texttt{width=\textless{}some-width-value\textgreater{}} and \texttt{height=\textless{}some-height-value\textgreater{}}.
+
+Put your code into \emph{exercise06.py}.
+
+\hypertarget{normalized-units}{%
+\subsection{Normalized units}\label{normalized-units}}
+
+These units are default ones and assume that the window goes from -1 to 1 both along x- and x-axis. Again, (0,0) is the center of the screen but the top-left corner is (-1, -1) whereas the bottom-right is (1, 1). This makes \emph{placing} your objects easier but \emph{sizing} them harder (you need to know the aspect ratio to ensure that a square is a square).
+
+Modify your code, so that it uses \texttt{"norm"} units when you create the window and size the \texttt{Rect} stimulus, so it does look like a square.
+
+Put your code into \emph{exercise07.py}.
+
+\hypertarget{pixels-on-screen}{%
+\subsection{Pixels on screen}\label{pixels-on-screen}}
+
+In this case, the window center is still at \texttt{(0,0)} but it goes from \texttt{-\textless{}width-in-pixels\textgreater{}/2} to \texttt{\textless{}width-in-pixels\textgreater{}/2} horizontally (from -400 to 400 in our case) and \texttt{-\textless{}height-in-pixels\textgreater{}/2} to \texttt{\textless{}height-in-pixels\textgreater{}/2} vertically (from -300 to 300). These units could be more intuitive when you are working with a fixed sized window, as the span is the same along the both axes (like for the height units). However, they spell trouble if your window size was changed or you are using a full screen window on some monitor with an unknown resolution.
+
+Modify your code to use \texttt{"pix"} units and briefly test sizing and placing your square within the window.
+
+Put your code into \emph{exercise08.py}.
+
+\hypertarget{degrees-of-visual-angle}{%
+\subsection{Degrees of visual angle}\label{degrees-of-visual-angle}}
+
+Unlike the three units above, these require you knowing a physical size of the screen, its resolution, and your viewing distance (how far your eyes are away from the screen). They are \emph{the} measurement units used in visual psychophysics as they describe stimulus size as it appears on the retina (see \href{https://en.wikipedia.org/wiki/Visual_angle}{Wikipedia} for details). Thus, these are the units you want to use when running an actual experiment in the lab but for our purposes we will stick to one of the three units systems above.
+
+\hypertarget{centimeters-on-screen}{%
+\subsection{Centimeters on screen}\label{centimeters-on-screen}}
+
+Here, you would need know the physical size of your screen and its resolution. These are fairly exotic units for very specific situations\footnote{so specific that I can't think of one, to be honest.}.
+
+\hypertarget{make-your-square-jump}{%
+\section{Make your square jump!}\label{make-your-square-jump}}
+
+So far, we fixed the location of the square when we created it. However, you can move it at any time by assigning a new \texttt{(\textless{}x\textgreater{},\ \textless{}y\textgreater{})} coordinates to its \texttt{pos} property. \emph{E.g.}, \texttt{white\_square.pos\ =\ (-0.1,\ 0.2)}. Let us experiment by moving the square to a random location on every iteration of the loop (this could cause a lot of flashing, so if you have a photosensitive epilepsy that can be triggered by flashing lights, you probably should do it just once before the loop). Use the units of your choice (I would recommend \texttt{"norm"}) and generate a new position using \href{https://docs.python.org/3/library/random.html\#random.uniform}{random.uniform(a, b)} function, that generates a random value within \emph{a..b} range. You need to generate two values (one for x, one for y) and your range is the same for \texttt{"norm"} units (from -1 to 1) but is different (and depends on the aspect ratio) for \texttt{"height"} units.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{importing libraries, now also the random library}
+\BuiltInTok{open}\NormalTok{ the window}
+\NormalTok{create white\_square here}
+
+\NormalTok{gameover }\OperatorTok{=} \VariableTok{False}
+\ControlFlowTok{while} \KeywordTok{not}\NormalTok{ gameover:}
+    \OperatorTok{{-}{-}\textgreater{}}\NormalTok{ move the square to a random position }\OperatorTok{\textless{}{-}{-}}
+\NormalTok{    draw white\_square }\KeywordTok{and}\NormalTok{ flip the window here}
+\NormalTok{    check keyboard }\ControlFlowTok{for}\NormalTok{ escape button press}
+
+\NormalTok{close the window}
+\end{Highlighting}
+\end{Shaded}
+
+Put your code into \emph{exercise09.py}.
+
+\hypertarget{make-the-square-jump-on-your-command}{%
+\section{Make the square jump on your command!}\label{make-the-square-jump-on-your-command}}
+
+This was very flashy, so let us make the square jump only when you press \emph{Space} button. For this, we need to expand the code that processes keyboard input. So far, we restricted it to just ``escape'' button and checked whether any (hence, ``escape'') button was pressed. In my case, the code looks like that
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gameover }\OperatorTok{=}\NormalTok{ event.getKeys(keyList}\OperatorTok{=}\NormalTok{[}\StringTok{\textquotesingle{}escape\textquotesingle{}}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+But I could have written it as
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{keys\_pressed }\OperatorTok{=}\NormalTok{ event.getKeys(keyList}\OperatorTok{=}\NormalTok{[}\StringTok{\textquotesingle{}escape\textquotesingle{}}\NormalTok{])}
+\ControlFlowTok{if}\NormalTok{ keys\_pressed }\KeywordTok{is} \KeywordTok{not} \VariableTok{None}\NormalTok{:}
+\NormalTok{    game\_over }\OperatorTok{=} \VariableTok{True}
+\end{Highlighting}
+\end{Shaded}
+
+Let us use the \emph{second} version, where we explicitly store the output of \texttt{event.getKeys()} function in \texttt{keys\_pressed}. First, you need to add \texttt{"space"} to the \texttt{keyList} parameter. Second, because \texttt{event.getKeys()} function returns a \textbf{list} of keys that were pressed, we need to loop over that list (which in most cases will contain no or just one element) and use conditional statements inside that loop to make the square jump or to exit the program.
+
+Use for \texttt{for} loop to loop over the elements of the list. Note that no iterations will occur if the list is empty, you can test this in a Jupyter cell:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{ \_ }\KeywordTok{in}\NormalTok{ []:}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"No one will ever see me..."}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+When you loop over \texttt{keys\_pressed}, your current loop variable value will be the string with the name of the button pressed (so, either \texttt{"escape"} or \texttt{"space"}). Now, you need to use conditional statements, so that the square jumps if the key was \texttt{"space"} and game is over if the key was \texttt{"escape"}. You code should look roughly like that
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{importing libraries, now also the random library}
+\BuiltInTok{open}\NormalTok{ the window}
+\NormalTok{create white\_square}
+
+\NormalTok{gameover }\OperatorTok{=} \VariableTok{False}
+\ControlFlowTok{while} \KeywordTok{not}\NormalTok{ gameover:}
+\NormalTok{    draw white\_square }\KeywordTok{and}\NormalTok{ flip the window here}
+    
+    \CommentTok{\# {-}{-}{-}{-}{-} New code {-}{-}{-}{-}{-}}
+\NormalTok{    keys\_pressed }\OperatorTok{=}\NormalTok{ event.getKeys(keyList}\OperatorTok{=}\NormalTok{[}\StringTok{\textquotesingle{}escape\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}space\textquotesingle{}}\NormalTok{])}
+\NormalTok{    loop over keys\_pressed:}
+        \ControlFlowTok{if}\NormalTok{ participant pressed space key:}
+\NormalTok{            move the square to a random location}
+        \ControlFlowTok{elif}\NormalTok{ participant pressed escape key:}
+            \BuiltInTok{set}\NormalTok{ gameover to }\VariableTok{False}
+    \CommentTok{\# {-}{-}{-}{-}{-} End of new code {-}{-}{-}{-}{-}}
+
+\NormalTok{close the window}
+\end{Highlighting}
+\end{Shaded}
+
+Put your code into \emph{exercise10.py}.
+
+\hypertarget{i-like-to-move-it-move-it}{%
+\section{I like to move it, move it!}\label{i-like-to-move-it-move-it}}
+
+Let us exert more control over our rectangle by moving it around using arrow buttons (\texttt{"up"}, \texttt{"down"}, \texttt{"left"}, and \texttt{"right"} in PsychoPy). Add these keys to the \texttt{keyList} parameter of the \texttt{event.getKeys()} call and add more conditional statements when processing the pressed key. In PsychoPy you can change position by adding to it via \texttt{+=} or \texttt{-=} operations (other operations are also supported, see \href{https://psychopy.org/coder/codeStimuli.html\#attrib-operations}{manual}). Thus, you can move your square to the right by 0.1 units (whatever they are) by writing \texttt{white\_square.pos\ +=\ (0.1,\ 0)}. Please note that you \textbf{cannot} write \texttt{white\_square.pos\ =\ white\_square.pos\ +\ (0.1,\ 0)}!
+
+Expand your code, so you move the rectangle around by 0.05 units in the direction of the key pressed.
+
+Put your code into \emph{exercise11.py}.
+
+When we continue, we will expand on this to build a Memory game. In the meantime, experiment with stimuli (you can have a circle or a line rather than a square). Try showing more than one stimulus (\emph{e.g.}, add back the ``press escape to exit'' message), etc.
 
 \hypertarget{cross-references}{%
 \chapter*{Cross references}\label{cross-references}}
