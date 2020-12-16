@@ -5,7 +5,7 @@ Our game is almost complete, we only need to add the Wumpus and arm the player w
 ## Adding Wumpus.
 By now you have added a player (single, location stored as in integer), bottomless pits (plural, locations stored in a list), and bats (plural as well). Add Wumpus! 
 
-1. Create a new variable (`wumpus`?) and place Wumpus in an occupied cave. Print out location of Wumpus for debugging purposes.
+1. Create a new variable (`wumpus`?) and place Wumpus in an unoccupied cave. Print out location of Wumpus for debugging purposes.
 2. Warn about Wumpus in the same code that warns about pits and bats. Canonical warning text is `"You smell a Wumpus!"`. 
 3. Check if player is in the same cave as Wumpus. If that is the case, game is over, as the player is eaten by a hungry Wumpus. This is similar to _game-over_ due to falling into a bottomless pit. Think about whether the check should before or after check for bats.
 
@@ -16,7 +16,21 @@ Put your code into exercise #1.
 ## Giving player a chance.
 Let us give player a chance. As they enter the cave with the Wumpus, they startle it. Then, Wumpus either runs away to a random adjacent cave (new) or stays put and eats the player. First, create a new constant that defines a probability that Wumpus runs away, e.g. `P_WUMPUS_SCARED`. In implementations I've found, it is typically 0.25, but use any value you feel is reasonable. 
 
-Thus, if the player is in the cave with Wumpus, draw a random number between 0 and 1. The function you are looking for is [random()](https://docs.python.org/3/library/random.html#random.random) and it is part of [random](https://docs.python.org/3/library/random.html) library, so the call is `random.random()`.If that number is smaller than probability that the Wumpus is scared, move it to a random adjacent cave (bats ignore Wumpus and it clings to the ceiling of the caves, so bottomless pits are not a problem for it). A useful function is [choice()](https://docs.python.org/3/library/random.html#random.choice), again, part of [random](https://docs.python.org/3/library/random.html) library. Otherwise, if Wumpus was not scared off, the player is eaten and game is over (the only outcome in exercise #1).
+Thus, if the player is in the cave with Wumpus, draw a random number between 0 and 1. The function you are looking for is [random()](https://docs.python.org/3/library/random.html#random.random) and it is part of [random](https://docs.python.org/3/library/random.html) library, so the call is `random.random()`. Remember that you can either import the _entire_ library and then call its function by prefixing them with the library name or you can import only a specific function via `from ... import ...`. 
+```python
+#1  import entire library
+import random
+
+random.random()
+random.randint(5)
+
+# import only functions you need
+from random import randint, random
+
+random()
+randint()
+```
+If that number is smaller than probability that the Wumpus is scared, move it to a random adjacent cave (bats ignore Wumpus and it clings to the ceiling of the caves, so bottomless pits are not a problem for it). A useful function is [choice()](https://docs.python.org/3/library/random.html#random.choice), again, part of [random](https://docs.python.org/3/library/random.html) library. Otherwise, if Wumpus was not scared off, the player is eaten and game is over (the only outcome in exercise #1).
 
 ::: {.infobox .program}
 Put your code into exercise #2.
