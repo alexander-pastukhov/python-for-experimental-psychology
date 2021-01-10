@@ -2,10 +2,14 @@
 
 By the time we finished our previous seminar, you had the code that created a single "card" with a given image at a given location and you were able to interact with it (flip-flopping it). Now, we need to extend the code so that we have eight cards that we can open only two at a time. If cards match (have same `"filename"` field), we remove them. If cards do not match, we simply turn them over.
 
-Before we start, create a new folder _Memory02_ for exercise files. Copy _Images_ subfolder, as well as the `utilities.py` and _exercise11.py_ (rename it to _exercise01.py_, as we will use the latter as the staring point). Also, create a new Jupyter notebook, which you will use to experiment with functions and do exercises. You will need to upload it along with other files.
+Before we start, create a new folder _Memory02_ for exercise files. Copy _Images_ subfolder, as well as the `utilities.py` and _exercise11.py_ (rename it to _exercise01.py_, as we will use the latter as the staring point). Also, download the [Jupyter notebook](notebooks/Seminar 10. Memory game, part 2.ipynb), which you will use to experiment with functions and do exercises. You will need to upload it along with other files.
 
 ## Getting list of image files.
 For a single card, we simply hard-coded the name of the image file, as well as its location. However, for a real game (or an experiment) we would like to be more flexible and automatically determine which files we have in the _Images_ folder. For this, you need to use [os.listdir(path=".")](https://docs.python.org/3/library/os.html#os.listdir) function that, you've guess it, returns a list with filenames of _all_ the files in a folder specified by path. By default, it is a current path (`path="."`). However, you can use either a relative path - `os.listdir("Images")`, assuming that _Images_ is a subfolder in your current directory - or an absolute path `os.listdir("E:/Teaching/Python/MemoryGame/Images")` (in my case). In Jupyter, write a single line code to get the list of files in the _Images_ folder. Use _relative_ path, if it is in a subfolder relative to your Jupyter notebook, or use an _absolute_ path, if it is in a different folder. Do not forget to `import os` before you run the code, of course!
+
+::: {.infobox .practice}
+Do exercise #1 in Jupyter notebook.
+:::
 
 You should have gotten a list of 8 files that are coded as _[r|l][index].png_, where _r_ or _l_ denote the side the chicken is looking at. However, for our game we need only four images (4 × 2 = 8 cards). Therefore, we need to select a subset of them. For example, a random four or chicken looking to the left or to the right only. Here, let us work with chicken looking to the left, meaning that we need only to pick files that start with "l". To make this list filtering more efficient, we will use [list comprehensions](https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions).
 
@@ -37,6 +41,10 @@ numbers_as_strings = [str(item) for item in numbers]
 ```
 What would be an equivalent form using a normal for loop? Write both versions of code in Jupiter cells and check that the results are the same.
 
+::: {.infobox .practice}
+Do exercise #2 in Jupyter notebook.
+:::
+
 
 Now, implement the code below using list comprehension. Check that results match.
 ```python
@@ -45,6 +53,10 @@ numbers = []
 for astring in strings:
     numbers.append(int(astring) + 10)
 ```
+
+::: {.infobox .practice}
+Do exercise #3 in Jupyter notebook.
+:::
 
 As noted above, you can also use conditional statement to filter which items are passed to the new list. In our numbers example, we can retain numbers that are greater than 1
 ```python
@@ -60,10 +72,18 @@ numbers_greater_than_1 = [item
                           if item > 1]
 ```
 
-You can of course combine the transformation and filtering in a single statement. In a Jupyter cell, create code that filters out all items below 2 and adds 4 to them.
+You can of course combine the transformation and filtering in a single statement. Create code that filters out all items below 2 and adds 4 to them.
+
+::: {.infobox .practice}
+Do exercise #4 in Jupyter notebook.
+:::
 
 ## Getting list of relevant files
 Now that you know about list comprehensions, you can easily create a list of files of chicken looking left, _i.e._ with filenames that start with "l". Use [str.startswith()](https://docs.python.org/3/library/stdtypes.html#str.startswith) for filtering, store the list in `filenames` variable. Put you code into a Jupyter cell.
+
+::: {.infobox .practice}
+Do exercise #5 in Jupyter notebook.
+:::
 
 This gives us a nice list of eight files but we need each name twice. There are several ways of making but we will use list operations for this.
 
@@ -88,6 +108,10 @@ a * b
 will give you `[1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3]`.
 
 Use either operations or `.extend()` method to create the new list where each filename is repeated twice. Hint, you can apply list multiplication directly to the filenames list you created via list comprehension.
+
+::: {.infobox .practice}
+Do exercise #6 in Jupyter notebook.
+:::
 
 ## Lots of cards, using list enumeration
 Now that we have a list of filenames, we can create a list of cards out of it. This list will replace your single `card` variable.  Name the new list `cards` and create it either using an empty list + for loop or using list comprehensions. Inside the loop you creating each card using its filename and index (see below) and append it to the `cards` list (or it is added automatically, if you use comprehensions).
