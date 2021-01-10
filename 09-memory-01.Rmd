@@ -1,0 +1,238 @@
+# Memory game, part 1 {#seminar09}
+
+Today, we will continue learning how to use PsychoPy. To this end, you will write a good old _Memory_ game. Sixteen cards are lying "face down", you can turn any two of them and, if they are identical, they are taken off the table. If they are different, the cards turn "face down" again.
+
+Before we start, create a new folder _Memory01_ for exercise files and create a subfolder _Images_ in it. Then, download [images of chicken](material/chicken.zip)^[The images are from [OpenClipart](https://openclipart.org/) and are public domain.] that we will use for the game and unzip them into _Images_ subfolder. 
+
+As per usual, we will start with bare basic and will add the complexity along the way. For the main script(s), please use VS Code (or IDE of your choice) but I would still encourage you to use Jupyter to figure out small code snippents.
+
+## Minimal code
+
+The minimal code that we start with is
+```python
+from psychopy import visual, event
+ 
+win = visual.Window(size=(???, ???), units="norm")
+
+# wait for a key press
+
+win.close()
+```
+
+Your first task is to figure the optimal image size. Each chicken image is 240×400 pixels and, for the game, we need place for _exactly_ 4×2 images, i.e. our window must be 4 cards wide and 2 cards high. Compute the window size and put into the code. Add [event.waitKeys()](https://psychopy.org/api/event.html#psychopy.event.waitKeys), to check the window before it closes.
+
+::: {.infobox .program}
+Put your code into _exercise01.py_.
+:::
+
+## Drawing an image
+Last time we displayed text and rectangles. Today, we will use images (see instructions above on downloading them). Using an [image stimulus](https://psychopy.org/api/visual/imagestim.html) in PsychoPy is very straightforward. First, you need to create an new object by calling `visual.ImageStim(...)`. You can find the complete list of parameters in the documentation (see the link above) but for our initial intents and purposes, we only need to pass three of them:
+
+* our window variable: `win`
+* image file name:  `image = "Images/01r.png"` 
+* size: `size=(???, ???)`. That is one for you to compute. Given that we use `"norm"` units (windows is 2 units wide and 2 units high) and we want to have a 4×2 images, what is the size of each image in `"norm"` units?
+
+Create the simple code that should follow the template:
+```python
+from psychopy import visual, event
+ 
+win = visual.Window(size=(???, ???), units="norm")
+
+# create the image stimulus, call variable "chicken"
+
+# draw chicken image just like you drew text or rectangle in previous seminar
+# flip window
+
+# wait for any key press
+
+win.close()
+```
+::: {.infobox .program}
+Put your code into _exercise02.py_.
+:::
+
+## Python function arguments/parameters
+
+When we created the image stimulus, we used two tricks: passing value by parameter name and using default values. 
+
+### Position and name (keyword)
+In Python, you can pass values to parameters by position or using their name. For example, if you have a simple function
+```python
+def subtract(x, y):
+    return x - y
+```
+
+you can call it by passing two values to the function `subtract(2, 3)`, which will return `-1`. However, you can also use parameter names to make it more explicit, _e.g._ `subtract(x=2, y=3)`, which will also return `-1`. If you use parameters by name, you do not need to list in the original order, _e.g._ `subtract(y=3, x=2)` will, again, return `-1`.
+
+Moreover, you can mix position and keyword (named) parameters in the same call, _e.g._ `subtract(2, y=3)`. However, the position parameters must always come _before_ named parameters `<function>(<value1>, <value2>, <param>=<value>, ...)`. Thus, in case of our simple function above, `subtract(x=2, 3)` won't work.
+
+##### Default values
+When you write a function, you can also specify _default_ values for its arguments. This way, when the function is called, you **must** specify  the parameters without default values and you **can but do not have to** also pass values to the arguments with the default values. PsychoPy relies heavily on defaults, allowing you to specify a bare minimum. For example, when we created the `ImageStim`, we only specified three parameters: `win`, `image`, and `size`. We **had to** specify the first two, as there are no meaningful defaults for them (PsychoPy needs to know which image and in which window it must use). But we could have left `size` argument out, in which case PsychoPy would use the actual image size (240×400 pixels, in our case).
+
+When writing a function, you simple add `=<default_value>` to the argument, _e.g._:
+```python
+def subtract(x, y=1):
+    return x - y
+```
+Now, you call `subtract(5)` to get `4` because function will use the default valule for `y`, which is 1. But you can always specify value for `y` as in previous examples `subtract(5, 3)` to get `2`.
+
+Don't forget to document the default values and, preferably, the reason for having these specific values as defaults.
+
+### Using _os_ library
+We specified image file name as `"Images/01r.png"`. This did the job but, unfortunately, major operating systems disagree with Windows on which slash should be used. To make your code more robust, you need to construct a proper filename string using _os_ library. It contains various utilities for working with your operating system and, in particular, with files and directories. The function we will need for this task is `join` in [path](https://docs.python.org/3/library/os.path.html) submodule. When you `import os` library, you can then call this function as `os.path.join()`. It takes path components and joins them to match the OS format. E.g., `os.path.join("Python seminar", "Memory game", "memory01.py")` on Windows will return `'Python seminar\\Memory game\\memory01.py'`.
+
+As we will need to load multiple files from the same folder later on, modify the code to make it more universal. First, create a constant `IMAGE_FOLDER = "Images"`, which specifies folder with our images, and a `card_filename = "01r.png"`. Then, modify your `ImageStim(...)` function call by constructing the full filename using `os.path.join` from the images folder and card filename variables.
+
+::: {.infobox .program}
+Put your code into _exercise03.py_.
+:::
+
+## Ordnung muss sein!
+When you import libraries, all import statements should be at the top of your file and you should avoid putting them there in random order. The recommended order is 1) system libraries, like `os` or `random`; 2) third-party libraries, like `psychopy`; 3) your project modules (we will use them shortly). And, within each section you should put the libraries _alphabetically_, so
+```python
+import os
+import random
+```
+
+This may not look particularly useful for our simple code but as your projects will grow, you will need to include more and more libraries. Keeping them in that order makes it easy to understand which libraries you use and which are non-standard. Alphabetic order means that you can quickly check whether a library is included, as you can quickly find the location where its import statement should appear.
+
+## Placing an image
+By default, our image is placed at the center of the screen, which is a surprisingly useful default for a typical psychophysical experiment that shows stimuli at fixation (center of the screen). However, we will need to draw eight images, each at its designated location. To make our life simpler in the long run, let us create a function that takes image index (from 0 to 7) and returns a tuple with its location on the screen. Here the sketch of how index correspond to the location:
+```
+[0 ][1 ][2 ][3 ]
+[4 ][5 ][6 ][7 ]
+```
+
+Name the function `position_from_index`, it should take one argument (`index`) and return a tuple with coordinates `(<x>, <y>)` in `"units"` coordinates (because this is our chosen coordinate units system). Then, we can then use this tuple to pass the value to `pos` argument of the `ImageStim()`. For example, when called as `position_from_index(0)` it should return `(-0.75, 0.5)`. When called as `position_from_index(6)` it should return `(0.25, 0.5)`, etc.
+
+Think how you compute position from the index given the size of image. My implementation makes use of the [floor division operator //](https://python-reference.readthedocs.io/en/latest/docs/operators/floor_division.html). It returns only the integer part of the division, so that `4//3` is `1` (because 4/3 is 1.33333) and `4//5` is `0` (because 4/5 is 0.8).
+
+First, write and debug this function in Jupyter. Initially, you do not even need to have a function. You can just set `index = 0` (or some other value) and write the code below. Once it work, you can add the `def position_from_index(index):` part and **document the function**. Once the function works, put it into a new file _utilities.py_, we will use it to implement out custom function without cluttering the main file.
+
+::: {.infobox .program}
+Put your code into _utilities.py_.
+:::
+
+### Using your own modules
+We need to add the definition of `position_from_index` function to our code. However, putting all function into the main file means that we would have **a lot of code** is a single file. This make it harder to navigate and to read. Thus, we will put our utility functions into a separate module and will import them, just like you import functions from other libraries.
+
+By now the code should be in _utilities.py_. So, you need toimport the function from the module as `from utilities import position_from_index`, this way you can call the function directly as `position_from_index(...)`. Alternatively, you can import entire module as `import utilities` and then call the function as `utilities.position_from_index()`. Both approaches are valid and your preference should depend on the readability of the code in each case.
+
+Now that we have the `position_from_index` function in `utilities.py` file and we imported it, use it to place your image at one of the location. For this, you just need to add `pos=position_from_index(<index value>)` to the `ImageStim` call. Use different hard-coded values (_e.g._, `0`) for the index value and see whether image does appear at the correct position.
+
+::: {.infobox .program}
+Put your code into _exercise04.py_.
+:::
+
+## Back side of the card
+So far, we have an image of the face, which will be a front side. For the game, we also need the back of the card. For this, create a rectangle ([Rect](https://psychopy.org/api/visual/rect.html) stimulus we used the last time) with same width/height as an image and position computed from an index (just like for the image). Pick a combination of a `fillColor` (inside) and `lineColor` (contour) that you like. Modify your code, to draw image (front of the card) and rectangle (back of the card) side-by-side (_e.g._, if face is at position with index 0, rectangle should be at position 1 or 4). This way you can check that sizes match and that they are position correctly.
+
+::: {.infobox .program}
+Put your code into _exercise05.py_.
+:::
+
+## Dictionaries
+Below, we will use a dictionary to store all relevant card information and stimuli in a single variable. [Dictionaries](https://docs.python.org/3/library/stdtypes.html#dict) in Python allow you to store information using _key_-_value_ pairs. This is similar to how you look up a meaning or translation (value) of the word (key) in the real dictionary, hence the name. To create a dictionary, you use _curly_ brackets `{<key1> : <value1>}, {<key2> : <value2>, ...}` or create it via `dict(<key1>=<value1>, <key2>=<value2>, ...)`.
+```python
+book = {"Author" : "Walter Moers", "Title": "Die 13½ Leben des Käpt'n Blaubär"}
+```
+now you can access or modify each field using its key. _E.g._ `print(book["Author"])` or `book["Author"] = "Moers, W."`. You can also add new fields by assigning values to them, _e.g._ `book["Publication year"] = 1999`. In short, you can use a combination of `<dictionary-variable>[<key>]` just like you would use a normal variable.
+
+Please note that dictionaries are mutable - sticker-on-a-object - variables, just like lists. Take another look at mutable values section, if you forgot the implications of this.
+
+## Using dictionary to represent a card
+Our card has 
+
+1. front side (image of a chicken), 
+2. back side (rectangle), 
+3. identity on the card (filename), 
+4. information about which side is up.
+
+We need #3, so we can later check whether the player opened two identical cards (their filenames match) or two different ones. We need #4 to know how we should draw it (remember, we will have eight cards to manage by the end of the game). Since all of this information belongs to the same card, it would make sense to store it in a single object or a _dictionary_. For didactic purposes of learning how to use dictionaries, we will use the latter.
+
+Create a dictionary variable (name it `card`) with the following fields:
+* `"front"`: assign your image stimulus to this field (we used to store in a `chicken` variable).
+* `"back"`: assign your rectangle stimulus to it (make sure that now rectangle is at the same position, as the front of the card).
+* `"filename"`: filename use used for it.
+* `"index"`: position index of the card (we will use it later for the interaction), pick the one you like.
+* `"side"`: assign it initially to be `"back"`.
+
+Now, you have both side and all the information you need in the dictionary. Create a code that draws the side of the card as specified in `"side"` field. Note, you **do not need an if-statement for this**! Think how you do it using the power of dictionaries.
+
+::: {.infobox .program}
+Put your code into _exercise06.py_.
+:::
+
+### Card factory
+So far, we have been creating the card dictionary within our main code. However, at a certain point of time, we will need to create eight of them. Thus, a better idea would be to spin this code off as a function which takes a window variable, filename, and position index arguments and returns a dictionary, just like the one we created. You are effectively just wrapping the already working code into a function. Call this function `create_card` and put it into our `utilities.py` file (don't forget to document it!). Import and use it in the main script, replacing the card dictionary calls with a single function call. Note that now you need the `IMAGE_FOLDER` variable in _utilities.py_, rather than in the main file. Also, think about libraries you will now need import in _utilities.py_.
+
+::: {.infobox .program}
+Put your code into _utilities.py_ and _exercise07.py_.
+:::
+
+### Adding presentation/inputs loop
+In our game, the player will click on a card to "turn it around". We will implement a mouse interaction shortly but, first, modify the code to have the main presentation loop as we did on previous seminar. E.g., with `while not gameover:` loop and checking whether the player pressed `"escape"` key to exit the game.
+
+::: {.infobox .program}
+Put your code into _exercise08.py_.
+:::
+
+
+### Detecting a mouse click
+Before you can use a [mouse](https://psychopy.org/api/event.html#psychopy.event.Mouse) in PsychoPy, you must create it via `mouse = event.Mouse(visible=True, win=win)` call, where `win` is the PsychoPy window you already created. This code should appear right after your created the window itself.
+
+Now, you can check whether the left button was pressed using `mouse.getPressed()` method. It returns a three-item list with `True`/`False` values indicating whether each of the three buttons are pressed. Use it the main loop, so that if the player pressed _left_ button (its index in the returned list is `0`), you change `card["side"]` to `"front"`.
+
+If you run the code and click _anywhere_, this should flip the card.
+
+::: {.infobox .program}
+Put your code into _exercise09.py_.
+:::
+
+## Position to index
+Currently, the card is flipped if you click _anywhere_. But it should flip only when the player clicked on that specific card. For this we need to implement a function `index_from_position` that is inverse of `position_from_index`. It should take an argument `pos`, which is a tuple of `(<x>, <y>)` values (that would be the mouse position within the window), and return an **integer** card index. You  have float values (with decimal points) in the `pos` argument (because it ranges from -1 to 1) and by default the values you compute from them will also be float. However, the index is integer, so you will need to wrap it in `int(<value>)` conversion call, before returning it.
+
+I would recommend debugging the code in Jupyter first. Just set `pos = (-0.9, 0.9)` (index is, then, 0) or some other values within -1..1 range) and make sure it computes a valid index. Once it works, turn it into a function, test it in Jupyter, document it(!), and copy-paste to `utilities.py` file.
+
+::: {.infobox .program}
+Put your code into _utilities.py_.
+:::
+
+## Flip on click
+Now that you have function that returns an index from position (don't forget to import it), you can check whether the player did click on the card itself. For this, you need to extend the card-flipping code inside the _if left-mouse button was pressed_ code.
+
+You can get the position of the mouse within the window by calling `mouse.getPos()`. This will return a tuple of `(x, y)` values, which you can pass to your `index_from_position()` function. This, in turn will return the index of the card the player click on. If it _matches_ the index of your only card (stored in `"index"` field of the `card` dictionary), then and only then you flip the card.
+
+::: {.infobox .program}
+Put your code into _exercise10.py_.
+:::
+
+## Flip-flop
+As a final exercise for today, let us make the card flip-flopping back and forth. We won't really use this code for the full version of the game but it will let you learn conditional assignment and `clock.wait()` function, you will need to use later.
+
+In order for the card to flip-flop, you need to modify your `card["side"] = "front"` statement, so that it is not `"front"` but _the other_ side of the card, which becomes active. There are several ways to implement this but use an if statement that checks the _current_ state of the card and assigns _the other_ one. So, if `card["side"]` is current `"front"` it should become `"back"` and vice versa. Write and debug this four lines of code in Jupyter. Create card variable in the cell itself, _e.g._ `card = {"side" : "front"}`.
+
+As you are only assigning one of the two values to the same variable inside if-statement, you can use a nifty conditional-assignment to simplify the code. The four-line code below
+```python
+if y == 1:
+    x = 2
+else:
+    x = 3
+```
+is equivalent to
+```python
+x = 2 if y == 1 else 3
+```
+
+Use this conditional assignment to implement flip-flopping of the card. First, test it in a Jupyter cell below and then copy-paste it to your code, replacing `card["side"] = "front"` statement. It will work kinda weirdly, do not worry about this and read on!
+
+By now the flip-flopping should work and, like, _real fast_! This is because `mouse.getPressed()` tells us whether the mouse button is pressed right now. Even if you are very fast in clicking it, you still hold it for a few frames (dozens of milliseconds) before releasing it. Hence, your card-flipping code is also invoked multiple times. There are several way to solve this problem. One would be to create a `is_pressed` variable to keep track of whether the button was already pressed or released and act accordingly. Here, we will implement a simpler quick (and, admittedly, very dirty) solution. We will simply pause the code for 0.1 seconds giving the player enough time to release the button. This won't help the player who stubbornly keeps holding the button down (then the card will flip-flop every 0.1 seconds) but will take care of simple clicks.
+
+For this, you need to use [wait()](https://psychopy.org/api/clock.html#psychopy.clock.wait) function in `clock` module of PsychoPy. Import the module (alongside `visual` and `event`) and call this function right after you flipped the card.  Use `0.1` seconds waiting time but you can experiment using shorter or longer ones.
+
+::: {.infobox .program}
+Put your code into _exercise11.py_.
+:::
+
+## To be continued...
+Well done! By now, we have the code that creates a card with a given image and at a given position, we can draw it based on which side should be shown, and we can detect when the player clicked on that card. Next time, we will use these abilities to add more cards and turn it into a real game. 
