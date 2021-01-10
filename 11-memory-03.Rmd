@@ -1,0 +1,134 @@
+# Memory game, part 3 {#seminar11}
+
+During our previous seminar, we competed the core **Memory Game**. Today we will put more bells-and-whistles on it.
+
+Before we start, create a new folder _Memory03_ for exercise files. Copy _Images_ subfolder, as well as the `utilities.py` and _exercise11.py_ (rename it to _exercise01.py_, as we will use the latter as the staring point) from the previous seminar. Also, download [sounds](material/sound.zip) file and unzip it into a _Sounds_ subfolder in the seminar directory. 
+
+## Sound effects
+Let us add "clicking" sounds whenever the player turns the card. For this, we will use [sound](https://psychopy.org/api/sound.html#ptb-sound) module of PsychoPy library. If your sound does not play, ask me and we will try to set your sound libraries up.
+
+First, you need to import the `Sound` class as suggested in the manual:
+```python
+from psychopy.sound import Sound
+```
+
+Next, create a new sound and assign it to a variable `click_sound`, just like you created the visual stimuli. Use a note name (_e.g._ `"C"` or `"A"`) and a short duration (_e.g._, `0.1` or `0.2` seconds). Do this at the beginning, right after we have created the mouse.
+
+Finally, you need to `.play()` this sound just like you `.draw()` the visual stimuli. However, in PsychoPy by default the sound will not rewind back to the beginning after it finished playing (at least not for the generated sound and the setup I have). So once you play it once, it is "at the end" and the next time you try to play it, there will be no sound (because it has finished playing already). To "rewind" the sound to the beginning, you first `.stop()` it and then, immediately, `.play()` it (a bit counterintuitive but works). Do it when the player turns the card over (not just clicks somewhere).
+
+
+::: {.infobox .program}
+Put your code into _exercise01.py_.
+:::
+
+## Sound from file
+Now, let us use more complex prerecorded sounds. Put the files from the **sounds.zip** folder into a _Sounds_ subfolder of the Memory game. Mixing generated sounds (like we used in the example above) with prerecorded does not always work and it is the limitation of the libraries that PsychoPy relies upon. Thus, let us replace the way the create the `click_sound` by using _click.wav_ instead of the note value. Note that you must specify the path to that file (it is in the `"Sounds"` folder), so use use `os.join.path()`.
+
+Interestingly, at least for my setup, the sound it reset automatically, so you do not need to `.stop()` it before you `.play()` it. Thus, you can drop that extra `.stop()` call.
+
+::: {.infobox .program}
+Put your code into _exercise02.py_.
+:::
+
+## Feedback sounds
+Now let us add two more sounds: `correct_sound` variable that uses `"correct.wav"` and `error_sound` that uses `"error.wav"`. They should be played when two cards are opened, right before the delay. Play `correct_sound` if the cards matched, `error_sound` otherwise.
+
+```
+if two cards are opened:
+    draw cards
+    
+    if cards match:
+        play correct_sound
+    else:
+        play error_sound
+        
+    clock.wait(0.5)
+```
+
+::: {.infobox .program}
+Put your code into _exercise03.py_.
+:::
+
+# Keeping sounds organized: dictionary comprehension
+We now have three variables for three different sounds. We could be tidier than that by putting them into a dictionary `sounds` and using them as `sounds['correct'].play()`. This is a more general, tidier (just one variable rather than lots), and more future-proof approach. You can create this dictionary in a direct way `sounds = {"click" : Sound(...), ...}` but will learn and use [dictionary comprehension](https://www.python.org/dev/peps/pep-0274/) instead.
+
+Dictionary comprehensions are very similar to list comprehensions. You also loop over a list but you use `{}` instead of `[]` and you use an item to generated both a key and the value for a dictionary entry. For example:
+```python
+index_letters = {i : chr(65+i) for i in range(4)}
+```
+
+Here, you use the item as a key `i` and generate a string value for it. Note that although keys **must be unique**, the values are not, so you can use the same value for all entries. Imagine that you are keeping the score in the game and all players start with a zero:
+```python
+players = ['Anna', 'Bob', 'Chris']
+score = {player : 0 for player in players}
+```
+
+Change the code to generate `sounds` dictionary via comprehension and use it instead of variables. In our case, the three keys should be `"click"`, `"correct"`, and `"error"`. You can generate the filename from these keys, just do not forget to [add](https://www.w3schools.com/python/gloss_python_string_concatenation.asp) the `".wav"` extension.
+
+::: {.infobox .program}
+Put your code into _exercise04.py_.
+:::
+
+## Logging data
+Although we recorded basic stats like the number of attempts or the total amount of time a player required, for a real experiment you would want to record as much information as possible. In our case, we would want to record every card flip. In the real experiment, that would inform us which chicken that are easier or harder to memorize.
+
+For this, we will use [ExperimentHandler](https://psychopy.org/api/data.html#experimenthandler), which is a part of experimental scheduling and data logging tools of PsychoPy. Basically, we need to have three additional pieces of code: 1) one that creates the handler, 2) one that logs the information about the click (card, time, and attempt number), 3) one that save the log to a file.
+
+1. Create an `ExperimentHandler()` object and assign it to the `exp` variable. Do it near the place where you created the window. There are multiple options you can specify but for out intents and purposes the defaults will do.
+2. To log information about each click, you need to first [.addData(key, value)](https://psychopy.org/api/data.html#psychopy.data.TrialHandler.addData) for each variable (key) and value you want to record. In our case you need to call it three times for `"card"` (value is the `"filename"` of the card the player clicked on), `"attempt"` (value is the index of the current attempt), and `"time"` (value is the time since the start, you already have a `timer` variable that you can use for this). After all three `.addData()` calls, you need to tell the handler to advance to the next row of you log table using [.nextEntry()](https://psychopy.org/api/data.html#psychopy.data.ExperimentHandler.nextEntry) method. Put this code right after your "flipped" the card.
+3. To save information to a file, you need to call [.saveAsWideText(...)](https://psychopy.org/api/data.html#psychopy.data.ExperimentHandler.saveAsWideText) method of the `exp`. You need to supply the `filename` parameter and, possibly, further options such as a delimiter (`delim`). My suggestion would be to use a filename such as `"log.csv"` and `","` for a delimiter symbol (this would make a standard comma-separated-values file that any program can read). Put this code at the very end after the game over message.
+
+::: {.infobox .program}
+Put your code into _exercise05.py_.
+:::
+
+## More rounds
+We have been using left-facing chicken  (the image files that start with `"l"`) but we also have right-facing chicken (the image files that start with `"r"`). Let us use both sets, so that games run for two rounds, first left- then right-facing chicken. 
+
+For this, we will need to create a variable with the list of conditions. Let us, inventively, call it `conditions` and it will be a simple list of two items: `"'l'"` and `"r"`. Create this variable in the beginning, **before** you create cards.
+
+Next, create an outer loop over the conditions. You code should look roughly like that
+```
+imports
+creating window, mouse, sounds, experiment handler, etc.
+create conditions list
+for condition in conditions:
+    create cards using condition letter to filter files
+    prepare everything for the round (gameover variable, timer, attempts counter, etc.)
+    while not gameover:
+        visuals
+        mouse handling
+        keyboard handling
+    game over message (change it to block results message)
+        
+save logs
+close window
+```
+
+When you create cards use the `condition` (assuming that you used `for condition in conditions:`) instead of the hardcoded `"l"` to filter the files. You also to need to log the condition. Add a `exp.addData()` call for it along the other ones.
+
+Finally, modify your "game-over" message to be "end-of-the-block" message. You still should show the stats, change only with wording.
+
+::: {.infobox .program}
+Put your code into _exercise06.py_.
+:::
+
+## Random order
+Randomize order of conditons before the main loop.
+
+::: {.infobox .program}
+Put your code into _exercise07.py_.
+:::
+
+## ABBA order
+When running an actual experiment, you may want to account for the learning effect. If conditions are presented in separate blocks (as in our case), the ones that occur later will benefit from learning (although they will also suffer because of fatigue). One way to even things out, is present conditions twice in a direct and, then, a reverse order (ABBA). This way, a condition which was used first (no learning) is also the last one (maximal learning).
+
+Once you randomized the order of the first two blocks, you need to add the same list but in a reverse order. One possibility is a [.reverse()](https://docs.python.org/3/tutorial/datastructures.html) method. However, it reverses the list itself in-place. Instead you should use [slicing](https://docs.python.org/3/reference/expressions.html?highlight=slicing#slicings) to create a _new_ reversed list before adding it to the original one. Read again on [lists](#lists), if you forgot how it works. The idea is simply to `conditions = conditions + conditions-that-are-sliced-to-be-in-reverse-order`. You can test this code in a Jupyter cell, before putting into the main code.
+
+::: {.infobox .program}
+Put your code into _exercise08.py_.
+:::
+
+## We want more!
+Now you have a real working experiment with randomized condition order, logging, feedback, etc. Think about how you can improve it further. Instructions? More/less feedback?
+
