@@ -29,7 +29,7 @@ Put your code into _exercise01.py_.
 Last time we displayed text and rectangles. Today, we will use images (see instructions above on downloading them). Using an [image stimulus](https://psychopy.org/api/visual/imagestim.html) in PsychoPy is very straightforward. First, you need to create an new object by calling `visual.ImageStim(...)`. You can find the complete list of parameters in the documentation (see the link above) but for our initial intents and purposes, we only need to pass three of them:
 
 * our window variable: `win`
-* image file name:  `image = "Images/01r.png"` 
+* image file name:  `image = "Images/r01.png"` 
 * size: `size=(???, ???)`. That is one for you to compute. Given that we use `"norm"` units (windows is 2 units wide and 2 units high) and we want to have a 4×2 images, what is the size of each image in `"norm"` units?
 
 Create the simple code that should follow the template:
@@ -79,9 +79,9 @@ Now, you call `subtract(5)` to get `4` because function will use the default val
 Don't forget to document the default values and, preferably, the reason for having these specific values as defaults.
 
 ### Using _os_ library
-We specified image file name as `"Images/01r.png"`. This did the job but, unfortunately, major operating systems disagree with Windows on which slash should be used. To make your code more robust, you need to construct a proper filename string using _os_ library. It contains various utilities for working with your operating system and, in particular, with files and directories. The function we will need for this task is `join` in [path](https://docs.python.org/3/library/os.path.html) submodule. When you `import os` library, you can then call this function as `os.path.join()`. It takes path components and joins them to match the OS format. E.g., `os.path.join("Python seminar", "Memory game", "memory01.py")` on Windows will return `'Python seminar\\Memory game\\memory01.py'`.
+We specified image file name as `"Images/r01.png"`. This did the job but, unfortunately, major operating systems disagree with Windows on which slash should be used. To make your code more robust, you need to construct a proper filename string using _os_ library. It contains various utilities for working with your operating system and, in particular, with files and directories. The function we will need for this task is `join` in [path](https://docs.python.org/3/library/os.path.html) submodule. When you `import os` library, you can then call this function as `os.path.join()`. It takes path components and joins them to match the OS format. E.g., `os.path.join("Python seminar", "Memory game", "memory01.py")` on Windows will return `'Python seminar\\Memory game\\memory01.py'`.
 
-As we will need to load multiple files from the same folder later on, modify the code to make it more universal. First, create a constant `IMAGE_FOLDER = "Images"`, which specifies folder with our images, and a `card_filename = "01r.png"`. Then, modify your `ImageStim(...)` function call by constructing the full filename using `os.path.join` from the images folder and card filename variables.
+As we will need to load multiple files from the same folder later on, modify the code to make it more universal. First, create a constant `IMAGE_FOLDER = "Images"`, which specifies folder with our images, and a `card_filename = "r01.png"`. Then, modify your `ImageStim(...)` function call by constructing the full filename using `os.path.join` from the images folder and card filename variables.
 
 ::: {.infobox .program}
 Put your code into _exercise03.py_.
