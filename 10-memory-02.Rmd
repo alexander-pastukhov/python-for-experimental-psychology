@@ -1,0 +1,12 @@
+# Memory game, part 2 {#seminar10}
+
+By the time we finished our previous seminar, you had the code that created a single "card" with a given image at a given location and you were able to interact with it (flip-flopping it). Now, we need to extend the code so that we have eight cards that we can open only two at a time. If cards match (have same `"filename"` field), we remove them. If cards do not match, we simply turn them over.
+
+Before we start, create a new folder _Memory02_ for exercise files. Copy _Images_ subfolder, as well as the `utilities.py` and _exercise11.py_. We will use the latter as the staring point.
+
+## Getting list of image files.
+For a single card, we simply hard-coded the name of the image file, as well as its location. However, for a real game (or an experiment) we would like to be more flexible and automatically determine which files we have in the _Images_ folder. For this, you need to use [os.listdir(path=".")](https://docs.python.org/3/library/os.html#os.listdir) function that, you've guess it, returns a list with filenames of _all_ the files in a folder specified by path. By default, it is a current path (`path="."`). However, you can use either a relative path - `os.listdir("Images")`, assuming that _Images_ is a subfolder in your current directory - or an absolute path `os.listdir("E:/Teaching/Python/MemoryGame/Images")` (in my case). In Jupyter, write a single line code to get the list of files in the _Images_ folder. Use _relative_ path, if it is in a subfolder relative to your Jupyter notebook, or use an _absolute_ path, if it is in a different folder. Do not forget to `import os` before you run the code, of course!
+
+You should have gotten a list of 8 files that are coded as _[index][r|l].png_, where _r_ or _l_ denote the side the chicken is looking at. However, for our game we need only four images (4 × 2 = 8 cards). Therefore, we need to select a subset of them. For example, a random four, or man/women only, or attractive/unattractive only. Here, let us work with female faces meaning that we need only to pick files that start with "w". To make this list filtering more efficient, we will use [list comprehensions](https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions).
+
+
