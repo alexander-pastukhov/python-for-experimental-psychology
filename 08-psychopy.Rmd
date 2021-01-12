@@ -143,7 +143,7 @@ Put your code into _exercise06.py_.
 :::
 
 ### Normalized units
-These units are default ones and assume that the window goes from -1 to 1 both along x- and x-axis. Again, (0,0) is the center of the screen but the top-left corner is (-1, -1) whereas the bottom-right is (1, 1). This makes _placing_ your objects easier but _sizing_ them harder (you need to know the aspect ratio to ensure that a square is a square).
+These units are default ones and assume that the window goes from -1 to 1 both along x- and x-axis. Again, (0,0) is the center of the screen but the bottom-left corner is (-1, -1) whereas the top-right is (1, 1). This makes _placing_ your objects easier but _sizing_ them harder (you need to know the aspect ratio to ensure that a square is a square).
 
 Modify your code, so that it uses `"norm"` units when you create the window and size the `Rect` stimulus, so it does look like a square.
 
