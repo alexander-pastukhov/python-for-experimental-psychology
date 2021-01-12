@@ -117,7 +117,7 @@
 
 \title{Python for social and experimental psychology}
 \author{Alexander (Sasha) Pastukhov}
-\date{2020-12-08}
+\date{2021-01-12}
 
 \begin{document}
 \maketitle
@@ -2021,7 +2021,7 @@ By now you have added a player (single, location stored as in integer), bottomle
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  Create a new variable (\texttt{wumpus}?) and place Wumpus in an occupied cave. Print out location of Wumpus for debugging purposes.
+  Create a new variable (\texttt{wumpus}?) and place Wumpus in an unoccupied cave. Print out location of Wumpus for debugging purposes.
 \item
   Warn about Wumpus in the same code that warns about pits and bats. Canonical warning text is \texttt{"You\ smell\ a\ Wumpus!"}.
 \item
@@ -2035,7 +2035,25 @@ Put your code into exercise \#1.
 
 Let us give player a chance. As they enter the cave with the Wumpus, they startle it. Then, Wumpus either runs away to a random adjacent cave (new) or stays put and eats the player. First, create a new constant that defines a probability that Wumpus runs away, e.g.~\texttt{P\_WUMPUS\_SCARED}. In implementations I've found, it is typically 0.25, but use any value you feel is reasonable.
 
-Thus, if the player is in the cave with Wumpus, draw a random number between 0 and 1. The function you are looking for is \href{https://docs.python.org/3/library/random.html\#random.random}{random()} and it is part of \href{https://docs.python.org/3/library/random.html}{random} library, so the call is \texttt{random.random()}.If that number is smaller than probability that the Wumpus is scared, move it to a random adjacent cave (bats ignore Wumpus and it clings to the ceiling of the caves, so bottomless pits are not a problem for it). A useful function is \href{https://docs.python.org/3/library/random.html\#random.choice}{choice()}, again, part of \href{https://docs.python.org/3/library/random.html}{random} library. Otherwise, if Wumpus was not scared off, the player is eaten and game is over (the only outcome in exercise \#1).
+Thus, if the player is in the cave with Wumpus, draw a random number between 0 and 1. The function you are looking for is \href{https://docs.python.org/3/library/random.html\#random.random}{random()} and it is part of \href{https://docs.python.org/3/library/random.html}{random} library, so the call is \texttt{random.random()}. Remember that you can either import the \emph{entire} library and then call its function by prefixing them with the library name or you can import only a specific function via \texttt{from\ ...\ import\ ...}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#1  import entire library}
+\ImportTok{import}\NormalTok{ random}
+
+\NormalTok{random.random()}
+\NormalTok{random.randint(}\DecValTok{5}\NormalTok{)}
+
+\CommentTok{\# import only functions you need}
+\ImportTok{from}\NormalTok{ random }\ImportTok{import}\NormalTok{ randint, random}
+
+\NormalTok{random()}
+\NormalTok{randint()}
+\end{Highlighting}
+\end{Shaded}
+
+If that number is smaller than probability that the Wumpus is scared, move it to a random adjacent cave (bats ignore Wumpus and it clings to the ceiling of the caves, so bottomless pits are not a problem for it). A useful function is \href{https://docs.python.org/3/library/random.html\#random.choice}{choice()}, again, part of \href{https://docs.python.org/3/library/random.html}{random} library. Otherwise, if Wumpus was not scared off, the player is eaten and game is over (the only outcome in exercise \#1).
 
 Put your code into exercise \#2.
 
@@ -2458,7 +2476,7 @@ Put your code into \emph{exercise06.py}.
 \hypertarget{normalized-units}{%
 \subsection{Normalized units}\label{normalized-units}}
 
-These units are default ones and assume that the window goes from -1 to 1 both along x- and x-axis. Again, (0,0) is the center of the screen but the top-left corner is (-1, -1) whereas the bottom-right is (1, 1). This makes \emph{placing} your objects easier but \emph{sizing} them harder (you need to know the aspect ratio to ensure that a square is a square).
+These units are default ones and assume that the window goes from -1 to 1 both along x- and x-axis. Again, (0,0) is the center of the screen but the bottom-left corner is (-1, -1) whereas the top-right is (1, 1). This makes \emph{placing} your objects easier but \emph{sizing} them harder (you need to know the aspect ratio to ensure that a square is a square).
 
 Modify your code, so that it uses \texttt{"norm"} units when you create the window and size the \texttt{Rect} stimulus, so it does look like a square.
 
@@ -2575,6 +2593,771 @@ Expand your code, so you move the rectangle around by 0.05 units in the directio
 Put your code into \emph{exercise11.py}.
 
 When we continue, we will expand on this to build a Memory game. In the meantime, experiment with stimuli (you can have a circle or a line rather than a square). Try showing more than one stimulus (\emph{e.g.}, add back the ``press escape to exit'' message), etc.
+
+\hypertarget{seminar09}{%
+\chapter{Memory game, part 1}\label{seminar09}}
+
+Today, we will continue learning how to use PsychoPy. To this end, you will write a good old \emph{Memory} game. Sixteen cards are lying ``face down'', you can turn any two of them and, if they are identical, they are taken off the table. If they are different, the cards turn ``face down'' again.
+
+Before we start, create a new folder \emph{Memory01} for exercise files and create a subfolder \emph{Images} in it. Then, download \href{material/chicken.zip}{images of chicken}\footnote{The images are from \href{https://openclipart.org/}{OpenClipart} and are public domain.} that we will use for the game and unzip them into \emph{Images} subfolder.
+
+As per usual, we will start with bare basic and will add the complexity along the way. For the main script(s), please use VS Code (or IDE of your choice) but I would still encourage you to use Jupyter to figure out small code snippents.
+
+\hypertarget{minimal-code}{%
+\section{Minimal code}\label{minimal-code}}
+
+The minimal code that we start with is
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ psychopy }\ImportTok{import}\NormalTok{ visual, event}
+ 
+\NormalTok{win }\OperatorTok{=}\NormalTok{ visual.Window(size}\OperatorTok{=}\NormalTok{(???, ???), units}\OperatorTok{=}\StringTok{"norm"}\NormalTok{)}
+
+\CommentTok{\# wait for a key press}
+
+\NormalTok{win.close()}
+\end{Highlighting}
+\end{Shaded}
+
+Your first task is to figure the optimal image size. Each chicken image is 240×400 pixels and, for the game, we need place for \emph{exactly} 4×2 images, i.e.~our window must be 4 cards wide and 2 cards high. Compute the window size and put into the code. Add \href{https://psychopy.org/api/event.html\#psychopy.event.waitKeys}{event.waitKeys()}, to check the window before it closes.
+
+Put your code into \emph{exercise01.py}.
+
+\hypertarget{drawing-an-image}{%
+\section{Drawing an image}\label{drawing-an-image}}
+
+Last time we displayed text and rectangles. Today, we will use images (see instructions above on downloading them). Using an \href{https://psychopy.org/api/visual/imagestim.html}{image stimulus} in PsychoPy is very straightforward. First, you need to create an new object by calling \texttt{visual.ImageStim(...)}. You can find the complete list of parameters in the documentation (see the link above) but for our initial intents and purposes, we only need to pass three of them:
+
+\begin{itemize}
+\tightlist
+\item
+  our window variable: \texttt{win}
+\item
+  image file name: \texttt{image\ =\ "Images/r01.png"}
+\item
+  size: \texttt{size=(???,\ ???)}. That is one for you to compute. Given that we use \texttt{"norm"} units (windows is 2 units wide and 2 units high) and we want to have a 4×2 images, what is the size of each image in \texttt{"norm"} units?
+\end{itemize}
+
+Create the simple code that should follow the template:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ psychopy }\ImportTok{import}\NormalTok{ visual, event}
+ 
+\NormalTok{win }\OperatorTok{=}\NormalTok{ visual.Window(size}\OperatorTok{=}\NormalTok{(???, ???), units}\OperatorTok{=}\StringTok{"norm"}\NormalTok{)}
+
+\CommentTok{\# create the image stimulus, call variable "chicken"}
+
+\CommentTok{\# draw chicken image just like you drew text or rectangle in previous seminar}
+\CommentTok{\# flip window}
+
+\CommentTok{\# wait for any key press}
+
+\NormalTok{win.close()}
+\end{Highlighting}
+\end{Shaded}
+
+Put your code into \emph{exercise02.py}.
+
+\hypertarget{python-function-argumentsparameters}{%
+\section{Python function arguments/parameters}\label{python-function-argumentsparameters}}
+
+When we created the image stimulus, we used two tricks: passing value by parameter name and using default values.
+
+\hypertarget{position-and-name-keyword}{%
+\subsection{Position and name (keyword)}\label{position-and-name-keyword}}
+
+In Python, you can pass values to parameters by position or using their name. For example, if you have a simple function
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ subtract(x, y):}
+    \ControlFlowTok{return}\NormalTok{ x }\OperatorTok{{-}}\NormalTok{ y}
+\end{Highlighting}
+\end{Shaded}
+
+you can call it by passing two values to the function \texttt{subtract(2,\ 3)}, which will return \texttt{-1}. However, you can also use parameter names to make it more explicit, \emph{e.g.} \texttt{subtract(x=2,\ y=3)}, which will also return \texttt{-1}. If you use parameters by name, you do not need to list in the original order, \emph{e.g.} \texttt{subtract(y=3,\ x=2)} will, again, return \texttt{-1}.
+
+Moreover, you can mix position and keyword (named) parameters in the same call, \emph{e.g.} \texttt{subtract(2,\ y=3)}. However, the position parameters must always come \emph{before} named parameters \texttt{\textless{}function\textgreater{}(\textless{}value1\textgreater{},\ \textless{}value2\textgreater{},\ \textless{}param\textgreater{}=\textless{}value\textgreater{},\ ...)}. Thus, in case of our simple function above, \texttt{subtract(x=2,\ 3)} won't work.
+
+\hypertarget{default-values}{%
+\paragraph{Default values}\label{default-values}}
+
+When you write a function, you can also specify \emph{default} values for its arguments. This way, when the function is called, you \textbf{must} specify the parameters without default values and you \textbf{can but do not have to} also pass values to the arguments with the default values. PsychoPy relies heavily on defaults, allowing you to specify a bare minimum. For example, when we created the \texttt{ImageStim}, we only specified three parameters: \texttt{win}, \texttt{image}, and \texttt{size}. We \textbf{had to} specify the first two, as there are no meaningful defaults for them (PsychoPy needs to know which image and in which window it must use). But we could have left \texttt{size} argument out, in which case PsychoPy would use the actual image size (240×400 pixels, in our case).
+
+When writing a function, you simple add \texttt{=\textless{}default\_value\textgreater{}} to the argument, \emph{e.g.}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ subtract(x, y}\OperatorTok{=}\DecValTok{1}\NormalTok{):}
+    \ControlFlowTok{return}\NormalTok{ x }\OperatorTok{{-}}\NormalTok{ y}
+\end{Highlighting}
+\end{Shaded}
+
+Now, you call \texttt{subtract(5)} to get \texttt{4} because function will use the default valule for \texttt{y}, which is 1. But you can always specify value for \texttt{y} as in previous examples \texttt{subtract(5,\ 3)} to get \texttt{2}.
+
+Don't forget to document the default values and, preferably, the reason for having these specific values as defaults.
+
+\hypertarget{using-os-library}{%
+\subsection{\texorpdfstring{Using \emph{os} library}{Using os library}}\label{using-os-library}}
+
+We specified image file name as \texttt{"Images/r01.png"}. This did the job but, unfortunately, major operating systems disagree with Windows on which slash should be used. To make your code more robust, you need to construct a proper filename string using \emph{os} library. It contains various utilities for working with your operating system and, in particular, with files and directories. The function we will need for this task is \texttt{join} in \href{https://docs.python.org/3/library/os.path.html}{path} submodule. When you \texttt{import\ os} library, you can then call this function as \texttt{os.path.join()}. It takes path components and joins them to match the OS format. E.g., \texttt{os.path.join("Python\ seminar",\ "Memory\ game",\ "memory01.py")} on Windows will return \texttt{\textquotesingle{}Python\ seminar\textbackslash{}\textbackslash{}Memory\ game\textbackslash{}\textbackslash{}memory01.py\textquotesingle{}}.
+
+As we will need to load multiple files from the same folder later on, modify the code to make it more universal. First, create a constant \texttt{IMAGE\_FOLDER\ =\ "Images"}, which specifies folder with our images, and a \texttt{card\_filename\ =\ "r01.png"}. Then, modify your \texttt{ImageStim(...)} function call by constructing the full filename using \texttt{os.path.join} from the images folder and card filename variables.
+
+Put your code into \emph{exercise03.py}.
+
+\hypertarget{ordnung-muss-sein}{%
+\section{Ordnung muss sein!}\label{ordnung-muss-sein}}
+
+When you import libraries, all import statements should be at the top of your file and you should avoid putting them there in random order. The recommended order is 1) system libraries, like \texttt{os} or \texttt{random}; 2) third-party libraries, like \texttt{psychopy}; 3) your project modules (we will use them shortly). And, within each section you should put the libraries \emph{alphabetically}, so
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ os}
+\ImportTok{import}\NormalTok{ random}
+\end{Highlighting}
+\end{Shaded}
+
+This may not look particularly useful for our simple code but as your projects will grow, you will need to include more and more libraries. Keeping them in that order makes it easy to understand which libraries you use and which are non-standard. Alphabetic order means that you can quickly check whether a library is included, as you can quickly find the location where its import statement should appear.
+
+\hypertarget{placing-an-image}{%
+\section{Placing an image}\label{placing-an-image}}
+
+By default, our image is placed at the center of the screen, which is a surprisingly useful default for a typical psychophysical experiment that shows stimuli at fixation (center of the screen). However, we will need to draw eight images, each at its designated location. To make our life simpler in the long run, let us create a function that takes image index (from 0 to 7) and returns a tuple with its location on the screen. Here the sketch of how index correspond to the location:
+
+\begin{verbatim}
+[0 ][1 ][2 ][3 ]
+[4 ][5 ][6 ][7 ]
+\end{verbatim}
+
+Name the function \texttt{position\_from\_index}, it should take one argument (\texttt{index}) and return a tuple with coordinates \texttt{(\textless{}x\textgreater{},\ \textless{}y\textgreater{})} in \texttt{"units"} coordinates (because this is our chosen coordinate units system). Then, we can then use this tuple to pass the value to \texttt{pos} argument of the \texttt{ImageStim()}. For example, when called as \texttt{position\_from\_index(0)} it should return \texttt{(-0.75,\ 0.5)}. When called as \texttt{position\_from\_index(6)} it should return \texttt{(0.25,\ 0.5)}, etc.
+
+Think how you compute position from the index given the size of image. My implementation makes use of the \href{https://python-reference.readthedocs.io/en/latest/docs/operators/floor_division.html}{floor division operator //}. It returns only the integer part of the division, so that \texttt{4//3} is \texttt{1} (because 4/3 is 1.33333) and \texttt{4//5} is \texttt{0} (because 4/5 is 0.8).
+
+First, write and debug this function in Jupyter. Initially, you do not even need to have a function. You can just set \texttt{index\ =\ 0} (or some other value) and write the code below. Once it work, you can add the \texttt{def\ position\_from\_index(index):} part and \textbf{document the function}. Once the function works, put it into a new file \emph{utilities.py}, we will use it to implement out custom function without cluttering the main file.
+
+Put your code into \emph{utilities.py}.
+
+\hypertarget{using-your-own-modules}{%
+\subsection{Using your own modules}\label{using-your-own-modules}}
+
+We need to add the definition of \texttt{position\_from\_index} function to our code. However, putting all function into the main file means that we would have \textbf{a lot of code} is a single file. This make it harder to navigate and to read. Thus, we will put our utility functions into a separate module and will import them, just like you import functions from other libraries.
+
+By now the code should be in \emph{utilities.py}. So, you need toimport the function from the module as \texttt{from\ utilities\ import\ position\_from\_index}, this way you can call the function directly as \texttt{position\_from\_index(...)}. Alternatively, you can import entire module as \texttt{import\ utilities} and then call the function as \texttt{utilities.position\_from\_index()}. Both approaches are valid and your preference should depend on the readability of the code in each case.
+
+Now that we have the \texttt{position\_from\_index} function in \texttt{utilities.py} file and we imported it, use it to place your image at one of the location. For this, you just need to add \texttt{pos=position\_from\_index(\textless{}index\ value\textgreater{})} to the \texttt{ImageStim} call. Use different hard-coded values (\emph{e.g.}, \texttt{0}) for the index value and see whether image does appear at the correct position.
+
+Put your code into \emph{exercise04.py}.
+
+\hypertarget{back-side-of-the-card}{%
+\section{Back side of the card}\label{back-side-of-the-card}}
+
+So far, we have an image of the face, which will be a front side. For the game, we also need the back of the card. For this, create a rectangle (\href{https://psychopy.org/api/visual/rect.html}{Rect} stimulus we used the last time) with same width/height as an image and position computed from an index (just like for the image). Pick a combination of a \texttt{fillColor} (inside) and \texttt{lineColor} (contour) that you like. Modify your code, to draw image (front of the card) and rectangle (back of the card) side-by-side (\emph{e.g.}, if face is at position with index 0, rectangle should be at position 1 or 4). This way you can check that sizes match and that they are position correctly.
+
+Put your code into \emph{exercise05.py}.
+
+\hypertarget{dictionaries}{%
+\section{Dictionaries}\label{dictionaries}}
+
+Below, we will use a dictionary to store all relevant card information and stimuli in a single variable. \href{https://docs.python.org/3/library/stdtypes.html\#dict}{Dictionaries} in Python allow you to store information using \emph{key}-\emph{value} pairs. This is similar to how you look up a meaning or translation (value) of the word (key) in the real dictionary, hence the name. To create a dictionary, you use \emph{curly} brackets \texttt{\{\textless{}key1\textgreater{}\ :\ \textless{}value1\textgreater{}\},\ \{\textless{}key2\textgreater{}\ :\ \textless{}value2\textgreater{},\ ...\}} or create it via \texttt{dict(\textless{}key1\textgreater{}=\textless{}value1\textgreater{},\ \textless{}key2\textgreater{}=\textless{}value2\textgreater{},\ ...)}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{book }\OperatorTok{=}\NormalTok{ \{}\StringTok{"Author"}\NormalTok{ : }\StringTok{"Walter Moers"}\NormalTok{, }\StringTok{"Title"}\NormalTok{: }\StringTok{"Die 13½ Leben des Käpt\textquotesingle{}n Blaubär"}\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+now you can access or modify each field using its key. \emph{E.g.} \texttt{print(book{[}"Author"{]})} or \texttt{book{[}"Author"{]}\ =\ "Moers,\ W."}. You can also add new fields by assigning values to them, \emph{e.g.} \texttt{book{[}"Publication\ year"{]}\ =\ 1999}. In short, you can use a combination of \texttt{\textless{}dictionary-variable\textgreater{}{[}\textless{}key\textgreater{}{]}} just like you would use a normal variable.
+
+Please note that dictionaries are mutable - sticker-on-a-object - variables, just like lists. Take another look at mutable values section, if you forgot the implications of this.
+
+\hypertarget{using-dictionary-to-represent-a-card}{%
+\section{Using dictionary to represent a card}\label{using-dictionary-to-represent-a-card}}
+
+Our card has
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  front side (image of a chicken),
+\item
+  back side (rectangle),
+\item
+  identity on the card (filename),
+\item
+  information about which side is up.
+\end{enumerate}
+
+We need \#3, so we can later check whether the player opened two identical cards (their filenames match) or two different ones. We need \#4 to know how we should draw it (remember, we will have eight cards to manage by the end of the game). Since all of this information belongs to the same card, it would make sense to store it in a single object or a \emph{dictionary}. For didactic purposes of learning how to use dictionaries, we will use the latter.
+
+Create a dictionary variable (name it \texttt{card}) with the following fields:
+* \texttt{"front"}: assign your image stimulus to this field (we used to store in a \texttt{chicken} variable).
+* \texttt{"back"}: assign your rectangle stimulus to it (make sure that now rectangle is at the same position, as the front of the card).
+* \texttt{"filename"}: filename use used for it.
+* \texttt{"index"}: position index of the card (we will use it later for the interaction), pick the one you like.
+* \texttt{"side"}: assign it initially to be \texttt{"back"}.
+
+Now, you have both side and all the information you need in the dictionary. Create a code that draws the side of the card as specified in \texttt{"side"} field. Note, you \textbf{do not need an if-statement for this}! Think how you do it using the power of dictionaries.
+
+Put your code into \emph{exercise06.py}.
+
+\hypertarget{card-factory}{%
+\subsection{Card factory}\label{card-factory}}
+
+So far, we have been creating the card dictionary within our main code. However, at a certain point of time, we will need to create eight of them. Thus, a better idea would be to spin this code off as a function which takes a window variable, filename, and position index arguments and returns a dictionary, just like the one we created. You are effectively just wrapping the already working code into a function. Call this function \texttt{create\_card} and put it into our \texttt{utilities.py} file (don't forget to document it!). Import and use it in the main script, replacing the card dictionary calls with a single function call. Note that now you need the \texttt{IMAGE\_FOLDER} variable in \emph{utilities.py}, rather than in the main file. Also, think about libraries you will now need import in \emph{utilities.py}.
+
+Put your code into \emph{utilities.py} and \emph{exercise07.py}.
+
+\hypertarget{adding-presentationinputs-loop}{%
+\subsection{Adding presentation/inputs loop}\label{adding-presentationinputs-loop}}
+
+In our game, the player will click on a card to ``turn it around''. We will implement a mouse interaction shortly but, first, modify the code to have the main presentation loop as we did on previous seminar. E.g., with \texttt{while\ not\ gameover:} loop and checking whether the player pressed \texttt{"escape"} key to exit the game.
+
+Put your code into \emph{exercise08.py}.
+
+\hypertarget{detecting-a-mouse-click}{%
+\subsection{Detecting a mouse click}\label{detecting-a-mouse-click}}
+
+Before you can use a \href{https://psychopy.org/api/event.html\#psychopy.event.Mouse}{mouse} in PsychoPy, you must create it via \texttt{mouse\ =\ event.Mouse(visible=True,\ win=win)} call, where \texttt{win} is the PsychoPy window you already created. This code should appear right after your created the window itself.
+
+Now, you can check whether the left button was pressed using \texttt{mouse.getPressed()} method. It returns a three-item list with \texttt{True}/\texttt{False} values indicating whether each of the three buttons are pressed. Use it the main loop, so that if the player pressed \emph{left} button (its index in the returned list is \texttt{0}), you change \texttt{card{[}"side"{]}} to \texttt{"front"}.
+
+If you run the code and click \emph{anywhere}, this should flip the card.
+
+Put your code into \emph{exercise09.py}.
+
+\hypertarget{position-to-index}{%
+\section{Position to index}\label{position-to-index}}
+
+Currently, the card is flipped if you click \emph{anywhere}. But it should flip only when the player clicked on that specific card. For this we need to implement a function \texttt{index\_from\_position} that is inverse of \texttt{position\_from\_index}. It should take an argument \texttt{pos}, which is a tuple of \texttt{(\textless{}x\textgreater{},\ \textless{}y\textgreater{})} values (that would be the mouse position within the window), and return an \textbf{integer} card index. You have float values (with decimal points) in the \texttt{pos} argument (because it ranges from -1 to 1) and by default the values you compute from them will also be float. However, the index is integer, so you will need to wrap it in \texttt{int(\textless{}value\textgreater{})} conversion call, before returning it.
+
+I would recommend debugging the code in Jupyter first. Just set \texttt{pos\ =\ (-0.9,\ 0.9)} (index is, then, 0) or some other values within -1..1 range) and make sure it computes a valid index. Once it works, turn it into a function, test it in Jupyter, document it(!), and copy-paste to \texttt{utilities.py} file.
+
+Put your code into \emph{utilities.py}.
+
+\hypertarget{flip-on-click}{%
+\section{Flip on click}\label{flip-on-click}}
+
+Now that you have function that returns an index from position (don't forget to import it), you can check whether the player did click on the card itself. For this, you need to extend the card-flipping code inside the \emph{if left-mouse button was pressed} code.
+
+You can get the position of the mouse within the window by calling \texttt{mouse.getPos()}. This will return a tuple of \texttt{(x,\ y)} values, which you can pass to your \texttt{index\_from\_position()} function. This, in turn will return the index of the card the player click on. If it \emph{matches} the index of your only card (stored in \texttt{"index"} field of the \texttt{card} dictionary), then and only then you flip the card.
+
+Put your code into \emph{exercise10.py}.
+
+\hypertarget{flip-flop}{%
+\section{Flip-flop}\label{flip-flop}}
+
+As a final exercise for today, let us make the card flip-flopping back and forth. We won't really use this code for the full version of the game but it will let you learn conditional assignment and \texttt{clock.wait()} function, you will need to use later.
+
+In order for the card to flip-flop, you need to modify your \texttt{card{[}"side"{]}\ =\ "front"} statement, so that it is not \texttt{"front"} but \emph{the other} side of the card, which becomes active. There are several ways to implement this but use an if statement that checks the \emph{current} state of the card and assigns \emph{the other} one. So, if \texttt{card{[}"side"{]}} is current \texttt{"front"} it should become \texttt{"back"} and vice versa. Write and debug this four lines of code in Jupyter. Create card variable in the cell itself, \emph{e.g.} \texttt{card\ =\ \{"side"\ :\ "front"\}}.
+
+As you are only assigning one of the two values to the same variable inside if-statement, you can use a nifty conditional-assignment to simplify the code. The four-line code below
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ y }\OperatorTok{==} \DecValTok{1}\NormalTok{:}
+\NormalTok{    x }\OperatorTok{=} \DecValTok{2}
+\ControlFlowTok{else}\NormalTok{:}
+\NormalTok{    x }\OperatorTok{=} \DecValTok{3}
+\end{Highlighting}
+\end{Shaded}
+
+is equivalent to
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OperatorTok{=} \DecValTok{2} \ControlFlowTok{if}\NormalTok{ y }\OperatorTok{==} \DecValTok{1} \ControlFlowTok{else} \DecValTok{3}
+\end{Highlighting}
+\end{Shaded}
+
+Use this conditional assignment to implement flip-flopping of the card. First, test it in a Jupyter cell below and then copy-paste it to your code, replacing \texttt{card{[}"side"{]}\ =\ "front"} statement. It will work kinda weirdly, do not worry about this and read on!
+
+By now the flip-flopping should work and, like, \emph{real fast}! This is because \texttt{mouse.getPressed()} tells us whether the mouse button is pressed right now. Even if you are very fast in clicking it, you still hold it for a few frames (dozens of milliseconds) before releasing it. Hence, your card-flipping code is also invoked multiple times. There are several way to solve this problem. One would be to create a \texttt{is\_pressed} variable to keep track of whether the button was already pressed or released and act accordingly. Here, we will implement a simpler quick (and, admittedly, very dirty) solution. We will simply pause the code for 0.1 seconds giving the player enough time to release the button. This won't help the player who stubbornly keeps holding the button down (then the card will flip-flop every 0.1 seconds) but will take care of simple clicks.
+
+For this, you need to use \href{https://psychopy.org/api/clock.html\#psychopy.clock.wait}{wait()} function in \texttt{clock} module of PsychoPy. Import the module (alongside \texttt{visual} and \texttt{event}) and call this function right after you flipped the card. Use \texttt{0.1} seconds waiting time but you can experiment using shorter or longer ones.
+
+Put your code into \emph{exercise11.py}.
+
+\hypertarget{to-be-continued}{%
+\section{To be continued\ldots{}}\label{to-be-continued}}
+
+Well done! By now, we have the code that creates a card with a given image and at a given position, we can draw it based on which side should be shown, and we can detect when the player clicked on that card. Next time, we will use these abilities to add more cards and turn it into a real game.
+
+\hypertarget{seminar10}{%
+\chapter{Memory game, part 2}\label{seminar10}}
+
+By the time we finished our previous seminar, you had the code that created a single ``card'' with a given image at a given location and you were able to interact with it (flip-flopping it). Now, we need to extend the code so that we have eight cards that we can open only two at a time. If cards match (have same \texttt{"filename"} field), we remove them. If cards do not match, we simply turn them over.
+
+Before we start, create a new folder \emph{Memory02} for exercise files. Copy \emph{Images} subfolder, as well as the \texttt{utilities.py} and \emph{exercise11.py} (rename it to \emph{exercise01.py}, as we will use the latter as the staring point). Also, download the \href{notebooks/Seminar\%2010.\%20Memory\%20game,\%20part\%202.ipynb}{Jupyter notebook}, which you will use to experiment with functions and do exercises. You will need to upload it along with other files.
+
+\hypertarget{getting-list-of-image-files.}{%
+\section{Getting list of image files.}\label{getting-list-of-image-files.}}
+
+For a single card, we simply hard-coded the name of the image file, as well as its location. However, for a real game (or an experiment) we would like to be more flexible and automatically determine which files we have in the \emph{Images} folder. For this, you need to use \href{https://docs.python.org/3/library/os.html\#os.listdir}{os.listdir(path=``.'')} function that, you've guess it, returns a list with filenames of \emph{all} the files in a folder specified by path. By default, it is a current path (\texttt{path="."}). However, you can use either a relative path - \texttt{os.listdir("Images")}, assuming that \emph{Images} is a subfolder in your current directory - or an absolute path \texttt{os.listdir("E:/Teaching/Python/MemoryGame/Images")} (in my case). In Jupyter, write a single line code to get the list of files in the \emph{Images} folder. Use \emph{relative} path, if it is in a subfolder relative to your Jupyter notebook, or use an \emph{absolute} path, if it is in a different folder. Do not forget to \texttt{import\ os} before you run the code, of course!
+
+Do exercise \#1 in Jupyter notebook.
+
+You should have gotten a list of 8 files that are coded as \emph{{[}r\textbar l{]}{[}index{]}.png}, where \emph{r} or \emph{l} denote the side the chicken is looking at. However, for our game we need only four images (4 × 2 = 8 cards). Therefore, we need to select a subset of them. For example, a random four or chicken looking to the left or to the right only. Here, let us work with chicken looking to the left, meaning that we need only to pick files that start with ``l''. To make this list filtering more efficient, we will use \href{https://docs.python.org/3/tutorial/datastructures.html\#list-comprehensions}{list comprehensions}.
+
+\hypertarget{list-comprehension}{%
+\section{List comprehension}\label{list-comprehension}}
+
+List comprehension provide an elegant and easy-to-read way to create, modify and/or filter elements of the list creating a new list. The general structure is
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{new\_list }\OperatorTok{=}\NormalTok{ [}\OperatorTok{\textless{}}\NormalTok{transform}\OperatorTok{{-}}\NormalTok{the}\OperatorTok{{-}}\NormalTok{item}\OperatorTok{\textgreater{}} \ControlFlowTok{for}\NormalTok{ item }\KeywordTok{in}\NormalTok{ old\_list }\ControlFlowTok{if} \OperatorTok{\textless{}}\NormalTok{condition}\OperatorTok{{-}}\NormalTok{given}\OperatorTok{{-}}\NormalTok{the}\OperatorTok{{-}}\NormalTok{item}\OperatorTok{\textgreater{}}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+Let us look at examples to understand how it works. Imagine that you have a list \texttt{numbers\ =\ {[}1,\ 2,\ 3{]}} and you need increment each number by 1\footnote{A very arbitrary example!}. You can do it by creating a new list and adding 1 to each item in the part:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{numbers }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{]}
+\NormalTok{numbers\_plus\_1 }\OperatorTok{=}\NormalTok{ [item }\OperatorTok{+} \DecValTok{1} \ControlFlowTok{for}\NormalTok{ item }\KeywordTok{in}\NormalTok{ numbers]}
+\end{Highlighting}
+\end{Shaded}
+
+Note that this is equivalent to
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{numbers }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{]}
+\NormalTok{numbers\_plus\_1 }\OperatorTok{=}\NormalTok{ []}
+\ControlFlowTok{for}\NormalTok{ item }\KeywordTok{in}\NormalTok{ numbers:}
+\NormalTok{    numbers\_plus\_1.append(item }\OperatorTok{+} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Or, imagine that you need to convert each item to a string. You can do it simply as
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{numbers }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{]}
+\NormalTok{numbers\_as\_strings }\OperatorTok{=}\NormalTok{ [}\BuiltInTok{str}\NormalTok{(item) }\ControlFlowTok{for}\NormalTok{ item }\KeywordTok{in}\NormalTok{ numbers]}
+\end{Highlighting}
+\end{Shaded}
+
+What would be an equivalent form using a normal for loop? Write both versions of code in Jupiter cells and check that the results are the same.
+
+Do exercise \#2 in Jupyter notebook.
+
+Now, implement the code below using list comprehension. Check that results match.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{strings }\OperatorTok{=}\NormalTok{ [}\StringTok{\textquotesingle{}1\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}2\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}3\textquotesingle{}}\NormalTok{]}
+\NormalTok{numbers }\OperatorTok{=}\NormalTok{ []}
+\ControlFlowTok{for}\NormalTok{ astring }\KeywordTok{in}\NormalTok{ strings:}
+\NormalTok{    numbers.append(}\BuiltInTok{int}\NormalTok{(astring) }\OperatorTok{+} \DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Do exercise \#3 in Jupyter notebook.
+
+As noted above, you can also use conditional statement to filter which items are passed to the new list. In our numbers example, we can retain numbers that are greater than 1
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{numbers }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{]}
+\NormalTok{numbers\_greater\_than\_1 }\OperatorTok{=}\NormalTok{ [item }\ControlFlowTok{for}\NormalTok{ item }\KeywordTok{in}\NormalTok{ numbers }\ControlFlowTok{if}\NormalTok{ item }\OperatorTok{\textgreater{}} \DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+Sometimes, the same statement is written in three lines, instead of one, to make reading easier:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{numbers }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{]}
+\NormalTok{numbers\_greater\_than\_1 }\OperatorTok{=}\NormalTok{ [item }
+                          \ControlFlowTok{for}\NormalTok{ item }\KeywordTok{in}\NormalTok{ numbers}
+                          \ControlFlowTok{if}\NormalTok{ item }\OperatorTok{\textgreater{}} \DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+You can of course combine the transformation and filtering in a single statement. Create code that filters out all items below 2 and adds 4 to them.
+
+Do exercise \#4 in Jupyter notebook.
+
+\hypertarget{getting-list-of-relevant-files}{%
+\section{Getting list of relevant files}\label{getting-list-of-relevant-files}}
+
+Now that you know about list comprehensions, you can easily create a list of files of chicken looking left, \emph{i.e.} with filenames that start with ``l''. Use \href{https://docs.python.org/3/library/stdtypes.html\#str.startswith}{str.startswith()} for filtering, store the list in \texttt{filenames} variable. Put you code into a Jupyter cell.
+
+Do exercise \#5 in Jupyter notebook.
+
+This gives us a nice list of eight files but we need each name twice. There are several ways of making but we will use list operations for this.
+
+\hypertarget{list-operations}{%
+\subsection{List operations}\label{list-operations}}
+
+Python lists implement two operations:
+
+\begin{itemize}
+\tightlist
+\item
+  Adding two lists together: \texttt{\textless{}list1\textgreater{}\ +\ \textless{}list2\textgreater{}}.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{]}
+\NormalTok{b }\OperatorTok{=}\NormalTok{ [}\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{]}
+\NormalTok{a }\OperatorTok{+}\NormalTok{ b}
+\end{Highlighting}
+\end{Shaded}
+
+gives a \emph{new} list with items \texttt{{[}1,\ 2,\ 3,\ 4,\ 5,\ 4,\ 5,\ 6{]}}. Note that this is not equivalent to \href{https://docs.python.org/3/tutorial/datastructures.html\#more-on-lists}{extend} method \texttt{a.extend(b)}! The \texttt{+} creates a \emph{new} list, \texttt{.extend()} extends the original list \texttt{a}.
+
+\begin{itemize}
+\tightlist
+\item
+  List multiplication/replication: \texttt{\textless{}list\textgreater{}\ *\ \textless{}integer-value\textgreater{}} creates a \emph{new} list by replicating the original one \texttt{\textless{}integer-value\textgreater{}} times. For example:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{]}
+\NormalTok{b }\OperatorTok{=} \DecValTok{4}
+\NormalTok{a }\OperatorTok{*}\NormalTok{ b}
+\end{Highlighting}
+\end{Shaded}
+
+will give you \texttt{{[}1,\ 2,\ 3,\ 1,\ 2,\ 3,\ 1,\ 2,\ 3,\ 1,\ 2,\ 3{]}}.
+
+Use either operations or \texttt{.extend()} method to create the new list where each filename is repeated twice. Hint, you can apply list multiplication directly to the filenames list you created via list comprehension.
+
+Do exercise \#6 in Jupyter notebook.
+
+\hypertarget{lots-of-cards-using-list-enumeration}{%
+\section{Lots of cards, using list enumeration}\label{lots-of-cards-using-list-enumeration}}
+
+Now that we have a list of filenames, we can create a list of cards out of it. This list will replace your single \texttt{card} variable. Name the new list \texttt{cards} and create it either using an empty list + for loop or using list comprehensions. Inside the loop you creating each card using its filename and index (see below) and append it to the \texttt{cards} list (or it is added automatically, if you use comprehensions).
+
+You can get the index of each filename (and, therefore, it position on the screen) via \href{https://docs.python.org/3/library/functions.html\#enumerate}{enumerate()}, which is a generator that returns a tuple of \texttt{(index,\ item)}. For example, test the example below that prints one letter at a time with its index:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{letters }\OperatorTok{=}\NormalTok{ [}\StringTok{\textquotesingle{}a\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}b\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}c\textquotesingle{}}\NormalTok{]}
+\ControlFlowTok{for}\NormalTok{ index, letter }\KeywordTok{in} \BuiltInTok{enumerate}\NormalTok{(letters):}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{\textquotesingle{}}\SpecialCharTok{\%d}\StringTok{: }\SpecialCharTok{\%s}\StringTok{\textquotesingle{}}\OperatorTok{\%}\NormalTok{(index, letter))}
+\end{Highlighting}
+\end{Shaded}
+
+Once you created the list of cards, you should draw \emph{all} of them inside the main loop. You already have a line that draws a single \texttt{single\_card}. You should wrap this call with a for loop that loops over all \texttt{cards} and uses \texttt{single\_card} as an iterator variable. Your code should look roughly as this
+
+\begin{verbatim}
+# import libraries
+# open window and create the mouse
+# get filenames for chicken looking left 
+# create all cards
+
+gameover = False
+while not gameover:
+    # draw all cards
+    
+    # check keys
+    
+    # mouse processing - COMMENT IT OUT FOR A MOMENT
+\end{verbatim}
+
+Put your code into \emph{exercise01.py}.
+
+\hypertarget{mouse-interaction-for-every-card}{%
+\section{Mouse interaction for every card}\label{mouse-interaction-for-every-card}}
+
+Our mouse interaction was based on the index of our only card and checking that it matches the mouse click. However, now we have eight cards that cover the \emph{entire} window. Thus, it does not matter where exactly the player clicked, there is a card which needs to be turned over. Modify your mouse click processing code so that if mouse left button is pressed, it computes an index of that location (it would be from 0 to 7), flips the card with that index in the list, waits for 0.1 seconds (our hack from last time, we won't need it soon).
+
+Put your code into \emph{exercise02.py}.
+
+\hypertarget{limiting-flipping-to-just-two-cards}{%
+\section{Limiting flipping to just two cards}\label{limiting-flipping-to-just-two-cards}}
+
+In the actual game, we are allow to only turn around \emph{two} cards at a time. We will either need an extra variable to know how many cards are face up already or do an on-the-fly scan through the list. Let us implement the extra variable solution. Create a new variable \texttt{faceup\_n\ =\ 0} before the loop. Inside the mouse-click processing code, you need to implement the following logic:
+
+\begin{verbatim}
+if mouse.getPressed()[0]:
+    # compute index of the mouse click
+    # if card with this index is not face up already:
+        # turn the card face up
+        # increment the faceup_n variable
+        # if faceup_n is equal to 2:
+            # --- draw all cards ---
+            # insert a pause of 0.5 seconds
+            # turn all cards back
+            # reset faceup_n to zero (as all cards are now with their backs up)
+\end{verbatim}
+
+Note that we need to explicitly draw the cards again inside the condition (and don't forget to flip the window)! Otherwise, we turn the card back before we ever get to the drawing stage.
+
+Put your code into \emph{exercise03.py}.
+
+\hypertarget{remembering-which-cards-were-turned}{%
+\section{Remembering which cards were turned}\label{remembering-which-cards-were-turned}}
+
+Our initial implementation was to count the number of cards that player turned. This, however, means that we don't know which cards these were. Let us now store face-up cards in a new list called \texttt{faceup} that would replace the \texttt{faceup\_n} variable. Initialize \texttt{faceup} with an empty list (just like you initialized \texttt{faceup\_n} with 0). And, once the card is flipped, add it to this list. Once \texttt{faceup} list is 2 items long (use \href{https://docs.python.org/3/library/functions.html?highlight=len\#len}{len()} function to get the length of the list), show the cards, wait for 0.5 seconds, turn cards in \texttt{faceup} list back, and \href{https://docs.python.org/3/tutorial/datastructures.html\#more-on-lists}{clear} the list.
+
+\begin{verbatim}
+if mouse.getPressed()[0]:
+    # compute index of the mouse click
+    # if card with this index is not face up already:
+        # turn the card face up
+        # add card to faceup list
+        # if faceup list length is equal to 2:
+            # --- draw all cards ---
+            # insert a pause of 0.5 seconds
+            # turn cards in faceup list back
+            # clear faceup list
+\end{verbatim}
+
+Put your code into \emph{exercise04.py}.
+
+\hypertarget{visible-card-flag}{%
+\section{``Visible'' card flag}\label{visible-card-flag}}
+
+In our next step, we will remove the matching cards. However, in reality, we won't actually remove them, we just won't draw them and won't allow user to interact with them once they are ``removed''. To know whether we need to draw a particular card, we will add a new field \texttt{visible}. There are three (well, four) pieces of code which needs to be modified.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Add \texttt{visible} field to the dictionary in the \texttt{create\_card()} function when making the card and set it to \texttt{True} by default.
+\item
+  When drawing cards, draw it only if \texttt{visible} field is \texttt{True}. By now you draw card in \emph{two} places, so both need to be appended.
+\item
+  In the code that processes the mouse click, when checking if the card hasn't been turned over yet, add ``and it is visible'' to the condition (in Python syntax, of course). So that it can be turned face up only if it is current face down and visible.
+\end{enumerate}
+
+You should see no difference in the game, because as long as all cards are visible (and, at the moment, they always are) it works just like before.
+
+Put your code into \emph{utilities.py} and \emph{exercise05.py}.
+
+\hypertarget{removing-matching-cards}{%
+\section{``Removing'' matching cards}\label{removing-matching-cards}}
+
+By now we now which two cards were turned over (these are in \texttt{faceup} list) and if they match, which means that their filenames match, we can ``remove'' them by setting their \texttt{visible} field to \texttt{False}.
+
+\begin{verbatim}
+# if faceup list length is equal to 2:
+    # --- draw all cards ---
+    # insert a pause of 0.5 seconds
+
+    # if cards match:
+        # set cards visibility to False
+    # else:
+        # turn them back
+
+    # clear faceup list
+\end{verbatim}
+
+Test this and remember that we didn't shuffle the faces so they repeat in an orderly fashion, making it easy to open the pairs.
+
+Put your code into \emph{exercise06.py}.
+
+\hypertarget{game-over-if-you-run-out-of-cards}{%
+\section{Game over, if you run out of cards}\label{game-over-if-you-run-out-of-cards}}
+
+Currently, our game can be exited by pressing \emph{Escape}. Let's add a more positive game-over outcome when you win because you matched all the cards! For this, we need to count how many cards are left on the table and modify the loop, so that it iterates only as long as the number of cards left is more than zero. For this,
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Create a new variable \texttt{cards\_left} before the loop start and set it to the total number of cards (length of the cards list).
+\item
+  Modify the while loop, adding the second condition that \texttt{cards\_left} must be more than zero.
+\item
+  Decrease \texttt{cards\_left} by 2, every time two cards are matched and ``removed''.
+\end{enumerate}
+
+Put your code into \emph{exercise07.py}.
+
+\hypertarget{game-over-message}{%
+\section{Game over message}\label{game-over-message}}
+
+Currently, our game abruptly closes once all cards are removed. It would be much friendlier to add a simple ``Game over'' message and show it for couple of seconds. After the main loop but before closing the window, create and draw the {[}TextStim{]}((\url{https://psychopy.org/api/visual/textstim.html}) and use either \texttt{clock.wait(2)} or \texttt{event.waitKeys()} (your choice). However, make sure that this message is only shown if there were no cards left. Otherwise it was the escape button press and so no ``game over'' message for people who are too lazy to finish the game!
+
+Put your code into \emph{exercise08.py}.
+
+\hypertarget{counting-attempts}{%
+\section{Counting attempts}\label{counting-attempts}}
+
+It would be even more fun to check how many attempts it required for the player to match all cards. Create a new variable \texttt{attempts} and initialize it to zero before the main loop. Increase it by 1 every time the player turned two cards over (irrespective of whether they matched). Add the number of attempts to the ``Game over'' message.
+
+Put your code into \emph{exercise09.py}.
+
+\hypertarget{record-time}{%
+\section{Record time}\label{record-time}}
+
+Let us record the time it took the player to complete the task. For this we will use PsychoPy's \href{https://psychopy.org/api/clock.html\#psychopy.clock.Clock}{Clock} class, which is very straightforward. Simply create the \texttt{timer\ =\ clock.Clock()} before the main loop and then call its \href{https://psychopy.org/api/clock.html\#psychopy.clock.MonotonicClock.getTime}{getTime()} method to get the elapsed time in seconds. Add this information to the ``game over'' message.
+
+Put your code into \emph{exercise10.py}.
+
+\hypertarget{randomness}{%
+\section{Randomness}\label{randomness}}
+
+The only boring thing about our game is that we know exactly where each chicken is. \href{https://docs.python.org/3/library/random.html\#random.shuffle}{Shuffle} the filenames list before you create the cards to turn it into a proper memory game.
+
+Put your code into \emph{exercise11.py}.
+
+Yay! Awesome game!
+
+\hypertarget{seminar11}{%
+\chapter{Memory game, part 3}\label{seminar11}}
+
+During our previous seminar, we competed the core \textbf{Memory Game}. Today we will put more bells-and-whistles on it.
+
+Before we start, create a new folder \emph{Memory03} for exercise files. Copy \emph{Images} subfolder, as well as the \texttt{utilities.py} and \emph{exercise11.py} (rename it to \emph{exercise01.py}, as we will use the latter as the staring point) from the previous seminar. Also, download \href{material/sound.zip}{sounds}\footnote{The files are public domain from \href{https://freesound.org/}{freesound.org}.} file and unzip it into a \emph{Sounds} subfolder in the seminar directory.
+
+\hypertarget{sound-effects}{%
+\section{Sound effects}\label{sound-effects}}
+
+Let us add ``clicking'' sounds whenever the player turns the card. For this, we will use \href{https://psychopy.org/api/sound.html\#ptb-sound}{sound} module of PsychoPy library. If your sound does not play, ask me and we will try to set your sound libraries up.
+
+First, you need to import the \texttt{Sound} class as suggested in the manual:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ psychopy.sound }\ImportTok{import}\NormalTok{ Sound}
+\end{Highlighting}
+\end{Shaded}
+
+Next, create a new sound and assign it to a variable \texttt{click\_sound}, just like you created the visual stimuli. Use a note name (\emph{e.g.} \texttt{"C"} or \texttt{"A"}) and a short duration (\emph{e.g.}, \texttt{0.1} or \texttt{0.2} seconds). Do this at the beginning, right after we have created the mouse.
+
+Finally, you need to \texttt{.play()} this sound just like you \texttt{.draw()} the visual stimuli. However, in PsychoPy by default the sound will not rewind back to the beginning after it finished playing (at least not for the generated sound and the setup I have). So once you play it once, it is ``at the end'' and the next time you try to play it, there will be no sound (because it has finished playing already). To ``rewind'' the sound to the beginning, you first \texttt{.stop()} it and then, immediately, \texttt{.play()} it (a bit counterintuitive but works). Do it when the player turns the card over (not just clicks somewhere).
+
+Put your code into \emph{exercise01.py}.
+
+\hypertarget{sound-from-file}{%
+\section{Sound from file}\label{sound-from-file}}
+
+Now, let us use more complex prerecorded sounds. Put the files from the \textbf{sounds.zip} folder into a \emph{Sounds} subfolder of the Memory game. Mixing generated sounds (like we used in the example above) with prerecorded does not always work and it is the limitation of the libraries that PsychoPy relies upon. Thus, let us replace the way the create the \texttt{click\_sound} by using \emph{click.wav} instead of the note value. Note that you must specify the path to that file (it is in the \texttt{"Sounds"} folder), so use use \texttt{os.join.path()}.
+
+Interestingly, at least for my setup, the sound it reset automatically, so you do not need to \texttt{.stop()} it before you \texttt{.play()} it. Thus, you can drop that extra \texttt{.stop()} call.
+
+Put your code into \emph{exercise02.py}.
+
+\hypertarget{feedback-sounds}{%
+\section{Feedback sounds}\label{feedback-sounds}}
+
+Now let us add two more sounds: \texttt{correct\_sound} variable that uses \texttt{"correct.wav"} and \texttt{error\_sound} that uses \texttt{"error.wav"}. They should be played when two cards are opened, right before the delay. Play \texttt{correct\_sound} if the cards matched, \texttt{error\_sound} otherwise.
+
+\begin{verbatim}
+if two cards are opened:
+    draw cards
+    
+    if cards match:
+        play correct_sound
+    else:
+        play error_sound
+        
+    clock.wait(0.5)
+\end{verbatim}
+
+Put your code into \emph{exercise03.py}.
+
+\hypertarget{keeping-sounds-organized-dictionary-comprehension}{%
+\chapter{Keeping sounds organized: dictionary comprehension}\label{keeping-sounds-organized-dictionary-comprehension}}
+
+We now have three variables for three different sounds. We could be tidier than that by putting them into a dictionary \texttt{sounds} and using them as \texttt{sounds{[}\textquotesingle{}correct\textquotesingle{}{]}.play()}. This is a more general, tidier (just one variable rather than lots), and more future-proof approach. You can create this dictionary in a direct way \texttt{sounds\ =\ \{"click"\ :\ Sound(...),\ ...\}} but will learn and use \href{https://www.python.org/dev/peps/pep-0274/}{dictionary comprehension} instead.
+
+Dictionary comprehensions are very similar to list comprehensions. You also loop over a list but you use \texttt{\{\}} instead of \texttt{{[}{]}} and you use an item to generated both a key and the value for a dictionary entry. For example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{index\_letters }\OperatorTok{=}\NormalTok{ \{i : }\BuiltInTok{chr}\NormalTok{(}\DecValTok{65}\OperatorTok{+}\NormalTok{i) }\ControlFlowTok{for}\NormalTok{ i }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{4}\NormalTok{)\}}
+\end{Highlighting}
+\end{Shaded}
+
+Here, you use the item as a key \texttt{i} and generate a string value for it. Note that although keys \textbf{must be unique}, the values are not, so you can use the same value for all entries. Imagine that you are keeping the score in the game and all players start with a zero:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{players }\OperatorTok{=}\NormalTok{ [}\StringTok{\textquotesingle{}Anna\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Bob\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Chris\textquotesingle{}}\NormalTok{]}
+\NormalTok{score }\OperatorTok{=}\NormalTok{ \{player : }\DecValTok{0} \ControlFlowTok{for}\NormalTok{ player }\KeywordTok{in}\NormalTok{ players\}}
+\end{Highlighting}
+\end{Shaded}
+
+Change the code to generate \texttt{sounds} dictionary via comprehension and use it instead of variables. In our case, the three keys should be \texttt{"click"}, \texttt{"correct"}, and \texttt{"error"}. You can generate the filename from these keys, just do not forget to \href{https://www.w3schools.com/python/gloss_python_string_concatenation.asp}{add} the \texttt{".wav"} extension.
+
+Put your code into \emph{exercise04.py}.
+
+\hypertarget{logging-data}{%
+\section{Logging data}\label{logging-data}}
+
+Although we recorded basic stats like the number of attempts or the total amount of time a player required, for a real experiment you would want to record as much information as possible. In our case, we would want to record every card flip. In the real experiment, that would inform us which chicken that are easier or harder to memorize.
+
+For this, we will use \href{https://psychopy.org/api/data.html\#experimenthandler}{ExperimentHandler}, which is a part of experimental scheduling and data logging tools of PsychoPy. Basically, we need to have three additional pieces of code: 1) one that creates the handler, 2) one that logs the information about the click (card, time, and attempt number), 3) one that save the log to a file.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Create an \texttt{ExperimentHandler()} object and assign it to the \texttt{exp} variable. Do it near the place where you created the window. There are multiple options you can specify but for out intents and purposes the defaults will do.
+\item
+  To log information about each click, you need to first \href{https://psychopy.org/api/data.html\#psychopy.data.TrialHandler.addData}{.addData(key, value)} for each variable (key) and value you want to record. In our case you need to call it three times for \texttt{"card"} (value is the \texttt{"filename"} of the card the player clicked on), \texttt{"attempt"} (value is the index of the current attempt), and \texttt{"time"} (value is the time since the start, you already have a \texttt{timer} variable that you can use for this). After all three \texttt{.addData()} calls, you need to tell the handler to advance to the next row of you log table using \href{https://psychopy.org/api/data.html\#psychopy.data.ExperimentHandler.nextEntry}{.nextEntry()} method. Put this code right after your ``flipped'' the card.
+\item
+  To save information to a file, you need to call \href{https://psychopy.org/api/data.html\#psychopy.data.ExperimentHandler.saveAsWideText}{.saveAsWideText(\ldots)} method of the \texttt{exp}. You need to supply the \texttt{filename} parameter and, possibly, further options such as a delimiter (\texttt{delim}). My suggestion would be to use a filename such as \texttt{"log.csv"} and \texttt{","} for a delimiter symbol (this would make a standard comma-separated-values file that any program can read). Put this code at the very end after the game over message.
+\end{enumerate}
+
+Put your code into \emph{exercise05.py}.
+
+\hypertarget{more-rounds}{%
+\section{More rounds}\label{more-rounds}}
+
+We have been using left-facing chicken (the image files that start with \texttt{"l"}) but we also have right-facing chicken (the image files that start with \texttt{"r"}). Let us use both sets, so that games run for two rounds, first left- then right-facing chicken.
+
+For this, we will need to create a variable with the list of conditions. Let us, inventively, call it \texttt{conditions} and it will be a simple list of two items: \texttt{"\textquotesingle{}l\textquotesingle{}"} and \texttt{"r"}. Create this variable in the beginning, \textbf{before} you create cards.
+
+Next, create an outer loop over the conditions. You code should look roughly like that
+
+\begin{verbatim}
+imports
+creating window, mouse, sounds, experiment handler, etc.
+create conditions list
+for condition in conditions:
+    create cards using condition letter to filter files
+    prepare everything for the round (gameover variable, timer, attempts counter, etc.)
+    while not gameover:
+        visuals
+        mouse handling
+        keyboard handling
+    game over message (change it to block results message)
+        
+save logs
+close window
+\end{verbatim}
+
+When you create cards use the \texttt{condition} (assuming that you used \texttt{for\ condition\ in\ conditions:}) instead of the hardcoded \texttt{"l"} to filter the files. You also to need to log the condition. Add a \texttt{exp.addData()} call for it along the other ones.
+
+Finally, modify your ``game-over'' message to be ``end-of-the-block'' message. You still should show the stats, change only with wording.
+
+Put your code into \emph{exercise06.py}.
+
+\hypertarget{random-order}{%
+\section{Random order}\label{random-order}}
+
+Randomize order of conditons before the main loop.
+
+Put your code into \emph{exercise07.py}.
+
+\hypertarget{abba-order}{%
+\section{ABBA order}\label{abba-order}}
+
+When running an actual experiment, you may want to account for the learning effect. If conditions are presented in separate blocks (as in our case), the ones that occur later will benefit from learning (although they will also suffer because of fatigue). One way to even things out, is present conditions twice in a direct and, then, a reverse order (ABBA). This way, a condition which was used first (no learning) is also the last one (maximal learning).
+
+Once you randomized the order of the first two blocks, you need to add the same list but in a reverse order. One possibility is a \href{https://docs.python.org/3/tutorial/datastructures.html}{.reverse()} method. However, it reverses the list itself in-place. Instead you should use \href{https://docs.python.org/3/reference/expressions.html?highlight=slicing\#slicings}{slicing} to create a \emph{new} reversed list before adding it to the original one. Read again on \protect\hyperlink{lists}{lists}, if you forgot how it works. The idea is simply to \texttt{conditions\ =\ conditions\ +\ conditions-that-are-sliced-to-be-in-reverse-order}. You can test this code in a Jupyter cell, before putting into the main code.
+
+Put your code into \emph{exercise08.py}.
+
+\hypertarget{we-want-more}{%
+\section{We want more!}\label{we-want-more}}
+
+Now you have a real working experiment with randomized condition order, logging, feedback, etc. Think about how you can improve it further. Instructions? More/less feedback?
 
 \hypertarget{cross-references}{%
 \chapter*{Cross references}\label{cross-references}}

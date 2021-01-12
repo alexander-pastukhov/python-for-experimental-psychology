@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Seminar 7 Hunt the Wumpus, part 4 | Python for social and experimental psychology</title>
+  <title>Seminar 10 Memory game, part 2 | Python for social and experimental psychology</title>
   <meta name="description" content="Material and exercises for ‘Python for social and experimental psychology’ seminar." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Seminar 7 Hunt the Wumpus, part 4 | Python for social and experimental psychology" />
+  <meta property="og:title" content="Seminar 10 Memory game, part 2 | Python for social and experimental psychology" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Seminar 7 Hunt the Wumpus, part 4 | Python for social and experimental psychology" />
+  <meta name="twitter:title" content="Seminar 10 Memory game, part 2 | Python for social and experimental psychology" />
   
   <meta name="twitter:description" content="Material and exercises for ‘Python for social and experimental psychology’ seminar." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="seminar06.html"/>
-<link rel="next" href="seminar08.html"/>
+<link rel="prev" href="seminar09.html"/>
+<link rel="next" href="seminar11.html"/>
 <script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -345,233 +345,241 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="seminar07" class="section level1" number="7">
-<h1><span class="header-section-number">Seminar 7</span> Hunt the Wumpus, part 4</h1>
-<p>Our game is almost complete, we only need to add the Wumpus and arm the player with crooked arrows! Grab the <a href="notebooks/Seminar%2007.%20Hunt%20the%20Wumpus,%20part%204.ipynb">exercise notebook</a> and let get busy.</p>
-<div id="adding-wumpus." class="section level2" number="7.1">
-<h2><span class="header-section-number">7.1</span> Adding Wumpus.</h2>
-<p>By now you have added a player (single, location stored as in integer), bottomless pits (plural, locations stored in a list), and bats (plural as well). Add Wumpus!</p>
+<div id="seminar10" class="section level1" number="10">
+<h1><span class="header-section-number">Seminar 10</span> Memory game, part 2</h1>
+<p>By the time we finished our previous seminar, you had the code that created a single “card” with a given image at a given location and you were able to interact with it (flip-flopping it). Now, we need to extend the code so that we have eight cards that we can open only two at a time. If cards match (have same <code>"filename"</code> field), we remove them. If cards do not match, we simply turn them over.</p>
+<p>Before we start, create a new folder <em>Memory02</em> for exercise files. Copy <em>Images</em> subfolder, as well as the <code>utilities.py</code> and <em>exercise11.py</em> (rename it to <em>exercise01.py</em>, as we will use the latter as the staring point). Also, download the <a href="notebooks/Seminar%2010.%20Memory%20game,%20part%202.ipynb">Jupyter notebook</a>, which you will use to experiment with functions and do exercises. You will need to upload it along with other files.</p>
+<div id="getting-list-of-image-files." class="section level2" number="10.1">
+<h2><span class="header-section-number">10.1</span> Getting list of image files.</h2>
+<p>For a single card, we simply hard-coded the name of the image file, as well as its location. However, for a real game (or an experiment) we would like to be more flexible and automatically determine which files we have in the <em>Images</em> folder. For this, you need to use <a href="https://docs.python.org/3/library/os.html#os.listdir">os.listdir(path=“.”)</a> function that, you’ve guess it, returns a list with filenames of <em>all</em> the files in a folder specified by path. By default, it is a current path (<code>path="."</code>). However, you can use either a relative path - <code>os.listdir("Images")</code>, assuming that <em>Images</em> is a subfolder in your current directory - or an absolute path <code>os.listdir("E:/Teaching/Python/MemoryGame/Images")</code> (in my case). In Jupyter, write a single line code to get the list of files in the <em>Images</em> folder. Use <em>relative</em> path, if it is in a subfolder relative to your Jupyter notebook, or use an <em>absolute</em> path, if it is in a different folder. Do not forget to <code>import os</code> before you run the code, of course!</p>
+<div class="infobox practice">
+<p>Do exercise #1 in Jupyter notebook.</p>
+</div>
+<p>You should have gotten a list of 8 files that are coded as <em>[r|l][index].png</em>, where <em>r</em> or <em>l</em> denote the side the chicken is looking at. However, for our game we need only four images (4 × 2 = 8 cards). Therefore, we need to select a subset of them. For example, a random four or chicken looking to the left or to the right only. Here, let us work with chicken looking to the left, meaning that we need only to pick files that start with “l”. To make this list filtering more efficient, we will use <a href="https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions">list comprehensions</a>.</p>
+</div>
+<div id="list-comprehension" class="section level2" number="10.2">
+<h2><span class="header-section-number">10.2</span> List comprehension</h2>
+<p>List comprehension provide an elegant and easy-to-read way to create, modify and/or filter elements of the list creating a new list. The general structure is</p>
+<div class="sourceCode" id="cb118"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb118-1"><a href="seminar10.html#cb118-1" aria-hidden="true" tabindex="-1"></a>new_list <span class="op">=</span> [<span class="op">&lt;</span>transform<span class="op">-</span>the<span class="op">-</span>item<span class="op">&gt;</span> <span class="cf">for</span> item <span class="kw">in</span> old_list <span class="cf">if</span> <span class="op">&lt;</span>condition<span class="op">-</span>given<span class="op">-</span>the<span class="op">-</span>item<span class="op">&gt;</span>]</span></code></pre></div>
+<p>Let us look at examples to understand how it works. Imagine that you have a list <code>numbers = [1, 2, 3]</code> and you need increment each number by 1<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>. You can do it by creating a new list and adding 1 to each item in the <transform-the-item> part:</p>
+<div class="sourceCode" id="cb119"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb119-1"><a href="seminar10.html#cb119-1" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
+<span id="cb119-2"><a href="seminar10.html#cb119-2" aria-hidden="true" tabindex="-1"></a>numbers_plus_1 <span class="op">=</span> [item <span class="op">+</span> <span class="dv">1</span> <span class="cf">for</span> item <span class="kw">in</span> numbers]</span></code></pre></div>
+<p>Note that this is equivalent to</p>
+<div class="sourceCode" id="cb120"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb120-1"><a href="seminar10.html#cb120-1" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
+<span id="cb120-2"><a href="seminar10.html#cb120-2" aria-hidden="true" tabindex="-1"></a>numbers_plus_1 <span class="op">=</span> []</span>
+<span id="cb120-3"><a href="seminar10.html#cb120-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> item <span class="kw">in</span> numbers:</span>
+<span id="cb120-4"><a href="seminar10.html#cb120-4" aria-hidden="true" tabindex="-1"></a>    numbers_plus_1.append(item <span class="op">+</span> <span class="dv">1</span>)</span></code></pre></div>
+<p>Or, imagine that you need to convert each item to a string. You can do it simply as</p>
+<div class="sourceCode" id="cb121"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb121-1"><a href="seminar10.html#cb121-1" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
+<span id="cb121-2"><a href="seminar10.html#cb121-2" aria-hidden="true" tabindex="-1"></a>numbers_as_strings <span class="op">=</span> [<span class="bu">str</span>(item) <span class="cf">for</span> item <span class="kw">in</span> numbers]</span></code></pre></div>
+<p>What would be an equivalent form using a normal for loop? Write both versions of code in Jupiter cells and check that the results are the same.</p>
+<div class="infobox practice">
+<p>Do exercise #2 in Jupyter notebook.</p>
+</div>
+<p>Now, implement the code below using list comprehension. Check that results match.</p>
+<div class="sourceCode" id="cb122"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb122-1"><a href="seminar10.html#cb122-1" aria-hidden="true" tabindex="-1"></a>strings <span class="op">=</span> [<span class="st">&#39;1&#39;</span>, <span class="st">&#39;2&#39;</span>, <span class="st">&#39;3&#39;</span>]</span>
+<span id="cb122-2"><a href="seminar10.html#cb122-2" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> []</span>
+<span id="cb122-3"><a href="seminar10.html#cb122-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> astring <span class="kw">in</span> strings:</span>
+<span id="cb122-4"><a href="seminar10.html#cb122-4" aria-hidden="true" tabindex="-1"></a>    numbers.append(<span class="bu">int</span>(astring) <span class="op">+</span> <span class="dv">10</span>)</span></code></pre></div>
+<div class="infobox practice">
+<p>Do exercise #3 in Jupyter notebook.</p>
+</div>
+<p>As noted above, you can also use conditional statement to filter which items are passed to the new list. In our numbers example, we can retain numbers that are greater than 1</p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb123-1"><a href="seminar10.html#cb123-1" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
+<span id="cb123-2"><a href="seminar10.html#cb123-2" aria-hidden="true" tabindex="-1"></a>numbers_greater_than_1 <span class="op">=</span> [item <span class="cf">for</span> item <span class="kw">in</span> numbers <span class="cf">if</span> item <span class="op">&gt;</span> <span class="dv">1</span>]</span></code></pre></div>
+<p>Sometimes, the same statement is written in three lines, instead of one, to make reading easier:</p>
+<div class="sourceCode" id="cb124"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb124-1"><a href="seminar10.html#cb124-1" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
+<span id="cb124-2"><a href="seminar10.html#cb124-2" aria-hidden="true" tabindex="-1"></a>numbers_greater_than_1 <span class="op">=</span> [item </span>
+<span id="cb124-3"><a href="seminar10.html#cb124-3" aria-hidden="true" tabindex="-1"></a>                          <span class="cf">for</span> item <span class="kw">in</span> numbers</span>
+<span id="cb124-4"><a href="seminar10.html#cb124-4" aria-hidden="true" tabindex="-1"></a>                          <span class="cf">if</span> item <span class="op">&gt;</span> <span class="dv">1</span>]</span></code></pre></div>
+<p>You can of course combine the transformation and filtering in a single statement. Create code that filters out all items below 2 and adds 4 to them.</p>
+<div class="infobox practice">
+<p>Do exercise #4 in Jupyter notebook.</p>
+</div>
+</div>
+<div id="getting-list-of-relevant-files" class="section level2" number="10.3">
+<h2><span class="header-section-number">10.3</span> Getting list of relevant files</h2>
+<p>Now that you know about list comprehensions, you can easily create a list of files of chicken looking left, <em>i.e.</em> with filenames that start with “l”. Use <a href="https://docs.python.org/3/library/stdtypes.html#str.startswith">str.startswith()</a> for filtering, store the list in <code>filenames</code> variable. Put you code into a Jupyter cell.</p>
+<div class="infobox practice">
+<p>Do exercise #5 in Jupyter notebook.</p>
+</div>
+<p>This gives us a nice list of eight files but we need each name twice. There are several ways of making but we will use list operations for this.</p>
+<div id="list-operations" class="section level3" number="10.3.1">
+<h3><span class="header-section-number">10.3.1</span> List operations</h3>
+<p>Python lists implement two operations:</p>
+<ul>
+<li>Adding two lists together: <code>&lt;list1&gt; + &lt;list2&gt;</code>.</li>
+</ul>
+<div class="sourceCode" id="cb125"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb125-1"><a href="seminar10.html#cb125-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
+<span id="cb125-2"><a href="seminar10.html#cb125-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> [<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>]</span>
+<span id="cb125-3"><a href="seminar10.html#cb125-3" aria-hidden="true" tabindex="-1"></a>a <span class="op">+</span> b</span></code></pre></div>
+<p>gives a <em>new</em> list with items <code>[1, 2, 3, 4, 5, 4, 5, 6]</code>. Note that this is not equivalent to <a href="https://docs.python.org/3/tutorial/datastructures.html#more-on-lists">extend</a> method <code>a.extend(b)</code>! The <code>+</code> creates a <em>new</em> list, <code>.extend()</code> extends the original list <code>a</code>.</p>
+<ul>
+<li>List multiplication/replication: <code>&lt;list&gt; * &lt;integer-value&gt;</code> creates a <em>new</em> list by replicating the original one <code>&lt;integer-value&gt;</code> times. For example:</li>
+</ul>
+<div class="sourceCode" id="cb126"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb126-1"><a href="seminar10.html#cb126-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
+<span id="cb126-2"><a href="seminar10.html#cb126-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> <span class="dv">4</span></span>
+<span id="cb126-3"><a href="seminar10.html#cb126-3" aria-hidden="true" tabindex="-1"></a>a <span class="op">*</span> b</span></code></pre></div>
+<p>will give you <code>[1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3]</code>.</p>
+<p>Use either operations or <code>.extend()</code> method to create the new list where each filename is repeated twice. Hint, you can apply list multiplication directly to the filenames list you created via list comprehension.</p>
+<div class="infobox practice">
+<p>Do exercise #6 in Jupyter notebook.</p>
+</div>
+</div>
+</div>
+<div id="lots-of-cards-using-list-enumeration" class="section level2" number="10.4">
+<h2><span class="header-section-number">10.4</span> Lots of cards, using list enumeration</h2>
+<p>Now that we have a list of filenames, we can create a list of cards out of it. This list will replace your single <code>card</code> variable. Name the new list <code>cards</code> and create it either using an empty list + for loop or using list comprehensions. Inside the loop you creating each card using its filename and index (see below) and append it to the <code>cards</code> list (or it is added automatically, if you use comprehensions).</p>
+<p>You can get the index of each filename (and, therefore, it position on the screen) via <a href="https://docs.python.org/3/library/functions.html#enumerate">enumerate()</a>, which is a generator that returns a tuple of <code>(index, item)</code>. For example, test the example below that prints one letter at a time with its index:</p>
+<div class="sourceCode" id="cb127"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb127-1"><a href="seminar10.html#cb127-1" aria-hidden="true" tabindex="-1"></a>letters <span class="op">=</span> [<span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>, <span class="st">&#39;c&#39;</span>]</span>
+<span id="cb127-2"><a href="seminar10.html#cb127-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> index, letter <span class="kw">in</span> <span class="bu">enumerate</span>(letters):</span>
+<span id="cb127-3"><a href="seminar10.html#cb127-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&#39;</span><span class="sc">%d</span><span class="st">: </span><span class="sc">%s</span><span class="st">&#39;</span><span class="op">%</span>(index, letter))</span></code></pre></div>
+<p>Once you created the list of cards, you should draw <em>all</em> of them inside the main loop. You already have a line that draws a single <code>single_card</code>. You should wrap this call with a for loop that loops over all <code>cards</code> and uses <code>single_card</code> as an iterator variable. Your code should look roughly as this</p>
+<pre><code># import libraries
+# open window and create the mouse
+# get filenames for chicken looking left 
+# create all cards
+
+gameover = False
+while not gameover:
+    # draw all cards
+    
+    # check keys
+    
+    # mouse processing - COMMENT IT OUT FOR A MOMENT</code></pre>
+<div class="infobox program">
+<p>Put your code into <em>exercise01.py</em>.</p>
+</div>
+</div>
+<div id="mouse-interaction-for-every-card" class="section level2" number="10.5">
+<h2><span class="header-section-number">10.5</span> Mouse interaction for every card</h2>
+<p>Our mouse interaction was based on the index of our only card and checking that it matches the mouse click. However, now we have eight cards that cover the <em>entire</em> window. Thus, it does not matter where exactly the player clicked, there is a card which needs to be turned over. Modify your mouse click processing code so that if mouse left button is pressed, it computes an index of that location (it would be from 0 to 7), flips the card with that index in the list, waits for 0.1 seconds (our hack from last time, we won’t need it soon).</p>
+<div class="infobox program">
+<p>Put your code into <em>exercise02.py</em>.</p>
+</div>
+</div>
+<div id="limiting-flipping-to-just-two-cards" class="section level2" number="10.6">
+<h2><span class="header-section-number">10.6</span> Limiting flipping to just two cards</h2>
+<p>In the actual game, we are allow to only turn around <em>two</em> cards at a time. We will either need an extra variable to know how many cards are face up already or do an on-the-fly scan through the list. Let us implement the extra variable solution. Create a new variable <code>faceup_n = 0</code> before the loop. Inside the mouse-click processing code, you need to implement the following logic:</p>
+<pre><code>if mouse.getPressed()[0]:
+    # compute index of the mouse click
+    # if card with this index is not face up already:
+        # turn the card face up
+        # increment the faceup_n variable
+        # if faceup_n is equal to 2:
+            # --- draw all cards ---
+            # insert a pause of 0.5 seconds
+            # turn all cards back
+            # reset faceup_n to zero (as all cards are now with their backs up)</code></pre>
+<p>Note that we need to explicitly draw the cards again inside the condition (and don’t forget to flip the window)! Otherwise, we turn the card back before we ever get to the drawing stage.</p>
+<div class="infobox program">
+<p>Put your code into <em>exercise03.py</em>.</p>
+</div>
+</div>
+<div id="remembering-which-cards-were-turned" class="section level2" number="10.7">
+<h2><span class="header-section-number">10.7</span> Remembering which cards were turned</h2>
+<p>Our initial implementation was to count the number of cards that player turned. This, however, means that we don’t know which cards these were. Let us now store face-up cards in a new list called <code>faceup</code> that would replace the <code>faceup_n</code> variable. Initialize <code>faceup</code> with an empty list (just like you initialized <code>faceup_n</code> with 0). And, once the card is flipped, add it to this list. Once <code>faceup</code> list is 2 items long (use <a href="https://docs.python.org/3/library/functions.html?highlight=len#len">len()</a> function to get the length of the list), show the cards, wait for 0.5 seconds, turn cards in <code>faceup</code> list back, and <a href="https://docs.python.org/3/tutorial/datastructures.html#more-on-lists">clear</a> the list.</p>
+<pre><code>if mouse.getPressed()[0]:
+    # compute index of the mouse click
+    # if card with this index is not face up already:
+        # turn the card face up
+        # add card to faceup list
+        # if faceup list length is equal to 2:
+            # --- draw all cards ---
+            # insert a pause of 0.5 seconds
+            # turn cards in faceup list back
+            # clear faceup list</code></pre>
+<div class="infobox program">
+<p>Put your code into <em>exercise04.py</em>.</p>
+</div>
+</div>
+<div id="visible-card-flag" class="section level2" number="10.8">
+<h2><span class="header-section-number">10.8</span> “Visible” card flag</h2>
+<p>In our next step, we will remove the matching cards. However, in reality, we won’t actually remove them, we just won’t draw them and won’t allow user to interact with them once they are “removed”. To know whether we need to draw a particular card, we will add a new field <code>visible</code>. There are three (well, four) pieces of code which needs to be modified.</p>
 <ol style="list-style-type: decimal">
-<li>Create a new variable (<code>wumpus</code>?) and place Wumpus in an unoccupied cave. Print out location of Wumpus for debugging purposes.</li>
-<li>Warn about Wumpus in the same code that warns about pits and bats. Canonical warning text is <code>"You smell a Wumpus!"</code>.</li>
-<li>Check if player is in the same cave as Wumpus. If that is the case, game is over, as the player is eaten by a hungry Wumpus. This is similar to <em>game-over</em> due to falling into a bottomless pit. Think about whether the check should before or after check for bats.</li>
+<li>Add <code>visible</code> field to the dictionary in the <code>create_card()</code> function when making the card and set it to <code>True</code> by default.</li>
+<li>When drawing cards, draw it only if <code>visible</code> field is <code>True</code>. By now you draw card in <em>two</em> places, so both need to be appended.</li>
+<li>In the code that processes the mouse click, when checking if the card hasn’t been turned over yet, add “and it is visible” to the condition (in Python syntax, of course). So that it can be turned face up only if it is current face down and visible.</li>
+</ol>
+<p>You should see no difference in the game, because as long as all cards are visible (and, at the moment, they always are) it works just like before.</p>
+<div class="infobox program">
+<p>Put your code into <em>utilities.py</em> and <em>exercise05.py</em>.</p>
+</div>
+</div>
+<div id="removing-matching-cards" class="section level2" number="10.9">
+<h2><span class="header-section-number">10.9</span> “Removing” matching cards</h2>
+<p>By now we now which two cards were turned over (these are in <code>faceup</code> list) and if they match, which means that their filenames match, we can “remove” them by setting their <code>visible</code> field to <code>False</code>.</p>
+<pre><code># if faceup list length is equal to 2:
+    # --- draw all cards ---
+    # insert a pause of 0.5 seconds
+
+    # if cards match:
+        # set cards visibility to False
+    # else:
+        # turn them back
+
+    # clear faceup list</code></pre>
+<p>Test this and remember that we didn’t shuffle the faces so they repeat in an orderly fashion, making it easy to open the pairs.</p>
+<div class="infobox program">
+<p>Put your code into <em>exercise06.py</em>.</p>
+</div>
+</div>
+<div id="game-over-if-you-run-out-of-cards" class="section level2" number="10.10">
+<h2><span class="header-section-number">10.10</span> Game over, if you run out of cards</h2>
+<p>Currently, our game can be exited by pressing <em>Escape</em>. Let’s add a more positive game-over outcome when you win because you matched all the cards! For this, we need to count how many cards are left on the table and modify the loop, so that it iterates only as long as the number of cards left is more than zero. For this,</p>
+<ol style="list-style-type: decimal">
+<li>Create a new variable <code>cards_left</code> before the loop start and set it to the total number of cards (length of the cards list).</li>
+<li>Modify the while loop, adding the second condition that <code>cards_left</code> must be more than zero.</li>
+<li>Decrease <code>cards_left</code> by 2, every time two cards are matched and “removed”.</li>
 </ol>
 <div class="infobox program">
-<p>Put your code into exercise #1.</p>
+<p>Put your code into <em>exercise07.py</em>.</p>
 </div>
 </div>
-<div id="giving-player-a-chance." class="section level2" number="7.2">
-<h2><span class="header-section-number">7.2</span> Giving player a chance.</h2>
-<p>Let us give player a chance. As they enter the cave with the Wumpus, they startle it. Then, Wumpus either runs away to a random adjacent cave (new) or stays put and eats the player. First, create a new constant that defines a probability that Wumpus runs away, e.g. <code>P_WUMPUS_SCARED</code>. In implementations I’ve found, it is typically 0.25, but use any value you feel is reasonable.</p>
-<p>Thus, if the player is in the cave with Wumpus, draw a random number between 0 and 1. The function you are looking for is <a href="https://docs.python.org/3/library/random.html#random.random">random()</a> and it is part of <a href="https://docs.python.org/3/library/random.html">random</a> library, so the call is <code>random.random()</code>. Remember that you can either import the <em>entire</em> library and then call its function by prefixing them with the library name or you can import only a specific function via <code>from ... import ...</code>.</p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb94-1"><a href="seminar07.html#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="co">#1  import entire library</span></span>
-<span id="cb94-2"><a href="seminar07.html#cb94-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
-<span id="cb94-3"><a href="seminar07.html#cb94-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb94-4"><a href="seminar07.html#cb94-4" aria-hidden="true" tabindex="-1"></a>random.random()</span>
-<span id="cb94-5"><a href="seminar07.html#cb94-5" aria-hidden="true" tabindex="-1"></a>random.randint(<span class="dv">5</span>)</span>
-<span id="cb94-6"><a href="seminar07.html#cb94-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb94-7"><a href="seminar07.html#cb94-7" aria-hidden="true" tabindex="-1"></a><span class="co"># import only functions you need</span></span>
-<span id="cb94-8"><a href="seminar07.html#cb94-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> random <span class="im">import</span> randint, random</span>
-<span id="cb94-9"><a href="seminar07.html#cb94-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb94-10"><a href="seminar07.html#cb94-10" aria-hidden="true" tabindex="-1"></a>random()</span>
-<span id="cb94-11"><a href="seminar07.html#cb94-11" aria-hidden="true" tabindex="-1"></a>randint()</span></code></pre></div>
-<p>If that number is smaller than probability that the Wumpus is scared, move it to a random adjacent cave (bats ignore Wumpus and it clings to the ceiling of the caves, so bottomless pits are not a problem for it). A useful function is <a href="https://docs.python.org/3/library/random.html#random.choice">choice()</a>, again, part of <a href="https://docs.python.org/3/library/random.html">random</a> library. Otherwise, if Wumpus was not scared off, the player is eaten and game is over (the only outcome in exercise #1).</p>
+<div id="game-over-message" class="section level2" number="10.11">
+<h2><span class="header-section-number">10.11</span> Game over message</h2>
+<p>Currently, our game abruptly closes once all cards are removed. It would be much friendlier to add a simple “Game over” message and show it for couple of seconds. After the main loop but before closing the window, create and draw the [TextStim]((<a href="https://psychopy.org/api/visual/textstim.html" class="uri">https://psychopy.org/api/visual/textstim.html</a>) and use either <code>clock.wait(2)</code> or <code>event.waitKeys()</code> (your choice). However, make sure that this message is only shown if there were no cards left. Otherwise it was the escape button press and so no “game over” message for people who are too lazy to finish the game!</p>
 <div class="infobox program">
-<p>Put your code into exercise #2.</p>
+<p>Put your code into <em>exercise08.py</em>.</p>
 </div>
 </div>
-<div id="flight-of-a-crooked-arrow" class="section level2" number="7.3">
-<h2><span class="header-section-number">7.3</span> Flight of a crooked arrow</h2>
-<p>Our player is armed with <em>crooked</em> arrows that can fly through caves. The rules for its flight are the following:</p>
-<ul>
-<li>The player decide in which cave it shoots an arrow and how far the arrow flies (from 1 up to 5 caves).</li>
-<li>Every time the arrow needs to flight into a next cave, that cave is picked randomly from adjacent caves <em>excluding</em> the cave it came from (so, the arrow cannot make a 180° turn and there are only two out of three caves available for choosing).</li>
-<li>If the arrow flies into a cave with Wumpus, it is defeated and the game is won.</li>
-<li>If the arrow flies into a cave with the player, then they committed unintentional suicide and the game is lost.</li>
-<li>If the arrow reached it last cave (based on how far the player wanted to shoot) and the cave is empty, it drops down on the floor.</li>
-<li>Bats or bottomless pits have no effect on the arrow.</li>
-</ul>
-<p>The total number of arrows the player has at the beginning should be defined in <code>ARROWS_NUMBER</code> constant (e.g., <code>5</code>).</p>
-<p>To keep track of the arrow, you will need following variables:</p>
-<ul>
-<li><code>arrow</code>: current location of the arrow.</li>
-<li><code>arrow_previous_cave</code>: index of the cave the arrow came from, so that you know where it cannot flight back.</li>
-<li><code>shooting_distance</code>: remaining distance to travel.</li>
-<li><code>remaining_arrows</code>: number of remaining arrows (set to <code>ARROWS_NUMBER</code> when the game starts).</li>
-</ul>
-</div>
-<div id="random-cave-but-no-180-turn" class="section level2" number="7.4">
-<h2><span class="header-section-number">7.4</span> Random cave but no 180° turn</h2>
-<p>You need to program a function (call it <code>next_arrow_cave()</code>) that picks a random cave but not the previous cave the arrow had been in. It should have two parameters:</p>
-<ul>
-<li><code>connected_caves</code>: a list of connected caves.</li>
-<li><code>previous_cave</code>: cave from which the arrow came from.</li>
-</ul>
-<p>First, debug the code in a separate cell. Assume that <code>connecting_caves = CAVES[1]</code> (so, arrow is currently in cave 1) and <code>previous_cave = 0</code> (arrow came from cave 0). Write the code that will pick one of the remaining caves randomly (in this case, either <code>2</code> or <code>7</code>). Once the code works, turn it into a function that returns the next cave for an arrow. Document the function. Test it with for other combinations of connected and previous caves.</p>
+<div id="counting-attempts" class="section level2" number="10.12">
+<h2><span class="header-section-number">10.12</span> Counting attempts</h2>
+<p>It would be even more fun to check how many attempts it required for the player to match all cards. Create a new variable <code>attempts</code> and initialize it to zero before the main loop. Increase it by 1 every time the player turned two cards over (irrespective of whether they matched). Add the number of attempts to the “Game over” message.</p>
 <div class="infobox program">
-<p>Put your code into exercise #3.</p>
+<p>Put your code into <em>exercise09.py</em>.</p>
 </div>
 </div>
-<div id="going-distance" class="section level2" number="7.5">
-<h2><span class="header-section-number">7.5</span> Going distance</h2>
-<p>Now that you have a function that flies to the next random cave, implement flying using a for loop. An arrow should fly through <code>shooting_distance</code> caves (set it to <code>5</code>, maximal distance, by hand for testing). The <em>first</em> cave is given (it will be picked by the player), so set <code>arrow</code> to <code>1</code> and <code>arrow_previous_cave</code> to <code>0</code> (player is in the cave <code>0</code> and shot the arrow into cave <code>1</code>). For debugging purposes, print out location of the arrow on each iteration. Test the code by changing <code>shooting_distance</code>. In particular, set it to <code>1</code>. The arrow should “fall down” already in cave <code>1</code>.</p>
+<div id="record-time" class="section level2" number="10.13">
+<h2><span class="header-section-number">10.13</span> Record time</h2>
+<p>Let us record the time it took the player to complete the task. For this we will use PsychoPy’s <a href="https://psychopy.org/api/clock.html#psychopy.clock.Clock">Clock</a> class, which is very straightforward. Simply create the <code>timer = clock.Clock()</code> before the main loop and then call its <a href="https://psychopy.org/api/clock.html#psychopy.clock.MonotonicClock.getTime">getTime()</a> method to get the elapsed time in seconds. Add this information to the “game over” message.</p>
 <div class="infobox program">
-<p>Put your code into exercise #4.</p>
+<p>Put your code into <em>exercise10.py</em>.</p>
 </div>
 </div>
-<div id="hitting-a-target" class="section level2" number="7.6">
-<h2><span class="header-section-number">7.6</span> Hitting a target</h2>
-<p>Implement check for hitting the Wumpus or the player in the loop. Should the check be before or after the arrow flies to the next random cave? In both cases, write an appropriate “game over” message, set variable <code>gameover</code> to <code>True</code> (we will add to the main code later), and break out of the loop. Test the code by placing Wumpus by hand into the cave the player is shooting at or the next one. Run code multiple times to check that it works.</p>
+<div id="randomness" class="section level2" number="10.14">
+<h2><span class="header-section-number">10.14</span> Randomness</h2>
+<p>The only boring thing about our game is that we know exactly where each chicken is. <a href="https://docs.python.org/3/library/random.html#random.shuffle">Shuffle</a> the filenames list before you create the cards to turn it into a proper memory game.</p>
 <div class="infobox program">
-<p>Put your code into exercise #5.</p>
+<p>Put your code into <em>exercise11.py</em>.</p>
 </div>
-</div>
-<div id="almost-where" class="section level2" number="7.7">
-<h2><span class="header-section-number">7.7</span> Almost where</h2>
-<p>We are almost where but before we can start putting the code together we need a few more things. To better understand what all the functions are for, take a look at the overall program we are trying to make. You have most parts: placing player and game objects, moving player, checking for bats, bottomless pits, and wumpus. But we still need to implement asking player whether they want to shoot or move, asking for shooting distance, and for cave the player wants to shoot at.</p>
-<pre><code>import random
-
-define CAVES
-define other constants
-
-define functions 
-
-place player, bottomless pits, bats, and wumpus
-set number of remaining arrows to ARROWS_NUMBER
-
-set gameover to False
-while not gameover:
-    while player wants to shoot and has arrows:
-        ask about cave that player want to shoot at
-        ask how the far the arrow should fly
-        
-        fly arrow through caves in for loop:
-            if hit wumpus -&gt; congrats game over message, gameover=True, and break out of the loop
-            if hit player -&gt; oops game over message, gameover=True, and break out of the loop
-        decrease number of remaining arrows
-        
-    check if game is over, break out of the loop, if that is the case
-        
-    ask player about the cave he want to go to and move player
-    
-    check for bats, move player to a random cave, while they are in the cave with bats
-    
-    check for bottomless pits (player dies, set gameover to True, break out of the loop)
-    
-    if player is in the same cave as wumpus:
-        if wumpus is scared
-            move wumpus to a random cave
-        otherwise
-            player is dead, set gameover to True, break out of the loop</code></pre>
-</div>
-<div id="move-or-shoot" class="section level2" number="7.8">
-<h2><span class="header-section-number">7.8</span> Move or shoot?</h2>
-<p>Previously, the player could only move, so we just asked for the next cave number. Now, on each turn, the player will have a choice of shooting an arrow or moving. Implement a function <code>input_shoot_or_move()</code> that has no parameters and returns <code>"s"</code> for shooting o <code>"m"</code> for moving. Inside, ask the player about their choice until they pick one of two options. Conceptually, this is very similar to your other input functions (<code>input_int()</code> and <code>input_cave()</code>) that repeatedly request input until a valid one is given. Test and document!</p>
-<div class="infobox program">
-<p>Put your code into exercise #6.</p>
-</div>
-</div>
-<div id="how-far" class="section level2" number="7.9">
-<h2><span class="header-section-number">7.9</span> How far?</h2>
-<p>Implement <code>input_distance()</code> function that has no parameters and returns the desired shooting distance between <code>1</code> and <code>5</code>. Inside, repeatedly ask for an integer number input on how far the arrow should travel until valid input is given. This is very similar to your other input functions. Test and document.</p>
-<div class="infobox program">
-<p>Put your code into exercise #7.</p>
-</div>
-</div>
-<div id="input_cave-prompt" class="section level2" number="7.10">
-<h2><span class="header-section-number">7.10</span> input_cave prompt</h2>
-<p>Add <code>prompt</code> parameter to the <code>input_cave()</code> function you have previously. Now we can ask either about moving to or shooting at the cave, hence, the need for the prompt in place of a hard-coded message.</p>
-<div class="infobox program">
-<p>Put your code into exercise #8.</p>
-</div>
-</div>
-<div id="putting-it-all-together" class="section level2" number="7.11">
-<h2><span class="header-section-number">7.11</span> Putting it all together</h2>
-<p>Here is the pseudocode again. Take a look to better understand how the new bits get integrated into the old code. By now, you should have following constants (you can have other values):</p>
-<ul>
-<li><code>CAVES</code></li>
-<li><code>NUMBER_OF_BATS</code> = 2</li>
-<li><code>NUMBER_OF_BOTTOMLESS_PITS</code> = 2</li>
-<li><code>P_WUMPUS_SCARED</code> = 0.25</li>
-<li><code>ARROWS_NUMBER</code> = 5</li>
-</ul>
-<p>Following functions:</p>
-<ul>
-<li><code>find_empty_cave(total_caves, caves_taken)</code>, returns an integer cave index</li>
-<li><code>input_int(prompt)</code>, returns an integer</li>
-<li><code>input_cave(prompt, connected_cave)</code>, returns an integer cave index</li>
-<li><code>input_shoot_or_move()</code>, returns <code>"s"</code> for shoot and <code>"m"</code> for move.</li>
-<li><code>input_distance()</code>, returns an integer between 1 and 5</li>
-<li><code>next_arrow_cave(connected_caves, previous_cave)</code>, return an integer cave index</li>
-</ul>
-<p>Following variables:</p>
-<ul>
-<li><code>player</code> : cave index</li>
-<li><code>bottomless_pit</code>: list of cave indexes</li>
-<li><code>bats</code>: list of cave indexes</li>
-<li><code>wumpus</code>: cave index</li>
-<li><code>remaining_arrows</code>: integer number of remaining arrows</li>
-<li><code>gameover</code>: <code>False</code> initially, until something good (defeated wumpus) or bad (fell into a bottomless pit, got eaten by wumpus) happens.</li>
-</ul>
-<p>Service/temporary variables:</p>
-<ul>
-<li><code>occupied_caves</code>: list of cave indexes</li>
-<li><code>arrow</code>: location of an arrow</li>
-<li><code>shooting_distance</code>: number of caves the arrow should fly through.</li>
-</ul>
-<pre><code>import random
-
-define CAVES
-define other constants
-
-define functions 
-
-place player, bottomless pits, bats, and wumpus
-set number of remaining arrows to ARROWS_NUMBER
-
-set gameover to False
-while not gameover:
-    while player wants to shoot (input_shoot_or_move function) and has arrows (remaining_arrows variable):
-        ask about cave that player want to shoot at (input_cave function), store answer in `arrow` variable
-        ask how the far the arrow should fly (input_distance function), store answer in `shooting_distance` variable
-        
-        fly arrow through caves in for loop (shooting_distance caves):
-            if hit wumpus -&gt; congrats game over message, gameover=True, and break out of the loop
-            if hit player -&gt; oops game over message, gameover=True, and break out of the loop
-            move arrow to the next random cave (next_arrow_cave function and arrow variable)
-        decrease number of remaining arrows (remaining_arrows variable)
-        
-    check if game is over, break out of the loop, if that is the case
-        
-    ask player about the cave he want to go to and move player (input_cave function)
-    
-    while player is in the cave with bats: 
-        move player to a random cave
-    
-    check for bottomless pits (player dies, set gameover to True, break out of the loop)
-    
-    if player is in the same cave as wumpus:
-        if wumpus is scared
-            move wumpus to a random cave
-        otherwise
-            player is dead, set gameover to True, break out of the loop</code></pre>
-<div class="infobox program">
-<p>Put your code into exercise #9.</p>
-</div>
-</div>
-<div id="wrap-up-2" class="section level2" number="7.12">
-<h2><span class="header-section-number">7.12</span> Wrap up</h2>
-<p>Well done! Next time, we will put <em>video</em> into <em>video game</em>!</p>
+<p>Yay! Awesome game!</p>
 
 </div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="6">
+<li id="fn6"><p>A very arbitrary example!<a href="seminar10.html#fnref6" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="seminar06.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="seminar08.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="seminar09.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="seminar11.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
