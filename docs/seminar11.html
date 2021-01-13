@@ -24,7 +24,7 @@
 <meta name="author" content="Alexander (Sasha) Pastukhov" />
 
 
-<meta name="date" content="2021-01-12" />
+<meta name="date" content="2021-01-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="seminar10.html"/>
-<link rel="next" href="keeping-sounds-organized-dictionary-comprehension.html"/>
+<link rel="next" href="cross-references.html"/>
 <script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -315,14 +315,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.1" data-path="seminar11.html"><a href="seminar11.html#sound-effects"><i class="fa fa-check"></i><b>11.1</b> Sound effects</a></li>
 <li class="chapter" data-level="11.2" data-path="seminar11.html"><a href="seminar11.html#sound-from-file"><i class="fa fa-check"></i><b>11.2</b> Sound from file</a></li>
 <li class="chapter" data-level="11.3" data-path="seminar11.html"><a href="seminar11.html#feedback-sounds"><i class="fa fa-check"></i><b>11.3</b> Feedback sounds</a></li>
-</ul></li>
-<li class="chapter" data-level="12" data-path="keeping-sounds-organized-dictionary-comprehension.html"><a href="keeping-sounds-organized-dictionary-comprehension.html"><i class="fa fa-check"></i><b>12</b> Keeping sounds organized: dictionary comprehension</a>
-<ul>
-<li class="chapter" data-level="12.1" data-path="keeping-sounds-organized-dictionary-comprehension.html"><a href="keeping-sounds-organized-dictionary-comprehension.html#logging-data"><i class="fa fa-check"></i><b>12.1</b> Logging data</a></li>
-<li class="chapter" data-level="12.2" data-path="keeping-sounds-organized-dictionary-comprehension.html"><a href="keeping-sounds-organized-dictionary-comprehension.html#more-rounds"><i class="fa fa-check"></i><b>12.2</b> More rounds</a></li>
-<li class="chapter" data-level="12.3" data-path="keeping-sounds-organized-dictionary-comprehension.html"><a href="keeping-sounds-organized-dictionary-comprehension.html#random-order"><i class="fa fa-check"></i><b>12.3</b> Random order</a></li>
-<li class="chapter" data-level="12.4" data-path="keeping-sounds-organized-dictionary-comprehension.html"><a href="keeping-sounds-organized-dictionary-comprehension.html#abba-order"><i class="fa fa-check"></i><b>12.4</b> ABBA order</a></li>
-<li class="chapter" data-level="12.5" data-path="keeping-sounds-organized-dictionary-comprehension.html"><a href="keeping-sounds-organized-dictionary-comprehension.html#we-want-more"><i class="fa fa-check"></i><b>12.5</b> We want more!</a></li>
+<li class="chapter" data-level="11.4" data-path="seminar11.html"><a href="seminar11.html#keeping-sounds-organized-dictionary-comprehension"><i class="fa fa-check"></i><b>11.4</b> Keeping sounds organized: dictionary comprehension</a></li>
+<li class="chapter" data-level="11.5" data-path="seminar11.html"><a href="seminar11.html#logging-data"><i class="fa fa-check"></i><b>11.5</b> Logging data</a></li>
+<li class="chapter" data-level="11.6" data-path="seminar11.html"><a href="seminar11.html#more-rounds"><i class="fa fa-check"></i><b>11.6</b> More rounds</a></li>
+<li class="chapter" data-level="11.7" data-path="seminar11.html"><a href="seminar11.html#random-order"><i class="fa fa-check"></i><b>11.7</b> Random order</a></li>
+<li class="chapter" data-level="11.8" data-path="seminar11.html"><a href="seminar11.html#abba-order"><i class="fa fa-check"></i><b>11.8</b> ABBA order</a></li>
+<li class="chapter" data-level="11.9" data-path="seminar11.html"><a href="seminar11.html#we-want-more"><i class="fa fa-check"></i><b>11.9</b> We want more!</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="cross-references.html"><a href="cross-references.html"><i class="fa fa-check"></i>Cross references</a></li>
 <li class="divider"></li>
@@ -384,6 +382,77 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Put your code into <em>exercise03.py</em>.</p>
 </div>
 </div>
+<div id="keeping-sounds-organized-dictionary-comprehension" class="section level2" number="11.4">
+<h2><span class="header-section-number">11.4</span> Keeping sounds organized: dictionary comprehension</h2>
+<p>We now have three variables for three different sounds. We could be tidier than that by putting them into a dictionary <code>sounds</code> and using them as <code>sounds['correct'].play()</code>. This is a more general, tidier (just one variable rather than lots), and more future-proof approach. You can create this dictionary in a direct way <code>sounds = {"click" : Sound(...), ...}</code> but will learn and use <a href="https://www.python.org/dev/peps/pep-0274/">dictionary comprehension</a> instead.</p>
+<p>Dictionary comprehensions are very similar to list comprehensions. You also loop over a list but you use <code>{}</code> instead of <code>[]</code> and you use an item to generated both a key and the value for a dictionary entry. For example:</p>
+<div class="sourceCode" id="cb134"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb134-1"><a href="seminar11.html#cb134-1" aria-hidden="true" tabindex="-1"></a>index_letters <span class="op">=</span> {i : <span class="bu">chr</span>(<span class="dv">65</span><span class="op">+</span>i) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">4</span>)}</span></code></pre></div>
+<p>Here, you use the item as a key <code>i</code> and generate a string value for it. Note that although keys <strong>must be unique</strong>, the values are not, so you can use the same value for all entries. Imagine that you are keeping the score in the game and all players start with a zero:</p>
+<div class="sourceCode" id="cb135"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb135-1"><a href="seminar11.html#cb135-1" aria-hidden="true" tabindex="-1"></a>players <span class="op">=</span> [<span class="st">&#39;Anna&#39;</span>, <span class="st">&#39;Bob&#39;</span>, <span class="st">&#39;Chris&#39;</span>]</span>
+<span id="cb135-2"><a href="seminar11.html#cb135-2" aria-hidden="true" tabindex="-1"></a>score <span class="op">=</span> {player : <span class="dv">0</span> <span class="cf">for</span> player <span class="kw">in</span> players}</span></code></pre></div>
+<p>Change the code to generate <code>sounds</code> dictionary via comprehension and use it instead of variables. In our case, the three keys should be <code>"click"</code>, <code>"correct"</code>, and <code>"error"</code>. You can generate the filename from these keys, just do not forget to <a href="https://www.w3schools.com/python/gloss_python_string_concatenation.asp">add</a> the <code>".wav"</code> extension.</p>
+<div class="infobox program">
+<p>Put your code into <em>exercise04.py</em>.</p>
+</div>
+</div>
+<div id="logging-data" class="section level2" number="11.5">
+<h2><span class="header-section-number">11.5</span> Logging data</h2>
+<p>Although we recorded basic stats like the number of attempts or the total amount of time a player required, for a real experiment you would want to record as much information as possible. In our case, we would want to record every card flip. In the real experiment, that would inform us which chicken that are easier or harder to memorize.</p>
+<p>For this, we will use <a href="https://psychopy.org/api/data.html#experimenthandler">ExperimentHandler</a>, which is a part of experimental scheduling and data logging tools of PsychoPy. Basically, we need to have three additional pieces of code: 1) one that creates the handler, 2) one that logs the information about the click (card, time, and attempt number), 3) one that save the log to a file.</p>
+<ol style="list-style-type: decimal">
+<li>Create an <code>ExperimentHandler()</code> object and assign it to the <code>exp</code> variable. Do it near the place where you created the window. There are multiple options you can specify but for out intents and purposes the defaults will do.</li>
+<li>To log information about each click, you need to first <a href="https://psychopy.org/api/data.html#psychopy.data.TrialHandler.addData">.addData(key, value)</a> for each variable (key) and value you want to record. In our case you need to call it three times for <code>"card"</code> (value is the <code>"filename"</code> of the card the player clicked on), <code>"attempt"</code> (value is the index of the current attempt), and <code>"time"</code> (value is the time since the start, you already have a <code>timer</code> variable that you can use for this). After all three <code>.addData()</code> calls, you need to tell the handler to advance to the next row of you log table using <a href="https://psychopy.org/api/data.html#psychopy.data.ExperimentHandler.nextEntry">.nextEntry()</a> method. Put this code right after your “flipped” the card.</li>
+<li>To save information to a file, you need to call <a href="https://psychopy.org/api/data.html#psychopy.data.ExperimentHandler.saveAsWideText">.saveAsWideText(…)</a> method of the <code>exp</code>. You need to supply the <code>filename</code> parameter and, possibly, further options such as a delimiter (<code>delim</code>). My suggestion would be to use a filename such as <code>"log.csv"</code> and <code>","</code> for a delimiter symbol (this would make a standard comma-separated-values file that any program can read). Put this code at the very end after the game over message.</li>
+</ol>
+<div class="infobox program">
+<p>Put your code into <em>exercise05.py</em>.</p>
+</div>
+</div>
+<div id="more-rounds" class="section level2" number="11.6">
+<h2><span class="header-section-number">11.6</span> More rounds</h2>
+<p>We have been using left-facing chicken (the image files that start with <code>"l"</code>) but we also have right-facing chicken (the image files that start with <code>"r"</code>). Let us use both sets, so that games run for two rounds, first left- then right-facing chicken.</p>
+<p>For this, we will need to create a variable with the list of conditions. Let us, inventively, call it <code>conditions</code> and it will be a simple list of two items: <code>"'l'"</code> and <code>"r"</code>. Create this variable in the beginning, <strong>before</strong> you create cards.</p>
+<p>Next, create an outer loop over the conditions. You code should look roughly like that</p>
+<pre><code>imports
+creating window, mouse, sounds, experiment handler, etc.
+create conditions list
+for condition in conditions:
+    create cards using condition letter to filter files
+    prepare everything for the round (gameover variable, timer, attempts counter, etc.)
+    while not gameover:
+        visuals
+        mouse handling
+        keyboard handling
+    game over message (change it to block results message)
+        
+save logs
+close window</code></pre>
+<p>When you create cards use the <code>condition</code> (assuming that you used <code>for condition in conditions:</code>) instead of the hardcoded <code>"l"</code> to filter the files. You also to need to log the condition. Add a <code>exp.addData()</code> call for it along the other ones.</p>
+<p>Finally, modify your “game-over” message to be “end-of-the-block” message. You still should show the stats, change only with wording.</p>
+<div class="infobox program">
+<p>Put your code into <em>exercise06.py</em>.</p>
+</div>
+</div>
+<div id="random-order" class="section level2" number="11.7">
+<h2><span class="header-section-number">11.7</span> Random order</h2>
+<p>Randomize order of conditons before the main loop.</p>
+<div class="infobox program">
+<p>Put your code into <em>exercise07.py</em>.</p>
+</div>
+</div>
+<div id="abba-order" class="section level2" number="11.8">
+<h2><span class="header-section-number">11.8</span> ABBA order</h2>
+<p>When running an actual experiment, you may want to account for the learning effect. If conditions are presented in separate blocks (as in our case), the ones that occur later will benefit from learning (although they will also suffer because of fatigue). One way to even things out, is present conditions twice in a direct and, then, a reverse order (ABBA). This way, a condition which was used first (no learning) is also the last one (maximal learning).</p>
+<p>Once you randomized the order of the first two blocks, you need to add the same list but in a reverse order. One possibility is a <a href="https://docs.python.org/3/tutorial/datastructures.html">.reverse()</a> method. However, it reverses the list itself in-place. Instead you should use <a href="https://docs.python.org/3/reference/expressions.html?highlight=slicing#slicings">slicing</a> to create a <em>new</em> reversed list before adding it to the original one. Read again on <a href="seminar04.html#lists">lists</a>, if you forgot how it works. The idea is simply to <code>conditions = conditions + conditions-that-are-sliced-to-be-in-reverse-order</code>. You can test this code in a Jupyter cell, before putting into the main code.</p>
+<div class="infobox program">
+<p>Put your code into <em>exercise08.py</em>.</p>
+</div>
+</div>
+<div id="we-want-more" class="section level2" number="11.9">
+<h2><span class="header-section-number">11.9</span> We want more!</h2>
+<p>Now you have a real working experiment with randomized condition order, logging, feedback, etc. Think about how you can improve it further. Instructions? More/less feedback?</p>
+
+</div>
 </div>
 <div class="footnotes">
 <hr />
@@ -397,7 +466,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 <a href="seminar10.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="keeping-sounds-organized-dictionary-comprehension.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="cross-references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

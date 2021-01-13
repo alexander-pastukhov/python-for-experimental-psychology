@@ -24,7 +24,7 @@
 <meta name="author" content="Alexander (Sasha) Pastukhov" />
 
 
-<meta name="date" content="2021-01-12" />
+<meta name="date" content="2021-01-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -315,14 +315,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.1" data-path="seminar11.html"><a href="seminar11.html#sound-effects"><i class="fa fa-check"></i><b>11.1</b> Sound effects</a></li>
 <li class="chapter" data-level="11.2" data-path="seminar11.html"><a href="seminar11.html#sound-from-file"><i class="fa fa-check"></i><b>11.2</b> Sound from file</a></li>
 <li class="chapter" data-level="11.3" data-path="seminar11.html"><a href="seminar11.html#feedback-sounds"><i class="fa fa-check"></i><b>11.3</b> Feedback sounds</a></li>
-</ul></li>
-<li class="chapter" data-level="12" data-path="keeping-sounds-organized-dictionary-comprehension.html"><a href="keeping-sounds-organized-dictionary-comprehension.html"><i class="fa fa-check"></i><b>12</b> Keeping sounds organized: dictionary comprehension</a>
-<ul>
-<li class="chapter" data-level="12.1" data-path="keeping-sounds-organized-dictionary-comprehension.html"><a href="keeping-sounds-organized-dictionary-comprehension.html#logging-data"><i class="fa fa-check"></i><b>12.1</b> Logging data</a></li>
-<li class="chapter" data-level="12.2" data-path="keeping-sounds-organized-dictionary-comprehension.html"><a href="keeping-sounds-organized-dictionary-comprehension.html#more-rounds"><i class="fa fa-check"></i><b>12.2</b> More rounds</a></li>
-<li class="chapter" data-level="12.3" data-path="keeping-sounds-organized-dictionary-comprehension.html"><a href="keeping-sounds-organized-dictionary-comprehension.html#random-order"><i class="fa fa-check"></i><b>12.3</b> Random order</a></li>
-<li class="chapter" data-level="12.4" data-path="keeping-sounds-organized-dictionary-comprehension.html"><a href="keeping-sounds-organized-dictionary-comprehension.html#abba-order"><i class="fa fa-check"></i><b>12.4</b> ABBA order</a></li>
-<li class="chapter" data-level="12.5" data-path="keeping-sounds-organized-dictionary-comprehension.html"><a href="keeping-sounds-organized-dictionary-comprehension.html#we-want-more"><i class="fa fa-check"></i><b>12.5</b> We want more!</a></li>
+<li class="chapter" data-level="11.4" data-path="seminar11.html"><a href="seminar11.html#keeping-sounds-organized-dictionary-comprehension"><i class="fa fa-check"></i><b>11.4</b> Keeping sounds organized: dictionary comprehension</a></li>
+<li class="chapter" data-level="11.5" data-path="seminar11.html"><a href="seminar11.html#logging-data"><i class="fa fa-check"></i><b>11.5</b> Logging data</a></li>
+<li class="chapter" data-level="11.6" data-path="seminar11.html"><a href="seminar11.html#more-rounds"><i class="fa fa-check"></i><b>11.6</b> More rounds</a></li>
+<li class="chapter" data-level="11.7" data-path="seminar11.html"><a href="seminar11.html#random-order"><i class="fa fa-check"></i><b>11.7</b> Random order</a></li>
+<li class="chapter" data-level="11.8" data-path="seminar11.html"><a href="seminar11.html#abba-order"><i class="fa fa-check"></i><b>11.8</b> ABBA order</a></li>
+<li class="chapter" data-level="11.9" data-path="seminar11.html"><a href="seminar11.html#we-want-more"><i class="fa fa-check"></i><b>11.9</b> We want more!</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="cross-references.html"><a href="cross-references.html"><i class="fa fa-check"></i>Cross references</a></li>
 <li class="divider"></li>
@@ -432,7 +430,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>[0 ][1 ][2 ][3 ]
 [4 ][5 ][6 ][7 ]</code></pre>
 <p>Name the function <code>position_from_index</code>, it should take one argument (<code>index</code>) and return a tuple with coordinates <code>(&lt;x&gt;, &lt;y&gt;)</code> in <code>"units"</code> coordinates (because this is our chosen coordinate units system). Then, we can then use this tuple to pass the value to <code>pos</code> argument of the <code>ImageStim()</code>. For example, when called as <code>position_from_index(0)</code> it should return <code>(-0.75, 0.5)</code>. When called as <code>position_from_index(6)</code> it should return <code>(0.25, 0.5)</code>, etc.</p>
-<p>Think how you compute position from the index given the size of image. My implementation makes use of the <a href="https://python-reference.readthedocs.io/en/latest/docs/operators/floor_division.html">floor division operator //</a>. It returns only the integer part of the division, so that <code>4//3</code> is <code>1</code> (because 4/3 is 1.33333) and <code>4//5</code> is <code>0</code> (because 4/5 is 0.8).</p>
+<p>Think how you compute position from the index given the size of image. My implementation makes use of the <a href="https://python-reference.readthedocs.io/en/latest/docs/operators/floor_division.html">floor division operator <code>//</code></a> and <a href="https://python-reference.readthedocs.io/en/latest/docs/operators/modulus.html">modulos, divison remainder <code>%</code></a> operators. The former returns only the integer part of the division, so that <code>4//3</code> is <code>1</code> (because 4/3 is 1.33333) and <code>1//4</code> is <code>0</code> (because 1/4 is 0.25). The latter returns the remaining integers, so that <code>4 % 3</code> is <code>1</code> and <code>1 % 4</code> is <code>0</code>.</p>
 <p>First, write and debug this function in Jupyter. Initially, you do not even need to have a function. You can just set <code>index = 0</code> (or some other value) and write the code below. Once it work, you can add the <code>def position_from_index(index):</code> part and <strong>document the function</strong>. Once the function works, put it into a new file <em>utilities.py</em>, we will use it to implement out custom function without cluttering the main file.</p>
 <div class="infobox program">
 <p>Put your code into <em>utilities.py</em>.</p>

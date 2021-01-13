@@ -49,7 +49,7 @@ if two cards are opened:
 Put your code into _exercise03.py_.
 :::
 
-# Keeping sounds organized: dictionary comprehension
+## Keeping sounds organized: dictionary comprehension
 We now have three variables for three different sounds. We could be tidier than that by putting them into a dictionary `sounds` and using them as `sounds['correct'].play()`. This is a more general, tidier (just one variable rather than lots), and more future-proof approach. You can create this dictionary in a direct way `sounds = {"click" : Sound(...), ...}` but will learn and use [dictionary comprehension](https://www.python.org/dev/peps/pep-0274/) instead.
 
 Dictionary comprehensions are very similar to list comprehensions. You also loop over a list but you use `{}` instead of `[]` and you use an item to generated both a key and the value for a dictionary entry. For example:

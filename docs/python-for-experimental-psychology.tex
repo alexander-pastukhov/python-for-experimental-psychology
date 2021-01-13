@@ -117,7 +117,7 @@
 
 \title{Python for social and experimental psychology}
 \author{Alexander (Sasha) Pastukhov}
-\date{2021-01-12}
+\date{2021-01-13}
 
 \begin{document}
 \maketitle
@@ -2734,7 +2734,7 @@ By default, our image is placed at the center of the screen, which is a surprisi
 
 Name the function \texttt{position\_from\_index}, it should take one argument (\texttt{index}) and return a tuple with coordinates \texttt{(\textless{}x\textgreater{},\ \textless{}y\textgreater{})} in \texttt{"units"} coordinates (because this is our chosen coordinate units system). Then, we can then use this tuple to pass the value to \texttt{pos} argument of the \texttt{ImageStim()}. For example, when called as \texttt{position\_from\_index(0)} it should return \texttt{(-0.75,\ 0.5)}. When called as \texttt{position\_from\_index(6)} it should return \texttt{(0.25,\ 0.5)}, etc.
 
-Think how you compute position from the index given the size of image. My implementation makes use of the \href{https://python-reference.readthedocs.io/en/latest/docs/operators/floor_division.html}{floor division operator //}. It returns only the integer part of the division, so that \texttt{4//3} is \texttt{1} (because 4/3 is 1.33333) and \texttt{4//5} is \texttt{0} (because 4/5 is 0.8).
+Think how you compute position from the index given the size of image. My implementation makes use of the \href{https://python-reference.readthedocs.io/en/latest/docs/operators/floor_division.html}{floor division operator \texttt{//}} and \href{https://python-reference.readthedocs.io/en/latest/docs/operators/modulus.html}{modulos, divison remainder \texttt{\%}} operators. The former returns only the integer part of the division, so that \texttt{4//3} is \texttt{1} (because 4/3 is 1.33333) and \texttt{1//4} is \texttt{0} (because 1/4 is 0.25). The latter returns the remaining integers, so that \texttt{4\ \%\ 3} is \texttt{1} and \texttt{1\ \%\ 4} is \texttt{0}.
 
 First, write and debug this function in Jupyter. Initially, you do not even need to have a function. You can just set \texttt{index\ =\ 0} (or some other value) and write the code below. Once it work, you can add the \texttt{def\ position\_from\_index(index):} part and \textbf{document the function}. Once the function works, put it into a new file \emph{utilities.py}, we will use it to implement out custom function without cluttering the main file.
 
@@ -3261,7 +3261,7 @@ if two cards are opened:
 Put your code into \emph{exercise03.py}.
 
 \hypertarget{keeping-sounds-organized-dictionary-comprehension}{%
-\chapter{Keeping sounds organized: dictionary comprehension}\label{keeping-sounds-organized-dictionary-comprehension}}
+\section{Keeping sounds organized: dictionary comprehension}\label{keeping-sounds-organized-dictionary-comprehension}}
 
 We now have three variables for three different sounds. We could be tidier than that by putting them into a dictionary \texttt{sounds} and using them as \texttt{sounds{[}\textquotesingle{}correct\textquotesingle{}{]}.play()}. This is a more general, tidier (just one variable rather than lots), and more future-proof approach. You can create this dictionary in a direct way \texttt{sounds\ =\ \{"click"\ :\ Sound(...),\ ...\}} but will learn and use \href{https://www.python.org/dev/peps/pep-0274/}{dictionary comprehension} instead.
 
