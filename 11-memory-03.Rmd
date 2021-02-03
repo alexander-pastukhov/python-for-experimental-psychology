@@ -2,10 +2,10 @@
 
 During our previous seminar, we competed the core **Memory Game**. Today we will put more bells-and-whistles on it.
 
-Before we start, create a new folder _Memory03_ for exercise files. Copy _Images_ subfolder, as well as the `utilities.py` and _exercise11.py_ (rename it to _exercise01.py_, as we will use the latter as the staring point) from the previous seminar. Also, download [sounds](material/sound.zip)^[The files are public domain  from [freesound.org](https://freesound.org/).] file and unzip it into a _Sounds_ subfolder in the seminar directory. 
+Before we start, create a new folder _Memory03_ for exercise files. Copy _Images_ subfolder, as well as the `utilities.py` and _exercise11.py_ (rename it to _exercise01.py_, as we will use the latter as the staring point) from the previous seminar. Also, download [sounds](material/sounds.zip)^[The files are public domain  from [freesound.org](https://freesound.org/).] file and unzip it into a _Sounds_ subfolder in the seminar directory. 
 
 ## Sound effects
-Let us add "clicking" sounds whenever the player turns the card. For this, we will use [sound](https://psychopy.org/api/sound.html#ptb-sound) module of PsychoPy library. If your sound does not play, ask me and we will try to set your sound libraries up.
+Let us add "clicking" sounds whenever the player turns the card. For this, we will use [sound](https://psychopy.org/api/sound.html) module of PsychoPy library. If your sound does not play, ask me and we will try to set your sound libraries up.
 
 First, you need to import the `Sound` class as suggested in the manual:
 ```python

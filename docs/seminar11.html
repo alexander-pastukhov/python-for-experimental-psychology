@@ -24,7 +24,7 @@
 <meta name="author" content="Alexander (Sasha) Pastukhov" />
 
 
-<meta name="date" content="2021-01-13" />
+<meta name="date" content="2021-02-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -346,10 +346,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="seminar11" class="section level1" number="11">
 <h1><span class="header-section-number">Seminar 11</span> Memory game, part 3</h1>
 <p>During our previous seminar, we competed the core <strong>Memory Game</strong>. Today we will put more bells-and-whistles on it.</p>
-<p>Before we start, create a new folder <em>Memory03</em> for exercise files. Copy <em>Images</em> subfolder, as well as the <code>utilities.py</code> and <em>exercise11.py</em> (rename it to <em>exercise01.py</em>, as we will use the latter as the staring point) from the previous seminar. Also, download <a href="material/sound.zip">sounds</a><a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a> file and unzip it into a <em>Sounds</em> subfolder in the seminar directory.</p>
+<p>Before we start, create a new folder <em>Memory03</em> for exercise files. Copy <em>Images</em> subfolder, as well as the <code>utilities.py</code> and <em>exercise11.py</em> (rename it to <em>exercise01.py</em>, as we will use the latter as the staring point) from the previous seminar. Also, download <a href="material/sounds.zip">sounds</a><a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a> file and unzip it into a <em>Sounds</em> subfolder in the seminar directory.</p>
 <div id="sound-effects" class="section level2" number="11.1">
 <h2><span class="header-section-number">11.1</span> Sound effects</h2>
-<p>Let us add “clicking” sounds whenever the player turns the card. For this, we will use <a href="https://psychopy.org/api/sound.html#ptb-sound">sound</a> module of PsychoPy library. If your sound does not play, ask me and we will try to set your sound libraries up.</p>
+<p>Let us add “clicking” sounds whenever the player turns the card. For this, we will use <a href="https://psychopy.org/api/sound.html">sound</a> module of PsychoPy library. If your sound does not play, ask me and we will try to set your sound libraries up.</p>
 <p>First, you need to import the <code>Sound</code> class as suggested in the manual:</p>
 <div class="sourceCode" id="cb132"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb132-1"><a href="seminar11.html#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> psychopy.sound <span class="im">import</span> Sound</span></code></pre></div>
 <p>Next, create a new sound and assign it to a variable <code>click_sound</code>, just like you created the visual stimuli. Use a note name (<em>e.g.</em> <code>"C"</code> or <code>"A"</code>) and a short duration (<em>e.g.</em>, <code>0.1</code> or <code>0.2</code> seconds). Do this at the beginning, right after we have created the mouse.</p>
