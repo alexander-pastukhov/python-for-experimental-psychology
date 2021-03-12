@@ -1,0 +1,64 @@
+# Snake game {#seminar-02-01}
+
+Welcome back! The purpose of today's seminar to refresh your knowledge of Python acquired previously. We will use dictionaries and lists, as well as conditional statements and loops. Plus, you will need to write functions.^[Sneaky preview: You will start learning about object-oriented programming during our next seminar and  we will turn it into object-based game.]
+
+## Assignments
+
+For this and following projects, use Python IDE of your choice (I would recommend [Visual Studio Code](#install-vs-code)). You still could and should use Jupyter for playing with and testing small code snippets, though. I've added a section on setting up [debugging in VS Code](#debug-in-vs-code) in [Getting Started](#getting-started), take a look once you are ready to run the code.
+
+From now on, create a separate subfolder for each seminar (e.g. _Seminar 01_ for today) and create a separate file (or files, later on) for each exercise^[You can "Save as..." the previous exercise to avoid copy-pasting things by hand.] (e.g., _exercise01.py_, _exercise02.py_, etc.). This is not the most efficient implementation of a version control and will certainly clutter the folder. But it would allow me to see your solutions on every step, which will make it easier for me to comment on them. For submitting the assignment, just zip the folder and upload the zip-file.
+
+## Snake
+
+Today, we will program a good old classic: the snake game! The story is simple: you control a snake trying to eat as many apples as you can. Every time you consume an apple, snake's length increases. However, if you hit the wall or bite yourself, the game is over (or you lose one of your lives and game is over once you run out of lives).
+
+As before, we will program the game step by step, starting with an empty gray PsychoPy window. Here is the general outline of how we will proceed:
+
+1. Create boilerplate code to initialize PsychoPy.
+2. Figure out how to place a square. We need this because our snake is made of square segments and lives on a rectangular grid made of squares.
+3. Create a single segment stationary snake^[Not very exciting, I know. But one has to start somewhere!].
+3. Make a single segment stationary snake move assuming a rectangular grid. Implement "died by hitting a wall".
+4. Add apples and make the snake grow.
+5. Add check for biting itself.
+6. Add bells-and-whistles to make game look awesome.
+
+As you can see, each new steps builds upon the previous one. Because of that, remember, do not proceed to the next step until the current one works and you fully(!) understand what each line of code does. Any leftover uncertainty will linger, grow and complicate your life disproportionately!
+
+## Initializing PsychoPy
+
+To remind yourself on how you initialize PsychoPy window, see [here](#seminar08). Let us plan ahead and decide on windows size and its units. Recall that PsychoPy has [five different units](#psychopy-units) for size and position. Given that our snake will be composed of square segments and move on a grid made out of squares, which units should we pick? Read on [units](#psychopy-units) and think which units you would pick before continuing
+
+---
+
+My suggestion would be `"height"` units as they make sizing squares easy. Next, let us think about the grid. We can define its width and height in _squares_, e.g., a 30 × 20 grid should give us enough space to try things out. Create a [constant]() `GRID_SIZE` and assign a [tuple](https://docs.python.org/3/tutorial/datastructures.html#tuples-and-sequences) of `(width, height)` to it. Note that window's aspect ratio will depend on the size of the grid that we pick. Want to have a square one, use a 30 × 30 grid.
+
+We also need to _define_ an _absolute_ size of a square in pixels (call the constant `SQUARE_SIZE_PIX`), which will determine how large each square will look on the screen and, therefore, will determine the size of the window that we will open: $window~height = window~height~in~squares * square~size~in~pixels$ (same goes for the width). Note that this parameter determines how the game looks, double the size of the square in pixels and that will double both width and height of the window. 
+
+Put it all together. You could should look roughly as follows:
+```python
+importing all libraries and modules you need
+
+define constants GRID_SIZE and SQUARE_SIZE_PIX
+
+create PsychoPy window, computing it size in pixels from the two constants
+
+wait for any key press (just so that window stays on the screen)
+
+close PsychoPy window
+```
+
+Experiment with different grid and square sizes and pick the one that fits your screen.
+
+::: {.infobox .program}
+Put your code into _exercise01.py_.
+:::
+
+## Adding a square
+
+
+and _compute_ its _relative_ size in `"height"` units (call it `SQUARE_SIZE`)
+ Assuming our grid covers the entire window, we can figure out a height of an individual square from the total window height in `"height"` units (spans from -1 to 1) and the number of squares 
+
+
+
+
