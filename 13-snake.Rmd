@@ -54,9 +54,9 @@ Put your code into _exercise01.py_.
 :::
 
 ## Adding a square
-As I already wrote, our game will be made of squares. Snake is made of squares. Grid it lives on is made of squares. Which means we need to know the size of that square in the units of the window and we need to know _where_ should each square go in the window based its coordinates on the grid.
+As I already wrote, our game will be made of squares. Snake is made of squares. Grid it lives on is made of squares. Which means we need to know the size of that square in the units of the window and we need to know _where_ should each square go in the window, based on its coordinates on the grid.
 
-Computing the size of the square in units of window size is easy, so let us start with it first. If you used `"height"` units for the PsychoPy window, we know that its height goes from -1 to 1. We also know that we have fit in `GRID_SIZE[1]` squares vertically (recall that `GRID_SIZE` defines the size of our grid in number of squares). Create a new constant (`SQUARE_SIZE`) and compute square size in units of `"height"` based on total height of the window in the `"height"` units (not the pixels!) and number of squares we need to fit in vertically.
+Computing the size of the square in units of window size is easy, so let us start with it first. If you used `"height"` units for the PsychoPy window, we know that its height goes from -1 to 1. We also know that we have to fit in `GRID_SIZE[1]` squares vertically (recall that `GRID_SIZE` defines the size of our grid in number of squares). Create a new constant (`SQUARE_SIZE`) and compute square size in units of `"height"` based on total height of the window in the `"height"` units (not the pixels!) and number of squares we need to fit in vertically.
 
 Next, let us create a function that translates position on the grid to the position in the window. This way, we can think in terms of the grid position but draw in the window coordinates. Create a new file _utilities.py_ and create a function `grid_to_win` that takes a tuple of integers `(x_index, y_index)` with grid position plus a second parameter with a square size (that we just computed) and returns a tuple of floats `(x_pos, y_pos)` with the coordinates of the _center_ of the square within the window. Take a look at the drawing below to see the logic of the computation.
 
