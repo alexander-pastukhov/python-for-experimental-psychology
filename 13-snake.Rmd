@@ -36,7 +36,7 @@ We also need to _define_ an _absolute_ size of a square in pixels (call the cons
 
 Put it all together. You could should look roughly as follows:
 ```python
-importing all libraries and modules you need
+import all libraries and modules you need
 
 define constants GRID_SIZE and SQUARE_SIZE_PIX
 
@@ -54,11 +54,43 @@ Put your code into _exercise01.py_.
 :::
 
 ## Adding a square
+As I already wrote, our game will be made of squares. Snake is made of squares. Grid it lives on is made of squares. Which means we need to know the size of that square in the units of the window and we need to know _where_ should each square go in the window based its coordinates on the grid.
+
+Computing the size of the square in units of window size is easy, so let us start with it first. If you used `"height"` units for the PsychoPy window, we know that its height goes from -1 to 1. We also know that we have fit in `GRID_SIZE[1]` squares vertically (recall that `GRID_SIZE` defines the size of our grid in number of squares). Create a new constant (`SQUARE_SIZE`) and compute square size in units of `"height"` based on total height of the window in the `"height"` units (not the pixels!) and number of squares we need to fit in vertically.
+
+Next, let us create a function that translates position on the grid to the position in the window. This way, we can think in terms of the grid position but draw in the window coordinates. Create a new file _utilities.py_ and create a function `grid_to_win` that takes a tuple of integers `(x_index, y_index)` with grid position plus a second parameter with a square size (that we just computed) and returns a tuple of floats `(x_pos, y_pos)` with the coordinates of the _center_ of the square within the window. Take a look at the drawing below to see the logic of the computation.
 
 
-and _compute_ its _relative_ size in `"height"` units (call it `SQUARE_SIZE`)
- Assuming our grid covers the entire window, we can figure out a height of an individual square from the total window height in `"height"` units (spans from -1 to 1) and the number of squares 
+I suggest using Jupyter notebook to create and debug this function and then copying it into _utilities.py_. Remember to document the function following [NumPy docstring format](https://numpydoc.readthedocs.io/en/latest/format.html).
 
+::: {.infobox .program}
+Put function grid_to_win into _utilities.py_.
+:::
 
+Now, test this function by creating a square and placing it at different locations of the grid. Check [here](#seminar08-add-square), if you forgot how to create squares in PsychoPy. Run the code several times, using different grid indexes and checking that visuals work as intended. Your code should look roughly as follows
+
+```python
+import all libraries and modules you need
+
+import grid_to_win function from utilities.py file
+
+define constants GRID_SIZE and SQUARE_SIZE_PIX
+compute SQUARE_SIZE constant
+
+create PsychoPy window, computing it size in pixels from the two constants
+
+create a square (Rect stimulus) with size of SQUARE_SIZE and position computed
+via grid_to_win function from a pair of grid coordinates
+
+draw square and flip the window
+
+wait for any key press (just so that window stays on the screen)
+
+close PsychoPy window
+```
+
+::: {.infobox .program}
+Put your code into _exercise02.py_.
+:::
 
 

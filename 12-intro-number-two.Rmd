@@ -1,1 +1,12 @@
 # Introduction to the second part / semester {-}
+
+
+Seminar outline:
+
+1. Refresh your memory by implementing a Snake game.
+2. Object-oriented programming: properties, method, constructors. We will re-implement the Snake game using OOP approach.
+3. Duck-typing, special methods, interfaces for object properties, computed properties.
+4. Iterators and generators in Python for generating pseudo-random trial sequences in experiments. Using staircase procedure to control difficulty of the task. We will use both in a "Guitar Hero" game clone (sans Guitars and Heroes).
+5. Numpy library for matrices, mathematics, and linear algebra. We will implement a classic "Game of Life".
+6. Pandas library for working with tables.
+
