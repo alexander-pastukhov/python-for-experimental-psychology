@@ -8,7 +8,7 @@ For this and following projects, use Python IDE of your choice (I would recommen
 
 From now on, create a separate subfolder for each seminar (e.g. _Seminar 01_ for today) and create a separate file (or files, later on) for each exercise^[You can "Save as..." the previous exercise to avoid copy-pasting things by hand.] (e.g., _exercise01.py_, _exercise02.py_, etc.). This is not the most efficient implementation of a version control and will certainly clutter the folder. But it would allow me to see your solutions on every step, which will make it easier for me to comment on them. For submitting the assignment, just zip the folder and upload the zip-file.
 
-## Snake
+## Snake game: an overview
 
 Today, we will program a good old classic: the snake game! The story is simple: you control a snake trying to eat as many apples as you can. Every time you consume an apple, snake's length increases. However, if you hit the wall or bite yourself, the game is over (or you lose one of your lives and game is over once you run out of lives).
 
@@ -17,7 +17,8 @@ As before, we will program the game step by step, starting with an empty gray Ps
 1. Create boilerplate code to initialize PsychoPy.
 2. Figure out how to place a square. We need this because our snake is made of square segments and lives on a rectangular grid made of squares.
 3. Create a single segment stationary snake^[Not very exciting, I know. But one has to start somewhere!].
-3. Make a single segment stationary snake move assuming a rectangular grid. Implement "died by hitting a wall".
+3. Make a single segment stationary snake move assuming a rectangular grid. 
+3. Implement "died by hitting a wall".
 4. Add apples and make the snake grow.
 5. Add check for biting itself.
 6. Add bells-and-whistles to make game look awesome.
@@ -30,21 +31,21 @@ To remind yourself on how you initialize PsychoPy window, see [here](#seminar08)
 
 ---
 
-My suggestion would be `"height"` units as they make sizing squares easy. Next, let us think about the grid. We can define its width and height in _squares_, e.g., a 30 × 20 grid should give us enough space to try things out. Create a [constant]() `GRID_SIZE` and assign a [tuple](https://docs.python.org/3/tutorial/datastructures.html#tuples-and-sequences) of `(width, height)` to it. Note that window's aspect ratio will depend on the size of the grid that we pick. Want to have a square one, use a 30 × 30 grid.
+My suggestion would be `"height"` units as they make sizing squares easy. Next, let us think about the grid. We can define its width and height in _squares_, e.g., a 30 × 20 grid should give us enough space to try things out but we can always increase the resolution of the game later. Create a [constant]() `GRID_SIZE` and assign a [tuple](https://docs.python.org/3/tutorial/datastructures.html#tuples-and-sequences) of `(width, height)` to it. Note that window's aspect ratio will depend on the size of the grid that we pick. If you want to have a square one, use a 30 × 30 grid.
 
 We also need to _define_ an _absolute_ size of a square in pixels (call the constant `SQUARE_SIZE_PIX`), which will determine how large each square will look on the screen and, therefore, will determine the size of the window that we will open: $window~height = window~height~in~squares * square~size~in~pixels$ (same goes for the width). Note that this parameter determines how the game looks, double the size of the square in pixels and that will double both width and height of the window. 
 
 Put it all together. You could should look roughly as follows:
 ```python
-import all libraries and modules you need
+# import all libraries and modules you need
 
-define constants GRID_SIZE and SQUARE_SIZE_PIX
+# define constants GRID_SIZE and SQUARE_SIZE_PIX
 
-create PsychoPy window, computing it size in pixels from the two constants
+# create PsychoPy window, computing it size in pixels from the two constants
 
-wait for any key press (just so that window stays on the screen)
+# wait for any key press (just so that window stays on the screen)
 
-close PsychoPy window
+# close PsychoPy window
 ```
 
 Experiment with different grid and square sizes and pick the one that fits your screen.
@@ -56,41 +57,116 @@ Put your code into _exercise01.py_.
 ## Adding a square
 As I already wrote, our game will be made of squares. Snake is made of squares. Grid it lives on is made of squares. Which means we need to know the size of that square in the units of the window and we need to know _where_ should each square go in the window, based on its coordinates on the grid.
 
-Computing the size of the square in units of window size is easy, so let us start with it first. If you used `"height"` units for the PsychoPy window, we know that its height goes from -1 to 1. We also know that we have to fit in `GRID_SIZE[1]` squares vertically (recall that `GRID_SIZE` defines the size of our grid in number of squares). Create a new constant (`SQUARE_SIZE`) and compute square size in units of `"height"` based on total height of the window in the `"height"` units (not the pixels!) and number of squares we need to fit in vertically.
+Computing the size of the square in units of window size is easy, so let us start with it first. If you used `"height"` units for the PsychoPy window, we know that its height goes from -1 to 1. We also know that we have to fit in `GRID_SIZE[1]` squares vertically (recall that `GRID_SIZE` defines the size of our grid in number of squares). Create a new constant `SQUARE_SIZE` and compute square size in units of `"height"` based on total height of the window in the `"height"` units (not the pixels!) and number of squares we need to fit in vertically.
 
-Next, let us create a function that translates position on the grid to the position in the window. This way, we can think in terms of the grid position but draw in the window coordinates. Create a new file _utilities.py_ and create a function `grid_to_win` that takes a tuple of integers `(x_index, y_index)` with grid position plus a second parameter with a square size (that we just computed) and returns a tuple of floats `(x_pos, y_pos)` with the coordinates of the _center_ of the square within the window. Take a look at the drawing below to see the logic of the computation.
+Next, let us create a function that maps a position on the grid to a position in the window. This way, we can think about position of the snake or apples in terms of the grid but draw them in the window coordinates. Create a new file _utilities.py_ and create a function `map_grid_to_win` that takes a tuple of integers `(x_index, y_index)` with grid position plus a second parameter with a square size (that we just computed) and returns a tuple of floats `(x_pos, y_pos)` with the coordinates of the _center_ of the square within the window. Take a look at the drawing below to see the logic of the computation.
 
 
 I suggest using Jupyter notebook to create and debug this function and then copying it into _utilities.py_. Remember to document the function following [NumPy docstring format](https://numpydoc.readthedocs.io/en/latest/format.html).
 
 ::: {.infobox .program}
-Put function grid_to_win into _utilities.py_.
+Put function map_grid_to_win into _utilities.py_.
 :::
 
-Now, test this function by creating a square and placing it at different locations of the grid. Check [here](#seminar08-add-square), if you forgot how to create squares in PsychoPy. Run the code several times, using different grid indexes and checking that visuals work as intended. Your code should look roughly as follows
+Now, test this function by creating a square and placing it at different locations of the grid. Check [here](#seminar08-add-square), if you forgot how to create squares in PsychoPy. Run the code several times, using different grid indexes or adding several squares to check that visuals work as intended. Your code should look roughly as follows
 
 ```python
-import all libraries and modules you need
+# import all libraries and modules you need
 
-import grid_to_win function from utilities.py file
+# import map_grid_to_win function from utilities.py file
 
-define constants GRID_SIZE and SQUARE_SIZE_PIX
-compute SQUARE_SIZE constant
+# define constants GRID_SIZE and SQUARE_SIZE_PIX
+# compute SQUARE_SIZE constant
 
-create PsychoPy window, computing it size in pixels from the two constants
+# create PsychoPy window, computing it size in pixels from the two constants
 
-create a square (Rect stimulus) with size of SQUARE_SIZE and position computed
-via grid_to_win function from a pair of grid coordinates
+# create a square (Rect stimulus) with size of SQUARE_SIZE and position computed
+#   via grid_to_win function from a pair of grid coordinates
 
-draw square and flip the window
+# draw square and flip the window
 
-wait for any key press (just so that window stays on the screen)
+# wait for any key press (just so that window stays on the screen)
 
-close PsychoPy window
+# close PsychoPy window
 ```
 
 ::: {.infobox .program}
 Put your code into _exercise02.py_.
 :::
+
+## Adding the snake
+
+Now, let us think about how can we represent a snake. It consist of one or more segments, the first one is its head, while the last one is its tail^[A single segment snake is a special case, as its head is also its tail]. Thus, we can think about it as a [list](https://docs.python.org/3/tutorial/datastructures.html#more-on-lists) of individual segments.
+
+Now let us consider an individual segment. We need to 1) keep track of its location in _grid_ coordinate system and 2) have its visual representation — a square, just like the one you create during the previous exercise  — positioned in _window_ coordinate system. Good news is, you already have a function maps the former on the latter, so as long as you know where the segment is on the grid, placing its square within the window is easy. As each segment has _two_ pieces of information associated with it, it makes sense to represent it as a [dictionary](https://docs.python.org/3/tutorial/datastructures.html#dictionaries) with two keys: `"pos"` (tuple of x and y in grid coordinates) and `"visuals"` (the square).
+
+To kep code nicely compartmentalized and isolated, add a new function to _utilities.py_ called `create_snake_segment`. It should take three arguments: 
+
+1. a variable with PsychoPy window, which you need to create an square visual.
+2. a tuple `(x, y)` with segment position within the grid.
+3. a square size, which you need for `map_grid_to_win` function.
+
+It should return a dictionary with `"pos"` and `"visuals"` field, as we agreed upon above.
+
+In the main code, create a variable `snake` that is a list with a single segment in the center of the screen (you need to compute it from `GRID_SIZE` using floor division operator [//](https://python-reference.readthedocs.io/en/latest/docs/operators/floor_division.html)). Instead of drawing a single square one call at a time, as in the previous exercise, you will need to draw all segments of the snake using a for loop^[You don't _really_ need it for a single segment snake we have now but there is no other way to do it later, so let us do it properly from the start]. Here is the outline:
+
+```python
+# import all libraries and modules you need
+
+# import map_grid_to_win and create_snake_segment functions from utilities.py file
+
+# define constants GRID_SIZE and SQUARE_SIZE_PIX
+# compute SQUARE_SIZE constant
+
+# create PsychoPy window, computing it size in pixels from the two constants
+
+# create the snake variable as a list with a single segment at the center of the screen 
+
+
+# draw all snake segments using for loop  
+# flip the window
+
+# wait for any key press (just so that window stays on the screen)
+
+# close PsychoPy window
+```
+::: {.infobox .program}
+Put function _create_snake_segment_ into _utilities.py_ and your modified code into _exercise03.py_.
+:::
+
+## Adding main game loop
+
+Our current game is not _very_ dynamic: it draws the (very small) snake once and waits for a key press before closing the window. Let us add the necessary scaffolding of a main game loop. The game should run [while](https://docs.python.org/3/reference/compound_stmts.html#the-while-statement) variable `gameover` is `False`. Inside the main loop, on each iteration you should draw the snake (and flip the window after that) and check whether participant press `"escape"` key via [event.getKeys()](https://www.psychopy.org/api/event.html#psychopy.event.getKeys). If they did, `gameover` should become `True`.
+
+The code outline is 
+```python
+# import all libraries and modules you need
+
+# import map_grid_to_win and create_snake_segment functions from utilities.py file
+
+# define constants GRID_SIZE and SQUARE_SIZE_PIX
+# compute SQUARE_SIZE constant
+
+# create PsychoPy window, computing it size in pixels from the two constants
+
+# create the snake variable as a list with a single segment at the center of the screen 
+
+# set gameover to False
+
+# while not gameover:
+#     draw all snake segments using for loop  
+#     flip the window
+
+#     if escape key was pressed:
+#         set gameover to True
+
+# close PsychoPy window
+```
+
+::: {.infobox .program}
+Put your code into _exercise04.py_.
+:::
+
+## Get a move on!
 
 
