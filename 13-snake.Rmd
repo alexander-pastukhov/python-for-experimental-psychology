@@ -282,7 +282,7 @@ elif dir == "right":
   ...
 ```
 
-However, this approach does introduces a lot of repetitive code and does not scale particularly well. Instead, we can use a dictionary (let us call it `DXY` as it is another constant) with `"up"`, `"right"`, etc. string as keys and tuples `(0, -1)`, `(1, 0)`, etc. as values. This way, we can use current value of `dir` variable as a key to get the `(dx, dy)` pair from `DXY` dictionary. Note that you should do it in the function call, **do not** create a temporary variable (as in the if-elif examples above.
+However, this approach introduces a lot of repetitive code and does not scale particularly well. Instead, we can use a dictionary (let us call it `DXY` as it is another constant) with `"up"`, `"right"`, etc. string as keys and tuples `(0, -1)`, `(1, 0)`, etc. as values. This way, we can use current value of `dir` variable as a key to get the `(dx, dy)` pair from `DXY` dictionary. Note that you should do it in the function call, **do not** create a temporary variable (as in the if-elif examples above.
 
 ```python
 # import all libraries and modules you need
@@ -321,4 +321,59 @@ However, this approach does introduces a lot of repetitive code and does not sca
 ::: {.infobox .program}
 Put your code into _exercise07.py_.
 :::
+
+## It is all about control
+Playing the game would be more fun, if we could steer the snake! The basic idea is, well, very basic. If the player presses _right arrow_ key, the snake should turn _clockwise_. Conversely, _left arrow_ key, should turn the snake _counterclockwise_. We need to figure out two things. First, how to determine a new direction of motion given the current one and the key that was pressed. Second, when and how to change the value of `direction` variable. Let us tackle these problems one at a time.
+
+Determining the new direction of motion is fairly straightforward. If current is `"up"` and key was _right_ (_clockwise_ rotation), the new direction should be `"right"`. If current is `"down"` and key was _left_, the new direction is again `"right"`, etc. You could implement it as a bunch of `if-elif` statements or, better still, use the dictionary look up approach we implemented in the previous exercise. Here, you need a nested dictionary (dictionary inside a dictionary) `NEW_DIRECTION[key][direction]`. The first level has two keys `"left"` and `"right"` (so, effectively, counterclockwise and clockwise rotation) that selects which translation should be used and the second level is the dictionary that translates current direction into the new direction of motion. E.g., if current direction is `"down"` and key was `"right"`, `NEW_DIRECTION["right"]["down"]` should be `"left"` (rotating clockwise from `"down"` gets us to `"left"`). You know how define a simple dictionary. Good news, defining nested dictionaries follows the same rules, so should be very straightforward. Think about you will define these nested dictionaries in the code.
+
+Now let us think about when and how should we change value of `direction` variable. The simplest approach would be to change it as soon as the player presses the key. However, because our snake does not move on every frame this could lead to some odd behavior. Imagine that our game is on "easy" mode, so that the snake moves very slowly (one square per second). In this case, the player could easily press _left_ twice during that second that would make snake move backwards, because  direction was changed by 180°. Snakes, at least our snake, cannot do this. Thus, we need a temporary variable, let us call it `new_direction`, which we will set every time the player presses the key but whose value will be transferred to `direction` only when it is time to move the snake. We will compute it from the current `direction` and the key pressed. This way, even the player presses _left_ key several times, the snake would still turn only once because we compute the same turn using the same `direction` value not based on the changing `new_direction` variable. This also means that players can "change their mind", as the last key press before the snake moves will determine the direction of motion.
+
+```python
+# import all libraries and modules you need
+
+# import all functions you need from from utilities.py file
+
+# define constants GRID_SIZE and SQUARE_SIZE_PIX
+# compute SQUARE_SIZE constant
+# define SNAKE_SPEED and compute SNAKE_TIME_INTERVAL
+
+# define DXY dictionary with (dx, dy) entries for each "up", "down", "right",
+#     and "left" keys
+
+# define NEW_DIRECTION nested dictionary
+
+# create PsychoPy window, computing it size in pixels from the two constants
+
+# create the snake variable as a list with three segments
+
+# initialize direction variable to one of the four directions
+# initialize new_direction(!!!!) to the same value as direction, why do you need to do this?
+
+# set gameover to False
+# create a clock or a countdown timer
+# while not gameover:
+#     draw all snake segments using for loop  
+#     flip the window
+
+#     if escape key was pressed:
+#         set gameover to True
+#     if key is left or right:
+#         set new_direction based on direction and pressed key using NEW_DIRECTION dictionary 
+#
+#     Check whether elapsed time is greater than SNAKE_TIME_INTERVAL, 
+#         set direction to new_direction
+#         move snake translating direction variable into (dx, dy) pair from DXY
+#         reset clock or countdown timer, if that is the case
+#
+#
+# close PsychoPy window
+```
+
+::: {.infobox .program}
+Put your code into _exercise08.py_.
+:::
+
+## Turning the hard way
+
 
