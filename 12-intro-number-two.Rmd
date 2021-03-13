@@ -1,7 +1,19 @@
 # Introduction to the second part / semester {-}
 
 
-Seminar outline:
+## Grading
+To pass the course, you need to complete all the assignments and score no less than 60% of points on each assignment. For a grade, you need the following percentages:
+
+* 1.0: ≥95% of points on _each_ assignment.
+* 1.3: ≥90%
+* 1.7: ≥85%
+* 2.0: ≥80%
+* 2.3: ≥75%
+* 2.7: ≥70%
+* 3.0: ≥60%
+* 4.0: <60%
+
+## Seminar outline
 
 1. Refresh your memory by implementing a Snake game.
 2. Object-oriented programming: properties, method, constructors. We will re-implement the Snake game using OOP approach.
