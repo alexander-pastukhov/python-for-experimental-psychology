@@ -17,11 +17,11 @@ As before, we will program the game step by step, starting with an empty gray Ps
 1. Create boilerplate code to initialize PsychoPy.
 2. Figure out how to place a square. We need this because our snake is made of square segments and lives on a rectangular grid made of squares.
 3. Create a single segment stationary snake^[Not very exciting, I know. But one has to start somewhere!].
-3. Make a single segment stationary snake move assuming a rectangular grid. 
-3. Implement "died by hitting a wall".
-4. Add apples and make the snake grow.
-5. Add check for biting itself.
-6. Add bells-and-whistles to make game look awesome.
+4. Make the snake move assuming a rectangular grid. 
+5. Implement "died by hitting a wall".
+6. Add check for biting itself.
+7. Add apples and make the snake grow.
+8. Add bells-and-whistles to make game look awesome.
 
 As you can see, each new steps builds upon the previous one. Because of that, remember, do not proceed to the next step until the current one works and you fully(!) understand what each line of code does. Any leftover uncertainty will linger, grow and complicate your life disproportionately!
 
@@ -232,7 +232,7 @@ Our snake should move by itself, not when the player presses _space_ button. For
 
 Instead, we should decide on snake's speed, e.g., 4 squares per second, and define it as a new constant `SNAKE_SPEED`^[Note that speed does not need to be an integer number of squares per second. It can move at 1.5 squares per second, so 3 squares every two seconds.]. From that we can compute a new constant (`SNAKE_TIME_INTERVAL`) that expresses the time interval between calls of `move_snake()` function, so that it is called `SNAKE_SPEED` times per second^[Why two constants that express the same information? We could define only the `SNAKE_TIME_INTERVAL` but for a human it is harder to understand just how fast the movement will be. In cases like these, I prefer to have two constants, one human-oriented, another computer-oriented. Remember, it is not just about writing a working code, it is about writing a code that is easy for a human to understand.]. For 4 squares/second, that time interval will be 0.25 seconds. Do not hard code it, compute it from `SNAKE_SPEED`!
 
-Now, we just need to use a [clock](https://www.psychopy.org/api/clock.html#psychopy.clock.Clock) or a [countdown timer](https://www.psychopy.org/api/clock.html#psychopy.clock.CountdownTimer)^[They work the same they, it is just a question of whether you start from zero and check whether time is over `SNAKE_TIME_INTERVAL` [clock](https://www.psychopy.org/api/clock.html#psychopy.clock.Clock) or you start at `SNAKE_TIME_INTERVAL` and check whether the time ran out/is already negative [timer](https://www.psychopy.org/api/clock.html#psychopy.clock.CountdownTimer).] We create it just before the main loop. Inside the loop, we check whether the elapsed time is equal to or greater than `SNAKE_TIME_INTERVAL`. If it is, move the snake and reset the timer. Try setting different speed and see whether the snake moves consistently.
+Now, we just need to use a [clock](https://www.psychopy.org/api/clock.html#psychopy.clock.Clock) or a [countdown timer](https://www.psychopy.org/api/clock.html#psychopy.clock.CountdownTimer)^[They work the same they, it is just a question of whether you start from zero and check whether time is over `SNAKE_TIME_INTERVAL` ([clock](https://www.psychopy.org/api/clock.html#psychopy.clock.Clock)) or you start at `SNAKE_TIME_INTERVAL` and check whether the time ran out/is already negative ([timer](https://www.psychopy.org/api/clock.html#psychopy.clock.CountdownTimer)).] We create it just before the main loop. Inside the loop, we check whether the elapsed time is equal to or greater than `SNAKE_TIME_INTERVAL`. If it is, move the snake and reset the timer. Try setting different speed and see whether the snake moves consistently.
 
 ```python
 # import all libraries and modules you need
@@ -256,9 +256,8 @@ Now, we just need to use a [clock](https://www.psychopy.org/api/clock.html#psych
 #     if escape key was pressed:
 #         set gameover to True
 #
-#     if elapsed time is greater than SNAKE_TIME_INTERVAL
-#         move snake up
-#         reset clock or countdown timer
+#     Check whether elapsed time is greater than SNAKE_TIME_INTERVAL, 
+#         move snake up and reset clock or countdown timer, if that is the case
 #
 #
 # close PsychoPy window
