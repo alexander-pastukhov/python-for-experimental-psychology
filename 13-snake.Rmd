@@ -267,3 +267,58 @@ Now, we just need to use a [clock](https://www.psychopy.org/api/clock.html#psych
 Put your code into _exercise06.py_.
 :::
 
+## Describing direction using words
+
+In our current design, we describe direction as a tuple `(dx, dy)`. Let us change it, so that it is described using words `"up"`, `"down"`, `"left"`, and `"right"`. This is not strictly necessary but will make our lives somewhat easier later on when we add steering controls. More importantly, it will serve a didactic purpose as well, showing how you can use dictionaries to translate values from one representation to another.
+
+Thus, let us create a new string variable `direction` and set it to `"up"` (or any other direction you like). We will keep the `move_snake()` function as is and will translate individual strings to pairs of `(dx, dy)` values. E.g., `"up"` corresponds to `(0, -1)`, `"right"` to `(1, 0)`, etc.
+
+We can implement this translation via if-elif conditional statements:
+```python
+if dir == "up":
+  dxy = (0, -1)
+elif dir == "right":
+  dxy = (1, 0)
+  ...
+```
+
+However, this approach does introduces a lot of repetitive code and does not scale particularly well. Instead, we can use a dictionary (let us call it `DXY` as it is another constant) with `"up"`, `"right"`, etc. string as keys and tuples `(0, -1)`, `(1, 0)`, etc. as values. This way, we can use current value of `dir` variable as a key to get the `(dx, dy)` pair from `DXY` dictionary. Note that you should do it in the function call, **do not** create a temporary variable (as in the if-elif examples above.
+
+```python
+# import all libraries and modules you need
+
+# import all functions you need from from utilities.py file
+
+# define constants GRID_SIZE and SQUARE_SIZE_PIX
+# compute SQUARE_SIZE constant
+# define SNAKE_SPEED and compute SNAKE_TIME_INTERVAL
+
+# define DXY dictionary with (dx, dy) entries for each "up", "down", "right",
+#     and "left" keys
+
+# create PsychoPy window, computing it size in pixels from the two constants
+
+# create the snake variable as a list with three segments
+
+# initialize direction variable to one of the four directions
+# set gameover to False
+# create a clock or a countdown timer
+# while not gameover:
+#     draw all snake segments using for loop  
+#     flip the window
+
+#     if escape key was pressed:
+#         set gameover to True
+#
+#     Check whether elapsed time is greater than SNAKE_TIME_INTERVAL, 
+#         move snake translating direction variable into (dx, dy) pair from DXY
+#         reset clock or countdown timer, if that is the case
+#
+#
+# close PsychoPy window
+```
+
+::: {.infobox .program}
+Put your code into _exercise07.py_.
+:::
+
