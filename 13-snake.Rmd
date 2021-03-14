@@ -19,8 +19,8 @@ As before, we will program the game step by step, starting with an empty gray Ps
 3. Create a single segment stationary snake^[Not very exciting, I know. But one has to start somewhere!].
 4. Make the snake move assuming a rectangular grid. 
 5. Implement "died by hitting a wall".
-6. Add check for biting itself.
-7. Add apples and make the snake grow.
+6. Add apples and make the snake grow.
+7. Add check for biting itself.
 8. Add bells-and-whistles to make game look awesome.
 
 As you can see, each new steps builds upon the previous one. Because of that, remember, do not proceed to the next step until the current one works and you fully(!) understand what each line of code does. Any leftover uncertainty will linger, grow and complicate your life disproportionately!
@@ -182,19 +182,22 @@ knitr::include_graphics("images/snake-movement-2.png")
 
 In the program, we [list.insert(index, value)](https://docs.python.org/3/tutorial/datastructures.html#more-on-lists)^[We could also have used `dqueue` class from _collections_ library instead of the `list`. It is, essentially, a list that allows appending and poping from the left as well.] the new head segment at index 0 and we remove the tail via [list.pop()](https://docs.python.org/3/tutorial/datastructures.html#more-on-lists).
 
-To keep things neat and tidy, we will implement a function `move_snake` that will take the following parameters:
+To keep things neat and tidy, we will implement two functions: `grow_snake()` and `trim_snake()`. Why not combine both actions into a single function? Strategic thinking! Once we add apples to the game, the snake will grow after consuming them by not shedding the tail. Thus, separating these two functions now will simplify our lives later on^[To be honest, I have initially implemented it as a single `move_snake()` function , wrote things up to eating apples, realized the problem, returned and rewrote the notes. So, it is a hindsight type of strategic thinking.].
+
+The `grow_snake()` function should take the following parameters:
 
 1. parameter for the snake itself, which we will modify. To minimize the potential confusion, do not call it `snake` but something (slightly) different, e.g., `the_snake`. This way it will be easier to remember that this is a parameter, not the global vairable.
 1. a variable with PsychoPy window, which you need to create a new head segment.
 2. a tuple `(x, y)` with _direction of movement_ (call it `dxy` for change in xy coordinates). I.e., it will be `(-1, 0)` for leftward moving snake, `(1, 0)` for right moving, `(-1, 0)` for up, and `(1, 0)` for down.
 3. a square size, which you need for `create_snake_segment` function.
-4. a logical parameter `drop_tail` with default value `True`^[Reminder, you can assign a default value for a parameter as `parameter=value`, which is used if you do not explicitly specify value for it. Re-read on [functions](#function), if you forgot how it works.]. We will need it later for cases when the snake moves to a location that has an apple and grows by one segment (plus a new head, keep the tail).
 
-Inside the function, you compute the coordinates for the new head based on the position of the current head (the very first element of the snake) and the direction of motion, (the third parameter `dxy`,) create a new snake segment at that location and insert it before all other elements. Next, if we need to `drop_tail`, pop the last element of the list.
+Inside the function, you compute the coordinates for the new head based on the position of the current head (the very first element of the snake) and the direction of motion, (the third parameter `dxy`,) create a new snake segment at that location and insert it before all other elements.
 
 Somewhat counterintuitively, this function does not need to return anything because the snake, which we are passing to it as a first parameter, is a _mutable_ list. Therefore, it is passed _by reference_ and any changes that we apply to it inside the function will affect the global variable itself^[Re-read about [mutable objects](#mutable-objects), if you forgot how it works.].
 
-To test this function, let us create a three-segment long snake at location `(10,9)`, `(11, 9)`, and `(12, 9)` and move it upwards every time the player presses `"space"` button. This does not look like a real game but will make it easier to debug, as you can put a break-point to check computation step-by-step. Also note that, eventually, the snake will crawl out of the window but we will worry about this later. Here is the code outline:
+The `trim_snake()` function is even simpler as it takes the snake as the only parameter and trims it tail. Again, because the snake is a mutable list, you do not need to return anything.
+
+To test these functions, let us create a three-segment long snake at location `(10,9)`, `(11, 9)`, and `(12, 9)` and move it (grow, then trim) upwards every time the player presses `"space"` button. This does not look like a real game but will make it easier to debug, as you can put a break-point to check computation step-by-step. Also note that, eventually, the snake will crawl out of the window but we will worry about this later. Here is the code outline:
 
 ```python
 # import all libraries and modules you need
@@ -224,13 +227,13 @@ To test this function, let us create a three-segment long snake at location `(10
 ```
 
 ::: {.infobox .program}
-Put function _move_snake_ into _utilities.py_ and your modified code into _exercise05.py_.
+Put functions _grow_snake_ and _trim_snake_ into _utilities.py_ and your modified code into _exercise05.py_.
 :::
 
 ## Self-motion
-Our snake should move by itself, not when the player presses _space_ button. For this, we can call `move_snake()` function on every iteration of the main game loop. However, by default, when you call `win.flip()` it will synchronize your loop with the refresh rate of the screen (typically, 60 Hz). This means that the `move_snake()` function will be called 60 times per second or, to put it differently, that it will move 60 squares per second. This is way too fast, given that our original grid size was just 30×20 squares. To appreciate just how fast this is, remove `if key was space:...` conditional statement, call `move_snake()` function on every iteration and see the snake fly off the screen.
+Our snake should move by itself, not when the player presses _space_ button. For this, we can call `grow_snake()` and `trim_snake()` functions on every iteration of the main game loop. However, by default, when you call `win.flip()` it will synchronize your loop with the refresh rate of the screen (typically, 60 Hz). This means that we would call these functions 60 times per second or, to put it differently, that the snake will move 60 squares per second. This is way too fast, given that our original grid size was just 30×20 squares. To appreciate just how fast this is, remove `if key was space:...` conditional statement, and call grow/trim snake functions on every iteration and see the snake fly off the screen.
 
-Instead, we should decide on snake's speed, e.g., 4 squares per second, and define it as a new constant `SNAKE_SPEED`^[Note that speed does not need to be an integer number of squares per second. It can move at 1.5 squares per second, so 3 squares every two seconds.]. From that we can compute a new constant (`SNAKE_TIME_INTERVAL`) that expresses the time interval between calls of `move_snake()` function, so that it is called `SNAKE_SPEED` times per second^[Why two constants that express the same information? We could define only the `SNAKE_TIME_INTERVAL` but for a human it is harder to understand just how fast the movement will be. In cases like these, I prefer to have two constants, one human-oriented, another computer-oriented. Remember, it is not just about writing a working code, it is about writing a code that is easy for a human to understand.]. For 4 squares/second, that time interval will be 0.25 seconds. Do not hard code it, compute it from `SNAKE_SPEED`!
+Instead, we should decide on snake's speed, e.g., 4 squares per second, and define it as a new constant `SNAKE_SPEED`^[Note that speed does not need to be an integer number of squares per second. It can move at 1.5 squares per second, so 3 squares every two seconds.]. From that we can compute a new constant (`SNAKE_TIME_INTERVAL`) that expresses the time interval between calls of grow/trim functions, so that it is called `SNAKE_SPEED` times per second^[Why two constants that express the same information? We could define only the `SNAKE_TIME_INTERVAL` but for a human it is harder to understand just how fast the movement will be. In cases like these, I prefer to have two constants, one human-oriented, another computer-oriented. Remember, it is not just about writing a working code, it is about writing a code that is easy for a human to understand.]. For 4 squares/second, that time interval will be 0.25 seconds. Do not hard code it, compute it from `SNAKE_SPEED`!
 
 Now, we just need to use a [clock](https://www.psychopy.org/api/clock.html#psychopy.clock.Clock) or a [countdown timer](https://www.psychopy.org/api/clock.html#psychopy.clock.CountdownTimer)^[They work the same they, it is just a question of whether you start from zero and check whether time is over `SNAKE_TIME_INTERVAL` ([clock](https://www.psychopy.org/api/clock.html#psychopy.clock.Clock)) or you start at `SNAKE_TIME_INTERVAL` and check whether the time ran out/is already negative ([timer](https://www.psychopy.org/api/clock.html#psychopy.clock.CountdownTimer)).] We create it just before the main loop. Inside the loop, we check whether the elapsed time is equal to or greater than `SNAKE_TIME_INTERVAL`. If it is, move the snake and reset the timer. Try setting different speed and see whether the snake moves consistently.
 
@@ -271,7 +274,7 @@ Put your code into _exercise06.py_.
 
 In our current design, we describe direction as a tuple `(dx, dy)`. Let us change it, so that it is described using words `"up"`, `"down"`, `"left"`, and `"right"`. This is not strictly necessary but will make our lives somewhat easier later on when we add steering controls. More importantly, it will serve a didactic purpose as well, showing how you can use dictionaries to translate values from one representation to another.
 
-Thus, let us create a new string variable `direction` and set it to `"up"` (or any other direction you like). We will keep the `move_snake()` function as is and will translate individual strings to pairs of `(dx, dy)` values. E.g., `"up"` corresponds to `(0, -1)`, `"right"` to `(1, 0)`, etc.
+Thus, let us create a new string variable `direction` and set it to `"up"` (or any other direction you like). We will keep the `grow_snake()` function as is and will translate individual strings to pairs of `(dx, dy)` values. E.g., `"up"` corresponds to `(0, -1)`, `"right"` to `(1, 0)`, etc.
 
 We can implement this translation via if-elif conditional statements:
 ```python
