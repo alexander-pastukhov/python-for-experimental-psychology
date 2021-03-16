@@ -20,7 +20,7 @@ As before, we will program the game step by step, starting with an empty gray Ps
 4. Make the snake move assuming a rectangular grid. 
 5. Implement "died by hitting a wall".
 6. Add apples and make the snake grow.
-7. Add check for biting itself.
+7. Add check for biting itself (and dying).
 8. Add bells-and-whistles to make game look awesome.
 
 As you can see, each new steps builds upon the previous one. Because of that, remember, do not proceed to the next step until the current one works and you fully(!) understand what each line of code does. Any leftover uncertainty will linger, grow and complicate your life disproportionately!
@@ -55,12 +55,15 @@ Put your code into _exercise01.py_.
 :::
 
 ## Adding a square
-As I already wrote, our game will be made of squares. Snake is made of squares. Grid it lives on is made of squares. Which means we need to know the size of that square in the units of the window and we need to know _where_ should each square go in the window, based on its coordinates on the grid.
+As I already wrote, our game will be made of squares. Snake is made of squares. Grid it lives on is made of squares. An apple will a square. Which means we need to know the size of that square in the units of the window and we need to know _where_ should each square go in the window, based on its coordinates on the grid.
 
-Computing the size of the square in units of window size is easy, so let us start with it first. If you used `"height"` units for the PsychoPy window, we know that its height goes from -1 to 1. We also know that we have to fit in `GRID_SIZE[1]` squares vertically (recall that `GRID_SIZE` defines the size of our grid in number of squares). Create a new constant `SQUARE_SIZE` and compute square size in units of `"height"` based on total height of the window in the `"height"` units (not the pixels!) and number of squares we need to fit in vertically.
+Computing the size of the square in units of window size is easy, so let us start with it first. If you used `"height"` units for the PsychoPy window, we know that its height goes from -1 (bottom) to 1 (top). We also know that we have to fit in `GRID_SIZE[1]` squares vertically (recall that `GRID_SIZE` defines the size of our grid in number of squares). Create a new constant `SQUARE_SIZE` and compute square size in units of `"height"` based on total height of the window in the `"height"` units (not the pixels!) and number of squares we need to fit in vertically.
 
-Next, let us create a function that maps a position on the grid to a position in the window. This way, we can think about position of the snake or apples in terms of the grid but draw them in the window coordinates. Create a new file _utilities.py_ and create a function `map_grid_to_win` that takes a tuple of integers `(x_index, y_index)` with grid position plus a second parameter with a square size (that we just computed) and returns a tuple of floats `(x_pos, y_pos)` with the coordinates of the _center_ of the square within the window. Take a look at the drawing below to see the logic of the computation.
+Next, let us create a function that maps a position on the grid to a position in the window. This way, we can think about position of the snake or apples in terms of the grid but draw them in the window coordinates. Create a new file _utilities.py_ and create a function `map_grid_to_win` that takes a tuple of integers `(x_index, y_index)` with grid position plus a second parameter with a square size (that we just computed) and returns a tuple of floats `(x_pos, y_pos)` with the coordinates of the _center_ of the square within the window. Take a look at the drawing below to see the logic of the computation. The red text show location of red points in _window height_ units, whereas the black font show location of a square in _grid index_ units. Note that you need to compute where the _center_ of the square should go.
 
+```{r echo=FALSE}
+knitr::include_graphics("images/snake-grid.png")
+```
 
 I suggest using Jupyter notebook to create and debug this function and then copying it into _utilities.py_. Remember to document the function following [NumPy docstring format](https://numpydoc.readthedocs.io/en/latest/format.html).
 
