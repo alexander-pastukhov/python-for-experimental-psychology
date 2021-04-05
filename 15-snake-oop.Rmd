@@ -1,0 +1,3 @@
+# Snake game: object-oriented programming {#seminar-02-03}
+
+We will not be programming a new game today. Rather,
