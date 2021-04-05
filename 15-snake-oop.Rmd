@@ -55,5 +55,77 @@ The definition of the class are the remaining _indented_ lines. As with function
 All class methods (apart from special cases we currently do not concern ourselves with) must have one special first parameter that is _the object_ itself. By convention it is called `self`. Technically, you can use any name but that will surely confuse everyone. It is passed to the method automatically, so whenever you write `square.draw()` (no explicit parameters passed in the function call), the actual method still received one parameter that is the reference to the `square` variable whose method you called. Inside a method, you use this variable to refer to the object itself. Thus, in the constructor, we add a new _persistent_ property to the object by assigning a value to it, as in `self.total = 0`. It is _persistent_, because even though we created it inside the method, we assigned it to the object itself. Now you can use access this property either from inside `self.total` or from outside `number_sum.total`. You can think of properties as being similar to field/value pairs in the dictionary we used during previous seminar but for syntax: `object.property` versus `dictonary["field"]`. Technically, you can create new properties in any method or even from outside (e.g., nothing prevents you from writing `number_sum.color = "red"`). However, this makes understand the code much harder, so the general recommendation is to create _all_ properties  inside the constructor (`__init__()`) method, even if this means assigning  `None` to them^[If you use a linter, it will complain whenever it sees a property not defined in the constructor].
 
 
-## GridWindow
+## `add` method
+Let us add a method that adds 1 to the `total` property. 
+```python
+class Accumulator:
+    ... # I am skipping all previous code here
+    
+    def add(self):
+        """
+        Add 1 to .total
+        """
+        self.total += 1
+```
 
+It has first special argument `self` that is the object itself and we simply add 1 to its `.total` property. Again, remember that `self` is passed automatically whenever you call the method, meaning that an actual call looks like `number_sum.add()`.
+
+Create a Jupyter notebook (call it "accumulator", you will need to submit it as part of the assignment) and copy-paste the code for `Accumulator` class, including the `.add()` method. Create **two** objects, call them `counter1` and `counter2`. Call `.add()` method twice for `counter2` and thrice for `counter1` (bonus: do it using for loop). What is the value of the `.total` property of each object? Check it by printing it out.
+
+::: {.infobox .program}
+Copy-paste and test `Accumulator` class code in a Jupiter notebook.
+:::
+
+
+## `subtract` method
+Add `subtract` method to the class. It should subtract `1` from the `.total` property. Check that it works. And don't forget to _document_ it!
+
+::: {.infobox .program}
+Add `subtract` method to the `Accumulator` class in a Jupiter notebook. Add testing.
+:::
+
+## Method arguments
+Now add `value` argument to both `.add()` and `.subtract()` method and add/subtract this value rather than `1`. Note that now you have _two_ arguments in each method `(self, value)` but when you call you only need to pass the latter (again, `self` is passed automatically). Don't forget to document `value` argument (but you do not need to document `self` as its meaning is fixed).
+
+::: {.infobox .program}
+Add `value` parameter to `add` and `subtract` methods of the `Accumulator` class in a Jupiter notebook. Test them!
+:::
+
+## Constructor arguments
+Although constructor `__init(...)__` is special, it is still a method. Thus, you can pass arguments to it just like you did it for other methods. You pass these arguments when you create an object, so in our case, you put it inside the bracket for `counter = Accumulator(...)`. 
+
+Modify the code so that you pass the initial value that total is set to, instead of zero.
+::: {.infobox .program}
+Add `initial_value` parameter to the constructor of the `Accumulator` class in a Jupiter notebook. Test it!
+:::
+
+## Calling methods from other methods
+You can call a function or object's method at any point of time, so, logically, you can use methods inside methods. Let's modify our code, realizing that _subtracting_ a value is like _adding a negative_ value. Modify your code, so that `.subtract()` only negates the value before passing is to `.add()` for actual processing. Thus, `total` is modified _only_ inside the `add()` method.
+
+::: {.infobox .program}
+Modify `subtract()` method to utilize `add()` in a Jupiter notebook. Test it!
+:::
+
+## Local variables
+Just like normal functions, you methods can have local variables. They are local (visible and accessible only from within the method) and are not persistence (their values do not survive between the calls). Conceptually, you separate variables that need to be persistent (retain their value the whole time object exists) as properties and temporary variables that are need only for the computation itself as local method variables. What would be value of property `.total` in this example:
+```python
+class Accumulator:
+    def __init__(self, initial):
+        temp = initial * 2
+        self.total = inital
+        
+counter = Accumulator(1)
+```
+
+What about in this case?
+```python
+class Accumulator:
+    def __init__(self, initial):
+        temp = initial * 2
+        self.total = temp
+        
+counter = Accumulator(1)
+```
+
+## GridWindow
+Got the idea? 
