@@ -60,7 +60,7 @@ Put your updated code into _exercise03.py_.
 ## Eating yourself
 Once our snake grows beyond four segments, it has an opportunity to bite itself^[Why at least five? Draw it on the grid and figure out whether it can do so even with four.]. For this, we need to check that, _after_ the snake moved, its head is _not_ ay the same location as the rest of its body. Create a new function `snake_bit_itself()` that takes the snake as a single parameter and returns `True` or `False` based on whether that is the case. The function is very similar but not identical to `is_inside_the_snake()` function you implemented earlier. What is the critical difference and why cannot you simply reuse it?
 
-Once you implemented `snake_bit_itself()` function, you should check for that eventuaily after it moved and, if that is the case, the game should be over.
+Once you implemented `snake_bit_itself()` function, you should check for that eventually after it moved and, if that is the case, the game should be over.
 
 ::: {.infobox .program}
 Put function _snake_bit_itself_ into _utilities.py_ and your updated code into _exercise04.py_.
