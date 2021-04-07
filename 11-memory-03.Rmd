@@ -114,7 +114,7 @@ Put your code into _exercise06.py_.
 :::
 
 ## Random order
-Randomize order of conditons before the main loop.
+Randomize order of conditions before the main loop.
 
 ::: {.infobox .program}
 Put your code into _exercise07.py_.
