@@ -12,6 +12,17 @@ From now on, create a separate subfolder for each seminar (e.g. _Seminar 01_ for
 
 Today, we will program a good old classic: the snake game! The story is simple: you control a snake trying to eat as many apples as you can. Every time you consume an apple, snake's length increases. However, if you hit the wall or bite yourself, the game is over (or you lose one of your lives and game is over once you run out of lives).
 
+Here is how the final product will look like.
+
+```{r, eval=knitr::is_html_output(excludes = "epub"), results = 'asis', echo = F}
+cat(
+'<iframe width="422" height="261" 
+  src="videos/snake.m4v"
+  frameborder="0" allow="accelerometer; autoplay; encrypted-media;  gyroscope; picture-in-picture">
+  </iframe>'
+)
+```
+
 As before, we will program the game step by step, starting with an empty gray PsychoPy window. Here is the general outline of how we will proceed:
 
 1. Create boilerplate code to initialize PsychoPy.
