@@ -210,3 +210,24 @@ win = GridWindow(GRID_SIZE, SQUARE_SIZE_PIX)
 ```
 
 ## Apple class
+Create it in a separate _apples.py_ file. The apple class has no ancestors and we just need to put all methods and variables together. Here are lists of attributes and methods.
+
+Attributes:
+
+* `win` : you should pass with window variable to the constructor of an `Apple` class and store it as an attribute for later use when you (re)create the apple.
+* `pos` : same as the field in the original dictionary but now as attribute
+* `visuals` : same as the field in the original dictionary but now as attribute
+
+Methods:
+
+* `__init__(self, win)` should store window as attribute and create _empty_ attributes `pos` and `visuals`.
+* `reset(self, snake)` : modified version of `create_apple()` function but you use grid size and square size attributes of the `self.win` instead of passing them as arguments. It should overwrite any old values of `self.pos` and `self.visuals` instead of returning the dictionary.
+* `draw()` : should draw the apple!
+
+Now, you need to create an `apple` object _after_ you create the window and `reset()` it whenever you need a new apple (at the beginning of each round and once the snake ate the apple).
+
+## Refactoring the code
+Unfortunately, now you need to work through the code and functions you have implemented to make them work with these new classes. In most cases, the changes are straightforward. E.g., `create_snake_segment(win, ipos, square_size)` does not need the third argument anymore, as you can get it from `win` itself. Put breakpoints and use debug console, if you are unsure about the changes.
+
+## Next time
+Next time we will be programming _Moon Lander_ game using object-oriented programming approach from ground up!
