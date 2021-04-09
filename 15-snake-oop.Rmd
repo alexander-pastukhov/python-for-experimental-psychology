@@ -136,4 +136,10 @@ counter = Accumulator(1)
 ```
 
 ## GridWindow
-Got the idea about using classes? Good, because now we will refactor our _snake_ game code using classes and objects. One of the most annoying thing about our current code was the necessity to pass grid information (`GRID_SIZE`, `SQUARE_SIZE`, etc.) as well as window variable every time we needed to create a new segment. It would be much simpler if our window object would 
+Got the idea about using classes? Good, because now we will refactor our _snake_ game code using classes and objects. One of the most annoying thing about our current code was the necessity to pass grid information (`GRID_SIZE`, `SQUARE_SIZE`, etc.) as well as window variable every time we needed to create a new segment. It would be much simpler, if our window object would also include information on the grid (grid and square sizes) as well as the function that maps grid-to-window coordinates (`map_grid_to_win()`). In this case, we would only need to pass the window variable that has all information that snake or apple function and classes will need.
+
+We still want the window to behave like PsychoPy window, so our `GridWindow` will inherit from it. Create a new file _gridwindow.py_ and put in the class declration line (the one with `def`.
+
+
+
+
