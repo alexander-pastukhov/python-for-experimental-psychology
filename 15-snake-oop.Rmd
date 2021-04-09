@@ -135,11 +135,78 @@ class Accumulator:
 counter = Accumulator(1)
 ```
 
-## GridWindow
-Got the idea about using classes? Good, because now we will refactor our _snake_ game code using classes and objects. One of the most annoying thing about our current code was the necessity to pass grid information (`GRID_SIZE`, `SQUARE_SIZE`, etc.) as well as window variable every time we needed to create a new segment. It would be much simpler, if our window object would also include information on the grid (grid and square sizes) as well as the function that maps grid-to-window coordinates (`map_grid_to_win()`). In this case, we would only need to pass the window variable that has all information that snake or apple function and classes will need.
+## Refactoring the Snake game
+Got the basic idea about using classes? Let us practice by partially refactoring the snake game. In principle, we can factor it into three classes / objects: 
 
-We still want the window to behave like PsychoPy window, so our `GridWindow` will inherit from it. Create a new file _gridwindow.py_ and put in the class declaration line where `GridWindow` should descend from `Window` from `psychopy.visual`. Think about imports that you require.
+* a window class that will incorporate grid information and mapping
+* an apple class
+* a snake class
 
+Here, we will cover the first two but I encourage you to think about how to convert snake-bits into a class as well.
 
+## GridWindow class
+One of the most annoying thing about our current code was the necessity to pass grid information (`GRID_SIZE`, `SQUARE_SIZE`, etc.) as well as window variable every time we needed to create a new segment, or an apple, or grow snake, etc.. It would be much simpler, if our window object would also include information on the grid (grid and square sizes) as well as the function that maps grid-to-window coordinates (`map_grid_to_win()`). In this case, we would only need to pass the window variable that has all information that snake or apple function and classes will need.
 
+We still want the window to behave like PsychoPy window, so our `GridWindow` will _inherit_ from it. Create a new file _gridwindow.py_ and create a new class as follows. We will discuss the specific bits below.
 
+```python
+# 1. import 
+
+class GridWindow(Window):
+    """
+    Grid window, inherits from PsychoPy window and adds grid attributes and functions.
+    """
+
+    def __init__(self, grid_size, square_size_pix):
+        """
+        Parameters
+        ----------
+        grid_size : tuple
+            Size of the grid
+        square_size_pix : integer
+            size of a single square in pixels
+        """
+        
+        # 2. store grid_size as an attribute, so that later on you
+        #     could use it as self.grid_size (from inside) and 
+        #     win.grid_size (from outside)
+        
+        # 3. compute square_size attribute
+        
+        # 4. call the constructor of the ancestor
+        super().__init__(units="norm", size=(however-you-computed-it))
+        
+    def map_grid_to_win(self, ipos):
+        """
+        Converts grid coordinates to window coordinates in height units.
+
+        Parameters
+        -----------
+        ipos : tuple
+            (x, y) coordiantes on the grid
+
+        Returns
+        -----------
+        tuple
+            (norm_x, norm_y) coordinates in the window
+        """
+        
+        # 5. code that computed the transformation but that uses
+        #    class attribute for square size
+        
+```
+
+Let us go through the code!
+
+1. You do need to import some modules, which ones?
+2. We pass the `grid_size` as a parameter to the constructor but we need to retain in for future computation. Hence, we should store it as a persistent attributed of the class. You can (should) use the same name but remember this is an attribute not a constant, so you should use `snake_lower_case` for the name.
+3. In the original code, you store the computed square size as a constant. Here, you store it as a persistent attribute but, otherwise, the idea is the same.
+4. New and somewhat complicated bit! In the original code, we created a window and specified its size in pixels (computing it from the grid size and size of the square in pixels) and `"norm"` units. We still need to do this, so that the window is initialized properly. In the constructor we wrote the code that takes care of _new_ bits but we need to ensure that the ancestor class does the _old_ bits. For this, we need to call its constructor (`__init__()` method). But there is a catch, we _overwrote_ it with a brand new `__init__()` method of our own, so we cannot just call it via `self.__init__()`^[Well, we can write that but we will be calling out brand new `__init__()` again.]. Instead, Python has `super()` function that refers to the ancestor of the class. Hence, `super().__init__(your-arguments-inside)` initializes the window. Note that you need `super()` only if you _override_ the original method, as we did with `__init__()`. E.g., you do not need it to call `flip()` method defined in the original class.
+5. The code is essentially the same but you can use square size attribute, so no need to pass it as a separate argument.
+
+And in the main code, you now create the window as 
+```python
+win = GridWindow(GRID_SIZE, SQUARE_SIZE_PIX)
+```
+
+## Apple class
