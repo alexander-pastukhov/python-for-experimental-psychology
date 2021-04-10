@@ -1,0 +1,45 @@
+# Moon lander game {#seminar-02-04}
+
+## Create window
+
+* create window
+* main loop with gameover and exit via "Escape"
+
+
+## Create MoonLander class
+
+* create visuals via ImageStim
+* `draw()` method. Remember, a class method must have at least _one_ parameter, which one?
+
+Create lander object and draw it in the main loop
+
+
+## Randomize position
+New method `reset()` that will reset the lander for the next round. Currently, it will only randomize position of the image. Use range of -1..1 horizontally and 0.8..0.9 vertically.
+
+Call it in the constructor (`__init__()`) and test it in the main loop by calling it every time you press "space" button.
+
+## Gravity
+Constant `GRAVITY = 9.81 / 30000`^[The constant itself does not mean anything, I adjusted it to be reasonable for the image and window size that we are using.]
+New attribute `speed = [0, 0]` that is horizontal and vertical speed of the lander. On each frame, its position (`self.image.pos`) is adjusted based on the the speed. But before that, speed itself must be adjusted based on the forces from gravity and thrusters. Create a new method `update()` where you first adjust _vertical_ speed based on gravity (it becomes more negative due to it) and when adjust _vertical_ position based on vertical speed (we will worry about the horizontal speed, once we start working on horizontal thrusters). Call `update()` method before the `draw()` in the main loop. Your lander fall down at accelerated rate. Once it is off the screen, press space and see it go again.
+
+## Vertical thurster
+PsychoPy allows to get key presses or, using [hardware.keyboard](https://www.psychopy.org/api/hardware/keyboard.html) to get both press and release time. However, in our game, the thursters must be active for as long as the player presses the key. Thus, we need to know whether a key is _currently_ pressed, not that it was pressed and released at some time in the past. For this, we will use _pyglet_ library (that is used by PsychoPy)  directly. First, in your _moonlander.py_ add `import pyglet` and then include this code inside the constructor of the class.
+
+```python
+# setting up keyboard monitoring
+self.key = pyglet.window.key
+self.keyboard = self.key.KeyStateHandler()
+win.winHandle.push_handlers(self.keyboard)
+```
+
+This installs a "handler" that monitors the state of the keyboard. Now, you can read out the state of, say, _down arrow_ key as`self.keyboard[self.key.DOWN]` (`True` if pressed, `False` other). We will use `DOWN` for the vertical thruster and `LEFT` and `RIGHT` for the horizontal ones.
+
+Define a `VERTICAL_ACC` to be twice and update the `update()`^[Pun intended.], so that the total vertical acceleration is `VERTICAL_ACC + GRAVITY` if the the user is pressing _down_ key (use `self.keyboard` and `self.key` to figure that out) but `GRAVITY` alone, if not.
+
+Test you that vertical thruster works!
+
+## Horizontal thursters
+Now implement the same logic, computing acceleration, speed, and position but for horizontal thrusters (define `HORIZONTAL_ACC`, decide on its value yourself). Remember, the _right_ thruster pushes the lander to the _left_ and vice versa! Assume that only one of the keys (_left_ or _right_) can be pressed at a time. Test it by flying around!
+
+## Landing pad: visuals
