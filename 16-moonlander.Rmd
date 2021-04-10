@@ -43,3 +43,23 @@ Test you that vertical thruster works!
 Now implement the same logic, computing acceleration, speed, and position but for horizontal thrusters (define `HORIZONTAL_ACC`, decide on its value yourself). Remember, the _right_ thruster pushes the lander to the _left_ and vice versa! Assume that only one of the keys (_left_ or _right_) can be pressed at a time. Test it by flying around!
 
 ## Landing pad: visuals
+The purpose of the game is to land on a landing pad. Let us add one! Create a new file _landing_pad.py_ and a new class `LandingPad`. In the constructor, create a rectangle that is `0.5` units wide and is located at the bottom of the window vertically but at a random position within window horizontally. Pick the fill and line colors that you like. The only other method the class needs is `draw()`. 
+
+In the main code, create an object of class `LandingPad` and draw it in the main loop, along with the lander itself.
+
+## @property
+The aim of the game is a soft touchdown on a landing pad. For this, we need to know where the _top_ of the landing pad is, as well as where the _bottom_ of the lander is and where _left_ and _right_ limits of each object are. Let us think about _top_ of the landing pad first, as the rest are very similar.
+
+We do not have information about it _directly_. We have the vertical position of the landing pad in `self.image.pos[1]` (I assume here that the visuals attribute is called image) and its height in `self.image.size[1]`. From this, it is easy to compute the top edge (but remember that position is about the _center_ of the rectangle). Accordingly, you could create a method called `top()` that would return the computed value when it is called (e.g., `pad.top()`). However, this is _semantically_ inconsistent because methods are about manipulating objects, e.g., drawing them, updating them, comparing them. But `top` is, effectively, an attribute of an object, like its position or size, it is just where the top of it is. We _could_ create and compute a `top` attribute inside the constructor, solving the problem of semantics, as now you could write `pad.top`. However, it would create another problem: What if someone _changes_ it? In that case, its value will not be correct, as `top` value depends on both position and size, so changing without a corresponding change in those two properties makes no sense! 
+
+How do we solve this conundrum? For cases like these, Python has special _decorators_^[These are functions that are called _before_ your function is called and can control how and whether it is executed. They are very useful in certain cases but we will not talk about them in detail here.]: `@property` and `@<name>.setter`. The former decorates a "getter" method for an attribute and that latter the "setter" method.
+
+
+
+
+
+## No the limits
+Before we continue, let us 
+Thing is, there no _private_ attributes or methods in Python. _Special_ methods, like the constructor are distinguished by double underscore, e.g. `__init__()`. There is also a _gentlemen agreement_ that a single underscore _implies_ a private method or an attribute. E.g., if you see an attribute like `_score`, you should pretend that you not know of its existence and, therefore, never read or modify it directly. But, the catch is, this is only an agreement and nothing prevents you or anyone else from modifying _any_ attribute you want ^[Or even replacing methods of an object at runtime, this is called "monkey patching".]. 
+
+you are calling a method but 
