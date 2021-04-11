@@ -47,19 +47,60 @@ The purpose of the game is to land on a landing pad. Let us add one! Create a ne
 
 In the main code, create an object of class `LandingPad` and draw it in the main loop, along with the lander itself.
 
-## @property
+## Computing edges of game objects
 The aim of the game is a soft touchdown on a landing pad. For this, we need to know where the _top_ of the landing pad is, as well as where the _bottom_ of the lander is and where _left_ and _right_ limits of each object are. Let us think about _top_ of the landing pad first, as the rest are very similar.
 
-We do not have information about it _directly_. We have the vertical position of the landing pad in `self.image.pos[1]` (I assume here that the visuals attribute is called image) and its height in `self.image.size[1]`. From this, it is easy to compute the top edge (but remember that position is about the _center_ of the rectangle). Accordingly, you could create a method called `top()` that would return the computed value when it is called (e.g., `pad.top()`). However, this is _semantically_ inconsistent because methods are about manipulating objects, e.g., drawing them, updating them, comparing them. But `top` is, effectively, an attribute of an object, like its position or size, it is just where the top of it is. We _could_ create and compute a `top` attribute inside the constructor, solving the problem of semantics, as now you could write `pad.top`. However, it would create another problem: What if someone _changes_ it? In that case, its value will not be correct, as `top` value depends on both position and size, so changing without a corresponding change in those two properties makes no sense! 
+We do not have information about it _directly_. We have the vertical position of the landing pad in `self.image.pos[1]` (I assume here that the visuals attribute is called image) and its height in `self.image.size[1]`. From this, it is easy to compute the top edge (but remember that position is about the _center_ of the rectangle). Accordingly, you could create a method called `top()` that would return the computed value when it is called (e.g., `pad.top()`). 
 
-How do we solve this conundrum? For cases like these, Python has special _decorators_^[These are functions that are called _before_ your function is called and can control how and whether it is executed. They are very useful in certain cases but we will not talk about them in detail here.]: `@property` and `@<name>.setter`. The former decorates a "getter" method for an attribute and that latter the "setter" method.
+## Virtual attributes via getters and setters
+Our approach of using `pad.top()` works but it is _semantically_ inconsistent. Calling methods is about manipulating objects, e.g., drawing them, updating them, comparing them. However, `top` is, effectively, an _attribute_ of an object, like its position or size, it is just where the top of it is. We _could_ create and compute a `top` attribute inside the constructor, solving the problem of semantics, as now you could write `pad.top`. However, things are more involved with the lander, as it moves so all of its edge attributes (`bottom`, `left` and `right`) need to be recomputed after every update. This is unavoidable but a _real_ attribute approach still creates another problem: What if someone _changes_ it? In that case, its value will not be correct, as `top` value depends on both position and size, so changing it without a corresponding change in those two attributes makes no sense! And it is really hard to decide whether change in the `top` should mean a change in position, or size, or, perhaps, both? Thus, ideally, it should be read-only  attribute.
 
+For cases like these, Python has special _decorators_^[These are functions that "decorate" you function and are called _before_ your function is called. They can control how and whether it is executed. They are very useful in certain scenarios and we will meet them again later. However, we will not talk about them in detail here.]: `@property` and `@<name>.setter`. The former one decorates a method that allows you to _get_ an attribute's value and, typically, is called a "getter". The latter one, is for a "setter" method that _sets_ a new value to an attribute. The idea is to isolate an actual attribute value from the outside influence. It is particularly helpful, if you need to control whether a new value of an attribute is a valid one, needs to converted, etc. For example, `color` attribute of rectangle stimulus uses this approach, which is why it can take RGB triplets, hexadecimal codes, or plain color names as value and set the color.
 
+Here is a sketch of how it could work but note that today, we will only use the _getter_ bit. To have a virtual attribute for `color`, one typically creates an _internal_ attribute with almost the same name, e.g., `_color` or `__color` (see below for the difference). The value is stored and read from that internal attribute by getter and setter  methods:
+```python
+class ExampleClass:
 
+  def __init__(self):
+    self.__color = "red"
 
+  @property
+  def color(self):
+    """
+    This is a getter method for virtual color
+    attribute.
+    """
+    # Here, we simply return the value. But we could 
+    # compute it from some other attributes instead.
+    return self.__color
+    
+  @color.setter # not the most elegant syntax
+  def color(self, newvalue):
+    """
+    Note that the setter name has THE SAME name!
+    It sets a new value and does not return anything.
+    """
+  
+    # Here, you can have checks, conversion, 
+    # additional changes to other attributes, etc.
+    self.__color = newvalue
+    
+    
+example = ExampleClass()
 
-## No the limits
-Before we continue, let us 
-Thing is, there no _private_ attributes or methods in Python. _Special_ methods, like the constructor are distinguished by double underscore, e.g. `__init__()`. There is also a _gentlemen agreement_ that a single underscore _implies_ a private method or an attribute. E.g., if you see an attribute like `_score`, you should pretend that you not know of its existence and, therefore, never read or modify it directly. But, the catch is, this is only an agreement and nothing prevents you or anyone else from modifying _any_ attribute you want ^[Or even replacing methods of an object at runtime, this is called "monkey patching".]. 
+# get the value, note the lack of () after color
+print(example.color)
 
-you are calling a method but 
+# set the value
+example.color = "blue"
+```
+
+Note that there is no _actual_ attribute `color`, yet, our code works as if it does exist. 
+
+There is another twist to the story. If you only define the getter `@property` method but no setter method, your property is read-only^[Note that you cannot have write-only property, you must have either getter alone or both.]! And this exactly what we wanted. Turning out `top()` method into a getter of an attribute is as easy as adding the `@property` decorator to it. After that, we can use it as a read-only attribute `pad.top`. Do this and also create similar read-only attributes for `left` and `right` of the pad and for `bottom`, `left`, and `right` of the lander class.
+
+## Access restrictions
+In the example on getter/setter methods, I used `__color` name with two leading underscores. This is a Python way to make things (almost) private, that is, invisible from outside. If you copy-paste the class code from above and try to access the attribute directly via `example.__color`, you will get an error "'ExampleClass' object has no attribute '__color'". However, as I wrote, it is _almost_ private, so you still can access it! The code format is `object._<ClassName><hidden attribute name>`, so in our case `example._ExampleClass__color`^[Try it and see that it works.]. However, this is a last resort sort of thing that you should use only if you absolutely must access that attribute and, hopefully, know what you doing.
+  
+You can also come across attributes with a _single_ leading underscore in the name, e.g. `_color`. These are not private and are fully visible. However, the leading underscore _hints_ that this attribute or method should be _considered_ private. So, if you see an attribute like `_color`, you should pretend that you know not of its existence and, therefore, you never read or modify it directly. Of course, this is only an _agreement_, so you can always ignore it and work with that attribute directly^[On a side note of doing crazy things that you shouldn't: You can replace a class method with your own at run time, this is called "monkey patching".]. However, this almost certainly will break the code in unexpected and hard-to-trace ways.
+
