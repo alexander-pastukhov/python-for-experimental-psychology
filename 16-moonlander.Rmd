@@ -1,5 +1,8 @@
 # Moon lander game {#seminar-02-04}
 
+Today we will create a moon lander game. You job is simple: land your ship on the pad but do not crash it!
+
+
 ## Create window
 
 * create window
@@ -103,4 +106,43 @@ There is another twist to the story. If you only define the getter `@property` m
 In the example on getter/setter methods, I used `__color` name with two leading underscores. This is a Python way to make things (almost) private, that is, invisible from outside. If you copy-paste the class code from above and try to access the attribute directly via `example.__color`, you will get an error "'ExampleClass' object has no attribute '__color'". However, as I wrote, it is _almost_ private, so you still can access it! The code format is `object._<ClassName><hidden attribute name>`, so in our case `example._ExampleClass__color`^[Try it and see that it works.]. However, this is a last resort sort of thing that you should use only if you absolutely must access that attribute and, hopefully, know what you doing.
   
 You can also come across attributes with a _single_ leading underscore in the name, e.g. `_color`. These are not private and are fully visible. However, the leading underscore _hints_ that this attribute or method should be _considered_ private. So, if you see an attribute like `_color`, you should pretend that you know not of its existence and, therefore, you never read or modify it directly. Of course, this is only an _agreement_, so you can always ignore it and work with that attribute directly^[On a side note of doing crazy things that you shouldn't: You can replace a class method with your own at run time, this is called "monkey patching".]. However, this almost certainly will break the code in unexpected and hard-to-trace ways.
+
+## Landing
+We should check for landing whenever the bottom edge of the lander is at or below the top edge of the landing pad.
+
+A successful landing must satisfy several conditions:
+
+* The lander must be within the limits of the lander pad horizontally.
+* The vertical speed must be zero or negative (otherwise, the lander flies up) but below a certain threshold that we will define as a constant `VERTICAL_SPEED_THRESHOLD = 0.05`.
+* The absolute horizontal speed must be below  a certain threshold, also defined as a constant `HORIZONTAL_SPEED_THRESHOLD = 0.05`.
+
+If _any_ of these conditions are false, the lander has crashed. Either way, the game is over, so you should record the outcome (whether the landing was successful) and set `gameover` to `False`. After the loop, inform the player about the outcome. Draw all game objects plus the message about the outcome (e.g., "You did it!" / "Oh, no!" or something else) and wait for a space key press.
+
+The condition above will be quite long, so fitting it into a single line is suboptimal. In Python, you can split the line by putting `\` at the end of it. So here, a multiline if statement will look as follows:
+```python
+if lander_is_within_horizontal_limits and \
+   lander_vertical_speed_is_good and \
+   lander_horizontal_speed_is_good:
+   ...
+else:
+  ...
+```
+
+## More rounds
+Extend the game to have more than one round after the player either landed or crashed. Remember to reset the position of the lander before each new round. You can also add a `reset()` method to the landing pad as well, randomizing it horizontal position. Importantly, _escape_ key should quit the game entirely. Think how you would implement this.
+
+## Limited fuel
+Let us add a fuel limit to make things more interesting, so that thrursters would work _only_ if there is any fuel left. For this, add a new attribute `fuel` to the lander class (remember that you need to explicitly define all attributes in the constructor) and set to `100` in the reset method. Every use of a thruster should reduce this by 1 and thrusters should work _only_ if there is fuel. You need to take care of this in the `update` method. Think about how you would do it for both vertical and horizontal thrusters.
+
+We also need to tell the player how much the fuel is left. In the constructor, create a text stimulus and place it at the top of the screen. You will need to update the text inside the `update` method and draw it together with the lander itself in the `draw` method.
+
+## Add to it!
+We already have a functioning game but you can add so much more to it: visuals for the thrusters, sounds, background, etc. Experiment at your will!
+
+
+
+
+
+
+
 
