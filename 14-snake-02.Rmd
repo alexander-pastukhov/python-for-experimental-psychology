@@ -4,7 +4,7 @@ Our plan for today is to continue developing the snake game. Our original plan w
 
 1. Create boilerplate code to initialize PsychoPy.
 2. Figure out how to place a square. We need this because our snake is made of square segments and lives on a rectangular grid made of squares.
-3. Create a single segment stationary snake^[Not very exciting, I know. But one has to start somewhere!].
+3. Create a single segment stationary snake.
 4. Make the snake move assuming a rectangular grid.
 5. Implement "died by hitting a wall".
 6. Add apples and make the snake grow.
@@ -14,18 +14,18 @@ Our plan for today is to continue developing the snake game. Our original plan w
 As before, create a new folder for this seminar, copy the latest version of _utilities.py_ to it and base your further development code on the latest exercise from the previous seminar (should be _exercise08.py_).
 
 ## Hitting the wall
-The last thing that we implemented during the previous seminar was our ability to control the snake. However, you cloud steer it off the screen and make it go through itself. Let us fix the former!
+The last thing that we implemented during the previous seminar was our ability to control the snake. However, you could steer it off the screen and make it go through itself. Let us fix the former!
 
-Develop a new function `hit_the_wall` and put it, as per usual, into _utilities.py_. The function should take `snake` variable as a first parameter and check whether the head of the snake (which segment is it?) is still within the grid that we defined (how do you check for that?). The function should return a logical value. `True`, if the head of the snake is outside of the grid limits (so, it is true that the snake hit the wall). `False`, if it is still inside. I mentioned that you should definitely pass the `snake` as an obvious parameter of the function but do you need other parameters? If yes, which ones? Document the function!
+Develop a new function `hit_the_wall` and put it into _utilities.py_. The function should take `snake` variable as a first parameter and check whether the head of the snake (which segment is it?) is still within the grid that we defined (how do you check for that?). The function should return a logical value. `True`, if the head of the snake is outside of the grid limits (so, it is true that the snake hit the wall). `False`, if it is still inside. I mentioned that you should definitely pass the `snake` as an obvious parameter of the function but do you need other parameters? If yes, which ones? Document the function!
 
-Test the function by adding a new check inside the main game loop. Check whether the snake `hit_the_wall()` and, if that is the case, the game should be over. Think about the optimal place where to check for this. You could do it on every iteration but there is a more logical place for it, inside that main loop. Where is it?
+Test the function by adding a new condition inside the main game loop. Check whether the snake `hit_the_wall()` and, if that is the case, the game should be over. Think about the optimal place where to check for this. You could do it on every iteration but there is a more logical place for it, inside that main loop. Where is it?
 
 ::: {.infobox .program}
 Put function _hit_the_wall_ into _utilities.py_ and your updated code into _exercise01.py_.
 :::
 
 ## Is this the snake?
-In the next section, we will be adding apples to the game. The catch is that these apples should appear at a location that is _not_ occupied by the snake. Otherwise, we would generate apples directly into snake's stomach. Practical for the snake but defeats the purpose of the game. To rephrase this problem, we need a function that checks whether a particular grid location is occupied by the snake. As a sneaky preview, we will use this function not just for apples but also to check whether snake is biting itself.
+In the next section, we will be adding apples to the game. The catch is that these apples should appear at a location that is _not_ occupied by the snake. Otherwise, we would generate apples directly into snake's stomach. Practical for the snake but defeats the purpose of the game. To rephrase this problem, we need a function that checks whether a particular grid location is occupied by the snake.
 
 Develop a new function `is_inside_the_snake` that takes the snake as a first parameter and a tuple with a grid location as a second parameter and returns a logical value whether that grid location is occupied by the snake (`True`) or not (`False`). Document the function!
 
@@ -36,11 +36,11 @@ Put function _is_inside_the_snake_ into _utilities.py_.
 :::
 
 ## An inedible apple
-Let us add that highly desirable fruit: the apple! For the moment, we will represent it as a _differently_ colored square and snake won't be able to eat it. I assume that you used green color for the snake, so apples would yellow, red, or orange (but feel free to pick any color of your fancy). Just like a snake segment, an apple is characterized by its position on the grid and by its visuals, so you can use the same dictionary structure as for the snake's segment.
+Let us add that highly desirable fruit: the apple! We will represent it as a _differently_ colored square and snake won't be able to eat it yet. I assume that you used green color for the snake, so apples would yellow, red, or orange (but feel free to pick any color of your fancy). Just like a snake segment, an apple is characterized by its position on the grid and by its visuals, so you can use the same dictionary structure as for the snake's segment.
 
-You need to write a new function `create_apple` that will be fairly similar to `create_snake_segment()` function you developed the last time. It should also return a dictionary with `pos` and `visuals` field. However, instead of taking a predefined grid location, it should generate one randomly within the grid and _not_ on the snake. The `is_inside_the_snake` function will help you to ensure the latter. Think about parameters that you need for this function. Remember to document it!
+You need to write a new function `create_apple` that will be fairly similar to `create_snake_segment()` function you developed the last time. It should also return a dictionary with `pos` and `visuals` field. However, instead of taking a predefined grid location, it should generate one randomly within the grid making sure it is _not_ on the snake. The `is_inside_the_snake` function will help you to ensure the latter. Think about parameters that you need for this function. Remember to document it!
 
-In the main loop, create a new variable `apple` and initialize it via `create_apple()` function. Think about where and when do you need to initialize it. Also, you need to add drawing the apple in the main loop. Again, think about where should you do it. 
+In the main loop, create a new variable `apple` and initialize it via `create_apple()` function. Think about where and when do you need to initialize it. Also, you need to drawi the apple in the main loop. Again, think about where should you do it. 
 
 ::: {.infobox .program}
 Put function _create_apple_ into _utilities.py_ and your updated code into _exercise02.py_.
@@ -51,14 +51,14 @@ Apples exist for snakes to eat them! Let us add this functionality. The general 
 
 You need to add a conditional statement that if the snake's head _is_ on the apple, you should generate a new one the same way as you generated it initially (add the next apple). What should you do, if there is no apple at that location?
 
-Also, modify you code so that you start with a single segment snake.
+Also, if you haven't already done that, modify you code so that you start with a single segment snake.
 
 ::: {.infobox .program}
 Put your updated code into _exercise03.py_.
 :::
 
 ## Eating yourself
-Once our snake grows beyond four segments, it has an opportunity to bite itself^[Why at least five? Draw it on the grid and figure out whether it can do so even with four.]. For this, we need to check that, _after_ the snake moved, its head is _not_ ay the same location as the rest of its body. Create a new function `snake_bit_itself()` that takes the snake as a single parameter and returns `True` or `False` based on whether that is the case. The function is very similar but not identical to `is_inside_the_snake()` function you implemented earlier. What is the critical difference and why cannot you simply reuse it?
+Once our snake grows beyond four segments, it has an opportunity to bite itself^[Why at least five? Draw it on the grid and figure out whether it can do so with four.]. For this, we need to check that, _after_ the snake moved, its head is _not_ at the same location as one of the segments of its body. Create a new function `snake_bit_itself()` that takes the snake as a single parameter and returns `True` or `False` based on whether that is the case. The function is very similar but not identical to `is_inside_the_snake()` function you implemented earlier. What is the critical difference and why cannot you simply reuse that function?
 
 Once you implemented `snake_bit_itself()` function, you should check for that eventually after it moved and, if that is the case, the game should be over.
 
@@ -76,7 +76,7 @@ Put your updated code into _exercise05.py_.
 ## Bells and whistels: three lives
 Let us give the player three attempts to achieve the top score. They have three lives, every time the snake dies, the game _but not the score_ resets: A single segment snake appears at the center and a new random apple appears elsewhere (where should you put the code to create them?). Once the snake dies three times, the game is over. Think how you can implement this three repetitions.
 
-_Important change_, the score should be cumulative, so at the beginning of round two it should be equal to the final score of round one plus current length of the snake (1 at the very beginning). Think how you can achieve this. _Another imporant change_: now you have two nested loop, one is for the game, one is for the round. When the snake dies, the round is over and, if you run out of lives, the game as well. When the player presses _escape_ both round **and** the game are over. Think about how you can implement it.
+The score should be cumulative, so at the beginning of round two it should be equal to the final score of round one plus current length of the snake (1 at the very beginning). Think how you can achieve this. _Another important point_: now you have two nested loop, one is for the game, one is for the round. When the snake dies, the round is over and, if you run out of lives, the game as well. When the player presses _escape_ both round **and** the game are over. Think about how you can implement it.
 
 ::: {.infobox .program}
 Put your updated code into _exercise06.py_.
@@ -101,14 +101,14 @@ Put your updated code into _exercise08.py_.
 
 ## Bells and whistles: sounds
 
-Download [game-over-arcade.wav](material/game-over-arcade.wav)^[Downloaded from [freesound.org](https://freesound.org/) and created by [myfox14](https://freesound.org/people/myfox14/)] and [8-bit-game-over-sound.wav](material /8-bit-game-over-sound.wav)^[Also downloaded from [freesound.org](https://freesound.org/) and created by [EVRetro](https://freesound.org/people/EVRetro/)]. Use the former whenever the snake dies but use the latter when the player runs out of lives. In other words, the game should play a _different_ sound for the game over. You will need to use [Sound](https://www.psychopy.org/api/sound.html#sound) class from [sound](https://www.psychopy.org/api/sound.html) module of PsychoPy.
+Download [game-over-arcade.wav](material/game-over-arcade.wav)^[Downloaded from [freesound.org](https://freesound.org/) and created by [myfox14](https://freesound.org/people/myfox14/)] and [8-bit-game-over-sound.wav](material /8-bit-game-over-sound.wav)^[Also downloaded from [freesound.org](https://freesound.org/) and created by [EVRetro](https://freesound.org/people/EVRetro/)]. Use the former whenever the snake dies and use the latter when the player runs out of lives. You will need to use [Sound](https://www.psychopy.org/api/sound.html#sound) class from [sound](https://www.psychopy.org/api/sound.html) module of PsychoPy.
 
 ::: {.infobox .program}
 Put your updated code into _exercise09.py_.
 :::
 
 ## Bells and whistles: blinking game over message
-Once the game is over, show a blinking "Game Over" message _superimposed_ over the final static game screen. Thus, you need to draw all the game objects and messages (but without moving the snake) plus you show a text message that is on for 0.5 second and off for 0.5 seconds until the player presses _Space_ button. Hint, it should be a separate loop after the main game loop over rounds.
+Once the game is over, show a blinking "Game Over" message _superimposed_ over the final static game screen. Thus, you need to draw all the game objects and messages (but without moving the snake) plus you show a text message that is on for 0.5 second and off for 0.5 seconds until the player presses _Space_ button. Hint, it should be a separate loop after the main game loop over rounds and clock/timers have definitely something to do with it.
 
 ::: {.infobox .program}
 Put your updated code into _exercise10.py_.
