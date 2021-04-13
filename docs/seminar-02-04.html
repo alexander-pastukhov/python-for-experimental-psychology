@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Seminar 8 Gettings start with PsychoPy | Python for social and experimental psychology</title>
+  <title>Seminar 16 Moon lander game | Python for social and experimental psychology</title>
   <meta name="description" content="Material and exercises for ‘Python for social and experimental psychology’ seminar." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Seminar 8 Gettings start with PsychoPy | Python for social and experimental psychology" />
+  <meta property="og:title" content="Seminar 16 Moon lander game | Python for social and experimental psychology" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Seminar 8 Gettings start with PsychoPy | Python for social and experimental psychology" />
+  <meta name="twitter:title" content="Seminar 16 Moon lander game | Python for social and experimental psychology" />
   
   <meta name="twitter:description" content="Material and exercises for ‘Python for social and experimental psychology’ seminar." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="seminar07.html"/>
-<link rel="next" href="seminar09.html"/>
+<link rel="prev" href="seminar-02-03.html"/>
+<link rel="next" href="cross-references.html"/>
 <script src="libs/header-attrs-2.7/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -414,217 +414,194 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="seminar08" class="section level1" number="8">
-<h1><span class="header-section-number">Seminar 8</span> Gettings start with PsychoPy</h1>
-<p>Before we program our first game using <a href="https://psychopy.org/">PsychoPy</a>, we need to spend some time figuring out its basics. It is not the most suitable library for writing games, for that you might want to use <a href="https://arcade.academy/">Python Arcade</a> or <a href="https://www.pygame.org/">PyGame</a>). However, it is (IMHO) the best Python library for developing psychophysical experiments, which is why we will use it in our course.</p>
-<p>For this and following projects, we won’t use Jupyter Notebooks but will develop a Python program using IDE environment of your choice (I would recommend <a href="getting-started.html#install-vs-code">Visual Studio Code</a>). You still could and should use Jupyter for playing with and testing small code snippets, though. I’ve added a section on setting up <a href="getting-started.html#debug-in-vs-code">debugging in VS Code</a> in <a href="getting-started.html#getting-started">Getting Started</a>, take a look once you are ready to run the code.</p>
-<p>From now on, create a separate subfolder for each seminar (e.g. <em>Seminar 08</em> for today) and create a separate file (or files, later on) for each exercise<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> (e.g., <em>exercise01.py</em>, <em>exercise02.py</em>, etc.). This is not the most efficient implementation of a version control and will certainly clutter the folder. But it would allow me to see your solutions on every step, which will make it easier for me to write comments. For submitting the assignment, just zip the folder and submit the zip-file.</p>
-<div id="minimal-psychopy-code" class="section level2" number="8.1">
-<h2><span class="header-section-number">8.1</span> Minimal PsychoPy code</h2>
-<p>In the subfolder for the current seminar, create file <em>exercise01.py</em> (I would recommend using lead zero in <em>01</em>, as it will ensure correct file sorting once we get to exercise 10, 11, etc.). Copy-paste the following code:</p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb97-1"><a href="seminar08.html#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;</span></span>
-<span id="cb97-2"><a href="seminar08.html#cb97-2" aria-hidden="true" tabindex="-1"></a><span class="co">A minimal PsychoPy code.</span></span>
-<span id="cb97-3"><a href="seminar08.html#cb97-3" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;</span></span>
-<span id="cb97-4"><a href="seminar08.html#cb97-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-5"><a href="seminar08.html#cb97-5" aria-hidden="true" tabindex="-1"></a><span class="co"># this imports two modules from psychopy</span></span>
-<span id="cb97-6"><a href="seminar08.html#cb97-6" aria-hidden="true" tabindex="-1"></a><span class="co"># visual has all the visual stimuli, including the Window class</span></span>
-<span id="cb97-7"><a href="seminar08.html#cb97-7" aria-hidden="true" tabindex="-1"></a><span class="co"># that we need to create a program window</span></span>
-<span id="cb97-8"><a href="seminar08.html#cb97-8" aria-hidden="true" tabindex="-1"></a><span class="co"># event has function for working with mouse and keyboard</span></span>
-<span id="cb97-9"><a href="seminar08.html#cb97-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> psychopy <span class="im">import</span> visual, event</span>
-<span id="cb97-10"><a href="seminar08.html#cb97-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-11"><a href="seminar08.html#cb97-11" aria-hidden="true" tabindex="-1"></a><span class="co"># creating a 800 x 600 window</span></span>
-<span id="cb97-12"><a href="seminar08.html#cb97-12" aria-hidden="true" tabindex="-1"></a>win <span class="op">=</span> visual.Window(size<span class="op">=</span>(<span class="dv">800</span>, <span class="dv">600</span>))</span>
-<span id="cb97-13"><a href="seminar08.html#cb97-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-14"><a href="seminar08.html#cb97-14" aria-hidden="true" tabindex="-1"></a><span class="co"># waiting for any key press</span></span>
-<span id="cb97-15"><a href="seminar08.html#cb97-15" aria-hidden="true" tabindex="-1"></a>event.waitKeys()</span>
-<span id="cb97-16"><a href="seminar08.html#cb97-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-17"><a href="seminar08.html#cb97-17" aria-hidden="true" tabindex="-1"></a><span class="co"># closing the window</span></span>
-<span id="cb97-18"><a href="seminar08.html#cb97-18" aria-hidden="true" tabindex="-1"></a>win.close()</span></code></pre></div>
-<p>Run it to check that PsychoPy work. You should get a gray window with <em>PsychoPy</em> title. Press any key (click on the window, if you switched to another one, so that it registers the key press) and it should close. Not very exciting but does show that everything works as it should.</p>
+<div id="seminar-02-04" class="section level1" number="16">
+<h1><span class="header-section-number">Seminar 16</span> Moon lander game</h1>
+<p>Today we will create a moon lander game. You job is simple: land your ship on the pad but do not crash it! Here is a brief video of my implementation of the game</p>
+<iframe width="636" height="504" src="videos/moonlander.m4v" frameborder="0" allow="accelerometer; encrypted-media;  gyroscope; picture-in-picture">
+</iframe>
+<p>We will program it using object-oriented approach from the beginning by defining two classes: the <code>MoonLander</code> and the <code>LandingPad</code>. Here is the general outline of how we will proceed:</p>
+<ol style="list-style-type: decimal">
+<li>Create a basic PsychoPy window and main experimental loop.</li>
+<li>Define a basic <code>MoonLander</code> class with a static image and add its drawing to the main loop.</li>
+<li>Randomize position of the lander.</li>
+<li>Add gravity pull.</li>
+<li>Add vertical thruster that counter-act gravity.</li>
+<li>Add horizontal thrusters, so you can maneuver around.</li>
+<li>Define <code>LandingPad</code> class.</li>
+<li>Learn about virtual attributes and implement them for both classes.</li>
+<li>Implement landing / crashing checks.</li>
+<li>Add more runs.</li>
+<li>Limit the fuel.</li>
+</ol>
+<p>This time most of the code will be in classes, so making versions of them will be quite cumbersome. Thus, submit only the final game. I would suggest calling files <em>main.py</em> (main script), <em>moonlander.py</em> (<code>MoonLander</code> class), and <em>landingpad.py</em> (<code>LandingPad</code> class).</p>
+<div id="create-window" class="section level2" number="16.1">
+<h2><span class="header-section-number">16.1</span> Create window</h2>
+<p>Create a PsychoPy window 640 × 480 in size. Add a main game loop with <code>gameover</code> variable that can be exited by pressing <em>escape</em>.</p>
 <div class="infobox program">
-<p>Put your code into <em>exercise01.py</em>.</p>
+<p>Put your code into <em>main.py</em>.</p>
 </div>
-<p>Let me explain what we are doing here line-by-line.</p>
+</div>
+<div id="create-moonlander-class" class="section level2" number="16.2">
+<h2><span class="header-section-number">16.2</span> Create MoonLander class</h2>
+<p>In <em>moonlander.py</em>, create a new <code>MoonLander</code> class. It should have an ImageStim as an attribute (that will be the visuals of the ship) created using <a href="material/ufo.png">ufo.png</a> image. For the moment, place it at its default location at the center. Also, implement <code>draw()</code> method that should draw all visual elements of the lander (we have one now but there will be more later on).</p>
+<p>Create an instance of <code>MoonLander</code> class in the main script and draw it in the main game loop. You should see a static picture of the ship at the center of the screen.</p>
+<div class="infobox program">
+<p>Create <code>MoonLander</code> class and use it in the main game loop.</p>
+</div>
+</div>
+<div id="randomize-position" class="section level2" number="16.3">
+<h2><span class="header-section-number">16.3</span> Randomize position</h2>
+<p>Implement a new method <code>reset()</code> that resets the lander for the next round. At the moment, the only thing it should do is to randomize position of the image. Use range of -0.5..0.5 horizontally and 0.8..0.9 vertically. Call it in the constructor and test it in the main loop by calling it every time you press <em>space</em> button.</p>
+<div class="infobox program">
+<p>Add <code>reset()</code> method to <code>MoonLander</code> class and use it in the main game loop.</p>
+</div>
+</div>
+<div id="gravity" class="section level2" number="16.4">
+<h2><span class="header-section-number">16.4</span> Gravity</h2>
+<p>Next we need to create a gravitational force that will pull the lander down. Create a constant <code>GRAVITY = 0.0001</code><a href="#fn34" class="footnote-ref" id="fnref34"><sup>34</sup></a> and create a new attribute <code>speed = [0, 0]</code> that is horizontal and vertical speed of the lander. Note that it should be reset to <code>(0, 0)</code> in the <code>reset()</code> method.</p>
+<p>The position of the lander (<code>self.image.pos</code>) must adjusted based on the the speed on every frame. But before that, speed itself must be adjusted based on the forces from gravity and thrusters that act upon the lander. Create a new method <code>update()</code> where you first adjust <em>vertical</em> speed based on gravity alone (we will add the effect of thrusters later) and when adjust <em>vertical</em> position based on vertical speed (we will worry about the horizontal speed, once we start working on horizontal thrusters). Call <code>update()</code> method before the <code>draw()</code> in the main loop. Your lander should fall down at accelerated rate (you can play with <code>GRAVITY</code> constant to see how it changes the speed of falling). Once it is off the screen, press space and see it go again.</p>
+<div class="infobox program">
+<p>Update <code>MoonLander</code> class for the effect of gravity and use this in the main loop.</p>
+</div>
+</div>
+<div id="vertical-thurster" class="section level2" number="16.5">
+<h2><span class="header-section-number">16.5</span> Vertical thurster</h2>
+<p>PsychoPy allows you to get key presses or, using <a href="https://www.psychopy.org/api/hardware/keyboard.html">hardware.keyboard</a> to get both press and release time. Unfortunately, you get both only <em>after</em> the key was released. But in our game, the thursters must be active for as long as the player presses the key. Thus, we need to know whether a key is <em>currently</em> pressed, not that it was pressed and released at some time in the past. For this, we will use <em>pyglet</em> library (that is a backend used by PsychoPy) directly. First, in your <em>moonlander.py</em> add <code>import pyglet</code> and then include the following code inside the constructor of the class.</p>
+<div class="sourceCode" id="cb153"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb153-1"><a href="seminar-02-04.html#cb153-1" aria-hidden="true" tabindex="-1"></a><span class="co"># setting up keyboard monitoring</span></span>
+<span id="cb153-2"><a href="seminar-02-04.html#cb153-2" aria-hidden="true" tabindex="-1"></a><span class="va">self</span>.key <span class="op">=</span> pyglet.window.key</span>
+<span id="cb153-3"><a href="seminar-02-04.html#cb153-3" aria-hidden="true" tabindex="-1"></a><span class="va">self</span>.keyboard <span class="op">=</span> <span class="va">self</span>.key.KeyStateHandler()</span>
+<span id="cb153-4"><a href="seminar-02-04.html#cb153-4" aria-hidden="true" tabindex="-1"></a>win.winHandle.push_handlers(<span class="va">self</span>.keyboard)</span></code></pre></div>
+<p>This installs a “handler” that monitors the state of the keyboard. Now, you can read out the state of, say, <em>down arrow</em> key as<code>self.keyboard[self.key.DOWN]</code> (<code>True</code> if pressed, <code>False</code> otherwise). We will use <code>DOWN</code> for the vertical thruster and <code>LEFT</code> and <code>RIGHT</code> for the horizontal ones.</p>
+<p>Define a <code>VERTICAL_ACC</code> to be twice the gravity (but you can use some other number, of course) and update the <code>update()</code><a href="#fn35" class="footnote-ref" id="fnref35"><sup>35</sup></a>, so that the total vertical acceleration is <code>VERTICAL_ACC + GRAVITY</code> if the the user is pressing <em>down</em> key (use <code>self.keyboard</code> and <code>self.key</code> to figure that out) but <code>GRAVITY</code> alone, if not.</p>
+<p>Test you that vertical thruster works!</p>
+<div class="infobox program">
+<p>Update <code>MoonLander</code> class for the counter-effect of a vertical thruster.</p>
+</div>
+</div>
+<div id="horizontal-thursters" class="section level2" number="16.6">
+<h2><span class="header-section-number">16.6</span> Horizontal thursters</h2>
+<p>Now implement the same logic, computing acceleration, speed, and position but for horizontal thrusters (define <code>HORIZONTAL_ACC</code>, decide on its value yourself). Remember, the <em>right</em> thruster pushes the lander to the <em>left</em> and vice versa! Assume that only one of the keys, <em>left</em> or <em>right</em>, can be pressed at a time. Test it by flying around!</p>
+<div class="infobox program">
+<p>Add horizontal thrusters to <code>MoonLander</code>.</p>
+</div>
+</div>
+<div id="landing-pad-visuals" class="section level2" number="16.7">
+<h2><span class="header-section-number">16.7</span> Landing pad: visuals</h2>
+<p>The purpose of the game is to land on a landing pad. Let us add one! Create a new file <em>landing_pad.py</em> and a new class <code>LandingPad</code>. In the constructor, create a rectangle that is <code>0.5</code> units wide and is located at the bottom of the window but at a random position within the window horizontally. Pick the fill and line colors that you like. The only other method the class needs is <code>draw()</code>.</p>
+<p>In the main code, create an object of class <code>LandingPad</code> and draw it in the main loop, along with the lander itself.</p>
+<div class="infobox program">
+<p>Create <code>LandingPad</code> class and use it in the main loop.</p>
+</div>
+</div>
+<div id="computing-edges-of-game-objects" class="section level2" number="16.8">
+<h2><span class="header-section-number">16.8</span> Computing edges of game objects</h2>
+<p>The aim of the game is a soft touchdown on a landing pad. For this, we need to know where the <em>top</em> of the landing pad is, as well as where the <em>bottom</em> of the lander is and where <em>left</em> and <em>right</em> limits of each object are. Let us think about <em>bottom</em> of the lander first, as the rest are very similar.</p>
+<p>We do not have information about it <em>directly</em>. We have the vertical position of the lander in <code>self.image.pos[1]</code> (I assume here that the visuals attribute is called image) and its height in <code>self.image.size[1]</code>. From this, it is easy to compute the bottom edge (but remember that position is about the <em>center</em> of the rectangle). Accordingly, you could create a method called <code>bottom()</code> that would return the computed value when it is called (e.g., <code>lander.bottom()</code>).</p>
+<div class="infobox program">
+<p>Implement <code>bottom()</code> method for the <code>MoonLander</code> class.</p>
+</div>
+</div>
+<div id="virtual-attributes-via-getters-and-setters" class="section level2" number="16.9">
+<h2><span class="header-section-number">16.9</span> Virtual attributes via getters and setters</h2>
+<p>Our approach of using <code>lander.bottom()</code> works but it is <em>semantically</em> inconsistent. Calling methods is about manipulating objects, e.g., drawing them, updating them, comparing them. However, <code>bottom</code> is, effectively, an <em>attribute</em> of an object, like its position or size, it is just where the bottom of it is. We <em>could</em> create and compute a <code>bottom</code> attribute inside the constructor, solving the problem of semantics, as now you could write <code>lander.bottom</code>. Note that as the lander moves all of its edge attributes (<code>bottom</code>, <code>left</code> and <code>right</code>) need to be recomputed after every update. This is unavoidable but a <em>real</em> attribute approach still creates another problem: What if someone <em>changes</em> it? In that case, its value will not be correct, as <code>bottom</code> value depends on both position and size, so changing it without a corresponding change in those two attributes makes no sense! And it is really hard to decide whether change in the <code>bottom</code> should mean a change in position, or size, or, perhaps, both? Thus, ideally, it should be a read-only attribute.</p>
+<p>For cases like these, Python has special <em>decorators</em><a href="#fn36" class="footnote-ref" id="fnref36"><sup>36</sup></a>: <code>@property</code> and <code>@&lt;name&gt;.setter</code>. The former one decorates a method that allows you to <em>get</em> an attribute’s value and, typically, is called a “getter”. The latter one, is for a “setter” method that <em>sets</em> a new value to an attribute. The idea is to isolate an actual attribute value from the outside influence. It is particularly helpful, if you need to control whether a new value of an attribute is a valid one, needs to converted, etc. For example, <code>color</code> attribute of the rectangle stimulus uses this approach, which is why it can take RGB triplets, hexadecimal codes, or plain color names as a value and set the color correctly.</p>
+<p>Here is a sketch of how it could work but note that today, we will only use the <em>getter</em> bit. To have a virtual attribute for <code>color</code>, one typically creates an <em>internal</em> attribute with almost the same name, e.g., <code>_color</code> or <code>__color</code> (see below for the difference). The value is stored and read from that internal attribute by getter and setter methods:</p>
+<div class="sourceCode" id="cb154"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb154-1"><a href="seminar-02-04.html#cb154-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ExampleClass:</span>
+<span id="cb154-2"><a href="seminar-02-04.html#cb154-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-3"><a href="seminar-02-04.html#cb154-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
+<span id="cb154-4"><a href="seminar-02-04.html#cb154-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.__color <span class="op">=</span> <span class="st">&quot;red&quot;</span></span>
+<span id="cb154-5"><a href="seminar-02-04.html#cb154-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-6"><a href="seminar-02-04.html#cb154-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">@property</span></span>
+<span id="cb154-7"><a href="seminar-02-04.html#cb154-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> color(<span class="va">self</span>):</span>
+<span id="cb154-8"><a href="seminar-02-04.html#cb154-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb154-9"><a href="seminar-02-04.html#cb154-9" aria-hidden="true" tabindex="-1"></a><span class="co">    This is a getter method for virtual color</span></span>
+<span id="cb154-10"><a href="seminar-02-04.html#cb154-10" aria-hidden="true" tabindex="-1"></a><span class="co">    attribute.</span></span>
+<span id="cb154-11"><a href="seminar-02-04.html#cb154-11" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb154-12"><a href="seminar-02-04.html#cb154-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Here, we simply return the value. But we could </span></span>
+<span id="cb154-13"><a href="seminar-02-04.html#cb154-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compute it from some other attribute(s) instead.</span></span>
+<span id="cb154-14"><a href="seminar-02-04.html#cb154-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">self</span>.__color</span>
+<span id="cb154-15"><a href="seminar-02-04.html#cb154-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb154-16"><a href="seminar-02-04.html#cb154-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">@color.setter</span> <span class="co"># not the most elegant syntax, IMHO</span></span>
+<span id="cb154-17"><a href="seminar-02-04.html#cb154-17" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> color(<span class="va">self</span>, newvalue):</span>
+<span id="cb154-18"><a href="seminar-02-04.html#cb154-18" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb154-19"><a href="seminar-02-04.html#cb154-19" aria-hidden="true" tabindex="-1"></a><span class="co">    Note that the setter name has THE SAME name as the getter!</span></span>
+<span id="cb154-20"><a href="seminar-02-04.html#cb154-20" aria-hidden="true" tabindex="-1"></a><span class="co">    It sets a new value and does not return anything.</span></span>
+<span id="cb154-21"><a href="seminar-02-04.html#cb154-21" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb154-22"><a href="seminar-02-04.html#cb154-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb154-23"><a href="seminar-02-04.html#cb154-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Here, you can have checks, conversion, </span></span>
+<span id="cb154-24"><a href="seminar-02-04.html#cb154-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># additional changes to other attributes, etc.</span></span>
+<span id="cb154-25"><a href="seminar-02-04.html#cb154-25" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.__color <span class="op">=</span> newvalue</span>
+<span id="cb154-26"><a href="seminar-02-04.html#cb154-26" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb154-27"><a href="seminar-02-04.html#cb154-27" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb154-28"><a href="seminar-02-04.html#cb154-28" aria-hidden="true" tabindex="-1"></a>example <span class="op">=</span> ExampleClass()</span>
+<span id="cb154-29"><a href="seminar-02-04.html#cb154-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-30"><a href="seminar-02-04.html#cb154-30" aria-hidden="true" tabindex="-1"></a><span class="co"># get the value, note the lack of () after color</span></span>
+<span id="cb154-31"><a href="seminar-02-04.html#cb154-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(example.color)</span>
+<span id="cb154-32"><a href="seminar-02-04.html#cb154-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-33"><a href="seminar-02-04.html#cb154-33" aria-hidden="true" tabindex="-1"></a><span class="co"># set the value</span></span>
+<span id="cb154-34"><a href="seminar-02-04.html#cb154-34" aria-hidden="true" tabindex="-1"></a>example.color <span class="op">=</span> <span class="st">&quot;blue&quot;</span></span></code></pre></div>
+<p>Note that there is no <em>actual</em> attribute <code>color</code>, yet, our code works as if it does exist.</p>
+<p>There is another twist to the story. If you only define the getter <code>@property</code> method but no setter method, your property is read-only<a href="#fn37" class="footnote-ref" id="fnref37"><sup>37</sup></a>! And this exactly what we wanted. Turning out <code>bottom()</code> method into a getter of an attribute is as easy as adding the <code>@property</code> decorator to it. After that, we can use it as a read-only attribute <code>lander.bottom</code>. Do this and also create similar read-only attributes for <code>top</code>, <code>left</code>, and <code>right</code> of the pad and for <code>left</code>, and <code>right</code> of the lander class.</p>
+<div class="infobox program">
+<p>Implement virtual properties for <code>MoonLander</code> and <code>LandingPad</code> classes.</p>
+</div>
+</div>
+<div id="access-restrictions" class="section level2" number="16.10">
+<h2><span class="header-section-number">16.10</span> Access restrictions</h2>
+<p>In the example on getter/setter methods, I used <code>__color</code> name with <em>two</em> leading underscores. This is a Python way to make things (almost) private, that is, invisible from outside. If you copy-paste the class code from above and try to access the attribute directly via <code>example.__color</code>, you will get an error "‘ExampleClass’ object has no attribute ’__color’". However, as I wrote, it is <em>almost</em> private, so you still can access it! The code format is <code>object._&lt;ClassName&gt;&lt;hidden attribute name&gt;</code>, so in our case <code>example._ExampleClass__color</code><a href="#fn38" class="footnote-ref" id="fnref38"><sup>38</sup></a>. However, this is a last resort sort of thing that you should use only if you absolutely must access that attribute or method and, hopefully, know what you doing.</p>
+<p>You can also come across attributes with a <em>single</em> leading underscore in the name, e.g. <code>_color</code>. These are not private and are fully visible. However, the leading underscore <em>hints</em> that this attribute or method should be <em>considered</em> private. So, if you see an attribute like <code>_color</code>, you should pretend that you know not of its existence and, therefore, you never read or modify it directly. Of course, this is only an <em>agreement</em>, so you can always ignore it and work with that attribute directly<a href="#fn39" class="footnote-ref" id="fnref39"><sup>39</sup></a>. However, this almost certainly will break the code in unexpected and hard-to-trace ways.</p>
+</div>
+<div id="landing" class="section level2" number="16.11">
+<h2><span class="header-section-number">16.11</span> Landing</h2>
+<p>We should check for landing whenever the bottom edge of the lander is at or below the top edge of the landing pad. A successful landing must satisfy several conditions:</p>
 <ul>
-<li><code>from psychopy import visual, event</code> here we import two (out of many) PsychoPy modules that give us <em>visual</em> stimuli and main program window plus ability to process <em>events</em>, such as keyboard presses or mouse activity.</li>
-<li><code>win = visual.Window(size=(800, 600))</code> we create a new PsychoPy <a href="https://psychopy.org/api/visual/window.html#psychopy.visual.Window">Window</a> <em>object</em> (you will learn about classes and objects soon) and define its <code>size</code> as 800 by 600 pixels (you can change that and see how the window also changes its size).</li>
-<li><code>event.waitKeys()</code> function <a href="https://psychopy.org/api/event.html#psychopy.event.waitKeys">waitKeys()</a> waits for a press of a keyboard key. As we didn’t specify which keys we are interested in, <em>any</em> key will do. Later on, you will learn how to make it wait for specific keys.</li>
-<li><code>win.close()</code> this calls a <em>method</em> <code>close</code> (function that belongs to an object, again, you’ll learn about them later) that tells window <code>win</code> to close itself.</li>
+<li>The lander must be within the limits of the lander pad horizontally.</li>
+<li>The vertical speed must be zero or negative (otherwise, the lander flies up) but below a certain threshold that we will define as a constant <code>VERTICAL_SPEED_THRESHOLD = 0.05</code>.</li>
+<li>The absolute horizontal speed must be below a certain threshold, also defined as a constant <code>HORIZONTAL_SPEED_THRESHOLD = 0.05</code>.</li>
 </ul>
-</div>
-<div id="adding-main-loop" class="section level2" number="8.2">
-<h2><span class="header-section-number">8.2</span> Adding main loop</h2>
-<p>Currently, nothing really happens in the code, so let us add the main loop. The loop goes between opening and closing the window:</p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb98-1"><a href="seminar08.html#cb98-1" aria-hidden="true" tabindex="-1"></a>importing libraries</span>
-<span id="cb98-2"><a href="seminar08.html#cb98-2" aria-hidden="true" tabindex="-1"></a>opening the window</span>
-<span id="cb98-3"><a href="seminar08.html#cb98-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb98-4"><a href="seminar08.html#cb98-4" aria-hidden="true" tabindex="-1"></a><span class="op">--&gt;</span> our main loop <span class="op">&lt;--</span></span>
-<span id="cb98-5"><a href="seminar08.html#cb98-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb98-6"><a href="seminar08.html#cb98-6" aria-hidden="true" tabindex="-1"></a>closing the window</span></code></pre></div>
-<p>For this, you need to create a new variable <code>gameover</code> and set it too <code>False</code> (just like we did it in <em>Hunt the Wumpus</em> game) and run the loop for as long as the game is <strong>not</strong> over. Inside the loop, use function <a href="https://psychopy.org/api/event.html#psychopy.event.getKeys">event.getKeys()</a> to check whether <em>escape</em> button was pressed (for this, you need to pass <code>keyList=['escape']</code>). The function returns a list of keys, if any of them were pressed in the meantime or an empty list, if no keys from the list were pressed. Accordingly, you need to check whether the return value as an empty list. There are two ways to do this. First, you can check whether length of the list is larger than zero (so, it has elements) using function <a href="https://docs.python.org/3/library/functions.html#len">len()</a>. Alternatively, an empty list evaluates to <code>False</code> when converted to a logical value either explicitly (via <code>bool()</code> type conversion) or when evaluated inside of the condition in an <code>if</code> or <code>while</code> statement:</p>
-<div class="sourceCode" id="cb99"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb99-1"><a href="seminar08.html#cb99-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> []</span>
-<span id="cb99-2"><a href="seminar08.html#cb99-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> x:</span>
-<span id="cb99-3"><a href="seminar08.html#cb99-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&quot;List is not empty&quot;</span>)</span>
-<span id="cb99-4"><a href="seminar08.html#cb99-4" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb99-5"><a href="seminar08.html#cb99-5" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&quot;List is definitely empty&quot;</span>)</span></code></pre></div>
-<pre><code>## List is definitely empty</code></pre>
-<p>If list is <em>not</em> empty, you should change <code>gameover</code> to <code>True</code>. Think, how can you do it <em>without</em> an <code>if</code> statement, computing the logical value directly?</p>
+<p>If <em>any</em> of these three conditions are false, the lander has crashed. Either way, the game is over, so you should record the outcome (whether the landing was successful) and set <code>gameover</code> to <code>False</code>. After the loop, inform the player about the outcome. Draw all game objects plus the message about the outcome (e.g., “You did it!” / “Oh, no!” or something else) and wait for a space key press.</p>
+<p>The condition above will be quite long, so fitting it into a single line will make it hard to read. In Python, you can split the line by putting <code>\</code> at the end of it. So here, a multiline if statement will look as follows:</p>
+<div class="sourceCode" id="cb155"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb155-1"><a href="seminar-02-04.html#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> lander_is_within_horizontal_limits <span class="kw">and</span> <span class="op">\</span></span>
+<span id="cb155-2"><a href="seminar-02-04.html#cb155-2" aria-hidden="true" tabindex="-1"></a>   lander_vertical_speed_is_good <span class="kw">and</span> <span class="op">\</span></span>
+<span id="cb155-3"><a href="seminar-02-04.html#cb155-3" aria-hidden="true" tabindex="-1"></a>   lander_horizontal_speed_is_good:</span>
+<span id="cb155-4"><a href="seminar-02-04.html#cb155-4" aria-hidden="true" tabindex="-1"></a>   ...</span>
+<span id="cb155-5"><a href="seminar-02-04.html#cb155-5" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb155-6"><a href="seminar-02-04.html#cb155-6" aria-hidden="true" tabindex="-1"></a>  ...</span></code></pre></div>
 <div class="infobox program">
-<p>Put your code into <em>exercise02.py</em>.</p>
+<p>Implement landing checks.</p>
 </div>
 </div>
-<div id="adding-text-message" class="section level2" number="8.3">
-<h2><span class="header-section-number">8.3</span> Adding text message</h2>
-<p>Although we are now running a nice loop, we still have only a boring gray window to look at. Let us create a text stimulus, which would say “Press escape to exit” and display it during the loop. For this we will use <a href="https://psychopy.org/api/visual/textstim.html">visual.TextStim</a> class from PsychoPy library.</p>
-<p>First, you need to create the <code>press_escape_text</code> object (instance of the <code>TextStim</code> class) before the main loop. There are quite a few parameters that you can play with but minimally, you need to pass the program window (our <code>win</code> variable) and the actual text you want to display (<code>"Press escape to exit"</code>). For all other settings PsychoPy will use its defaults (default font family, color and size, placed right the screen center).</p>
-<div class="sourceCode" id="cb101"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb101-1"><a href="seminar08.html#cb101-1" aria-hidden="true" tabindex="-1"></a>press_escape_text <span class="op">=</span> visual.TextStim(win, <span class="st">&quot;Press escape to exit&quot;</span>)</span></code></pre></div>
-<p>To show the visuals in PsychoPy, you first <em>draw</em> each element by calling its <code>draw()</code> method (thus, in our case, <code>press_escape_text.draw()</code>) and then put the “drawing” on the screen by <em>flipping</em> we window (<code>win.flip()</code> method). These two calls should go inside the main loop either before (my preference) or after the keyboard check.</p>
-<div class="sourceCode" id="cb102"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb102-1"><a href="seminar08.html#cb102-1" aria-hidden="true" tabindex="-1"></a>importing libraries</span>
-<span id="cb102-2"><a href="seminar08.html#cb102-2" aria-hidden="true" tabindex="-1"></a>opening the window</span>
-<span id="cb102-3"><a href="seminar08.html#cb102-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb102-4"><a href="seminar08.html#cb102-4" aria-hidden="true" tabindex="-1"></a><span class="op">--&gt;</span> create press_escape_text here <span class="op">&lt;--</span></span>
-<span id="cb102-5"><a href="seminar08.html#cb102-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb102-6"><a href="seminar08.html#cb102-6" aria-hidden="true" tabindex="-1"></a>gameover <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb102-7"><a href="seminar08.html#cb102-7" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="kw">not</span> gameover:</span>
-<span id="cb102-8"><a href="seminar08.html#cb102-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">--&gt;</span> draw press_escape_text <span class="op">&lt;--</span></span>
-<span id="cb102-9"><a href="seminar08.html#cb102-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">--&gt;</span> flip the window  <span class="op">&lt;--</span></span>
-<span id="cb102-10"><a href="seminar08.html#cb102-10" aria-hidden="true" tabindex="-1"></a>    check keyboard <span class="cf">for</span> escape button press</span>
-<span id="cb102-11"><a href="seminar08.html#cb102-11" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb102-12"><a href="seminar08.html#cb102-12" aria-hidden="true" tabindex="-1"></a>close the window</span></code></pre></div>
-<p>Now, you should have a nice, although static, message that tells you how you can exit the game. Check out the manual page for <a href="https://psychopy.org/api/visual/textstim.html">visual.TextStim</a> and try changing it by passing additional parameters to the object constructor call. For example you can change its <code>color</code>, whether text is <code>bold</code> and/or <code>italic</code>, how it is aligned, etc. However, if you want to change <em>where</em> the text is displayed, read on below.</p>
+<div id="more-rounds-1" class="section level2" number="16.12">
+<h2><span class="header-section-number">16.12</span> More rounds</h2>
+<p>Extend the game to have more than one round after the player either landed or crashed. Remember to reset the position of the lander before each new round. You can also add a <code>reset()</code> method to the landing pad as well, randomizing it horizontal position. Importantly, <em>escape</em> key should quit the game, not just the round, and there should be no “success”/“failure” message in that case. Think how you would implement this.</p>
 <div class="infobox program">
-<p>Put your code into <em>exercise03.py</em>.</p>
+<p>Add more rounds.</p>
 </div>
 </div>
-<div id="adding-a-square-and-placing-it-not-at-the-center-of-the-window" class="section level2" number="8.4">
-<h2><span class="header-section-number">8.4</span> Adding a square and placing it <em>not</em> at the center of the window</h2>
-<p>Now, let us figure out how create and move visuals to an arbitrary location on the screen. In principle, this is very straightforward as every visual stimulus (including <code>TextStim</code> we used just above) has <code>pos</code> property that specifies (you guessed it!) its position. However, to make your life easier, PsychoPy first complicates it by having <a href="https://psychopy.org/general/units.html"><strong>five</strong> different units systems</a>.</p>
-<p>Before we start exploring the units, let us create a simple white square. The visual class we need is <a href="https://psychopy.org/api/visual/rect.html">visual.Rect</a>. Just like the <code>TextStim</code> above, it requires <code>win</code> variable (so it knows which window it belongs to), <code>width</code> (defaults to 0.5 of that mysterious units), <code>height</code> (also defaults to 0.5), <code>pos</code> (defaults to (0,0)), <code>lineColor</code> (defaults to <code>white</code>) and <code>fillColor</code> (defaults to <code>None</code>). Thus, to get a “standard” white square with size of <code>(0.5, 0.5)</code> units at <code>(0, 0)</code> location you only need pass the <code>win</code> variable: <code>white_square = visual.Rect(win)</code>. You draw the square just like you drew the text stimulus, via its <code>draw()</code> method. Create the code, run it to see a very white square, and read on.</p>
-<div class="sourceCode" id="cb103"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb103-1"><a href="seminar08.html#cb103-1" aria-hidden="true" tabindex="-1"></a>importing libraries</span>
-<span id="cb103-2"><a href="seminar08.html#cb103-2" aria-hidden="true" tabindex="-1"></a>opening the window</span>
-<span id="cb103-3"><a href="seminar08.html#cb103-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb103-4"><a href="seminar08.html#cb103-4" aria-hidden="true" tabindex="-1"></a><span class="op">--&gt;</span> create white_square here <span class="op">&lt;--</span></span>
-<span id="cb103-5"><a href="seminar08.html#cb103-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb103-6"><a href="seminar08.html#cb103-6" aria-hidden="true" tabindex="-1"></a>gameover <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb103-7"><a href="seminar08.html#cb103-7" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="kw">not</span> gameover:</span>
-<span id="cb103-8"><a href="seminar08.html#cb103-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">--&gt;</span> draw white_square <span class="kw">and</span> flip the window here <span class="op">&lt;--</span></span>
-<span id="cb103-9"><a href="seminar08.html#cb103-9" aria-hidden="true" tabindex="-1"></a>    check keyboard <span class="cf">for</span> escape button press</span>
-<span id="cb103-10"><a href="seminar08.html#cb103-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb103-11"><a href="seminar08.html#cb103-11" aria-hidden="true" tabindex="-1"></a>close the window</span></code></pre></div>
+<div id="limited-fuel" class="section level2" number="16.13">
+<h2><span class="header-section-number">16.13</span> Limited fuel</h2>
+<p>Let us add a fuel limit to make things more interesting, so that thrursters would work <em>only</em> if there is any fuel left. For this, define a new constant <code>FULL_TANK</code> (I’ve picked it to be <code>100</code> but you can have more) and add a new attribute <code>fuel</code> to the lander class (remember that you need to explicitly define all attributes in the constructor). The <code>fuel</code> level should be set to <code>FULL_TANK</code> whenever you reset the lander.</p>
+<p>Every use of a thruster should reduce this by 1 and thrusters should work <em>only</em> if there is fuel. You need to take care of this in the <code>update</code> method. Think about how you would do it for both vertical and horizontal thrusters.</p>
+<p>We also need to tell the player how much the fuel is left. I’ve implemented it as a bar gauge but you can implement it as text stimulus as well. Create the appropriate visual attribute in the constructor and remember to update it every time the level of the fuel changes and to draw it whenever you draw the lander itself. As a nice touch, you can change the color to indicate how much of the fuel is left. I’ve used <em>green</em> for more than 2/3, <em>yellow</em> for more than 1/3, and <em>red</em> if less than that.</p>
 <div class="infobox program">
-<p>Put your code into <em>exercise04.py</em>.</p>
-</div>
-<p>What did you say, your square was not really a square? Well, I told you, <strong>five</strong> units systems!</p>
-</div>
-<div id="five-units-systems" class="section level2" number="8.5">
-<h2><span class="header-section-number">8.5</span> Five units systems</h2>
-<div id="height-units" class="section level3" number="8.5.1">
-<h3><span class="header-section-number">8.5.1</span> Height units</h3>
-<p>With height units everything is specified in the units of window height. The center of the window is at <code>(0,0)</code> and the window goes vertically from <code>-0.5</code> to <code>0.5</code>. However, its horizontal limits depend on the aspect ratio. For our 800×600 window, it will go from -0.666 to 0.666 (the window is 1.3333 window heights wide). For a 600×800 window from -0.375 to 0.375 (the window is 0.75 window heights wide), for a square window 600×600 from -0.5 to 0.5 (again, in all these cases it goes from -0.5 to 0.5 vertically). This means that the actual on-screen distance for the units is the same for both axes. So that a square of <code>size=(0.5, 0.5)</code> is actually a square (it spans the same distance vertically and horizontally). Thus, it makes <em>sizing</em> objects easier but <em>placing them on horizontal axis correctly</em> harder (as you need to know the aspect ratio).</p>
-<p>Modify your code by specifying the unit system when you create the window: <code>win = visual.Window(..., units="height")</code>. Play with your code by specifying position of the square when you create it. You just need to pass an extra parameter <code>pos=(&lt;x&gt;, &lt;y&gt;)</code>. Which was is up, when y is below or above zero?</p>
-<div class="infobox program">
-<p>Put your code into <em>exercise05.py</em>.</p>
-</div>
-<p>Unfortunately, unlike x-axis, the y-axis can go both ways. For PsychoPy y-axis points up (so negative values move the square down and positive up). However, if you would use an Eyelink eye tracker to record where participants looked <em>on the screen</em>, it assumes that y-axis starts at the top of the screen and points down (which could be very confusing, if you forget about this when overlaying gaze data on the image you used and wondering what on Earth the participants were doing).</p>
-<p>Now, modify the size of the square (and turn it into a non-square rectangle) by passing <code>width=&lt;some-width-value&gt;</code> and <code>height=&lt;some-height-value&gt;</code>.</p>
-<div class="infobox program">
-<p>Put your code into <em>exercise06.py</em>.</p>
+<p>Add fuel and fuel gauge.</p>
 </div>
 </div>
-<div id="normalized-units" class="section level3" number="8.5.2">
-<h3><span class="header-section-number">8.5.2</span> Normalized units</h3>
-<p>These units are default ones and assume that the window goes from -1 to 1 both along x- and x-axis. Again, (0,0) is the center of the screen but the bottom-left corner is (-1, -1) whereas the top-right is (1, 1). This makes <em>placing</em> your objects easier but <em>sizing</em> them harder (you need to know the aspect ratio to ensure that a square is a square).</p>
-<p>Modify your code, so that it uses <code>"norm"</code> units when you create the window and size the <code>Rect</code> stimulus, so it does look like a square.</p>
-<div class="infobox program">
-<p>Put your code into <em>exercise07.py</em>.</p>
-</div>
-</div>
-<div id="pixels-on-screen" class="section level3" number="8.5.3">
-<h3><span class="header-section-number">8.5.3</span> Pixels on screen</h3>
-<p>In this case, the window center is still at <code>(0,0)</code> but it goes from <code>-&lt;width-in-pixels&gt;/2</code> to <code>&lt;width-in-pixels&gt;/2</code> horizontally (from -400 to 400 in our case) and <code>-&lt;height-in-pixels&gt;/2</code> to <code>&lt;height-in-pixels&gt;/2</code> vertically (from -300 to 300). These units could be more intuitive when you are working with a fixed sized window, as the span is the same along the both axes (like for the height units). However, they spell trouble if your window size was changed or you are using a full screen window on some monitor with an unknown resolution.</p>
-<p>Modify your code to use <code>"pix"</code> units and briefly test sizing and placing your square within the window.</p>
-<div class="infobox program">
-<p>Put your code into <em>exercise08.py</em>.</p>
-</div>
-</div>
-<div id="degrees-of-visual-angle" class="section level3" number="8.5.4">
-<h3><span class="header-section-number">8.5.4</span> Degrees of visual angle</h3>
-<p>Unlike the three units above, these require you knowing a physical size of the screen, its resolution, and your viewing distance (how far your eyes are away from the screen). They are <em>the</em> measurement units used in visual psychophysics as they describe stimulus size as it appears on the retina (see <a href="https://en.wikipedia.org/wiki/Visual_angle">Wikipedia</a> for details). Thus, these are the units you want to use when running an actual experiment in the lab but for our purposes we will stick to one of the three units systems above.</p>
-</div>
-<div id="centimeters-on-screen" class="section level3" number="8.5.5">
-<h3><span class="header-section-number">8.5.5</span> Centimeters on screen</h3>
-<p>Here, you would need know the physical size of your screen and its resolution. These are fairly exotic units for very specific situations<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>.</p>
-</div>
-</div>
-<div id="make-your-square-jump" class="section level2" number="8.6">
-<h2><span class="header-section-number">8.6</span> Make your square jump!</h2>
-<p>So far, we fixed the location of the square when we created it. However, you can move it at any time by assigning a new <code>(&lt;x&gt;, &lt;y&gt;)</code> coordinates to its <code>pos</code> property. <em>E.g.</em>, <code>white_square.pos = (-0.1, 0.2)</code>. Let us experiment by moving the square to a random location on every iteration of the loop (this could cause a lot of flashing, so if you have a photosensitive epilepsy that can be triggered by flashing lights, you probably should do it just once before the loop). Use the units of your choice (I would recommend <code>"norm"</code>) and generate a new position using <a href="https://docs.python.org/3/library/random.html#random.uniform">random.uniform(a, b)</a> function, that generates a random value within <em>a..b</em> range. You need to generate two values (one for x, one for y) and your range is the same for <code>"norm"</code> units (from -1 to 1) but is different (and depends on the aspect ratio) for <code>"height"</code> units.</p>
-<div class="sourceCode" id="cb104"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb104-1"><a href="seminar08.html#cb104-1" aria-hidden="true" tabindex="-1"></a>importing libraries, now also the random library</span>
-<span id="cb104-2"><a href="seminar08.html#cb104-2" aria-hidden="true" tabindex="-1"></a><span class="bu">open</span> the window</span>
-<span id="cb104-3"><a href="seminar08.html#cb104-3" aria-hidden="true" tabindex="-1"></a>create white_square here</span>
-<span id="cb104-4"><a href="seminar08.html#cb104-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb104-5"><a href="seminar08.html#cb104-5" aria-hidden="true" tabindex="-1"></a>gameover <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb104-6"><a href="seminar08.html#cb104-6" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="kw">not</span> gameover:</span>
-<span id="cb104-7"><a href="seminar08.html#cb104-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">--&gt;</span> move the square to a random position <span class="op">&lt;--</span></span>
-<span id="cb104-8"><a href="seminar08.html#cb104-8" aria-hidden="true" tabindex="-1"></a>    draw white_square <span class="kw">and</span> flip the window here</span>
-<span id="cb104-9"><a href="seminar08.html#cb104-9" aria-hidden="true" tabindex="-1"></a>    check keyboard <span class="cf">for</span> escape button press</span>
-<span id="cb104-10"><a href="seminar08.html#cb104-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb104-11"><a href="seminar08.html#cb104-11" aria-hidden="true" tabindex="-1"></a>close the window</span></code></pre></div>
-<div class="infobox program">
-<p>Put your code into <em>exercise09.py</em>.</p>
-</div>
-</div>
-<div id="make-the-square-jump-on-your-command" class="section level2" number="8.7">
-<h2><span class="header-section-number">8.7</span> Make the square jump on your command!</h2>
-<p>This was very flashy, so let us make the square jump only when you press <em>Space</em> button. For this, we need to expand the code that processes keyboard input. So far, we restricted it to just “escape” button and checked whether any (hence, “escape”) button was pressed. In my case, the code looks like that</p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb105-1"><a href="seminar08.html#cb105-1" aria-hidden="true" tabindex="-1"></a>gameover <span class="op">=</span> event.getKeys(keyList<span class="op">=</span>[<span class="st">&#39;escape&#39;</span>])</span></code></pre></div>
-<p>But I could have written it as</p>
-<div class="sourceCode" id="cb106"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb106-1"><a href="seminar08.html#cb106-1" aria-hidden="true" tabindex="-1"></a>keys_pressed <span class="op">=</span> event.getKeys(keyList<span class="op">=</span>[<span class="st">&#39;escape&#39;</span>])</span>
-<span id="cb106-2"><a href="seminar08.html#cb106-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> keys_pressed <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb106-3"><a href="seminar08.html#cb106-3" aria-hidden="true" tabindex="-1"></a>    game_over <span class="op">=</span> <span class="va">True</span></span></code></pre></div>
-<p>Let us use the <em>second</em> version, where we explicitly store the output of <code>event.getKeys()</code> function in <code>keys_pressed</code>. First, you need to add <code>"space"</code> to the <code>keyList</code> parameter. Second, because <code>event.getKeys()</code> function returns a <strong>list</strong> of keys that were pressed, we need to loop over that list (which in most cases will contain no or just one element) and use conditional statements inside that loop to make the square jump or to exit the program.</p>
-<p>Use for <code>for</code> loop to loop over the elements of the list. Note that no iterations will occur if the list is empty, you can test this in a Jupyter cell:</p>
-<div class="sourceCode" id="cb107"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb107-1"><a href="seminar08.html#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> []:</span>
-<span id="cb107-2"><a href="seminar08.html#cb107-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;No one will ever see me...&quot;</span>)</span></code></pre></div>
-<p>When you loop over <code>keys_pressed</code>, your current loop variable value will be the string with the name of the button pressed (so, either <code>"escape"</code> or <code>"space"</code>). Now, you need to use conditional statements, so that the square jumps if the key was <code>"space"</code> and game is over if the key was <code>"escape"</code>. You code should look roughly like that</p>
-<div class="sourceCode" id="cb108"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb108-1"><a href="seminar08.html#cb108-1" aria-hidden="true" tabindex="-1"></a>importing libraries, now also the random library</span>
-<span id="cb108-2"><a href="seminar08.html#cb108-2" aria-hidden="true" tabindex="-1"></a><span class="bu">open</span> the window</span>
-<span id="cb108-3"><a href="seminar08.html#cb108-3" aria-hidden="true" tabindex="-1"></a>create white_square</span>
-<span id="cb108-4"><a href="seminar08.html#cb108-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-5"><a href="seminar08.html#cb108-5" aria-hidden="true" tabindex="-1"></a>gameover <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb108-6"><a href="seminar08.html#cb108-6" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="kw">not</span> gameover:</span>
-<span id="cb108-7"><a href="seminar08.html#cb108-7" aria-hidden="true" tabindex="-1"></a>    draw white_square <span class="kw">and</span> flip the window here</span>
-<span id="cb108-8"><a href="seminar08.html#cb108-8" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb108-9"><a href="seminar08.html#cb108-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ----- New code -----</span></span>
-<span id="cb108-10"><a href="seminar08.html#cb108-10" aria-hidden="true" tabindex="-1"></a>    keys_pressed <span class="op">=</span> event.getKeys(keyList<span class="op">=</span>[<span class="st">&#39;escape&#39;</span>, <span class="st">&#39;space&#39;</span>])</span>
-<span id="cb108-11"><a href="seminar08.html#cb108-11" aria-hidden="true" tabindex="-1"></a>    loop over keys_pressed:</span>
-<span id="cb108-12"><a href="seminar08.html#cb108-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> participant pressed space key:</span>
-<span id="cb108-13"><a href="seminar08.html#cb108-13" aria-hidden="true" tabindex="-1"></a>            move the square to a random location</span>
-<span id="cb108-14"><a href="seminar08.html#cb108-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> participant pressed escape key:</span>
-<span id="cb108-15"><a href="seminar08.html#cb108-15" aria-hidden="true" tabindex="-1"></a>            <span class="bu">set</span> gameover to <span class="va">False</span></span>
-<span id="cb108-16"><a href="seminar08.html#cb108-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ----- End of new code -----</span></span>
-<span id="cb108-17"><a href="seminar08.html#cb108-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-18"><a href="seminar08.html#cb108-18" aria-hidden="true" tabindex="-1"></a>close the window</span></code></pre></div>
-<div class="infobox program">
-<p>Put your code into <em>exercise10.py</em>.</p>
-</div>
-</div>
-<div id="i-like-to-move-it-move-it" class="section level2" number="8.8">
-<h2><span class="header-section-number">8.8</span> I like to move it, move it!</h2>
-<p>Let us exert more control over our rectangle by moving it around using arrow buttons (<code>"up"</code>, <code>"down"</code>, <code>"left"</code>, and <code>"right"</code> in PsychoPy). Add these keys to the <code>keyList</code> parameter of the <code>event.getKeys()</code> call and add more conditional statements when processing the pressed key. In PsychoPy you can change position by adding to it via <code>+=</code> or <code>-=</code> operations (other operations are also supported, see <a href="https://psychopy.org/coder/codeStimuli.html#attrib-operations">manual</a>). Thus, you can move your square to the right by 0.1 units (whatever they are) by writing <code>white_square.pos += (0.1, 0)</code>. Please note that you <strong>cannot</strong> write <code>white_square.pos = white_square.pos + (0.1, 0)</code>!</p>
-<p>Expand your code, so you move the rectangle around by 0.05 units in the direction of the key pressed.</p>
-<div class="infobox program">
-<p>Put your code into <em>exercise11.py</em>.</p>
-</div>
-<p>When we continue, we will expand on this to build a Memory game. In the meantime, experiment with stimuli (you can have a circle or a line rather than a square). Try showing more than one stimulus (<em>e.g.</em>, add back the “press escape to exit” message), etc.</p>
+<div id="add-to-it" class="section level2" number="16.14">
+<h2><span class="header-section-number">16.14</span> Add to it!</h2>
+<p>We already have a functioning game but you can add so much more to it: visuals for the thrusters, sounds, background, etc. Experiment at your will!</p>
 
 </div>
 </div>
 <div class="footnotes">
 <hr />
-<ol start="3">
-<li id="fn3"><p>You can “Save as…” the previous exercise to avoid copy-pasting things by hand.<a href="seminar08.html#fnref3" class="footnote-back">↩︎</a></p></li>
-<li id="fn4"><p>so specific that I can’t think of one, to be honest.<a href="seminar08.html#fnref4" class="footnote-back">↩︎</a></p></li>
+<ol start="34">
+<li id="fn34"><p>The constant itself does not mean anything, I adjusted it to be reasonable for the image and window size that we are using.<a href="seminar-02-04.html#fnref34" class="footnote-back">↩︎</a></p></li>
+<li id="fn35"><p>Pun intended.<a href="seminar-02-04.html#fnref35" class="footnote-back">↩︎</a></p></li>
+<li id="fn36"><p>These are functions that “decorate” you function and are called <em>before</em> your function is called. They are like gatekeeps or face control, so they can alter whether your function or how it is executed. They are very useful in certain scenarios and we will meet them again later. However, we will not talk about them in detail here.<a href="seminar-02-04.html#fnref36" class="footnote-back">↩︎</a></p></li>
+<li id="fn37"><p>Note that you cannot have write-only property, you must have either getter alone or both.<a href="seminar-02-04.html#fnref37" class="footnote-back">↩︎</a></p></li>
+<li id="fn38"><p>Try it and see that it works.<a href="seminar-02-04.html#fnref38" class="footnote-back">↩︎</a></p></li>
+<li id="fn39"><p>On a side note of doing crazy things that you shouldn’t: You can replace a class method with your own at run time, this is called “monkey patching”!<a href="seminar-02-04.html#fnref39" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -632,8 +609,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="seminar07.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="seminar09.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="seminar-02-03.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="cross-references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

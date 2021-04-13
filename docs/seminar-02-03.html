@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Seminar 8 Gettings start with PsychoPy | Python for social and experimental psychology</title>
+  <title>Seminar 15 Snake game: object-oriented programming | Python for social and experimental psychology</title>
   <meta name="description" content="Material and exercises for ‘Python for social and experimental psychology’ seminar." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Seminar 8 Gettings start with PsychoPy | Python for social and experimental psychology" />
+  <meta property="og:title" content="Seminar 15 Snake game: object-oriented programming | Python for social and experimental psychology" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Seminar 8 Gettings start with PsychoPy | Python for social and experimental psychology" />
+  <meta name="twitter:title" content="Seminar 15 Snake game: object-oriented programming | Python for social and experimental psychology" />
   
   <meta name="twitter:description" content="Material and exercises for ‘Python for social and experimental psychology’ seminar." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="seminar07.html"/>
-<link rel="next" href="seminar09.html"/>
+<link rel="prev" href="seminar-02-02.html"/>
+<link rel="next" href="seminar-02-04.html"/>
 <script src="libs/header-attrs-2.7/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -414,217 +414,229 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="seminar08" class="section level1" number="8">
-<h1><span class="header-section-number">Seminar 8</span> Gettings start with PsychoPy</h1>
-<p>Before we program our first game using <a href="https://psychopy.org/">PsychoPy</a>, we need to spend some time figuring out its basics. It is not the most suitable library for writing games, for that you might want to use <a href="https://arcade.academy/">Python Arcade</a> or <a href="https://www.pygame.org/">PyGame</a>). However, it is (IMHO) the best Python library for developing psychophysical experiments, which is why we will use it in our course.</p>
-<p>For this and following projects, we won’t use Jupyter Notebooks but will develop a Python program using IDE environment of your choice (I would recommend <a href="getting-started.html#install-vs-code">Visual Studio Code</a>). You still could and should use Jupyter for playing with and testing small code snippets, though. I’ve added a section on setting up <a href="getting-started.html#debug-in-vs-code">debugging in VS Code</a> in <a href="getting-started.html#getting-started">Getting Started</a>, take a look once you are ready to run the code.</p>
-<p>From now on, create a separate subfolder for each seminar (e.g. <em>Seminar 08</em> for today) and create a separate file (or files, later on) for each exercise<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> (e.g., <em>exercise01.py</em>, <em>exercise02.py</em>, etc.). This is not the most efficient implementation of a version control and will certainly clutter the folder. But it would allow me to see your solutions on every step, which will make it easier for me to write comments. For submitting the assignment, just zip the folder and submit the zip-file.</p>
-<div id="minimal-psychopy-code" class="section level2" number="8.1">
-<h2><span class="header-section-number">8.1</span> Minimal PsychoPy code</h2>
-<p>In the subfolder for the current seminar, create file <em>exercise01.py</em> (I would recommend using lead zero in <em>01</em>, as it will ensure correct file sorting once we get to exercise 10, 11, etc.). Copy-paste the following code:</p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb97-1"><a href="seminar08.html#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;</span></span>
-<span id="cb97-2"><a href="seminar08.html#cb97-2" aria-hidden="true" tabindex="-1"></a><span class="co">A minimal PsychoPy code.</span></span>
-<span id="cb97-3"><a href="seminar08.html#cb97-3" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;</span></span>
-<span id="cb97-4"><a href="seminar08.html#cb97-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-5"><a href="seminar08.html#cb97-5" aria-hidden="true" tabindex="-1"></a><span class="co"># this imports two modules from psychopy</span></span>
-<span id="cb97-6"><a href="seminar08.html#cb97-6" aria-hidden="true" tabindex="-1"></a><span class="co"># visual has all the visual stimuli, including the Window class</span></span>
-<span id="cb97-7"><a href="seminar08.html#cb97-7" aria-hidden="true" tabindex="-1"></a><span class="co"># that we need to create a program window</span></span>
-<span id="cb97-8"><a href="seminar08.html#cb97-8" aria-hidden="true" tabindex="-1"></a><span class="co"># event has function for working with mouse and keyboard</span></span>
-<span id="cb97-9"><a href="seminar08.html#cb97-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> psychopy <span class="im">import</span> visual, event</span>
-<span id="cb97-10"><a href="seminar08.html#cb97-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-11"><a href="seminar08.html#cb97-11" aria-hidden="true" tabindex="-1"></a><span class="co"># creating a 800 x 600 window</span></span>
-<span id="cb97-12"><a href="seminar08.html#cb97-12" aria-hidden="true" tabindex="-1"></a>win <span class="op">=</span> visual.Window(size<span class="op">=</span>(<span class="dv">800</span>, <span class="dv">600</span>))</span>
-<span id="cb97-13"><a href="seminar08.html#cb97-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-14"><a href="seminar08.html#cb97-14" aria-hidden="true" tabindex="-1"></a><span class="co"># waiting for any key press</span></span>
-<span id="cb97-15"><a href="seminar08.html#cb97-15" aria-hidden="true" tabindex="-1"></a>event.waitKeys()</span>
-<span id="cb97-16"><a href="seminar08.html#cb97-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-17"><a href="seminar08.html#cb97-17" aria-hidden="true" tabindex="-1"></a><span class="co"># closing the window</span></span>
-<span id="cb97-18"><a href="seminar08.html#cb97-18" aria-hidden="true" tabindex="-1"></a>win.close()</span></code></pre></div>
-<p>Run it to check that PsychoPy work. You should get a gray window with <em>PsychoPy</em> title. Press any key (click on the window, if you switched to another one, so that it registers the key press) and it should close. Not very exciting but does show that everything works as it should.</p>
-<div class="infobox program">
-<p>Put your code into <em>exercise01.py</em>.</p>
+<div id="seminar-02-03" class="section level1" number="15">
+<h1><span class="header-section-number">Seminar 15</span> Snake game: object-oriented programming</h1>
+<p>We will not be programming a new game today. Rather, you will learn about object-oriented approach in Python and will use it to simplify your code of the Snake game that you already programmed. Yes, it would be more fun to program a new game but this way you get to concentrate on the concepts rather than on the game logic.</p>
+<div id="object-oriented-programming" class="section level2" number="15.1">
+<h2><span class="header-section-number">15.1</span> Object-oriented programming</h2>
+<p>The core idea is in the name: Instead of having variables/data and functions separately, you combine them in an object that has attrbutes/properties (its own variables) and methods (functions). This approach uses our natural tendency to perceive the world as a collection of interacting objects and has several advantages that I will discuss below.</p>
+<div id="classes-and-objects-instances-of-classes" class="section level3" number="15.1.1">
+<h3><span class="header-section-number">15.1.1</span> Classes and objects (instances of classes)</h3>
+<p>Before we continue, I need to make an important distinction between <em>classes</em> and <em>objects</em>. A <em>class</em> is a “blue print” that describes properties and behavior (methods) of objects of that class. This “blue print” is used to create an <em>instance</em> of that class, which is called an <em>object</em>. For example, Homo sapiens is a <em>class</em> that describes species that have certain properties, such as height, and can do certain things, such as running. However, Homo sapiens as a class only has a concept of height but no specific height itself. E.g., you cannot ask “What is height of Homo sapiens?” only what is an average (mean, median, etc.) height of individuals of that class. Similarly, you cannot say “Run, Homo sapiens! Run!” as abstract concepts have trouble with real actions like that. Instead, it is Alexander Pastukhov who is an <em>instance</em> of Homo sapiens class with a specific height and a specific (not particularly good) ability to run. Other instances of Homo sapiens (other people) will have different height and a different (typically better) ability to run. Thus, class describes what kind of properties and methods objects have. This means that whenever you meet a Homo sapien, you could be sure that they have height. However, individual objects have different values for this properties and so calling their methods may result in different outcomes.</p>
+<p>Another, a more applied, example would be your use of <code>ImageStim</code> <em>class</em> to create multiple <em>instances</em> of front side of a card in “Memory” game. Again, the <em>class</em> defines properties (<code>image</code>, <code>pos</code>, <code>size</code>, etc.) and methods (e.g., method <code>draw()</code>) that individual <em>objects</em> will have. You created these objects to serve as front side of cards. You set <em>different</em> values for same properties (<code>image</code>, <code>pos</code>) and that ensured that when you call their method <code>draw()</code>, each card was drawn at its own location and with it own image.</p>
 </div>
-<p>Let me explain what we are doing here line-by-line.</p>
+<div id="encapsulation" class="section level3" number="15.1.2">
+<h3><span class="header-section-number">15.1.2</span> Encapsulation</h3>
+<p>Putting all the data (properties) and behavior (methods) inside the class simplifies programming by ensuring that all relevant information can be found in its definition. Thus, you have a single place that should hold <em>everything</em> that defines object’s behavior. Contrast this with our approach in previous two seminars where snake data (e.g., variable <code>snake</code>) was defined at one place and functions that used and altered it (e.g., <code>snake_bit_itself()</code> or <code>grow_snake()</code>) were defined elsewhere. Moreover, we had to resort to using <em>snake</em> or <em>apple</em> in function names just to remind ourselves that they belong to the snake or an apple. This also necessitated creating functions with multiple arguments that ensured that all information is available within each function. And, we modified <code>snake</code> inside the function creating further uncertainty about when and where it can be changed. Today, you will see how encapsulating everything into classes turns this mess into a simpler and easier-to-understand code.</p>
+</div>
+</div>
+<div id="inheritance-generalization" class="section level2" number="15.2">
+<h2><span class="header-section-number">15.2</span> Inheritance / Generalization</h2>
+<p>In object-oriented programming, a class can be derived from some other <em>ancestor</em> class and thus <em>inherit</em> its properties and methods. Moreover, several classes can be derived from a single ancestor producing a mix of unique and shared functionality. This means that instead of rewriting the same code for each class, you can define a common code in an ancestor class and focus on differences or additional methods and properties in descendants.</p>
+<p>Using the Homo sapiens example from above. Humans, chimpanzees and gorillas are all different species but we share a common ancestor. Hence, we are different in many respect, yet, you could think about all of us as “apes” that have common properties such as binocular trichromatic vision. On other words, if you are interested in color vision, you do not care what specific species you are looking it, as all apes are the same in that respect. Or, you can move further down the evolution tree and think about us as “mammals” that, again, have common properties and behavior, such as thermoregulation and lactation. Again, if you are interested <em>only</em> in whether an animal has thermoregulation, knowing that it is a mammal is enough.</p>
+<p>Similarly, in PsychoPy various visual stimuli that we used (<code>ImageStim</code>, <code>TextStim</code>, <code>Rect</code>) have same properties (e.g., <code>pos</code>, <code>size</code>, etc.) and methods (most notably, <code>draw()</code>). This is because they are all descendants from a common ancestor <code>BaseVisualStim</code> that defines their common properties and methods<a href="#fn27" class="footnote-ref" id="fnref27"><sup>27</sup></a>. This means that you can assume that <em>any</em> visual stimulus (as long as it descends from <code>BaseVisualStim</code>) will have <code>size</code>, <code>pos</code>, <code>ori</code> and can be drawn. This, in turn, means that you can have a list of various PsychoPy visual stimuli and move or draw all of them in a single loop without thinking which <em>specific</em> visual stimulus you are moving or drawing. Also note that you cannot assume these same proporties of <em>sound</em> stimuli because they are <em>not</em> descendants of <code>BaseVisualStim</code> but of <code>_SoundBase</code> class.</p>
+<p>Where is another way of achieving common behavior (generalization) in Python without inheritance. It is called “duck typing”<a href="#fn28" class="footnote-ref" id="fnref28"><sup>28</sup></a> and it will be the topic of a different seminar.</p>
+</div>
+<div id="polymorphism" class="section level2" number="15.3">
+<h2><span class="header-section-number">15.3</span> Polymorphism</h2>
+<p>As you’ve learned in the previous section, inheritance allows different descendants to share common properties and behavior, so that in certain cases you can view them as being equivalent to an ancestor. E.g., any visual stimulus (a descendant of <code>BaseVisualStim</code> class) can be drawn, so you just call its <code>draw()</code> method. However, it is clear that these different stimuli implement drawing <em>differently</em>, as the <code>Rect</code> stimulus looks different from the <code>ImageStim</code> or <code>TextStim</code>. This is called “polymorphism” and the idea is to keep the common interface (same <code>draw()</code> call) while abstracting away the actual implementation. This allows you to think about what you want an object to do (or what to do with an object), instead of thinking how exactly it is implemented.</p>
+</div>
+<div id="a-minimal-class-example" class="section level2" number="15.4">
+<h2><span class="header-section-number">15.4</span> A minimal class example</h2>
+<p>Enough of the theory, let us see how classes are implemented in Python. Here is a very simple class that has nothing but the <em>constructor</em> <code>__init__()</code> method, which is called whenever a new object (class instance) is created, and a single attribute / property <code>total</code>.</p>
+<div class="sourceCode" id="cb146"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb146-1"><a href="seminar-02-03.html#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Accumulator:</span>
+<span id="cb146-2"><a href="seminar-02-03.html#cb146-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb146-3"><a href="seminar-02-03.html#cb146-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Simple class that accumulates (sums up) values.</span></span>
+<span id="cb146-4"><a href="seminar-02-03.html#cb146-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb146-5"><a href="seminar-02-03.html#cb146-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Properties</span></span>
+<span id="cb146-6"><a href="seminar-02-03.html#cb146-6" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb146-7"><a href="seminar-02-03.html#cb146-7" aria-hidden="true" tabindex="-1"></a><span class="co">    total : float</span></span>
+<span id="cb146-8"><a href="seminar-02-03.html#cb146-8" aria-hidden="true" tabindex="-1"></a><span class="co">        Total accumulated value</span></span>
+<span id="cb146-9"><a href="seminar-02-03.html#cb146-9" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb146-10"><a href="seminar-02-03.html#cb146-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb146-11"><a href="seminar-02-03.html#cb146-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
+<span id="cb146-12"><a href="seminar-02-03.html#cb146-12" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb146-13"><a href="seminar-02-03.html#cb146-13" aria-hidden="true" tabindex="-1"></a><span class="co">        Constructor, initializes the total value to zero.</span></span>
+<span id="cb146-14"><a href="seminar-02-03.html#cb146-14" aria-hidden="true" tabindex="-1"></a><span class="co">        &quot;&quot;&quot;</span></span>
+<span id="cb146-15"><a href="seminar-02-03.html#cb146-15" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.total <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb146-16"><a href="seminar-02-03.html#cb146-16" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb146-17"><a href="seminar-02-03.html#cb146-17" aria-hidden="true" tabindex="-1"></a><span class="co"># here we create an object number_sum, which is an instance of class Accumulator.</span></span>
+<span id="cb146-18"><a href="seminar-02-03.html#cb146-18" aria-hidden="true" tabindex="-1"></a>number_sum <span class="op">=</span> Accumulator()</span></code></pre></div>
+<p>Let’s go through it line by line. First line <code>class Accumulator:</code> shows that this is a declaration of a <code>class</code> whose name is <code>Accumulator</code>. Note that the first letter is capitalized. This is not required per se, so Python police won’t be knocking on your door if you write it all in lower or upper case. However, the general recommendation is that <strong>class</strong> names are written using <code>UpperCaseCamelCase</code> whereas <strong>object</strong> (instances of the class) names are written using <code>lower_case_snake_case</code>. This makes distinguishing between classes and objects easier, so you should follow this convention.</p>
+<p>The definition of the class are the remaining <em>indented</em> lines. As with functions or loops, it is the indentation that defines what is inside and what is outside of the class. The only method we defined is <code>def __init__(self):</code>. This is a <em>special</em> method<a href="#fn29" class="footnote-ref" id="fnref29"><sup>29</sup></a> that is called when an object (instance of the class) is created. This allows you to initialize the object based on parameters that were passed to this function (if any). You do not call this function directly, rather it is called whenever an object is created, <em>e.g.</em> <code>number_sum = Accumulator()</code> (last line). Also, it does not return any value explicitly via <code>return</code>. Instead, <code>self</code> (the very first parameter, more on it below) is returned automatically.</p>
+<p>All class methods (apart from special cases we currently do not concern ourselves with) must have one special first parameter that is <em>the object</em> itself. By convention it is called <code>self</code><a href="#fn30" class="footnote-ref" id="fnref30"><sup>30</sup></a>. It is passed to the method automatically, so whenever you write <code>square.draw()</code> (no explicit parameters written in the function call), the actual method still receives one parameter that is the <em>reference</em> to the <code>square</code> variable whose method you called. Inside a method, you use this variable to refer to the object itself.</p>
+<p>Let us go back to the constructor <code>__init()__</code> to see how you can use <code>self</code>. Here, we add a new <em>persistent</em> attribute/property to the object and assign a value to it: <code>self.total = 0</code>. It is <em>persistent</em>, because even though we created it inside the method, the mutable object is passed by reference and, therefore, we assigned it to the object itself. Now you can use this property either from inside <code>self.total</code> or from outside <code>number_sum.total</code>. You can think of properties as being similar to field/value pairs in the dictionary we used during previous seminar but for syntax: <code>object.property</code> versus <code>dictonary["field"]</code><a href="#fn31" class="footnote-ref" id="fnref31"><sup>31</sup></a>. Technically, you can create new properties in any method or even from outside (e.g., nothing prevents you from writing <code>number_sum.color = "red"</code>). However, this makes understanding the code much harder, so the general recommendation is to create <em>all</em> properties inside the constructor <code>__init__()</code> method, even if this means assigning <code>None</code> to them<a href="#fn32" class="footnote-ref" id="fnref32"><sup>32</sup></a>.</p>
+</div>
+<div id="add-method" class="section level2" number="15.5">
+<h2><span class="header-section-number">15.5</span> <code>add</code> method</h2>
+<p>Let us add a method that adds 1 to the <code>total</code> property.</p>
+<div class="sourceCode" id="cb147"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb147-1"><a href="seminar-02-03.html#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Accumulator:</span>
+<span id="cb147-2"><a href="seminar-02-03.html#cb147-2" aria-hidden="true" tabindex="-1"></a>    ... <span class="co"># I am skipping all previous code here</span></span>
+<span id="cb147-3"><a href="seminar-02-03.html#cb147-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb147-4"><a href="seminar-02-03.html#cb147-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> add(<span class="va">self</span>):</span>
+<span id="cb147-5"><a href="seminar-02-03.html#cb147-5" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb147-6"><a href="seminar-02-03.html#cb147-6" aria-hidden="true" tabindex="-1"></a><span class="co">        Add 1 to total</span></span>
+<span id="cb147-7"><a href="seminar-02-03.html#cb147-7" aria-hidden="true" tabindex="-1"></a><span class="co">        &quot;&quot;&quot;</span></span>
+<span id="cb147-8"><a href="seminar-02-03.html#cb147-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.total <span class="op">+=</span> <span class="dv">1</span></span></code></pre></div>
+<p>It has first special argument <code>self</code> that is the object itself and we simply add 1 to its <code>total</code> property. Again, remember that <code>self</code> is passed automatically whenever you call the method, meaning that an actual call looks like <code>number_sum.add()</code>.</p>
+<p>Create a Jupyter notebook (you will need to submit it as part of the assignment) and copy-paste the code for <code>Accumulator</code> class, including the <code>.add()</code> method. Create <strong>two</strong> objects, call them <code>counter1</code> and <code>counter2</code>. Call <code>.add()</code> method twice for <code>counter2</code> and thrice for <code>counter1</code> (bonus: do it using <code>for</code> loop). What is the value of the <code>.total</code> property of each object? Check it by printing it out.</p>
+<div class="infobox program">
+<p>Copy-paste and test <code>Accumulator</code> class code in a Jupiter notebook.</p>
+</div>
+</div>
+<div id="flexible-accumulator-with-a-subtract-method" class="section level2" number="15.6">
+<h2><span class="header-section-number">15.6</span> Flexible accumulator with a <code>subtract</code> method</h2>
+<p>Now lets us create a new class that is a <em>descendant</em> of the <code>Accumulator</code>. We will call it <code>FlexibleAccumulator</code> as it will allow you to also <em>subtract</em> from the total count. You specify ancestors (could be more than one!) in round brackets after the class name</p>
+<div class="sourceCode" id="cb148"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb148-1"><a href="seminar-02-03.html#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> FlexibleAccumulator(Accumulator):</span>
+<span id="cb148-2"><a href="seminar-02-03.html#cb148-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span> <span class="co"># You must have at least one non-empty line, and pass means &quot;do nothing&quot;</span></span></code></pre></div>
+<p>Now you have a new class that is a descendant of <code>Accumulator</code> but, so far, is a perfect copy of it. Add <code>subtract</code> method to the class. It should subtract <code>1</code> from the <code>.total</code> property (don’t forget to <em>document</em> it!). Check that it works. Create one instance of <code>Accumulator</code> and another one of <code>FlexibleAccumulator</code> class and check that you can call <code>add()</code> on both of them but <code>subtract()</code> only for the latter.</p>
+<div class="infobox program">
+<p>Add <code>subtract</code> method to the <code>FlexibleAccumulator</code> class in a Jupiter notebook. Add testing.</p>
+</div>
+</div>
+<div id="method-arguments" class="section level2" number="15.7">
+<h2><span class="header-section-number">15.7</span> Method arguments</h2>
+<p>Now, create a new class <code>SuperFlexibleAccumulator</code> that will be able to both <code>add()</code> and <code>subtract()</code> <em>arbitrary</em> value! Think about which class it should inherit from. Redefine both <code>.add()</code> and <code>.subtract()</code> method in that new class by adding <code>value</code> argument to both method and add/subtract this value rather than <code>1</code>. Note that now you have <em>two</em> arguments in each method <code>(self, value)</code> but when you call you only need to pass the latter (again, <code>self</code> is passed automatically). Don’t forget to document <code>value</code> argument (but you do not need to document <code>self</code> as its meaning is fixed).</p>
+<div class="infobox program">
+<p>Create <code>SuperFlexibleAccumulator</code> class and define super flexible <code>add</code> and <code>subtract</code> methods that have <code>value</code> parameter ( in a Jupiter notebook). Test them!</p>
+</div>
+</div>
+<div id="constructor-arguments" class="section level2" number="15.8">
+<h2><span class="header-section-number">15.8</span> Constructor arguments</h2>
+<p>Although constructor <code>__init(...)__</code> is special, it is still a method. Thus, you can pass arguments to it just like you did it for other methods. You pass these arguments when you create an object, so in our case, you put it inside the bracket for <code>counter = SuperFlexibleAccumulator(...)</code>.</p>
+<p>Modify the code so that you pass the initial value that total is set to, instead of zero.
+::: {.infobox .program}
+Add <code>initial_value</code> parameter to the constructor of the <code>SuperFlexibleAccumulator</code> class in a Jupiter notebook. Test it!
+:::</p>
+</div>
+<div id="calling-methods-from-other-methods" class="section level2" number="15.9">
+<h2><span class="header-section-number">15.9</span> Calling methods from other methods</h2>
+<p>You can call a function or object’s method at any point of time, so, logically, you can use methods inside methods. Let’s modify our code, realizing that <em>subtracting</em> a value is like <em>adding a negative</em> value. Modify your code, so that <code>.subtract()</code> only negates the value before passing is to <code>.add()</code> for actual processing. Thus, <code>total</code> is modified <em>only</em> inside the <code>add()</code> method.</p>
+<div class="infobox program">
+<p>Modify <code>subtract()</code> method of <code>SuperFlexibleAccumulator</code> to utilize <code>add()</code> in a Jupiter notebook. Test it!</p>
+</div>
+</div>
+<div id="local-variables" class="section level2" number="15.10">
+<h2><span class="header-section-number">15.10</span> Local variables</h2>
+<p>Just like normal functions, you methods can have local variables. They are local (visible and accessible only from within the method) and are not persistent (their values do not survive between the calls). Conceptually, you separate variables that need to be persistent (retain their value the whole time object exists) as attributes/properties and temporary variables that are need only for the computation itself as local method variables. What would be value of property <code>.total</code> in this example:</p>
+<div class="sourceCode" id="cb149"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb149-1"><a href="seminar-02-03.html#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Accumulator:</span>
+<span id="cb149-2"><a href="seminar-02-03.html#cb149-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, initial):</span>
+<span id="cb149-3"><a href="seminar-02-03.html#cb149-3" aria-hidden="true" tabindex="-1"></a>        temp <span class="op">=</span> initial <span class="op">*</span> <span class="dv">2</span></span>
+<span id="cb149-4"><a href="seminar-02-03.html#cb149-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.total <span class="op">=</span> inital</span>
+<span id="cb149-5"><a href="seminar-02-03.html#cb149-5" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb149-6"><a href="seminar-02-03.html#cb149-6" aria-hidden="true" tabindex="-1"></a>counter <span class="op">=</span> Accumulator(<span class="dv">1</span>)</span></code></pre></div>
+<p>What about in this case?</p>
+<div class="sourceCode" id="cb150"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb150-1"><a href="seminar-02-03.html#cb150-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Accumulator:</span>
+<span id="cb150-2"><a href="seminar-02-03.html#cb150-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, initial):</span>
+<span id="cb150-3"><a href="seminar-02-03.html#cb150-3" aria-hidden="true" tabindex="-1"></a>        temp <span class="op">=</span> initial <span class="op">*</span> <span class="dv">2</span></span>
+<span id="cb150-4"><a href="seminar-02-03.html#cb150-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.total <span class="op">=</span> temp</span>
+<span id="cb150-5"><a href="seminar-02-03.html#cb150-5" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb150-6"><a href="seminar-02-03.html#cb150-6" aria-hidden="true" tabindex="-1"></a>counter <span class="op">=</span> Accumulator(<span class="dv">1</span>)</span></code></pre></div>
+</div>
+<div id="refactoring-the-snake-game" class="section level2" number="15.11">
+<h2><span class="header-section-number">15.11</span> Refactoring the Snake game</h2>
+<p>Got the basic idea about using classes? Let us practice by partially refactoring the snake game. In principle, we can factor it into three classes / objects:</p>
 <ul>
-<li><code>from psychopy import visual, event</code> here we import two (out of many) PsychoPy modules that give us <em>visual</em> stimuli and main program window plus ability to process <em>events</em>, such as keyboard presses or mouse activity.</li>
-<li><code>win = visual.Window(size=(800, 600))</code> we create a new PsychoPy <a href="https://psychopy.org/api/visual/window.html#psychopy.visual.Window">Window</a> <em>object</em> (you will learn about classes and objects soon) and define its <code>size</code> as 800 by 600 pixels (you can change that and see how the window also changes its size).</li>
-<li><code>event.waitKeys()</code> function <a href="https://psychopy.org/api/event.html#psychopy.event.waitKeys">waitKeys()</a> waits for a press of a keyboard key. As we didn’t specify which keys we are interested in, <em>any</em> key will do. Later on, you will learn how to make it wait for specific keys.</li>
-<li><code>win.close()</code> this calls a <em>method</em> <code>close</code> (function that belongs to an object, again, you’ll learn about them later) that tells window <code>win</code> to close itself.</li>
+<li>a window class that will incorporate grid information and mapping</li>
+<li>an apple class</li>
+<li>a snake class</li>
 </ul>
+<p>Here, we will cover the first two but I encourage you to think about how to convert snake-bits into a class as well. Before you begin, create a new folder (<em>snake2</em>, <em>snake-oop</em>, etc.) and copy your old code where.</p>
 </div>
-<div id="adding-main-loop" class="section level2" number="8.2">
-<h2><span class="header-section-number">8.2</span> Adding main loop</h2>
-<p>Currently, nothing really happens in the code, so let us add the main loop. The loop goes between opening and closing the window:</p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb98-1"><a href="seminar08.html#cb98-1" aria-hidden="true" tabindex="-1"></a>importing libraries</span>
-<span id="cb98-2"><a href="seminar08.html#cb98-2" aria-hidden="true" tabindex="-1"></a>opening the window</span>
-<span id="cb98-3"><a href="seminar08.html#cb98-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb98-4"><a href="seminar08.html#cb98-4" aria-hidden="true" tabindex="-1"></a><span class="op">--&gt;</span> our main loop <span class="op">&lt;--</span></span>
-<span id="cb98-5"><a href="seminar08.html#cb98-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb98-6"><a href="seminar08.html#cb98-6" aria-hidden="true" tabindex="-1"></a>closing the window</span></code></pre></div>
-<p>For this, you need to create a new variable <code>gameover</code> and set it too <code>False</code> (just like we did it in <em>Hunt the Wumpus</em> game) and run the loop for as long as the game is <strong>not</strong> over. Inside the loop, use function <a href="https://psychopy.org/api/event.html#psychopy.event.getKeys">event.getKeys()</a> to check whether <em>escape</em> button was pressed (for this, you need to pass <code>keyList=['escape']</code>). The function returns a list of keys, if any of them were pressed in the meantime or an empty list, if no keys from the list were pressed. Accordingly, you need to check whether the return value as an empty list. There are two ways to do this. First, you can check whether length of the list is larger than zero (so, it has elements) using function <a href="https://docs.python.org/3/library/functions.html#len">len()</a>. Alternatively, an empty list evaluates to <code>False</code> when converted to a logical value either explicitly (via <code>bool()</code> type conversion) or when evaluated inside of the condition in an <code>if</code> or <code>while</code> statement:</p>
-<div class="sourceCode" id="cb99"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb99-1"><a href="seminar08.html#cb99-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> []</span>
-<span id="cb99-2"><a href="seminar08.html#cb99-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> x:</span>
-<span id="cb99-3"><a href="seminar08.html#cb99-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&quot;List is not empty&quot;</span>)</span>
-<span id="cb99-4"><a href="seminar08.html#cb99-4" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb99-5"><a href="seminar08.html#cb99-5" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&quot;List is definitely empty&quot;</span>)</span></code></pre></div>
-<pre><code>## List is definitely empty</code></pre>
-<p>If list is <em>not</em> empty, you should change <code>gameover</code> to <code>True</code>. Think, how can you do it <em>without</em> an <code>if</code> statement, computing the logical value directly?</p>
-<div class="infobox program">
-<p>Put your code into <em>exercise02.py</em>.</p>
+<div id="gridwindow-class" class="section level2" number="15.12">
+<h2><span class="header-section-number">15.12</span> GridWindow class</h2>
+<p>One of the most annoying things about our current code was the necessity to pass grid information (<code>GRID_SIZE</code>, <code>SQUARE_SIZE</code>, etc.) as well as window variable every time we needed to create a new segment, or an apple, or grow snake, etc. It would be much simpler, if our window object would also include information on the grid (grid and square sizes) as well as the function that maps grid-to-window coordinates (<code>map_grid_to_win()</code>). In this case, we would only need to pass the window variable that has all information that snake or apple function and classes will need.</p>
+<p>We still want the window to behave like PsychoPy window, so our <code>GridWindow</code> will <em>inherit</em> from it. Create a new file <em>gridwindow.py</em> and create a new class as follows. We will discuss the specific bits below.</p>
+<div class="sourceCode" id="cb151"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb151-1"><a href="seminar-02-03.html#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. import </span></span>
+<span id="cb151-2"><a href="seminar-02-03.html#cb151-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb151-3"><a href="seminar-02-03.html#cb151-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> GridWindow(Window):</span>
+<span id="cb151-4"><a href="seminar-02-03.html#cb151-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb151-5"><a href="seminar-02-03.html#cb151-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Grid window, inherits from PsychoPy window and adds grid attributes and functions.</span></span>
+<span id="cb151-6"><a href="seminar-02-03.html#cb151-6" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb151-7"><a href="seminar-02-03.html#cb151-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb151-8"><a href="seminar-02-03.html#cb151-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, grid_size, square_size_pix):</span>
+<span id="cb151-9"><a href="seminar-02-03.html#cb151-9" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb151-10"><a href="seminar-02-03.html#cb151-10" aria-hidden="true" tabindex="-1"></a><span class="co">        Parameters</span></span>
+<span id="cb151-11"><a href="seminar-02-03.html#cb151-11" aria-hidden="true" tabindex="-1"></a><span class="co">        ----------</span></span>
+<span id="cb151-12"><a href="seminar-02-03.html#cb151-12" aria-hidden="true" tabindex="-1"></a><span class="co">        grid_size : tuple</span></span>
+<span id="cb151-13"><a href="seminar-02-03.html#cb151-13" aria-hidden="true" tabindex="-1"></a><span class="co">            Size of the grid</span></span>
+<span id="cb151-14"><a href="seminar-02-03.html#cb151-14" aria-hidden="true" tabindex="-1"></a><span class="co">        square_size_pix : integer</span></span>
+<span id="cb151-15"><a href="seminar-02-03.html#cb151-15" aria-hidden="true" tabindex="-1"></a><span class="co">            size of a single square in pixels</span></span>
+<span id="cb151-16"><a href="seminar-02-03.html#cb151-16" aria-hidden="true" tabindex="-1"></a><span class="co">        &quot;&quot;&quot;</span></span>
+<span id="cb151-17"><a href="seminar-02-03.html#cb151-17" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb151-18"><a href="seminar-02-03.html#cb151-18" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 2. store grid_size as an attribute, so that later on you</span></span>
+<span id="cb151-19"><a href="seminar-02-03.html#cb151-19" aria-hidden="true" tabindex="-1"></a>        <span class="co">#     could use it as self.grid_size (from inside) and </span></span>
+<span id="cb151-20"><a href="seminar-02-03.html#cb151-20" aria-hidden="true" tabindex="-1"></a>        <span class="co">#     win.grid_size (from outside)</span></span>
+<span id="cb151-21"><a href="seminar-02-03.html#cb151-21" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb151-22"><a href="seminar-02-03.html#cb151-22" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 3. compute square_size attribute</span></span>
+<span id="cb151-23"><a href="seminar-02-03.html#cb151-23" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb151-24"><a href="seminar-02-03.html#cb151-24" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 4. call the constructor of the ancestor</span></span>
+<span id="cb151-25"><a href="seminar-02-03.html#cb151-25" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(units<span class="op">=</span><span class="st">&quot;norm&quot;</span>, size<span class="op">=</span>(however<span class="op">-</span>you<span class="op">-</span>computed<span class="op">-</span>it))</span>
+<span id="cb151-26"><a href="seminar-02-03.html#cb151-26" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb151-27"><a href="seminar-02-03.html#cb151-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> map_grid_to_win(<span class="va">self</span>, ipos):</span>
+<span id="cb151-28"><a href="seminar-02-03.html#cb151-28" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb151-29"><a href="seminar-02-03.html#cb151-29" aria-hidden="true" tabindex="-1"></a><span class="co">        Converts grid coordinates to window coordinates in height units.</span></span>
+<span id="cb151-30"><a href="seminar-02-03.html#cb151-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb151-31"><a href="seminar-02-03.html#cb151-31" aria-hidden="true" tabindex="-1"></a><span class="co">        Parameters</span></span>
+<span id="cb151-32"><a href="seminar-02-03.html#cb151-32" aria-hidden="true" tabindex="-1"></a><span class="co">        -----------</span></span>
+<span id="cb151-33"><a href="seminar-02-03.html#cb151-33" aria-hidden="true" tabindex="-1"></a><span class="co">        ipos : tuple</span></span>
+<span id="cb151-34"><a href="seminar-02-03.html#cb151-34" aria-hidden="true" tabindex="-1"></a><span class="co">            (x, y) coordiantes on the grid</span></span>
+<span id="cb151-35"><a href="seminar-02-03.html#cb151-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb151-36"><a href="seminar-02-03.html#cb151-36" aria-hidden="true" tabindex="-1"></a><span class="co">        Returns</span></span>
+<span id="cb151-37"><a href="seminar-02-03.html#cb151-37" aria-hidden="true" tabindex="-1"></a><span class="co">        -----------</span></span>
+<span id="cb151-38"><a href="seminar-02-03.html#cb151-38" aria-hidden="true" tabindex="-1"></a><span class="co">        tuple</span></span>
+<span id="cb151-39"><a href="seminar-02-03.html#cb151-39" aria-hidden="true" tabindex="-1"></a><span class="co">            (norm_x, norm_y) coordinates in the window</span></span>
+<span id="cb151-40"><a href="seminar-02-03.html#cb151-40" aria-hidden="true" tabindex="-1"></a><span class="co">        &quot;&quot;&quot;</span></span>
+<span id="cb151-41"><a href="seminar-02-03.html#cb151-41" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb151-42"><a href="seminar-02-03.html#cb151-42" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 5. code that computed the transformation but that uses</span></span>
+<span id="cb151-43"><a href="seminar-02-03.html#cb151-43" aria-hidden="true" tabindex="-1"></a>        <span class="co">#    class attribute for square size</span></span>
+<span id="cb151-44"><a href="seminar-02-03.html#cb151-44" aria-hidden="true" tabindex="-1"></a>        </span></code></pre></div>
+<p>Let us go through the code!</p>
+<ol style="list-style-type: decimal">
+<li>You do need to import some modules, which ones?</li>
+<li>We pass the <code>grid_size</code> as a parameter to the constructor but we need to retain in for future computation. Hence, we should store it as a persistent attributed of the class. You can (should) use the same name but remember this is an attribute not a constant, so you should use <code>snake_lower_case</code> for the name.</li>
+<li>In the original code, you store the computed square size as a constant. Here, you store it as a persistent attribute but, otherwise, the idea is the same.</li>
+<li>New and somewhat complicated bit! In the original code, we created a window and specified its size in pixels (computing it from the grid size and size of the square in pixels) and <code>"norm"</code> units. We still need to do this, so that the window is initialized properly. In the constructor we wrote the code that takes care of <em>new</em> bits but we need to ensure that the ancestor class does the <em>old</em> bits. For this, we need to call its constructor (<code>__init__()</code> method). But there is a catch, we <em>overwrote</em> it with a brand new <code>__init__()</code> method of our own, so we cannot just call it via <code>self.__init__()</code><a href="#fn33" class="footnote-ref" id="fnref33"><sup>33</sup></a>. Instead, Python has <code>super()</code> function that refers to the ancestor of the class. Hence, <code>super().__init__(your-arguments-inside)</code> initializes the window. Note that you need <code>super()</code> only if you <em>override</em> the original method, as we did with <code>__init__()</code>. E.g., you do not need it to call <code>flip()</code> method defined in the original class.</li>
+<li>The code is essentially the same but you can use square size attribute, so no need to pass it as a separate argument.</li>
+</ol>
+<p>And in the main code, you now create the window as</p>
+<div class="sourceCode" id="cb152"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb152-1"><a href="seminar-02-03.html#cb152-1" aria-hidden="true" tabindex="-1"></a>win <span class="op">=</span> GridWindow(GRID_SIZE, SQUARE_SIZE_PIX)</span></code></pre></div>
 </div>
+<div id="apple-class" class="section level2" number="15.13">
+<h2><span class="header-section-number">15.13</span> Apple class</h2>
+<p>Create it in a separate <em>apples.py</em> file. The apple class has no ancestors and we just need to put all methods and variables together. Here are lists of attributes and methods.</p>
+<p>Attributes:</p>
+<ul>
+<li><code>win</code> : you should pass window variable to the constructor of an <code>Apple</code> class and store it as an attribute for later use when you (re)create the apple at random position.</li>
+<li><code>pos</code> : same as the field in the original dictionary but now as an attribute.</li>
+<li><code>visuals</code> : same as the field in the original dictionary but now as an attribute.</li>
+</ul>
+<p>Methods:</p>
+<ul>
+<li><code>__init__(self, win)</code> should store window as attribute and create <em>empty</em> attributes <code>pos</code> and <code>visuals</code>.</li>
+<li><code>reset(self, snake)</code> : modified version of <code>create_apple()</code> function but you use grid size and square size attributes of the <code>self.win</code> instead of passing them as arguments. It should overwrite any old values of <code>self.pos</code> and <code>self.visuals</code> instead of returning the dictionary.</li>
+<li><code>draw()</code> : should draw the apple!</li>
+</ul>
+<p>Now, you need to create an <code>apple</code> object <em>after</em> you create the window and <code>reset()</code> it whenever you need a new apple (at the beginning of each round and once the snake ate the apple).</p>
 </div>
-<div id="adding-text-message" class="section level2" number="8.3">
-<h2><span class="header-section-number">8.3</span> Adding text message</h2>
-<p>Although we are now running a nice loop, we still have only a boring gray window to look at. Let us create a text stimulus, which would say “Press escape to exit” and display it during the loop. For this we will use <a href="https://psychopy.org/api/visual/textstim.html">visual.TextStim</a> class from PsychoPy library.</p>
-<p>First, you need to create the <code>press_escape_text</code> object (instance of the <code>TextStim</code> class) before the main loop. There are quite a few parameters that you can play with but minimally, you need to pass the program window (our <code>win</code> variable) and the actual text you want to display (<code>"Press escape to exit"</code>). For all other settings PsychoPy will use its defaults (default font family, color and size, placed right the screen center).</p>
-<div class="sourceCode" id="cb101"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb101-1"><a href="seminar08.html#cb101-1" aria-hidden="true" tabindex="-1"></a>press_escape_text <span class="op">=</span> visual.TextStim(win, <span class="st">&quot;Press escape to exit&quot;</span>)</span></code></pre></div>
-<p>To show the visuals in PsychoPy, you first <em>draw</em> each element by calling its <code>draw()</code> method (thus, in our case, <code>press_escape_text.draw()</code>) and then put the “drawing” on the screen by <em>flipping</em> we window (<code>win.flip()</code> method). These two calls should go inside the main loop either before (my preference) or after the keyboard check.</p>
-<div class="sourceCode" id="cb102"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb102-1"><a href="seminar08.html#cb102-1" aria-hidden="true" tabindex="-1"></a>importing libraries</span>
-<span id="cb102-2"><a href="seminar08.html#cb102-2" aria-hidden="true" tabindex="-1"></a>opening the window</span>
-<span id="cb102-3"><a href="seminar08.html#cb102-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb102-4"><a href="seminar08.html#cb102-4" aria-hidden="true" tabindex="-1"></a><span class="op">--&gt;</span> create press_escape_text here <span class="op">&lt;--</span></span>
-<span id="cb102-5"><a href="seminar08.html#cb102-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb102-6"><a href="seminar08.html#cb102-6" aria-hidden="true" tabindex="-1"></a>gameover <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb102-7"><a href="seminar08.html#cb102-7" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="kw">not</span> gameover:</span>
-<span id="cb102-8"><a href="seminar08.html#cb102-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">--&gt;</span> draw press_escape_text <span class="op">&lt;--</span></span>
-<span id="cb102-9"><a href="seminar08.html#cb102-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">--&gt;</span> flip the window  <span class="op">&lt;--</span></span>
-<span id="cb102-10"><a href="seminar08.html#cb102-10" aria-hidden="true" tabindex="-1"></a>    check keyboard <span class="cf">for</span> escape button press</span>
-<span id="cb102-11"><a href="seminar08.html#cb102-11" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb102-12"><a href="seminar08.html#cb102-12" aria-hidden="true" tabindex="-1"></a>close the window</span></code></pre></div>
-<p>Now, you should have a nice, although static, message that tells you how you can exit the game. Check out the manual page for <a href="https://psychopy.org/api/visual/textstim.html">visual.TextStim</a> and try changing it by passing additional parameters to the object constructor call. For example you can change its <code>color</code>, whether text is <code>bold</code> and/or <code>italic</code>, how it is aligned, etc. However, if you want to change <em>where</em> the text is displayed, read on below.</p>
-<div class="infobox program">
-<p>Put your code into <em>exercise03.py</em>.</p>
-</div>
-</div>
-<div id="adding-a-square-and-placing-it-not-at-the-center-of-the-window" class="section level2" number="8.4">
-<h2><span class="header-section-number">8.4</span> Adding a square and placing it <em>not</em> at the center of the window</h2>
-<p>Now, let us figure out how create and move visuals to an arbitrary location on the screen. In principle, this is very straightforward as every visual stimulus (including <code>TextStim</code> we used just above) has <code>pos</code> property that specifies (you guessed it!) its position. However, to make your life easier, PsychoPy first complicates it by having <a href="https://psychopy.org/general/units.html"><strong>five</strong> different units systems</a>.</p>
-<p>Before we start exploring the units, let us create a simple white square. The visual class we need is <a href="https://psychopy.org/api/visual/rect.html">visual.Rect</a>. Just like the <code>TextStim</code> above, it requires <code>win</code> variable (so it knows which window it belongs to), <code>width</code> (defaults to 0.5 of that mysterious units), <code>height</code> (also defaults to 0.5), <code>pos</code> (defaults to (0,0)), <code>lineColor</code> (defaults to <code>white</code>) and <code>fillColor</code> (defaults to <code>None</code>). Thus, to get a “standard” white square with size of <code>(0.5, 0.5)</code> units at <code>(0, 0)</code> location you only need pass the <code>win</code> variable: <code>white_square = visual.Rect(win)</code>. You draw the square just like you drew the text stimulus, via its <code>draw()</code> method. Create the code, run it to see a very white square, and read on.</p>
-<div class="sourceCode" id="cb103"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb103-1"><a href="seminar08.html#cb103-1" aria-hidden="true" tabindex="-1"></a>importing libraries</span>
-<span id="cb103-2"><a href="seminar08.html#cb103-2" aria-hidden="true" tabindex="-1"></a>opening the window</span>
-<span id="cb103-3"><a href="seminar08.html#cb103-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb103-4"><a href="seminar08.html#cb103-4" aria-hidden="true" tabindex="-1"></a><span class="op">--&gt;</span> create white_square here <span class="op">&lt;--</span></span>
-<span id="cb103-5"><a href="seminar08.html#cb103-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb103-6"><a href="seminar08.html#cb103-6" aria-hidden="true" tabindex="-1"></a>gameover <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb103-7"><a href="seminar08.html#cb103-7" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="kw">not</span> gameover:</span>
-<span id="cb103-8"><a href="seminar08.html#cb103-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">--&gt;</span> draw white_square <span class="kw">and</span> flip the window here <span class="op">&lt;--</span></span>
-<span id="cb103-9"><a href="seminar08.html#cb103-9" aria-hidden="true" tabindex="-1"></a>    check keyboard <span class="cf">for</span> escape button press</span>
-<span id="cb103-10"><a href="seminar08.html#cb103-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb103-11"><a href="seminar08.html#cb103-11" aria-hidden="true" tabindex="-1"></a>close the window</span></code></pre></div>
-<div class="infobox program">
-<p>Put your code into <em>exercise04.py</em>.</p>
-</div>
-<p>What did you say, your square was not really a square? Well, I told you, <strong>five</strong> units systems!</p>
-</div>
-<div id="five-units-systems" class="section level2" number="8.5">
-<h2><span class="header-section-number">8.5</span> Five units systems</h2>
-<div id="height-units" class="section level3" number="8.5.1">
-<h3><span class="header-section-number">8.5.1</span> Height units</h3>
-<p>With height units everything is specified in the units of window height. The center of the window is at <code>(0,0)</code> and the window goes vertically from <code>-0.5</code> to <code>0.5</code>. However, its horizontal limits depend on the aspect ratio. For our 800×600 window, it will go from -0.666 to 0.666 (the window is 1.3333 window heights wide). For a 600×800 window from -0.375 to 0.375 (the window is 0.75 window heights wide), for a square window 600×600 from -0.5 to 0.5 (again, in all these cases it goes from -0.5 to 0.5 vertically). This means that the actual on-screen distance for the units is the same for both axes. So that a square of <code>size=(0.5, 0.5)</code> is actually a square (it spans the same distance vertically and horizontally). Thus, it makes <em>sizing</em> objects easier but <em>placing them on horizontal axis correctly</em> harder (as you need to know the aspect ratio).</p>
-<p>Modify your code by specifying the unit system when you create the window: <code>win = visual.Window(..., units="height")</code>. Play with your code by specifying position of the square when you create it. You just need to pass an extra parameter <code>pos=(&lt;x&gt;, &lt;y&gt;)</code>. Which was is up, when y is below or above zero?</p>
-<div class="infobox program">
-<p>Put your code into <em>exercise05.py</em>.</p>
-</div>
-<p>Unfortunately, unlike x-axis, the y-axis can go both ways. For PsychoPy y-axis points up (so negative values move the square down and positive up). However, if you would use an Eyelink eye tracker to record where participants looked <em>on the screen</em>, it assumes that y-axis starts at the top of the screen and points down (which could be very confusing, if you forget about this when overlaying gaze data on the image you used and wondering what on Earth the participants were doing).</p>
-<p>Now, modify the size of the square (and turn it into a non-square rectangle) by passing <code>width=&lt;some-width-value&gt;</code> and <code>height=&lt;some-height-value&gt;</code>.</p>
-<div class="infobox program">
-<p>Put your code into <em>exercise06.py</em>.</p>
-</div>
-</div>
-<div id="normalized-units" class="section level3" number="8.5.2">
-<h3><span class="header-section-number">8.5.2</span> Normalized units</h3>
-<p>These units are default ones and assume that the window goes from -1 to 1 both along x- and x-axis. Again, (0,0) is the center of the screen but the bottom-left corner is (-1, -1) whereas the top-right is (1, 1). This makes <em>placing</em> your objects easier but <em>sizing</em> them harder (you need to know the aspect ratio to ensure that a square is a square).</p>
-<p>Modify your code, so that it uses <code>"norm"</code> units when you create the window and size the <code>Rect</code> stimulus, so it does look like a square.</p>
-<div class="infobox program">
-<p>Put your code into <em>exercise07.py</em>.</p>
-</div>
-</div>
-<div id="pixels-on-screen" class="section level3" number="8.5.3">
-<h3><span class="header-section-number">8.5.3</span> Pixels on screen</h3>
-<p>In this case, the window center is still at <code>(0,0)</code> but it goes from <code>-&lt;width-in-pixels&gt;/2</code> to <code>&lt;width-in-pixels&gt;/2</code> horizontally (from -400 to 400 in our case) and <code>-&lt;height-in-pixels&gt;/2</code> to <code>&lt;height-in-pixels&gt;/2</code> vertically (from -300 to 300). These units could be more intuitive when you are working with a fixed sized window, as the span is the same along the both axes (like for the height units). However, they spell trouble if your window size was changed or you are using a full screen window on some monitor with an unknown resolution.</p>
-<p>Modify your code to use <code>"pix"</code> units and briefly test sizing and placing your square within the window.</p>
-<div class="infobox program">
-<p>Put your code into <em>exercise08.py</em>.</p>
-</div>
-</div>
-<div id="degrees-of-visual-angle" class="section level3" number="8.5.4">
-<h3><span class="header-section-number">8.5.4</span> Degrees of visual angle</h3>
-<p>Unlike the three units above, these require you knowing a physical size of the screen, its resolution, and your viewing distance (how far your eyes are away from the screen). They are <em>the</em> measurement units used in visual psychophysics as they describe stimulus size as it appears on the retina (see <a href="https://en.wikipedia.org/wiki/Visual_angle">Wikipedia</a> for details). Thus, these are the units you want to use when running an actual experiment in the lab but for our purposes we will stick to one of the three units systems above.</p>
-</div>
-<div id="centimeters-on-screen" class="section level3" number="8.5.5">
-<h3><span class="header-section-number">8.5.5</span> Centimeters on screen</h3>
-<p>Here, you would need know the physical size of your screen and its resolution. These are fairly exotic units for very specific situations<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>.</p>
-</div>
-</div>
-<div id="make-your-square-jump" class="section level2" number="8.6">
-<h2><span class="header-section-number">8.6</span> Make your square jump!</h2>
-<p>So far, we fixed the location of the square when we created it. However, you can move it at any time by assigning a new <code>(&lt;x&gt;, &lt;y&gt;)</code> coordinates to its <code>pos</code> property. <em>E.g.</em>, <code>white_square.pos = (-0.1, 0.2)</code>. Let us experiment by moving the square to a random location on every iteration of the loop (this could cause a lot of flashing, so if you have a photosensitive epilepsy that can be triggered by flashing lights, you probably should do it just once before the loop). Use the units of your choice (I would recommend <code>"norm"</code>) and generate a new position using <a href="https://docs.python.org/3/library/random.html#random.uniform">random.uniform(a, b)</a> function, that generates a random value within <em>a..b</em> range. You need to generate two values (one for x, one for y) and your range is the same for <code>"norm"</code> units (from -1 to 1) but is different (and depends on the aspect ratio) for <code>"height"</code> units.</p>
-<div class="sourceCode" id="cb104"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb104-1"><a href="seminar08.html#cb104-1" aria-hidden="true" tabindex="-1"></a>importing libraries, now also the random library</span>
-<span id="cb104-2"><a href="seminar08.html#cb104-2" aria-hidden="true" tabindex="-1"></a><span class="bu">open</span> the window</span>
-<span id="cb104-3"><a href="seminar08.html#cb104-3" aria-hidden="true" tabindex="-1"></a>create white_square here</span>
-<span id="cb104-4"><a href="seminar08.html#cb104-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb104-5"><a href="seminar08.html#cb104-5" aria-hidden="true" tabindex="-1"></a>gameover <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb104-6"><a href="seminar08.html#cb104-6" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="kw">not</span> gameover:</span>
-<span id="cb104-7"><a href="seminar08.html#cb104-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">--&gt;</span> move the square to a random position <span class="op">&lt;--</span></span>
-<span id="cb104-8"><a href="seminar08.html#cb104-8" aria-hidden="true" tabindex="-1"></a>    draw white_square <span class="kw">and</span> flip the window here</span>
-<span id="cb104-9"><a href="seminar08.html#cb104-9" aria-hidden="true" tabindex="-1"></a>    check keyboard <span class="cf">for</span> escape button press</span>
-<span id="cb104-10"><a href="seminar08.html#cb104-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb104-11"><a href="seminar08.html#cb104-11" aria-hidden="true" tabindex="-1"></a>close the window</span></code></pre></div>
-<div class="infobox program">
-<p>Put your code into <em>exercise09.py</em>.</p>
-</div>
-</div>
-<div id="make-the-square-jump-on-your-command" class="section level2" number="8.7">
-<h2><span class="header-section-number">8.7</span> Make the square jump on your command!</h2>
-<p>This was very flashy, so let us make the square jump only when you press <em>Space</em> button. For this, we need to expand the code that processes keyboard input. So far, we restricted it to just “escape” button and checked whether any (hence, “escape”) button was pressed. In my case, the code looks like that</p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb105-1"><a href="seminar08.html#cb105-1" aria-hidden="true" tabindex="-1"></a>gameover <span class="op">=</span> event.getKeys(keyList<span class="op">=</span>[<span class="st">&#39;escape&#39;</span>])</span></code></pre></div>
-<p>But I could have written it as</p>
-<div class="sourceCode" id="cb106"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb106-1"><a href="seminar08.html#cb106-1" aria-hidden="true" tabindex="-1"></a>keys_pressed <span class="op">=</span> event.getKeys(keyList<span class="op">=</span>[<span class="st">&#39;escape&#39;</span>])</span>
-<span id="cb106-2"><a href="seminar08.html#cb106-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> keys_pressed <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb106-3"><a href="seminar08.html#cb106-3" aria-hidden="true" tabindex="-1"></a>    game_over <span class="op">=</span> <span class="va">True</span></span></code></pre></div>
-<p>Let us use the <em>second</em> version, where we explicitly store the output of <code>event.getKeys()</code> function in <code>keys_pressed</code>. First, you need to add <code>"space"</code> to the <code>keyList</code> parameter. Second, because <code>event.getKeys()</code> function returns a <strong>list</strong> of keys that were pressed, we need to loop over that list (which in most cases will contain no or just one element) and use conditional statements inside that loop to make the square jump or to exit the program.</p>
-<p>Use for <code>for</code> loop to loop over the elements of the list. Note that no iterations will occur if the list is empty, you can test this in a Jupyter cell:</p>
-<div class="sourceCode" id="cb107"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb107-1"><a href="seminar08.html#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> []:</span>
-<span id="cb107-2"><a href="seminar08.html#cb107-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;No one will ever see me...&quot;</span>)</span></code></pre></div>
-<p>When you loop over <code>keys_pressed</code>, your current loop variable value will be the string with the name of the button pressed (so, either <code>"escape"</code> or <code>"space"</code>). Now, you need to use conditional statements, so that the square jumps if the key was <code>"space"</code> and game is over if the key was <code>"escape"</code>. You code should look roughly like that</p>
-<div class="sourceCode" id="cb108"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb108-1"><a href="seminar08.html#cb108-1" aria-hidden="true" tabindex="-1"></a>importing libraries, now also the random library</span>
-<span id="cb108-2"><a href="seminar08.html#cb108-2" aria-hidden="true" tabindex="-1"></a><span class="bu">open</span> the window</span>
-<span id="cb108-3"><a href="seminar08.html#cb108-3" aria-hidden="true" tabindex="-1"></a>create white_square</span>
-<span id="cb108-4"><a href="seminar08.html#cb108-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-5"><a href="seminar08.html#cb108-5" aria-hidden="true" tabindex="-1"></a>gameover <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb108-6"><a href="seminar08.html#cb108-6" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="kw">not</span> gameover:</span>
-<span id="cb108-7"><a href="seminar08.html#cb108-7" aria-hidden="true" tabindex="-1"></a>    draw white_square <span class="kw">and</span> flip the window here</span>
-<span id="cb108-8"><a href="seminar08.html#cb108-8" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb108-9"><a href="seminar08.html#cb108-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ----- New code -----</span></span>
-<span id="cb108-10"><a href="seminar08.html#cb108-10" aria-hidden="true" tabindex="-1"></a>    keys_pressed <span class="op">=</span> event.getKeys(keyList<span class="op">=</span>[<span class="st">&#39;escape&#39;</span>, <span class="st">&#39;space&#39;</span>])</span>
-<span id="cb108-11"><a href="seminar08.html#cb108-11" aria-hidden="true" tabindex="-1"></a>    loop over keys_pressed:</span>
-<span id="cb108-12"><a href="seminar08.html#cb108-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> participant pressed space key:</span>
-<span id="cb108-13"><a href="seminar08.html#cb108-13" aria-hidden="true" tabindex="-1"></a>            move the square to a random location</span>
-<span id="cb108-14"><a href="seminar08.html#cb108-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> participant pressed escape key:</span>
-<span id="cb108-15"><a href="seminar08.html#cb108-15" aria-hidden="true" tabindex="-1"></a>            <span class="bu">set</span> gameover to <span class="va">False</span></span>
-<span id="cb108-16"><a href="seminar08.html#cb108-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ----- End of new code -----</span></span>
-<span id="cb108-17"><a href="seminar08.html#cb108-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-18"><a href="seminar08.html#cb108-18" aria-hidden="true" tabindex="-1"></a>close the window</span></code></pre></div>
-<div class="infobox program">
-<p>Put your code into <em>exercise10.py</em>.</p>
-</div>
-</div>
-<div id="i-like-to-move-it-move-it" class="section level2" number="8.8">
-<h2><span class="header-section-number">8.8</span> I like to move it, move it!</h2>
-<p>Let us exert more control over our rectangle by moving it around using arrow buttons (<code>"up"</code>, <code>"down"</code>, <code>"left"</code>, and <code>"right"</code> in PsychoPy). Add these keys to the <code>keyList</code> parameter of the <code>event.getKeys()</code> call and add more conditional statements when processing the pressed key. In PsychoPy you can change position by adding to it via <code>+=</code> or <code>-=</code> operations (other operations are also supported, see <a href="https://psychopy.org/coder/codeStimuli.html#attrib-operations">manual</a>). Thus, you can move your square to the right by 0.1 units (whatever they are) by writing <code>white_square.pos += (0.1, 0)</code>. Please note that you <strong>cannot</strong> write <code>white_square.pos = white_square.pos + (0.1, 0)</code>!</p>
-<p>Expand your code, so you move the rectangle around by 0.05 units in the direction of the key pressed.</p>
-<div class="infobox program">
-<p>Put your code into <em>exercise11.py</em>.</p>
-</div>
-<p>When we continue, we will expand on this to build a Memory game. In the meantime, experiment with stimuli (you can have a circle or a line rather than a square). Try showing more than one stimulus (<em>e.g.</em>, add back the “press escape to exit” message), etc.</p>
+<div id="refactoring-the-code" class="section level2" number="15.14">
+<h2><span class="header-section-number">15.14</span> Refactoring the code</h2>
+<p>Start by changing with window class to <code>GridWindow</code> without doing anything else. The code should “just work” as our <code>GridWindow</code> has all the functionality of PsychoPy <code>Window</code> that we relied upon. Next, go through the <em>snake</em> code (the apple has its own class, so we will deal with it later) to use window attributes instead of constants and simplify functions. E.g., <code>create_snake_segment(win, ipos, square_size)</code> does not need the third argument anymore, as you can get it from <code>win</code> itself. Similarly, you do not need it for <code>grow_snake()</code> function. Alter one function at a time and test your code.</p>
+<p>Next, use <code>Apple</code> class for the apple and adjust the code accordingly using attributes and <code>draw()</code> method. Here, you have to do all alterations in one go, of course, as changes we introduced are breaking.</p>
+<p>Remember, one step at a time, check your code before continuing. Put breakpoints and use debug console, if you are unsure about the changes.</p>
 
 </div>
 </div>
 <div class="footnotes">
 <hr />
-<ol start="3">
-<li id="fn3"><p>You can “Save as…” the previous exercise to avoid copy-pasting things by hand.<a href="seminar08.html#fnref3" class="footnote-back">↩︎</a></p></li>
-<li id="fn4"><p>so specific that I can’t think of one, to be honest.<a href="seminar08.html#fnref4" class="footnote-back">↩︎</a></p></li>
+<ol start="27">
+<li id="fn27"><p><code>BaseVisualStim</code> does not actually define <code>draw()</code> method, only that it must be present.<a href="seminar-02-03.html#fnref27" class="footnote-back">↩︎</a></p></li>
+<li id="fn28"><p>Yes, it is really called “duck typing”.<a href="seminar-02-03.html#fnref28" class="footnote-back">↩︎</a></p></li>
+<li id="fn29"><p>There are more special methods that you will learn about later, they all follow <code>__methodname__()</code> convention.<a href="seminar-02-03.html#fnref29" class="footnote-back">↩︎</a></p></li>
+<li id="fn30"><p>Again, you can use any name but that will surely confuse everyone.<a href="seminar-02-03.html#fnref30" class="footnote-back">↩︎</a></p></li>
+<li id="fn31"><p>This is actually how all properties and methods are stored, in a <code>__dict__</code> attribute, so you can write <code>number_sum.__dict__["total"]</code> to get it.<a href="seminar-02-03.html#fnref31" class="footnote-back">↩︎</a></p></li>
+<li id="fn32"><p>If you use a linter, it will complain whenever it sees a property not defined in the constructor<a href="seminar-02-03.html#fnref32" class="footnote-back">↩︎</a></p></li>
+<li id="fn33"><p>Well, we can write that but we will be calling out brand new <code>__init__()</code> again.<a href="seminar-02-03.html#fnref33" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -632,8 +644,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="seminar07.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="seminar09.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="seminar-02-02.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="seminar-02-04.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

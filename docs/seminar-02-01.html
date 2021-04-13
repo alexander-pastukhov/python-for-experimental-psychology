@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Seminar 13 Snake game | Python for social and experimental psychology</title>
+  <meta name="description" content="Material and exercises for ‘Python for social and experimental psychology’ seminar." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Seminar 13 Snake game | Python for social and experimental psychology" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Material and exercises for ‘Python for social and experimental psychology’ seminar." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Seminar 13 Snake game | Python for social and experimental psychology" />
+  
+  <meta name="twitter:description" content="Material and exercises for ‘Python for social and experimental psychology’ seminar." />
+  
+
+<meta name="author" content="Alexander (Sasha) Pastukhov" />
+
+
+<meta name="date" content="2021-04-13" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="the-skill-of-programming.html"/>
+<link rel="next" href="seminar-02-02.html"/>
+<script src="libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Python for social and experimental psychology</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#about-the-seminar"><i class="fa fa-check"></i>About the seminar</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#note-on-exercises"><i class="fa fa-check"></i>Note on exercises</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#why-python"><i class="fa fa-check"></i>Why Python?</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="getting-started.html"><a href="getting-started.html"><i class="fa fa-check"></i>Getting Started</a>
+<ul>
+<li class="chapter" data-level="" data-path="getting-started.html"><a href="getting-started.html#install-anaconda"><i class="fa fa-check"></i>Installing Anaconda environment</a></li>
+<li class="chapter" data-level="" data-path="getting-started.html"><a href="getting-started.html#install-vs-code"><i class="fa fa-check"></i>Installing Visual Studio Code</a></li>
+<li class="chapter" data-level="" data-path="getting-started.html"><a href="getting-started.html#debug-in-vs-code"><i class="fa fa-check"></i>Debugging in VIsual Studio Code</a></li>
+<li class="chapter" data-level="" data-path="getting-started.html"><a href="getting-started.html#install-psychopy"><i class="fa fa-check"></i>Installing PsychoPy</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="seminar01.html"><a href="seminar01.html"><i class="fa fa-check"></i><b>1</b> Python basics</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="seminar01.html"><a href="seminar01.html#variables"><i class="fa fa-check"></i><b>1.1</b> Variables</a></li>
+<li class="chapter" data-level="1.2" data-path="seminar01.html"><a href="seminar01.html#assignments-are-not-equations"><i class="fa fa-check"></i><b>1.2</b> Assignments are not equations!</a></li>
+<li class="chapter" data-level="1.3" data-path="seminar01.html"><a href="seminar01.html#constants"><i class="fa fa-check"></i><b>1.3</b> Constants</a></li>
+<li class="chapter" data-level="1.4" data-path="seminar01.html"><a href="seminar01.html#value-types"><i class="fa fa-check"></i><b>1.4</b> Value types</a></li>
+<li class="chapter" data-level="1.5" data-path="seminar01.html"><a href="seminar01.html#printing-output"><i class="fa fa-check"></i><b>1.5</b> Printing output</a></li>
+<li class="chapter" data-level="1.6" data-path="seminar01.html"><a href="seminar01.html#string-formatting"><i class="fa fa-check"></i><b>1.6</b> String formatting</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="seminar02.html"><a href="seminar02.html"><i class="fa fa-check"></i><b>2</b> Guess the Number</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="seminar02.html"><a href="seminar02.html#game-description"><i class="fa fa-check"></i><b>2.1</b> Game description</a></li>
+<li class="chapter" data-level="2.2" data-path="seminar02.html"><a href="seminar02.html#lets-pick-the-number-exercise-1"><i class="fa fa-check"></i><b>2.2</b> Let’s pick the number (Exercise 1)</a></li>
+<li class="chapter" data-level="2.3" data-path="seminar02.html"><a href="seminar02.html#input-function"><i class="fa fa-check"></i><b>2.3</b> Asking user for a guess (Exercise 2)</a></li>
+<li class="chapter" data-level="2.4" data-path="seminar02.html"><a href="seminar02.html#conditional-if-statement"><i class="fa fa-check"></i><b>2.4</b> Conditional <em>if</em> statement</a></li>
+<li class="chapter" data-level="2.5" data-path="seminar02.html"><a href="seminar02.html#conditions-and-comparisons-exercises-3-8"><i class="fa fa-check"></i><b>2.5</b> Conditions and comparisons (exercises 3-8)</a></li>
+<li class="chapter" data-level="2.6" data-path="seminar02.html"><a href="seminar02.html#grouping-statements-via-identation-exercise-9"><i class="fa fa-check"></i><b>2.6</b> Grouping statements via identation (exercise #9)</a></li>
+<li class="chapter" data-level="2.7" data-path="seminar02.html"><a href="seminar02.html#checking-the-answer-exercise-11"><i class="fa fa-check"></i><b>2.7</b> Checking the answer (Exercise 11)</a></li>
+<li class="chapter" data-level="2.8" data-path="seminar02.html"><a href="seminar02.html#picking-number-randomly-exercise-12"><i class="fa fa-check"></i><b>2.8</b> Picking number randomly (Exercise 12)</a></li>
+<li class="chapter" data-level="2.9" data-path="seminar02.html"><a href="seminar02.html#one-armed-bandit-exercise-13"><i class="fa fa-check"></i><b>2.9</b> One-armed bandit (Exercise 13)</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="seminar03.html"><a href="seminar03.html"><i class="fa fa-check"></i><b>3</b> Guess the Number, the Sequel</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="seminar03.html"><a href="seminar03.html#while-loop"><i class="fa fa-check"></i><b>3.1</b> While loop (Exercises 1-2)</a></li>
+<li class="chapter" data-level="3.2" data-path="seminar03.html"><a href="seminar03.html#counting-attempts-exercise-3"><i class="fa fa-check"></i><b>3.2</b> Counting attempts (Exercise #3)</a></li>
+<li class="chapter" data-level="3.3" data-path="seminar03.html"><a href="seminar03.html#break"><i class="fa fa-check"></i><b>3.3</b> Breaking (and exiting, Exercise #4)</a></li>
+<li class="chapter" data-level="3.4" data-path="seminar03.html"><a href="seminar03.html#limiting-number-of-attempts-via-break-exercise-5"><i class="fa fa-check"></i><b>3.4</b> Limiting number of attempts via break (Exercise 5)</a></li>
+<li class="chapter" data-level="3.5" data-path="seminar03.html"><a href="seminar03.html#correct-end-of-game-message-exercise-6"><i class="fa fa-check"></i><b>3.5</b> Correct end-of-game message (Exercise 6)</a></li>
+<li class="chapter" data-level="3.6" data-path="seminar03.html"><a href="seminar03.html#limiting-number-of-attempts-with-a-break-exercise-7"><i class="fa fa-check"></i><b>3.6</b> Limiting number of attempts with a break (Exercise 7)</a></li>
+<li class="chapter" data-level="3.7" data-path="seminar03.html"><a href="seminar03.html#show-remaining-attempts-exercise-8"><i class="fa fa-check"></i><b>3.7</b> Show remaining attempts (Exercise 8)</a></li>
+<li class="chapter" data-level="3.8" data-path="seminar03.html"><a href="seminar03.html#repeating-the-game-exercise-9"><i class="fa fa-check"></i><b>3.8</b> Repeating the game (Exercise 9)</a></li>
+<li class="chapter" data-level="3.9" data-path="seminar03.html"><a href="seminar03.html#best-score-exercise-10"><i class="fa fa-check"></i><b>3.9</b> Best score (Exercise 10)</a></li>
+<li class="chapter" data-level="3.10" data-path="seminar03.html"><a href="seminar03.html#counting-game-rounds-exercise-11"><i class="fa fa-check"></i><b>3.10</b> Counting game rounds (Exercise 11)</a></li>
+<li class="chapter" data-level="3.11" data-path="seminar03.html"><a href="seminar03.html#wrap-up"><i class="fa fa-check"></i><b>3.11</b> Wrap up</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="seminar04.html"><a href="seminar04.html"><i class="fa fa-check"></i><b>4</b> Hunt the Wumpus, part 1</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="seminar04.html"><a href="seminar04.html#lists"><i class="fa fa-check"></i><b>4.1</b> Lists</a></li>
+<li class="chapter" data-level="4.2" data-path="seminar04.html"><a href="seminar04.html#caves"><i class="fa fa-check"></i><b>4.2</b> Caves</a></li>
+<li class="chapter" data-level="4.3" data-path="seminar04.html"><a href="seminar04.html#wandering-around"><i class="fa fa-check"></i><b>4.3</b> Wandering around</a></li>
+<li class="chapter" data-level="4.4" data-path="seminar04.html"><a href="seminar04.html#checking-whether-a-value-is-in-the-list"><i class="fa fa-check"></i><b>4.4</b> Checking whether a value is <em>in</em> the list</a></li>
+<li class="chapter" data-level="4.5" data-path="seminar04.html"><a href="seminar04.html#checking-valid-cave-index"><i class="fa fa-check"></i><b>4.5</b> Checking valid cave index</a></li>
+<li class="chapter" data-level="4.6" data-path="seminar04.html"><a href="seminar04.html#checking-that-string-can-be-converted-to-an-integer"><i class="fa fa-check"></i><b>4.6</b> Checking that string can be converted to an integer</a></li>
+<li class="chapter" data-level="4.7" data-path="seminar04.html"><a href="seminar04.html#checking-valid-integer-input"><i class="fa fa-check"></i><b>4.7</b> Checking valid integer input</a></li>
+<li class="chapter" data-level="4.8" data-path="seminar04.html"><a href="seminar04.html#wrap-up-1"><i class="fa fa-check"></i><b>4.8</b> Wrap up</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="seminar05.html"><a href="seminar05.html"><i class="fa fa-check"></i><b>5</b> Hunt the Wumpus, part 2</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="seminar05.html"><a href="seminar05.html#function"><i class="fa fa-check"></i><b>5.1</b> Functions</a>
+<ul>
+<li class="chapter" data-level="" data-path="seminar05.html"><a href="seminar05.html#function-performs-a-single-computation"><i class="fa fa-check"></i>Function performs a single computation</a></li>
+<li class="chapter" data-level="" data-path="seminar05.html"><a href="seminar05.html#function-isolates-code-from-the-rest-of-the-program"><i class="fa fa-check"></i>Function isolates code from the rest of the program</a></li>
+<li class="chapter" data-level="" data-path="seminar05.html"><a href="seminar05.html#function-makes-code-easier-to-test"><i class="fa fa-check"></i>Function makes code easier to test</a></li>
+<li class="chapter" data-level="" data-path="seminar05.html"><a href="seminar05.html#function-makes-code-reusable"><i class="fa fa-check"></i>Function makes code reusable</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="seminar05.html"><a href="seminar05.html#defining-a-function-in-python"><i class="fa fa-check"></i><b>5.2</b> Defining a function in Python</a></li>
+<li class="chapter" data-level="5.3" data-path="seminar05.html"><a href="seminar05.html#function-arguments"><i class="fa fa-check"></i><b>5.3</b> Function arguments</a></li>
+<li class="chapter" data-level="5.4" data-path="seminar05.html"><a href="seminar05.html#functions-returned-value-output"><i class="fa fa-check"></i><b>5.4</b> Functions’ returned value (output)</a></li>
+<li class="chapter" data-level="5.5" data-path="seminar05.html"><a href="seminar05.html#scopes-for-immutable-values"><i class="fa fa-check"></i><b>5.5</b> Scopes (for immutable values)</a></li>
+<li class="chapter" data-level="5.6" data-path="seminar05.html"><a href="seminar05.html#create-input_int"><i class="fa fa-check"></i><b>5.6</b> Create <em>input_int()</em></a></li>
+<li class="chapter" data-level="5.7" data-path="seminar05.html"><a href="seminar05.html#documenting-input_int"><i class="fa fa-check"></i><b>5.7</b> Documenting <em>input_int()</em></a></li>
+<li class="chapter" data-level="5.8" data-path="seminar05.html"><a href="seminar05.html#adding-prompt-parameter-to-input_int"><i class="fa fa-check"></i><b>5.8</b> Adding prompt parameter to <em>input_int()</em></a></li>
+<li class="chapter" data-level="5.9" data-path="seminar05.html"><a href="seminar05.html#using-the-function-in-the-code"><i class="fa fa-check"></i><b>5.9</b> Using the function in the code</a></li>
+<li class="chapter" data-level="5.10" data-path="seminar05.html"><a href="seminar05.html#create-input_cave-function"><i class="fa fa-check"></i><b>5.10</b> Create <em>input_cave()</em> function</a></li>
+<li class="chapter" data-level="5.11" data-path="seminar05.html"><a href="seminar05.html#create-find_empty_cave-function"><i class="fa fa-check"></i><b>5.11</b> Create <em>find_empty_cave()</em> function</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="seminar06.html"><a href="seminar06.html"><i class="fa fa-check"></i><b>6</b> Hunt the Wumpus, part 3</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="seminar06.html"><a href="seminar06.html#recall-variables-as-boxes-immutable-objects"><i class="fa fa-check"></i><b>6.1</b> Recall, Variables as Boxes (immutable objects)</a></li>
+<li class="chapter" data-level="6.2" data-path="seminar06.html"><a href="seminar06.html#variables-as-post-it-stickers-mutable-objects"><i class="fa fa-check"></i><b>6.2</b> Variables as post-it stickers (mutable objects)</a></li>
+<li class="chapter" data-level="6.3" data-path="seminar06.html"><a href="seminar06.html#tuple-a-frozen-list"><i class="fa fa-check"></i><b>6.3</b> Tuple: a frozen list</a></li>
+<li class="chapter" data-level="6.4" data-path="seminar06.html"><a href="seminar06.html#keeping-track-of-occupied-caves"><i class="fa fa-check"></i><b>6.4</b> Keeping track of occupied caves</a></li>
+<li class="chapter" data-level="6.5" data-path="seminar06.html"><a href="seminar06.html#for-loop"><i class="fa fa-check"></i><b>6.5</b> For loop</a></li>
+<li class="chapter" data-level="6.6" data-path="seminar06.html"><a href="seminar06.html#range"><i class="fa fa-check"></i><b>6.6</b> range()</a></li>
+<li class="chapter" data-level="6.7" data-path="seminar06.html"><a href="seminar06.html#placing-bottomless-pits"><i class="fa fa-check"></i><b>6.7</b> Placing bottomless pits</a></li>
+<li class="chapter" data-level="6.8" data-path="seminar06.html"><a href="seminar06.html#falling-into-a-bottomless-pit"><i class="fa fa-check"></i><b>6.8</b> Falling into a bottomless pit</a></li>
+<li class="chapter" data-level="6.9" data-path="seminar06.html"><a href="seminar06.html#warning-about-a-bottomless-pit"><i class="fa fa-check"></i><b>6.9</b> Warning about a bottomless pit</a></li>
+<li class="chapter" data-level="6.10" data-path="seminar06.html"><a href="seminar06.html#placing-bats"><i class="fa fa-check"></i><b>6.10</b> Placing bats</a></li>
+<li class="chapter" data-level="6.11" data-path="seminar06.html"><a href="seminar06.html#warned-about-bats"><i class="fa fa-check"></i><b>6.11</b> Warned about bats</a></li>
+<li class="chapter" data-level="6.12" data-path="seminar06.html"><a href="seminar06.html#transported-by-bats-to-a-random-cave"><i class="fa fa-check"></i><b>6.12</b> Transported by bats to a random cave</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="seminar07.html"><a href="seminar07.html"><i class="fa fa-check"></i><b>7</b> Hunt the Wumpus, part 4</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="seminar07.html"><a href="seminar07.html#adding-wumpus."><i class="fa fa-check"></i><b>7.1</b> Adding Wumpus.</a></li>
+<li class="chapter" data-level="7.2" data-path="seminar07.html"><a href="seminar07.html#giving-player-a-chance."><i class="fa fa-check"></i><b>7.2</b> Giving player a chance.</a></li>
+<li class="chapter" data-level="7.3" data-path="seminar07.html"><a href="seminar07.html#flight-of-a-crooked-arrow"><i class="fa fa-check"></i><b>7.3</b> Flight of a crooked arrow</a></li>
+<li class="chapter" data-level="7.4" data-path="seminar07.html"><a href="seminar07.html#random-cave-but-no-180-turn"><i class="fa fa-check"></i><b>7.4</b> Random cave but no 180° turn</a></li>
+<li class="chapter" data-level="7.5" data-path="seminar07.html"><a href="seminar07.html#going-distance"><i class="fa fa-check"></i><b>7.5</b> Going distance</a></li>
+<li class="chapter" data-level="7.6" data-path="seminar07.html"><a href="seminar07.html#hitting-a-target"><i class="fa fa-check"></i><b>7.6</b> Hitting a target</a></li>
+<li class="chapter" data-level="7.7" data-path="seminar07.html"><a href="seminar07.html#almost-where"><i class="fa fa-check"></i><b>7.7</b> Almost where</a></li>
+<li class="chapter" data-level="7.8" data-path="seminar07.html"><a href="seminar07.html#move-or-shoot"><i class="fa fa-check"></i><b>7.8</b> Move or shoot?</a></li>
+<li class="chapter" data-level="7.9" data-path="seminar07.html"><a href="seminar07.html#how-far"><i class="fa fa-check"></i><b>7.9</b> How far?</a></li>
+<li class="chapter" data-level="7.10" data-path="seminar07.html"><a href="seminar07.html#input_cave-prompt"><i class="fa fa-check"></i><b>7.10</b> input_cave prompt</a></li>
+<li class="chapter" data-level="7.11" data-path="seminar07.html"><a href="seminar07.html#putting-it-all-together"><i class="fa fa-check"></i><b>7.11</b> Putting it all together</a></li>
+<li class="chapter" data-level="7.12" data-path="seminar07.html"><a href="seminar07.html#wrap-up-2"><i class="fa fa-check"></i><b>7.12</b> Wrap up</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="seminar08.html"><a href="seminar08.html"><i class="fa fa-check"></i><b>8</b> Gettings start with PsychoPy</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="seminar08.html"><a href="seminar08.html#minimal-psychopy-code"><i class="fa fa-check"></i><b>8.1</b> Minimal PsychoPy code</a></li>
+<li class="chapter" data-level="8.2" data-path="seminar08.html"><a href="seminar08.html#adding-main-loop"><i class="fa fa-check"></i><b>8.2</b> Adding main loop</a></li>
+<li class="chapter" data-level="8.3" data-path="seminar08.html"><a href="seminar08.html#adding-text-message"><i class="fa fa-check"></i><b>8.3</b> Adding text message</a></li>
+<li class="chapter" data-level="8.4" data-path="seminar08.html"><a href="seminar08.html#adding-a-square-and-placing-it-not-at-the-center-of-the-window"><i class="fa fa-check"></i><b>8.4</b> Adding a square and placing it <em>not</em> at the center of the window</a></li>
+<li class="chapter" data-level="8.5" data-path="seminar08.html"><a href="seminar08.html#five-units-systems"><i class="fa fa-check"></i><b>8.5</b> Five units systems</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="seminar08.html"><a href="seminar08.html#height-units"><i class="fa fa-check"></i><b>8.5.1</b> Height units</a></li>
+<li class="chapter" data-level="8.5.2" data-path="seminar08.html"><a href="seminar08.html#normalized-units"><i class="fa fa-check"></i><b>8.5.2</b> Normalized units</a></li>
+<li class="chapter" data-level="8.5.3" data-path="seminar08.html"><a href="seminar08.html#pixels-on-screen"><i class="fa fa-check"></i><b>8.5.3</b> Pixels on screen</a></li>
+<li class="chapter" data-level="8.5.4" data-path="seminar08.html"><a href="seminar08.html#degrees-of-visual-angle"><i class="fa fa-check"></i><b>8.5.4</b> Degrees of visual angle</a></li>
+<li class="chapter" data-level="8.5.5" data-path="seminar08.html"><a href="seminar08.html#centimeters-on-screen"><i class="fa fa-check"></i><b>8.5.5</b> Centimeters on screen</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="seminar08.html"><a href="seminar08.html#make-your-square-jump"><i class="fa fa-check"></i><b>8.6</b> Make your square jump!</a></li>
+<li class="chapter" data-level="8.7" data-path="seminar08.html"><a href="seminar08.html#make-the-square-jump-on-your-command"><i class="fa fa-check"></i><b>8.7</b> Make the square jump on your command!</a></li>
+<li class="chapter" data-level="8.8" data-path="seminar08.html"><a href="seminar08.html#i-like-to-move-it-move-it"><i class="fa fa-check"></i><b>8.8</b> I like to move it, move it!</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="seminar09.html"><a href="seminar09.html"><i class="fa fa-check"></i><b>9</b> Memory game, part 1</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="seminar09.html"><a href="seminar09.html#minimal-code"><i class="fa fa-check"></i><b>9.1</b> Minimal code</a></li>
+<li class="chapter" data-level="9.2" data-path="seminar09.html"><a href="seminar09.html#drawing-an-image"><i class="fa fa-check"></i><b>9.2</b> Drawing an image</a></li>
+<li class="chapter" data-level="9.3" data-path="seminar09.html"><a href="seminar09.html#python-function-argumentsparameters"><i class="fa fa-check"></i><b>9.3</b> Python function arguments/parameters</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="seminar09.html"><a href="seminar09.html#position-and-name-keyword"><i class="fa fa-check"></i><b>9.3.1</b> Position and name (keyword)</a></li>
+<li class="chapter" data-level="9.3.2" data-path="seminar09.html"><a href="seminar09.html#using-os-library"><i class="fa fa-check"></i><b>9.3.2</b> Using <em>os</em> library</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="seminar09.html"><a href="seminar09.html#ordnung-muss-sein"><i class="fa fa-check"></i><b>9.4</b> Ordnung muss sein!</a></li>
+<li class="chapter" data-level="9.5" data-path="seminar09.html"><a href="seminar09.html#placing-an-image"><i class="fa fa-check"></i><b>9.5</b> Placing an image</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="seminar09.html"><a href="seminar09.html#using-your-own-modules"><i class="fa fa-check"></i><b>9.5.1</b> Using your own modules</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="seminar09.html"><a href="seminar09.html#back-side-of-the-card"><i class="fa fa-check"></i><b>9.6</b> Back side of the card</a></li>
+<li class="chapter" data-level="9.7" data-path="seminar09.html"><a href="seminar09.html#dictionaries"><i class="fa fa-check"></i><b>9.7</b> Dictionaries</a></li>
+<li class="chapter" data-level="9.8" data-path="seminar09.html"><a href="seminar09.html#using-dictionary-to-represent-a-card"><i class="fa fa-check"></i><b>9.8</b> Using dictionary to represent a card</a>
+<ul>
+<li class="chapter" data-level="9.8.1" data-path="seminar09.html"><a href="seminar09.html#card-factory"><i class="fa fa-check"></i><b>9.8.1</b> Card factory</a></li>
+<li class="chapter" data-level="9.8.2" data-path="seminar09.html"><a href="seminar09.html#adding-presentationinputs-loop"><i class="fa fa-check"></i><b>9.8.2</b> Adding presentation/inputs loop</a></li>
+<li class="chapter" data-level="9.8.3" data-path="seminar09.html"><a href="seminar09.html#detecting-a-mouse-click"><i class="fa fa-check"></i><b>9.8.3</b> Detecting a mouse click</a></li>
+</ul></li>
+<li class="chapter" data-level="9.9" data-path="seminar09.html"><a href="seminar09.html#position-to-index"><i class="fa fa-check"></i><b>9.9</b> Position to index</a></li>
+<li class="chapter" data-level="9.10" data-path="seminar09.html"><a href="seminar09.html#flip-on-click"><i class="fa fa-check"></i><b>9.10</b> Flip on click</a></li>
+<li class="chapter" data-level="9.11" data-path="seminar09.html"><a href="seminar09.html#flip-flop"><i class="fa fa-check"></i><b>9.11</b> Flip-flop</a></li>
+<li class="chapter" data-level="9.12" data-path="seminar09.html"><a href="seminar09.html#to-be-continued"><i class="fa fa-check"></i><b>9.12</b> To be continued…</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="seminar10.html"><a href="seminar10.html"><i class="fa fa-check"></i><b>10</b> Memory game, part 2</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="seminar10.html"><a href="seminar10.html#getting-list-of-image-files."><i class="fa fa-check"></i><b>10.1</b> Getting list of image files.</a></li>
+<li class="chapter" data-level="10.2" data-path="seminar10.html"><a href="seminar10.html#list-comprehension"><i class="fa fa-check"></i><b>10.2</b> List comprehension</a></li>
+<li class="chapter" data-level="10.3" data-path="seminar10.html"><a href="seminar10.html#getting-list-of-relevant-files"><i class="fa fa-check"></i><b>10.3</b> Getting list of relevant files</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="seminar10.html"><a href="seminar10.html#list-operations"><i class="fa fa-check"></i><b>10.3.1</b> List operations</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="seminar10.html"><a href="seminar10.html#lots-of-cards-using-list-enumeration"><i class="fa fa-check"></i><b>10.4</b> Lots of cards, using list enumeration</a></li>
+<li class="chapter" data-level="10.5" data-path="seminar10.html"><a href="seminar10.html#mouse-interaction-for-every-card"><i class="fa fa-check"></i><b>10.5</b> Mouse interaction for every card</a></li>
+<li class="chapter" data-level="10.6" data-path="seminar10.html"><a href="seminar10.html#limiting-flipping-to-just-two-cards"><i class="fa fa-check"></i><b>10.6</b> Limiting flipping to just two cards</a></li>
+<li class="chapter" data-level="10.7" data-path="seminar10.html"><a href="seminar10.html#remembering-which-cards-were-turned"><i class="fa fa-check"></i><b>10.7</b> Remembering which cards were turned</a></li>
+<li class="chapter" data-level="10.8" data-path="seminar10.html"><a href="seminar10.html#visible-card-flag"><i class="fa fa-check"></i><b>10.8</b> “Visible” card flag</a></li>
+<li class="chapter" data-level="10.9" data-path="seminar10.html"><a href="seminar10.html#removing-matching-cards"><i class="fa fa-check"></i><b>10.9</b> “Removing” matching cards</a></li>
+<li class="chapter" data-level="10.10" data-path="seminar10.html"><a href="seminar10.html#game-over-if-you-run-out-of-cards"><i class="fa fa-check"></i><b>10.10</b> Game over, if you run out of cards</a></li>
+<li class="chapter" data-level="10.11" data-path="seminar10.html"><a href="seminar10.html#game-over-message"><i class="fa fa-check"></i><b>10.11</b> Game over message</a></li>
+<li class="chapter" data-level="10.12" data-path="seminar10.html"><a href="seminar10.html#counting-attempts"><i class="fa fa-check"></i><b>10.12</b> Counting attempts</a></li>
+<li class="chapter" data-level="10.13" data-path="seminar10.html"><a href="seminar10.html#record-time"><i class="fa fa-check"></i><b>10.13</b> Record time</a></li>
+<li class="chapter" data-level="10.14" data-path="seminar10.html"><a href="seminar10.html#randomness"><i class="fa fa-check"></i><b>10.14</b> Randomness</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="seminar11.html"><a href="seminar11.html"><i class="fa fa-check"></i><b>11</b> Memory game, part 3</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="seminar11.html"><a href="seminar11.html#sound-effects"><i class="fa fa-check"></i><b>11.1</b> Sound effects</a></li>
+<li class="chapter" data-level="11.2" data-path="seminar11.html"><a href="seminar11.html#sound-from-file"><i class="fa fa-check"></i><b>11.2</b> Sound from file</a></li>
+<li class="chapter" data-level="11.3" data-path="seminar11.html"><a href="seminar11.html#feedback-sounds"><i class="fa fa-check"></i><b>11.3</b> Feedback sounds</a></li>
+<li class="chapter" data-level="11.4" data-path="seminar11.html"><a href="seminar11.html#keeping-sounds-organized-dictionary-comprehension"><i class="fa fa-check"></i><b>11.4</b> Keeping sounds organized: dictionary comprehension</a></li>
+<li class="chapter" data-level="11.5" data-path="seminar11.html"><a href="seminar11.html#logging-data"><i class="fa fa-check"></i><b>11.5</b> Logging data</a></li>
+<li class="chapter" data-level="11.6" data-path="seminar11.html"><a href="seminar11.html#more-rounds"><i class="fa fa-check"></i><b>11.6</b> More rounds</a></li>
+<li class="chapter" data-level="11.7" data-path="seminar11.html"><a href="seminar11.html#random-order"><i class="fa fa-check"></i><b>11.7</b> Random order</a></li>
+<li class="chapter" data-level="11.8" data-path="seminar11.html"><a href="seminar11.html#abba-order"><i class="fa fa-check"></i><b>11.8</b> ABBA order</a></li>
+<li class="chapter" data-level="11.9" data-path="seminar11.html"><a href="seminar11.html#we-want-more"><i class="fa fa-check"></i><b>11.9</b> We want more!</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="the-skill-of-programming.html"><a href="the-skill-of-programming.html"><i class="fa fa-check"></i><b>12</b> The skill of programming</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="the-skill-of-programming.html"><a href="the-skill-of-programming.html#writing-the-code"><i class="fa fa-check"></i><b>12.1</b> Writing the code</a></li>
+<li class="chapter" data-level="12.2" data-path="the-skill-of-programming.html"><a href="the-skill-of-programming.html#reading-the-code"><i class="fa fa-check"></i><b>12.2</b> Reading the code</a></li>
+<li class="chapter" data-level="12.3" data-path="the-skill-of-programming.html"><a href="the-skill-of-programming.html#zen-of-python"><i class="fa fa-check"></i><b>12.3</b> Zen of Python</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="seminar-02-01.html"><a href="seminar-02-01.html"><i class="fa fa-check"></i><b>13</b> Snake game</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="seminar-02-01.html"><a href="seminar-02-01.html#assignments"><i class="fa fa-check"></i><b>13.1</b> Assignments</a></li>
+<li class="chapter" data-level="13.2" data-path="seminar-02-01.html"><a href="seminar-02-01.html#snake-game-an-overview"><i class="fa fa-check"></i><b>13.2</b> Snake game: an overview</a></li>
+<li class="chapter" data-level="13.3" data-path="seminar-02-01.html"><a href="seminar-02-01.html#initializing-psychopy"><i class="fa fa-check"></i><b>13.3</b> Initializing PsychoPy</a></li>
+<li class="chapter" data-level="13.4" data-path="seminar-02-01.html"><a href="seminar-02-01.html#adding-a-square"><i class="fa fa-check"></i><b>13.4</b> Adding a square</a></li>
+<li class="chapter" data-level="13.5" data-path="seminar-02-01.html"><a href="seminar-02-01.html#adding-the-snake"><i class="fa fa-check"></i><b>13.5</b> Adding the snake</a></li>
+<li class="chapter" data-level="13.6" data-path="seminar-02-01.html"><a href="seminar-02-01.html#adding-main-game-loop"><i class="fa fa-check"></i><b>13.6</b> Adding main game loop</a></li>
+<li class="chapter" data-level="13.7" data-path="seminar-02-01.html"><a href="seminar-02-01.html#get-a-move-on"><i class="fa fa-check"></i><b>13.7</b> Get a move on!</a></li>
+<li class="chapter" data-level="13.8" data-path="seminar-02-01.html"><a href="seminar-02-01.html#self-motion"><i class="fa fa-check"></i><b>13.8</b> Self-motion</a></li>
+<li class="chapter" data-level="13.9" data-path="seminar-02-01.html"><a href="seminar-02-01.html#describing-direction-using-words"><i class="fa fa-check"></i><b>13.9</b> Describing direction using words</a></li>
+<li class="chapter" data-level="13.10" data-path="seminar-02-01.html"><a href="seminar-02-01.html#it-is-all-about-control"><i class="fa fa-check"></i><b>13.10</b> It is all about control</a></li>
+<li class="chapter" data-level="13.11" data-path="seminar-02-01.html"><a href="seminar-02-01.html#turning-the-hard-way"><i class="fa fa-check"></i><b>13.11</b> Turning the hard way</a></li>
+<li class="chapter" data-level="13.12" data-path="seminar-02-01.html"><a href="seminar-02-01.html#to-be-continued-1"><i class="fa fa-check"></i><b>13.12</b> To be continued…</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="seminar-02-02.html"><a href="seminar-02-02.html"><i class="fa fa-check"></i><b>14</b> Snake game, part 2</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="seminar-02-02.html"><a href="seminar-02-02.html#hitting-the-wall"><i class="fa fa-check"></i><b>14.1</b> Hitting the wall</a></li>
+<li class="chapter" data-level="14.2" data-path="seminar-02-02.html"><a href="seminar-02-02.html#is-this-the-snake"><i class="fa fa-check"></i><b>14.2</b> Is this the snake?</a></li>
+<li class="chapter" data-level="14.3" data-path="seminar-02-02.html"><a href="seminar-02-02.html#an-inedible-apple"><i class="fa fa-check"></i><b>14.3</b> An inedible apple</a></li>
+<li class="chapter" data-level="14.4" data-path="seminar-02-02.html"><a href="seminar-02-02.html#eating-an-apple"><i class="fa fa-check"></i><b>14.4</b> Eating an apple</a></li>
+<li class="chapter" data-level="14.5" data-path="seminar-02-02.html"><a href="seminar-02-02.html#eating-yourself"><i class="fa fa-check"></i><b>14.5</b> Eating yourself</a></li>
+<li class="chapter" data-level="14.6" data-path="seminar-02-02.html"><a href="seminar-02-02.html#bells-and-whistles-score"><i class="fa fa-check"></i><b>14.6</b> Bells and whistles: score</a></li>
+<li class="chapter" data-level="14.7" data-path="seminar-02-02.html"><a href="seminar-02-02.html#bells-and-whistels-three-lives"><i class="fa fa-check"></i><b>14.7</b> Bells and whistels: three lives</a></li>
+<li class="chapter" data-level="14.8" data-path="seminar-02-02.html"><a href="seminar-02-02.html#bells-and-whistels-showing-lives"><i class="fa fa-check"></i><b>14.8</b> Bells and whistels: showing lives</a></li>
+<li class="chapter" data-level="14.9" data-path="seminar-02-02.html"><a href="seminar-02-02.html#bells-and-whistles-difficulty"><i class="fa fa-check"></i><b>14.9</b> Bells and whistles: difficulty</a></li>
+<li class="chapter" data-level="14.10" data-path="seminar-02-02.html"><a href="seminar-02-02.html#bells-and-whistles-sounds"><i class="fa fa-check"></i><b>14.10</b> Bells and whistles: sounds</a></li>
+<li class="chapter" data-level="14.11" data-path="seminar-02-02.html"><a href="seminar-02-02.html#bells-and-whistles-blinking-game-over-message"><i class="fa fa-check"></i><b>14.11</b> Bells and whistles: blinking game over message</a></li>
+<li class="chapter" data-level="14.12" data-path="seminar-02-02.html"><a href="seminar-02-02.html#next-stop-classes-and-objects"><i class="fa fa-check"></i><b>14.12</b> Next stop: classes and objects</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="seminar-02-03.html"><a href="seminar-02-03.html"><i class="fa fa-check"></i><b>15</b> Snake game: object-oriented programming</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="seminar-02-03.html"><a href="seminar-02-03.html#object-oriented-programming"><i class="fa fa-check"></i><b>15.1</b> Object-oriented programming</a>
+<ul>
+<li class="chapter" data-level="15.1.1" data-path="seminar-02-03.html"><a href="seminar-02-03.html#classes-and-objects-instances-of-classes"><i class="fa fa-check"></i><b>15.1.1</b> Classes and objects (instances of classes)</a></li>
+<li class="chapter" data-level="15.1.2" data-path="seminar-02-03.html"><a href="seminar-02-03.html#encapsulation"><i class="fa fa-check"></i><b>15.1.2</b> Encapsulation</a></li>
+</ul></li>
+<li class="chapter" data-level="15.2" data-path="seminar-02-03.html"><a href="seminar-02-03.html#inheritance-generalization"><i class="fa fa-check"></i><b>15.2</b> Inheritance / Generalization</a></li>
+<li class="chapter" data-level="15.3" data-path="seminar-02-03.html"><a href="seminar-02-03.html#polymorphism"><i class="fa fa-check"></i><b>15.3</b> Polymorphism</a></li>
+<li class="chapter" data-level="15.4" data-path="seminar-02-03.html"><a href="seminar-02-03.html#a-minimal-class-example"><i class="fa fa-check"></i><b>15.4</b> A minimal class example</a></li>
+<li class="chapter" data-level="15.5" data-path="seminar-02-03.html"><a href="seminar-02-03.html#add-method"><i class="fa fa-check"></i><b>15.5</b> <code>add</code> method</a></li>
+<li class="chapter" data-level="15.6" data-path="seminar-02-03.html"><a href="seminar-02-03.html#flexible-accumulator-with-a-subtract-method"><i class="fa fa-check"></i><b>15.6</b> Flexible accumulator with a <code>subtract</code> method</a></li>
+<li class="chapter" data-level="15.7" data-path="seminar-02-03.html"><a href="seminar-02-03.html#method-arguments"><i class="fa fa-check"></i><b>15.7</b> Method arguments</a></li>
+<li class="chapter" data-level="15.8" data-path="seminar-02-03.html"><a href="seminar-02-03.html#constructor-arguments"><i class="fa fa-check"></i><b>15.8</b> Constructor arguments</a></li>
+<li class="chapter" data-level="15.9" data-path="seminar-02-03.html"><a href="seminar-02-03.html#calling-methods-from-other-methods"><i class="fa fa-check"></i><b>15.9</b> Calling methods from other methods</a></li>
+<li class="chapter" data-level="15.10" data-path="seminar-02-03.html"><a href="seminar-02-03.html#local-variables"><i class="fa fa-check"></i><b>15.10</b> Local variables</a></li>
+<li class="chapter" data-level="15.11" data-path="seminar-02-03.html"><a href="seminar-02-03.html#refactoring-the-snake-game"><i class="fa fa-check"></i><b>15.11</b> Refactoring the Snake game</a></li>
+<li class="chapter" data-level="15.12" data-path="seminar-02-03.html"><a href="seminar-02-03.html#gridwindow-class"><i class="fa fa-check"></i><b>15.12</b> GridWindow class</a></li>
+<li class="chapter" data-level="15.13" data-path="seminar-02-03.html"><a href="seminar-02-03.html#apple-class"><i class="fa fa-check"></i><b>15.13</b> Apple class</a></li>
+<li class="chapter" data-level="15.14" data-path="seminar-02-03.html"><a href="seminar-02-03.html#refactoring-the-code"><i class="fa fa-check"></i><b>15.14</b> Refactoring the code</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="seminar-02-04.html"><a href="seminar-02-04.html"><i class="fa fa-check"></i><b>16</b> Moon lander game</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="seminar-02-04.html"><a href="seminar-02-04.html#create-window"><i class="fa fa-check"></i><b>16.1</b> Create window</a></li>
+<li class="chapter" data-level="16.2" data-path="seminar-02-04.html"><a href="seminar-02-04.html#create-moonlander-class"><i class="fa fa-check"></i><b>16.2</b> Create MoonLander class</a></li>
+<li class="chapter" data-level="16.3" data-path="seminar-02-04.html"><a href="seminar-02-04.html#randomize-position"><i class="fa fa-check"></i><b>16.3</b> Randomize position</a></li>
+<li class="chapter" data-level="16.4" data-path="seminar-02-04.html"><a href="seminar-02-04.html#gravity"><i class="fa fa-check"></i><b>16.4</b> Gravity</a></li>
+<li class="chapter" data-level="16.5" data-path="seminar-02-04.html"><a href="seminar-02-04.html#vertical-thurster"><i class="fa fa-check"></i><b>16.5</b> Vertical thurster</a></li>
+<li class="chapter" data-level="16.6" data-path="seminar-02-04.html"><a href="seminar-02-04.html#horizontal-thursters"><i class="fa fa-check"></i><b>16.6</b> Horizontal thursters</a></li>
+<li class="chapter" data-level="16.7" data-path="seminar-02-04.html"><a href="seminar-02-04.html#landing-pad-visuals"><i class="fa fa-check"></i><b>16.7</b> Landing pad: visuals</a></li>
+<li class="chapter" data-level="16.8" data-path="seminar-02-04.html"><a href="seminar-02-04.html#computing-edges-of-game-objects"><i class="fa fa-check"></i><b>16.8</b> Computing edges of game objects</a></li>
+<li class="chapter" data-level="16.9" data-path="seminar-02-04.html"><a href="seminar-02-04.html#virtual-attributes-via-getters-and-setters"><i class="fa fa-check"></i><b>16.9</b> Virtual attributes via getters and setters</a></li>
+<li class="chapter" data-level="16.10" data-path="seminar-02-04.html"><a href="seminar-02-04.html#access-restrictions"><i class="fa fa-check"></i><b>16.10</b> Access restrictions</a></li>
+<li class="chapter" data-level="16.11" data-path="seminar-02-04.html"><a href="seminar-02-04.html#landing"><i class="fa fa-check"></i><b>16.11</b> Landing</a></li>
+<li class="chapter" data-level="16.12" data-path="seminar-02-04.html"><a href="seminar-02-04.html#more-rounds-1"><i class="fa fa-check"></i><b>16.12</b> More rounds</a></li>
+<li class="chapter" data-level="16.13" data-path="seminar-02-04.html"><a href="seminar-02-04.html#limited-fuel"><i class="fa fa-check"></i><b>16.13</b> Limited fuel</a></li>
+<li class="chapter" data-level="16.14" data-path="seminar-02-04.html"><a href="seminar-02-04.html#add-to-it"><i class="fa fa-check"></i><b>16.14</b> Add to it!</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="cross-references.html"><a href="cross-references.html"><i class="fa fa-check"></i>Cross references</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Python for social and experimental psychology</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="seminar-02-01" class="section level1" number="13">
+<h1><span class="header-section-number">Seminar 13</span> Snake game</h1>
+<p>Welcome back! The purpose of today’s seminar to refresh your knowledge of Python acquired previously. We will use dictionaries and lists, as well as conditional statements and loops. Plus, you will need to write functions.<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a></p>
+<div id="assignments" class="section level2" number="13.1">
+<h2><span class="header-section-number">13.1</span> Assignments</h2>
+<p>For this and following projects, use Python IDE of your choice (I would recommend <a href="getting-started.html#install-vs-code">Visual Studio Code</a>). You still could and should use Jupyter for playing with and testing small code snippets, though. I’ve added a section on setting up <a href="getting-started.html#debug-in-vs-code">debugging in VS Code</a> in <a href="getting-started.html#getting-started">Getting Started</a>, take a look once you are ready to run the code.</p>
+<p>From now on, create a separate subfolder for each seminar (e.g. <em>Seminar 01</em> for today) and create a separate file (or files, later on) for each exercise<a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a> (e.g., <em>exercise01.py</em>, <em>exercise02.py</em>, etc.). This is not the most efficient implementation of a version control and will certainly clutter the folder. But it would allow me to see your solutions on every step, which will make it easier for me to comment on them. For submitting the assignment, just zip the folder and upload the zip-file.</p>
+</div>
+<div id="snake-game-an-overview" class="section level2" number="13.2">
+<h2><span class="header-section-number">13.2</span> Snake game: an overview</h2>
+<p>Today, we will program a good old classic: the snake game! The story is simple: you control a snake trying to eat as many apples as you can. Every time you consume an apple, snake’s length increases. However, if you hit the wall or bite yourself, the game is over (or you lose one of your lives and game is over once you run out of lives).</p>
+<p>Here is how the final product will look like.</p>
+<iframe width="422" height="261" src="videos/snake.m4v" frameborder="0" allow="accelerometer; encrypted-media;  gyroscope; picture-in-picture">
+</iframe>
+<p>As before, we will program the game step by step, starting with an empty gray PsychoPy window. Here is the general outline of how we will proceed:</p>
+<ol style="list-style-type: decimal">
+<li>Create boilerplate code to initialize PsychoPy.</li>
+<li>Figure out how to place a square. We need this because our snake is made of square segments and lives on a rectangular grid made of squares.</li>
+<li>Create a single segment stationary snake<a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a>.</li>
+<li>Make the snake move assuming a rectangular grid.</li>
+<li>Implement “died by hitting a wall”.</li>
+<li>Add apples and make the snake grow.</li>
+<li>Add check for biting itself (and dying).</li>
+<li>Add bells-and-whistles to make game look awesome.</li>
+</ol>
+<p>As you can see, each new step builds on the previous one. Because of that, remember, do not proceed to the next step until the current one works and you fully(!) understand what each line of code does. Any leftover uncertainty will linger, grow and complicate your life disproportionately!</p>
+</div>
+<div id="initializing-psychopy" class="section level2" number="13.3">
+<h2><span class="header-section-number">13.3</span> Initializing PsychoPy</h2>
+<p>To remind yourself on how you initialize PsychoPy window, see <a href="seminar08.html#seminar08">here</a>. Let us plan ahead and decide on windows size and its units. Recall that PsychoPy has <a href="#psychopy-units">five different units</a> for size and position. Given that our snake will be composed of square segments and move on a grid made out of squares, which units should we pick? Read on <a href="#psychopy-units">units</a> and think which units you would pick before continuing</p>
+<hr />
+<p>My suggestion would be <code>"norm"</code> units as they make sizing squares easy, as long as we use a suitable aspect ratio. Thus, let us think about the grid. We can define its width and height in <em>squares</em>, e.g., a 30 × 20 grid should give us enough space to try things out but we can always increase the resolution of the game later. Create a <a href="">constant</a> <code>GRID_SIZE</code> and assign a <a href="https://docs.python.org/3/tutorial/datastructures.html#tuples-and-sequences">tuple</a> of <code>(width, height)</code> to it. Note that window’s aspect ratio will depend on the size of the grid that we pick. If you want to have a square window, use a 30 × 30 grid.</p>
+<p>We also need to define an <em>absolute</em> size of a square in pixels (call the constant <code>SQUARE_SIZE_PIX</code>), which will determine how large each square will look on the screen and, therefore, will determine the absolute size of the window: <span class="math inline">\(window~height = window~height~in~squares * square~size~in~pixels\)</span> (same goes for the width). Note that this parameter determines how the game looks, double the size of the square in pixels and that will double both width and height of the window.</p>
+<p>Put it all together. You could should look roughly as follows:</p>
+<div class="sourceCode" id="cb137"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb137-1"><a href="seminar-02-01.html#cb137-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import all libraries and modules you need</span></span>
+<span id="cb137-2"><a href="seminar-02-01.html#cb137-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb137-3"><a href="seminar-02-01.html#cb137-3" aria-hidden="true" tabindex="-1"></a><span class="co"># define constants GRID_SIZE and SQUARE_SIZE_PIX</span></span>
+<span id="cb137-4"><a href="seminar-02-01.html#cb137-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb137-5"><a href="seminar-02-01.html#cb137-5" aria-hidden="true" tabindex="-1"></a><span class="co"># create PsychoPy window, computing it size in pixels from the two constants</span></span>
+<span id="cb137-6"><a href="seminar-02-01.html#cb137-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb137-7"><a href="seminar-02-01.html#cb137-7" aria-hidden="true" tabindex="-1"></a><span class="co"># wait for any key press (just so that window stays on the screen)</span></span>
+<span id="cb137-8"><a href="seminar-02-01.html#cb137-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb137-9"><a href="seminar-02-01.html#cb137-9" aria-hidden="true" tabindex="-1"></a><span class="co"># close PsychoPy window</span></span></code></pre></div>
+<p>Experiment with different grid and square sizes and pick the one that fits your screen.</p>
+<div class="infobox program">
+<p>Put your code into <em>exercise01.py</em>.</p>
+</div>
+</div>
+<div id="adding-a-square" class="section level2" number="13.4">
+<h2><span class="header-section-number">13.4</span> Adding a square</h2>
+<p>As I already wrote, our game will be made of squares. Snake is made of squares. Grid it lives on is made of squares. An apple is a square. Which means we need to know the size of that square in the units of the window and we need to know <em>where</em> should each square go in the window, based on its coordinates on the grid.</p>
+<p>Computing the size of the square in units of window size is easy, so let us start with it first. If you used <code>"norm"</code> units for the PsychoPy window, we know that both its width and its height go from -1 (bottom) to 1 (top). We also know that we have to fit in <code>GRID_SIZE[0]</code> squares horizontally and <code>GRID_SIZE[1]</code> vertically (recall that <code>GRID_SIZE</code> defines the size of our grid in number of squares). Create a new constant <code>SQUARE_SIZE</code> that is a <em>tuple</em> and compute square size in units of <code>"norm"</code> based on total width/height of the window in the <code>"norm"</code> units (not the pixels!) and number of squares we need to fit in horizontally/vertically.</p>
+<p>Next, let us create a function that maps a position on the grid to a position in the window. This way, we can think about position of the snake or apples in terms of the grid but draw them in the window coordinates. Create a new file <em>utilities.py</em> and create a function <code>map_grid_to_win()</code> that takes a tuple of integers <code>(x_index, y_index)</code> with grid position (I called this argument <code>ipos</code>) plus a second parameter with a square size (that we just computed) and returns a tuple of floats <code>(x_pos, y_pos)</code> with the coordinates of the <em>center</em> of the square in <em>window</em> coordinates. Take a look at the drawing below to see the logic of the computation. The red text show location of red points in <em>window norm</em> units, whereas the black font shows location of a square in <em>grid index</em> units. Note that you need to compute where the <em>center</em> of the square should go.</p>
+<p><img src="images/snake-grid.png" width="530" /></p>
+<p>I suggest using Jupyter notebook to create and debug this function and then copying it into <em>utilities.py</em>. Remember to document the function following <a href="https://numpydoc.readthedocs.io/en/latest/format.html">NumPy docstring format</a>.</p>
+<div class="infobox program">
+<p>Put function map_grid_to_win into <em>utilities.py</em>.</p>
+</div>
+<p>Now, test this function by creating a square (you remember which constant defines its size, right?) and placing it at different locations of the grid. Check <a href="#seminar08-add-square">here</a>, if you forgot how to create squares in PsychoPy. Run the code several times, using different grid indexes or adding several squares to check that it work as intended. Your code should look roughly as follows</p>
+<div class="sourceCode" id="cb138"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb138-1"><a href="seminar-02-01.html#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import all libraries and modules you need</span></span>
+<span id="cb138-2"><a href="seminar-02-01.html#cb138-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-3"><a href="seminar-02-01.html#cb138-3" aria-hidden="true" tabindex="-1"></a><span class="co"># import map_grid_to_win function from utilities.py file</span></span>
+<span id="cb138-4"><a href="seminar-02-01.html#cb138-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-5"><a href="seminar-02-01.html#cb138-5" aria-hidden="true" tabindex="-1"></a><span class="co"># define constants GRID_SIZE and SQUARE_SIZE_PIX</span></span>
+<span id="cb138-6"><a href="seminar-02-01.html#cb138-6" aria-hidden="true" tabindex="-1"></a><span class="co"># compute SQUARE_SIZE constant</span></span>
+<span id="cb138-7"><a href="seminar-02-01.html#cb138-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-8"><a href="seminar-02-01.html#cb138-8" aria-hidden="true" tabindex="-1"></a><span class="co"># create PsychoPy window, computing it size in pixels from the two constants</span></span>
+<span id="cb138-9"><a href="seminar-02-01.html#cb138-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-10"><a href="seminar-02-01.html#cb138-10" aria-hidden="true" tabindex="-1"></a><span class="co"># create a square (Rect stimulus) with size of SQUARE_SIZE and position computed</span></span>
+<span id="cb138-11"><a href="seminar-02-01.html#cb138-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   via grid_to_win function from a pair of grid coordinates</span></span>
+<span id="cb138-12"><a href="seminar-02-01.html#cb138-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-13"><a href="seminar-02-01.html#cb138-13" aria-hidden="true" tabindex="-1"></a><span class="co"># draw square and flip the window</span></span>
+<span id="cb138-14"><a href="seminar-02-01.html#cb138-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-15"><a href="seminar-02-01.html#cb138-15" aria-hidden="true" tabindex="-1"></a><span class="co"># wait for any key press (just so that window stays on the screen)</span></span>
+<span id="cb138-16"><a href="seminar-02-01.html#cb138-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-17"><a href="seminar-02-01.html#cb138-17" aria-hidden="true" tabindex="-1"></a><span class="co"># close PsychoPy window</span></span></code></pre></div>
+<div class="infobox program">
+<p>Put your code into <em>exercise02.py</em>.</p>
+</div>
+</div>
+<div id="adding-the-snake" class="section level2" number="13.5">
+<h2><span class="header-section-number">13.5</span> Adding the snake</h2>
+<p>Now, let us think about how can we represent a snake. It consist of one or more segments. The first one is its head, while the last one is its tail<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a>. Thus, we can think about it as a <a href="https://docs.python.org/3/tutorial/datastructures.html#more-on-lists">list</a> of individual segments.</p>
+<p>Now let us consider an individual segment. We need to 1) keep track of its location in <em>grid</em> coordinate system and 2) have its visual representation — a square, just like the one you create during the previous exercise — positioned in <em>window</em> coordinate system. Good news is, you already have a function that maps the former on the latter, so as long as you know where the segment is on the grid, placing its square within the window is easy. As each segment has <em>two</em> pieces of information associated with it, it makes sense to represent it as a <a href="https://docs.python.org/3/tutorial/datastructures.html#dictionaries">dictionary</a> with two keys: <code>"pos"</code> (tuple of x and y in grid coordinates) and <code>"visuals"</code> (the square).</p>
+<p>To keep code nicely compartmentalized and isolated, add a new function to <em>utilities.py</em> called <code>create_snake_segment</code>. It should take three arguments:</p>
+<ol style="list-style-type: decimal">
+<li>a variable with PsychoPy window, which you need to create an square visual.</li>
+<li>a tuple <code>(x, y)</code> with segment position within the grid.</li>
+<li>a square size, which you need for <code>map_grid_to_win</code> function.</li>
+</ol>
+<p>It should return a dictionary with <code>"pos"</code> and <code>"visuals"</code> field, as we agreed upon above.</p>
+<p>In the main code, create a variable <code>snake</code> that is a list with a single segment in the center of the screen (you need to compute it from <code>GRID_SIZE</code> using floor division operator <a href="https://python-reference.readthedocs.io/en/latest/docs/operators/floor_division.html">//</a>). Instead of drawing a single square one call at a time, as in the previous exercise, you will need to draw all segments of the snake using a <em>for</em> loop<a href="#fn15" class="footnote-ref" id="fnref15"><sup>15</sup></a>. Here is the outline:</p>
+<div class="sourceCode" id="cb139"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb139-1"><a href="seminar-02-01.html#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import all libraries and modules you need</span></span>
+<span id="cb139-2"><a href="seminar-02-01.html#cb139-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-3"><a href="seminar-02-01.html#cb139-3" aria-hidden="true" tabindex="-1"></a><span class="co"># import map_grid_to_win and create_snake_segment functions from utilities.py file</span></span>
+<span id="cb139-4"><a href="seminar-02-01.html#cb139-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-5"><a href="seminar-02-01.html#cb139-5" aria-hidden="true" tabindex="-1"></a><span class="co"># define constants GRID_SIZE and SQUARE_SIZE_PIX</span></span>
+<span id="cb139-6"><a href="seminar-02-01.html#cb139-6" aria-hidden="true" tabindex="-1"></a><span class="co"># compute SQUARE_SIZE constant</span></span>
+<span id="cb139-7"><a href="seminar-02-01.html#cb139-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-8"><a href="seminar-02-01.html#cb139-8" aria-hidden="true" tabindex="-1"></a><span class="co"># create PsychoPy window, computing it size in pixels from the two constants</span></span>
+<span id="cb139-9"><a href="seminar-02-01.html#cb139-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-10"><a href="seminar-02-01.html#cb139-10" aria-hidden="true" tabindex="-1"></a><span class="co"># create the snake variable as a list with a single segment at the center of the screen </span></span>
+<span id="cb139-11"><a href="seminar-02-01.html#cb139-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-12"><a href="seminar-02-01.html#cb139-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-13"><a href="seminar-02-01.html#cb139-13" aria-hidden="true" tabindex="-1"></a><span class="co"># draw all snake segments using for loop  </span></span>
+<span id="cb139-14"><a href="seminar-02-01.html#cb139-14" aria-hidden="true" tabindex="-1"></a><span class="co"># flip the window</span></span>
+<span id="cb139-15"><a href="seminar-02-01.html#cb139-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-16"><a href="seminar-02-01.html#cb139-16" aria-hidden="true" tabindex="-1"></a><span class="co"># wait for any key press (just so that window stays on the screen)</span></span>
+<span id="cb139-17"><a href="seminar-02-01.html#cb139-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-18"><a href="seminar-02-01.html#cb139-18" aria-hidden="true" tabindex="-1"></a><span class="co"># close PsychoPy window</span></span></code></pre></div>
+<div class="infobox program">
+<p>Put function <em>create_snake_segment</em> into <em>utilities.py</em> and your modified code into <em>exercise03.py</em>.</p>
+</div>
+</div>
+<div id="adding-main-game-loop" class="section level2" number="13.6">
+<h2><span class="header-section-number">13.6</span> Adding main game loop</h2>
+<p>Our current game is not <em>very</em> dynamic: it draws the (very small) snake once and waits for a key press before closing the window. Let us add the necessary scaffolding of a main game loop. The game should run <a href="https://docs.python.org/3/reference/compound_stmts.html#the-while-statement">while</a> variable <code>gameover</code> is <code>False</code>. Inside the main loop, on each iteration you should draw the snake (and flip the window after that) and check whether participant press <code>"escape"</code> key via <a href="https://www.psychopy.org/api/event.html#psychopy.event.getKeys">event.getKeys()</a>. If they did, <code>gameover</code> should become <code>True</code>.</p>
+<p>The code outline is</p>
+<div class="sourceCode" id="cb140"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb140-1"><a href="seminar-02-01.html#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import all libraries and modules you need</span></span>
+<span id="cb140-2"><a href="seminar-02-01.html#cb140-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb140-3"><a href="seminar-02-01.html#cb140-3" aria-hidden="true" tabindex="-1"></a><span class="co"># import map_grid_to_win and create_snake_segment functions from utilities.py file</span></span>
+<span id="cb140-4"><a href="seminar-02-01.html#cb140-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb140-5"><a href="seminar-02-01.html#cb140-5" aria-hidden="true" tabindex="-1"></a><span class="co"># define constants GRID_SIZE and SQUARE_SIZE_PIX</span></span>
+<span id="cb140-6"><a href="seminar-02-01.html#cb140-6" aria-hidden="true" tabindex="-1"></a><span class="co"># compute SQUARE_SIZE constant</span></span>
+<span id="cb140-7"><a href="seminar-02-01.html#cb140-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb140-8"><a href="seminar-02-01.html#cb140-8" aria-hidden="true" tabindex="-1"></a><span class="co"># create PsychoPy window, computing it size in pixels from the two constants</span></span>
+<span id="cb140-9"><a href="seminar-02-01.html#cb140-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb140-10"><a href="seminar-02-01.html#cb140-10" aria-hidden="true" tabindex="-1"></a><span class="co"># create the snake variable as a list with a single segment at the center of the screen </span></span>
+<span id="cb140-11"><a href="seminar-02-01.html#cb140-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb140-12"><a href="seminar-02-01.html#cb140-12" aria-hidden="true" tabindex="-1"></a><span class="co"># set gameover to False</span></span>
+<span id="cb140-13"><a href="seminar-02-01.html#cb140-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb140-14"><a href="seminar-02-01.html#cb140-14" aria-hidden="true" tabindex="-1"></a><span class="co"># while not gameover:</span></span>
+<span id="cb140-15"><a href="seminar-02-01.html#cb140-15" aria-hidden="true" tabindex="-1"></a><span class="co">#     draw all snake segments using for loop  </span></span>
+<span id="cb140-16"><a href="seminar-02-01.html#cb140-16" aria-hidden="true" tabindex="-1"></a><span class="co">#     flip the window</span></span>
+<span id="cb140-17"><a href="seminar-02-01.html#cb140-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb140-18"><a href="seminar-02-01.html#cb140-18" aria-hidden="true" tabindex="-1"></a><span class="co">#     if escape key was pressed:</span></span>
+<span id="cb140-19"><a href="seminar-02-01.html#cb140-19" aria-hidden="true" tabindex="-1"></a><span class="co">#         set gameover to True</span></span>
+<span id="cb140-20"><a href="seminar-02-01.html#cb140-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb140-21"><a href="seminar-02-01.html#cb140-21" aria-hidden="true" tabindex="-1"></a><span class="co"># close PsychoPy window</span></span></code></pre></div>
+<div class="infobox program">
+<p>Put your code into <em>exercise04.py</em>.</p>
+</div>
+</div>
+<div id="get-a-move-on" class="section level2" number="13.7">
+<h2><span class="header-section-number">13.7</span> Get a move on!</h2>
+<p>Now we need to understand how we will move the snake given that it consist of many segments. Assume that we have a four segment snake that moves up, as in the picture below.
+<img src="images/snake-movement.png" width="517" /></p>
+<p>Technically, we need to move each segment to a new position. The very first “head” segment moves to the position above the snake. The second segment moves to where the head was before. The third moves into the previous position of the forth one, etc. We <em>can</em> implement movement like that but instead we will utilize the fact that, unless colored as in the figure above, all segments look identical. Look at the uniformly colored snake below. We can “move” it by adding a new segment at a new location (growing a new head at the bity end of the snake, marked as red) and clipping off the last tail segment (marked by the cross), so that the previously penultimate segment becomes the tail. The rest can stay where they are, saving us a lot of hustle when the snake is long!
+<img src="images/snake-movement-2.png" width="517" /></p>
+<p>In the program, we <a href="https://docs.python.org/3/tutorial/datastructures.html#more-on-lists">list.insert(index, value)</a><a href="#fn16" class="footnote-ref" id="fnref16"><sup>16</sup></a> the new head segment at index 0 and we remove the tail via <a href="https://docs.python.org/3/tutorial/datastructures.html#more-on-lists">list.pop()</a>.</p>
+<p>To keep things neat and tidy, we will implement two functions: <code>grow_snake()</code> and <code>trim_snake()</code>. Why not combine both actions into a single function? Strategic thinking! Once we add apples to the game, the snake will grow after consuming them by not shedding the tail. Thus, separating these two functions now will simplify our lives later on<a href="#fn17" class="footnote-ref" id="fnref17"><sup>17</sup></a>.</p>
+<p>The <code>grow_snake()</code> function should take the following parameters:</p>
+<ol style="list-style-type: decimal">
+<li>parameter for the snake itself, which we will modify. To minimize the potential confusion, do not call it <code>snake</code> but something (slightly) different, e.g., <code>the_snake</code>. This way it will be easier to remember that this is a parameter, not the global vairable.</li>
+<li>a variable with PsychoPy window, which you need to create a new head segment.</li>
+<li>a tuple <code>(x, y)</code> with <em>direction of movement</em> (call it <code>dxy</code> for change in xy coordinates). I.e., it will be <code>(-1, 0)</code> for leftward moving snake, <code>(1, 0)</code> for right moving, <code>(-1, 0)</code> for up, and <code>(1, 0)</code> for down.</li>
+<li>a square size, which you need for <code>create_snake_segment</code> function.</li>
+</ol>
+<p>Inside the function, you compute the coordinates for the new head segment based on the position of the current head (the very first element of the snake) and the direction of motion, (the third parameter <code>dxy</code>,) create a new snake segment at that location (you wrote a function for that!) and insert it before all other elements.</p>
+<p>Somewhat counterintuitively, this function does not need to return anything because the snake, which we are passing to it as a first parameter, is a <em>mutable</em> list. Therefore, it is passed <em>by reference</em> and any changes that we apply to it inside the function will affect the global variable itself<a href="#fn18" class="footnote-ref" id="fnref18"><sup>18</sup></a>.</p>
+<p>The <code>trim_snake()</code> function is even simpler as it takes the snake as the only parameter and trims its tail. Again, because the snake is a mutable list, you do not need to return anything.</p>
+<p>To test these functions, let us create a three-segment long snake at location <code>(10,9)</code>, <code>(11, 9)</code>, and <code>(12, 9)</code> and move it (grow, then trim) upwards every time the player presses <code>"space"</code> button. This does not look like a real game but will make it easier to debug, as you can put a break-point to check computation step-by-step. Also note that, eventually, the snake will crawl out of the window but we will worry about this later. Here is the code outline:</p>
+<div class="sourceCode" id="cb141"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb141-1"><a href="seminar-02-01.html#cb141-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import all libraries and modules you need</span></span>
+<span id="cb141-2"><a href="seminar-02-01.html#cb141-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb141-3"><a href="seminar-02-01.html#cb141-3" aria-hidden="true" tabindex="-1"></a><span class="co"># import all functions you need from from utilities.py file</span></span>
+<span id="cb141-4"><a href="seminar-02-01.html#cb141-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb141-5"><a href="seminar-02-01.html#cb141-5" aria-hidden="true" tabindex="-1"></a><span class="co"># define constants GRID_SIZE and SQUARE_SIZE_PIX</span></span>
+<span id="cb141-6"><a href="seminar-02-01.html#cb141-6" aria-hidden="true" tabindex="-1"></a><span class="co"># compute SQUARE_SIZE constant</span></span>
+<span id="cb141-7"><a href="seminar-02-01.html#cb141-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb141-8"><a href="seminar-02-01.html#cb141-8" aria-hidden="true" tabindex="-1"></a><span class="co"># create PsychoPy window, computing it size in pixels from the two constants</span></span>
+<span id="cb141-9"><a href="seminar-02-01.html#cb141-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb141-10"><a href="seminar-02-01.html#cb141-10" aria-hidden="true" tabindex="-1"></a><span class="co"># create the snake variable as a list with three segments</span></span>
+<span id="cb141-11"><a href="seminar-02-01.html#cb141-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb141-12"><a href="seminar-02-01.html#cb141-12" aria-hidden="true" tabindex="-1"></a><span class="co"># set gameover to False</span></span>
+<span id="cb141-13"><a href="seminar-02-01.html#cb141-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb141-14"><a href="seminar-02-01.html#cb141-14" aria-hidden="true" tabindex="-1"></a><span class="co"># while not gameover:</span></span>
+<span id="cb141-15"><a href="seminar-02-01.html#cb141-15" aria-hidden="true" tabindex="-1"></a><span class="co">#     draw all snake segments using for loop  </span></span>
+<span id="cb141-16"><a href="seminar-02-01.html#cb141-16" aria-hidden="true" tabindex="-1"></a><span class="co">#     flip the window</span></span>
+<span id="cb141-17"><a href="seminar-02-01.html#cb141-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb141-18"><a href="seminar-02-01.html#cb141-18" aria-hidden="true" tabindex="-1"></a><span class="co">#     if escape key was pressed:</span></span>
+<span id="cb141-19"><a href="seminar-02-01.html#cb141-19" aria-hidden="true" tabindex="-1"></a><span class="co">#         set gameover to True</span></span>
+<span id="cb141-20"><a href="seminar-02-01.html#cb141-20" aria-hidden="true" tabindex="-1"></a><span class="co">#     else if the key was &quot;space&quot;:</span></span>
+<span id="cb141-21"><a href="seminar-02-01.html#cb141-21" aria-hidden="true" tabindex="-1"></a><span class="co">#         move snake up  </span></span>
+<span id="cb141-22"><a href="seminar-02-01.html#cb141-22" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb141-23"><a href="seminar-02-01.html#cb141-23" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb141-24"><a href="seminar-02-01.html#cb141-24" aria-hidden="true" tabindex="-1"></a><span class="co"># close PsychoPy window</span></span></code></pre></div>
+<div class="infobox program">
+<p>Put functions <em>grow_snake</em> and <em>trim_snake</em> into <em>utilities.py</em> and your modified code into <em>exercise05.py</em>.</p>
+</div>
+</div>
+<div id="self-motion" class="section level2" number="13.8">
+<h2><span class="header-section-number">13.8</span> Self-motion</h2>
+<p>Our snake should move by itself, not when the player presses <em>space</em> button. For this, we can call <code>grow_snake()</code> and <code>trim_snake()</code> functions on every iteration of the main game loop. However, by default, when you call <code>win.flip()</code> it will synchronize your loop with the refresh rate of the screen (typically, 60 Hz). This means that we would call these functions 60 times per second or, to put it differently, the snake will move 60 squares per second. This is waaaay too fast, given that our original grid size was just 30×20 squares. To appreciate just how fast this is, remove <code>if key was space:...</code> conditional statement, and call grow/trim snake functions on every iteration and see the snake fly off the screen.</p>
+<p>Instead, we should decide on snake’s speed, e.g., 4 squares per second, and define it as a new constant <code>SNAKE_SPEED</code><a href="#fn19" class="footnote-ref" id="fnref19"><sup>19</sup></a>. From that we can compute a new constant (<code>SNAKE_TIME_INTERVAL</code>) that expresses the time interval between calls of grow/trim functions, so that it is called <code>SNAKE_SPEED</code> times per second<a href="#fn20" class="footnote-ref" id="fnref20"><sup>20</sup></a>. For 4 squares/second, that time interval will be 0.25 seconds. Do not hard code it, compute it from <code>SNAKE_SPEED</code>!</p>
+<p>Now, we just need to use a <a href="https://www.psychopy.org/api/clock.html#psychopy.clock.Clock">clock</a> or a <a href="https://www.psychopy.org/api/clock.html#psychopy.clock.CountdownTimer">countdown timer</a><a href="#fn21" class="footnote-ref" id="fnref21"><sup>21</sup></a> We create it just before the main loop. Inside the loop, we check whether the elapsed time is equal to or greater than <code>SNAKE_TIME_INTERVAL</code>. If it is, move the snake and reset the timer. Try setting different speed and see whether the snake moves consistently.</p>
+<div class="sourceCode" id="cb142"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb142-1"><a href="seminar-02-01.html#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import all libraries and modules you need</span></span>
+<span id="cb142-2"><a href="seminar-02-01.html#cb142-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb142-3"><a href="seminar-02-01.html#cb142-3" aria-hidden="true" tabindex="-1"></a><span class="co"># import all functions you need from from utilities.py file</span></span>
+<span id="cb142-4"><a href="seminar-02-01.html#cb142-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb142-5"><a href="seminar-02-01.html#cb142-5" aria-hidden="true" tabindex="-1"></a><span class="co"># define constants GRID_SIZE and SQUARE_SIZE_PIX</span></span>
+<span id="cb142-6"><a href="seminar-02-01.html#cb142-6" aria-hidden="true" tabindex="-1"></a><span class="co"># compute SQUARE_SIZE constant</span></span>
+<span id="cb142-7"><a href="seminar-02-01.html#cb142-7" aria-hidden="true" tabindex="-1"></a><span class="co"># define SNAKE_SPEED and compute SNAKE_TIME_INTERVAL</span></span>
+<span id="cb142-8"><a href="seminar-02-01.html#cb142-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb142-9"><a href="seminar-02-01.html#cb142-9" aria-hidden="true" tabindex="-1"></a><span class="co"># create PsychoPy window, computing it size in pixels from the two constants</span></span>
+<span id="cb142-10"><a href="seminar-02-01.html#cb142-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb142-11"><a href="seminar-02-01.html#cb142-11" aria-hidden="true" tabindex="-1"></a><span class="co"># create the snake variable as a list with three segments</span></span>
+<span id="cb142-12"><a href="seminar-02-01.html#cb142-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb142-13"><a href="seminar-02-01.html#cb142-13" aria-hidden="true" tabindex="-1"></a><span class="co"># set gameover to False</span></span>
+<span id="cb142-14"><a href="seminar-02-01.html#cb142-14" aria-hidden="true" tabindex="-1"></a><span class="co"># create a clock or a countdown timer</span></span>
+<span id="cb142-15"><a href="seminar-02-01.html#cb142-15" aria-hidden="true" tabindex="-1"></a><span class="co"># while not gameover:</span></span>
+<span id="cb142-16"><a href="seminar-02-01.html#cb142-16" aria-hidden="true" tabindex="-1"></a><span class="co">#     draw all snake segments using for loop  </span></span>
+<span id="cb142-17"><a href="seminar-02-01.html#cb142-17" aria-hidden="true" tabindex="-1"></a><span class="co">#     flip the window</span></span>
+<span id="cb142-18"><a href="seminar-02-01.html#cb142-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb142-19"><a href="seminar-02-01.html#cb142-19" aria-hidden="true" tabindex="-1"></a><span class="co">#     if escape key was pressed:</span></span>
+<span id="cb142-20"><a href="seminar-02-01.html#cb142-20" aria-hidden="true" tabindex="-1"></a><span class="co">#         set gameover to True</span></span>
+<span id="cb142-21"><a href="seminar-02-01.html#cb142-21" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb142-22"><a href="seminar-02-01.html#cb142-22" aria-hidden="true" tabindex="-1"></a><span class="co">#     Check whether elapsed time is greater than SNAKE_TIME_INTERVAL, </span></span>
+<span id="cb142-23"><a href="seminar-02-01.html#cb142-23" aria-hidden="true" tabindex="-1"></a><span class="co">#         move snake up and reset clock or countdown timer, if that is the case</span></span>
+<span id="cb142-24"><a href="seminar-02-01.html#cb142-24" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb142-25"><a href="seminar-02-01.html#cb142-25" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb142-26"><a href="seminar-02-01.html#cb142-26" aria-hidden="true" tabindex="-1"></a><span class="co"># close PsychoPy window</span></span></code></pre></div>
+<div class="infobox program">
+<p>Put your code into <em>exercise06.py</em>.</p>
+</div>
+</div>
+<div id="describing-direction-using-words" class="section level2" number="13.9">
+<h2><span class="header-section-number">13.9</span> Describing direction using words</h2>
+<p>In our current design, we describe direction as a tuple <code>(dx, dy)</code>. Let us change it, so that it is described using words <code>"up"</code>, <code>"down"</code>, <code>"left"</code>, and <code>"right"</code>. This is not strictly necessary but will make our lives somewhat easier later on when we add steering controls. More importantly, it will serve a didactic purpose as well, showing how you can use dictionaries to translate values from one representation to another.</p>
+<p>Thus, let us create a new string variable <code>direction</code> and set it to <code>"up"</code> (or any other direction you like). We will keep the <code>grow_snake()</code> function as is and will translate individual strings to pairs of <code>(dx, dy)</code> values. E.g., <code>"up"</code> corresponds to <code>(0, -1)</code>, <code>"right"</code> to <code>(1, 0)</code>, etc.</p>
+<p>We can implement this translation via if-elif conditional statements:</p>
+<div class="sourceCode" id="cb143"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb143-1"><a href="seminar-02-01.html#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">dir</span> <span class="op">==</span> <span class="st">&quot;up&quot;</span>:</span>
+<span id="cb143-2"><a href="seminar-02-01.html#cb143-2" aria-hidden="true" tabindex="-1"></a>  dxy <span class="op">=</span> (<span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb143-3"><a href="seminar-02-01.html#cb143-3" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> <span class="bu">dir</span> <span class="op">==</span> <span class="st">&quot;right&quot;</span>:</span>
+<span id="cb143-4"><a href="seminar-02-01.html#cb143-4" aria-hidden="true" tabindex="-1"></a>  dxy <span class="op">=</span> (<span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb143-5"><a href="seminar-02-01.html#cb143-5" aria-hidden="true" tabindex="-1"></a>  ...</span></code></pre></div>
+<p>However, this approach introduces a lot of repetitive code and does not scale particularly well. Instead, we can use a dictionary (let us call it <code>DXY</code> as it is another constant) with <code>"up"</code>, <code>"right"</code>, etc. string as keys and tuples <code>(0, -1)</code>, <code>(1, 0)</code>, etc. as values. This way, we can use current value of <code>dir</code> variable as a key to get the <code>(dx, dy)</code> pair from <code>DXY</code> dictionary. Note that you should do it in the function call, <strong>do not</strong> create a temporary variable as in the if-elif examples above.</p>
+<div class="sourceCode" id="cb144"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb144-1"><a href="seminar-02-01.html#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import all libraries and modules you need</span></span>
+<span id="cb144-2"><a href="seminar-02-01.html#cb144-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb144-3"><a href="seminar-02-01.html#cb144-3" aria-hidden="true" tabindex="-1"></a><span class="co"># import all functions you need from from utilities.py file</span></span>
+<span id="cb144-4"><a href="seminar-02-01.html#cb144-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb144-5"><a href="seminar-02-01.html#cb144-5" aria-hidden="true" tabindex="-1"></a><span class="co"># define constants GRID_SIZE and SQUARE_SIZE_PIX</span></span>
+<span id="cb144-6"><a href="seminar-02-01.html#cb144-6" aria-hidden="true" tabindex="-1"></a><span class="co"># compute SQUARE_SIZE constant</span></span>
+<span id="cb144-7"><a href="seminar-02-01.html#cb144-7" aria-hidden="true" tabindex="-1"></a><span class="co"># define SNAKE_SPEED and compute SNAKE_TIME_INTERVAL</span></span>
+<span id="cb144-8"><a href="seminar-02-01.html#cb144-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb144-9"><a href="seminar-02-01.html#cb144-9" aria-hidden="true" tabindex="-1"></a><span class="co"># define DXY dictionary with (dx, dy) entries for each &quot;up&quot;, &quot;down&quot;, &quot;right&quot;,</span></span>
+<span id="cb144-10"><a href="seminar-02-01.html#cb144-10" aria-hidden="true" tabindex="-1"></a><span class="co">#     and &quot;left&quot; keys</span></span>
+<span id="cb144-11"><a href="seminar-02-01.html#cb144-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb144-12"><a href="seminar-02-01.html#cb144-12" aria-hidden="true" tabindex="-1"></a><span class="co"># create PsychoPy window, computing it size in pixels from the two constants</span></span>
+<span id="cb144-13"><a href="seminar-02-01.html#cb144-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb144-14"><a href="seminar-02-01.html#cb144-14" aria-hidden="true" tabindex="-1"></a><span class="co"># create the snake variable as a list with three segments</span></span>
+<span id="cb144-15"><a href="seminar-02-01.html#cb144-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb144-16"><a href="seminar-02-01.html#cb144-16" aria-hidden="true" tabindex="-1"></a><span class="co"># initialize direction variable to one of the four directions</span></span>
+<span id="cb144-17"><a href="seminar-02-01.html#cb144-17" aria-hidden="true" tabindex="-1"></a><span class="co"># set gameover to False</span></span>
+<span id="cb144-18"><a href="seminar-02-01.html#cb144-18" aria-hidden="true" tabindex="-1"></a><span class="co"># create a clock or a countdown timer</span></span>
+<span id="cb144-19"><a href="seminar-02-01.html#cb144-19" aria-hidden="true" tabindex="-1"></a><span class="co"># while not gameover:</span></span>
+<span id="cb144-20"><a href="seminar-02-01.html#cb144-20" aria-hidden="true" tabindex="-1"></a><span class="co">#     draw all snake segments using for loop  </span></span>
+<span id="cb144-21"><a href="seminar-02-01.html#cb144-21" aria-hidden="true" tabindex="-1"></a><span class="co">#     flip the window</span></span>
+<span id="cb144-22"><a href="seminar-02-01.html#cb144-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb144-23"><a href="seminar-02-01.html#cb144-23" aria-hidden="true" tabindex="-1"></a><span class="co">#     if escape key was pressed:</span></span>
+<span id="cb144-24"><a href="seminar-02-01.html#cb144-24" aria-hidden="true" tabindex="-1"></a><span class="co">#         set gameover to True</span></span>
+<span id="cb144-25"><a href="seminar-02-01.html#cb144-25" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb144-26"><a href="seminar-02-01.html#cb144-26" aria-hidden="true" tabindex="-1"></a><span class="co">#     Check whether elapsed time is greater than SNAKE_TIME_INTERVAL, </span></span>
+<span id="cb144-27"><a href="seminar-02-01.html#cb144-27" aria-hidden="true" tabindex="-1"></a><span class="co">#         move snake translating direction variable into (dx, dy) pair from DXY</span></span>
+<span id="cb144-28"><a href="seminar-02-01.html#cb144-28" aria-hidden="true" tabindex="-1"></a><span class="co">#         reset clock or countdown timer, if that is the case</span></span>
+<span id="cb144-29"><a href="seminar-02-01.html#cb144-29" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb144-30"><a href="seminar-02-01.html#cb144-30" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb144-31"><a href="seminar-02-01.html#cb144-31" aria-hidden="true" tabindex="-1"></a><span class="co"># close PsychoPy window</span></span></code></pre></div>
+<div class="infobox program">
+<p>Put your code into <em>exercise07.py</em>.</p>
+</div>
+</div>
+<div id="it-is-all-about-control" class="section level2" number="13.10">
+<h2><span class="header-section-number">13.10</span> It is all about control</h2>
+<p>Playing the game would be more fun, if we could steer the snake! If the player presses <em>right arrow</em> key, the snake should turn <em>clockwise</em>. Conversely, <em>left arrow</em> key, should turn the snake <em>counterclockwise</em>. We need to figure out two things. First, how to determine a new direction of motion given the current one and the key that was pressed. Second, we must decide when and how to change the value of <code>direction</code> variable. Let us tackle these problems one at a time.</p>
+<p>Determining the new direction of motion is fairly straightforward. If current is <code>"up"</code> and key was <em>right</em> (<em>clockwise</em> rotation), the new direction should be <code>"right"</code>. If current is <code>"down"</code> and key was <em>left</em>, the new direction is again <code>"right"</code>, etc. You could implement it as a bunch of <code>if-elif</code> statements or, better still, use the dictionary look up approach we implemented in the previous exercise. Here, you need a nested dictionary (dictionary inside a dictionary) <code>NEW_DIRECTION[key][direction]</code>. The first level has two keys <code>"left"</code> and <code>"right"</code> (so, effectively, counterclockwise and clockwise rotation) that selects which translation should be used and the second level is the dictionary that translates current direction into the new direction of motion. E.g., if current direction is <code>"down"</code> and key was <code>"right"</code>, <code>NEW_DIRECTION["right"]["down"]</code> should be <code>"left"</code> (rotating clockwise from <code>"down"</code> gets us to <code>"left"</code>). You know how define a simple dictionary. Good news, defining nested dictionaries follows the same rules, so should be straightforward.</p>
+<p>Now let us think about when and how should we change value of <code>direction</code> variable. The simplest approach would be to change it as soon as the player presses the key. However, because our snake does not move on every frame this could lead to some odd behavior. Imagine that our game is on “easy” mode, so that the snake moves very slowly (one square per second). In this case, the player could easily press <em>left</em> twice during that second that would make snake move backwards, because direction was changed by 180°. Snakes, at least our snake, cannot do this. Thus, we need a temporary variable, let us call it <code>new_direction</code>, which we will set every time the player presses the key but whose value will be transferred to <code>direction</code> only when it is time to move the snake. We will compute it from the current <code>direction</code> and the key pressed. This way, even when the player presses <em>left</em> key several times, the snake would still turn only once because we compute the each turn using the same <code>direction</code> value but not the changing <code>new_direction</code> variable. This also means that players can “change their mind”, as the last key press before the snake moves will determine the direction of motion.</p>
+<div class="sourceCode" id="cb145"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb145-1"><a href="seminar-02-01.html#cb145-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import all libraries and modules you need</span></span>
+<span id="cb145-2"><a href="seminar-02-01.html#cb145-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb145-3"><a href="seminar-02-01.html#cb145-3" aria-hidden="true" tabindex="-1"></a><span class="co"># import all functions you need from from utilities.py file</span></span>
+<span id="cb145-4"><a href="seminar-02-01.html#cb145-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb145-5"><a href="seminar-02-01.html#cb145-5" aria-hidden="true" tabindex="-1"></a><span class="co"># define constants GRID_SIZE and SQUARE_SIZE_PIX</span></span>
+<span id="cb145-6"><a href="seminar-02-01.html#cb145-6" aria-hidden="true" tabindex="-1"></a><span class="co"># compute SQUARE_SIZE constant</span></span>
+<span id="cb145-7"><a href="seminar-02-01.html#cb145-7" aria-hidden="true" tabindex="-1"></a><span class="co"># define SNAKE_SPEED and compute SNAKE_TIME_INTERVAL</span></span>
+<span id="cb145-8"><a href="seminar-02-01.html#cb145-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb145-9"><a href="seminar-02-01.html#cb145-9" aria-hidden="true" tabindex="-1"></a><span class="co"># define DXY dictionary with (dx, dy) entries for each &quot;up&quot;, &quot;down&quot;, &quot;right&quot;,</span></span>
+<span id="cb145-10"><a href="seminar-02-01.html#cb145-10" aria-hidden="true" tabindex="-1"></a><span class="co">#     and &quot;left&quot; keys</span></span>
+<span id="cb145-11"><a href="seminar-02-01.html#cb145-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb145-12"><a href="seminar-02-01.html#cb145-12" aria-hidden="true" tabindex="-1"></a><span class="co"># define NEW_DIRECTION nested dictionary</span></span>
+<span id="cb145-13"><a href="seminar-02-01.html#cb145-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb145-14"><a href="seminar-02-01.html#cb145-14" aria-hidden="true" tabindex="-1"></a><span class="co"># create PsychoPy window, computing it size in pixels from the two constants</span></span>
+<span id="cb145-15"><a href="seminar-02-01.html#cb145-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb145-16"><a href="seminar-02-01.html#cb145-16" aria-hidden="true" tabindex="-1"></a><span class="co"># create the snake variable as a list with three segments</span></span>
+<span id="cb145-17"><a href="seminar-02-01.html#cb145-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb145-18"><a href="seminar-02-01.html#cb145-18" aria-hidden="true" tabindex="-1"></a><span class="co"># initialize direction variable to one of the four directions</span></span>
+<span id="cb145-19"><a href="seminar-02-01.html#cb145-19" aria-hidden="true" tabindex="-1"></a><span class="co"># initialize new_direction(!!!!) to the same value as direction, why do you need to do this?</span></span>
+<span id="cb145-20"><a href="seminar-02-01.html#cb145-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb145-21"><a href="seminar-02-01.html#cb145-21" aria-hidden="true" tabindex="-1"></a><span class="co"># set gameover to False</span></span>
+<span id="cb145-22"><a href="seminar-02-01.html#cb145-22" aria-hidden="true" tabindex="-1"></a><span class="co"># create a clock or a countdown timer</span></span>
+<span id="cb145-23"><a href="seminar-02-01.html#cb145-23" aria-hidden="true" tabindex="-1"></a><span class="co"># while not gameover:</span></span>
+<span id="cb145-24"><a href="seminar-02-01.html#cb145-24" aria-hidden="true" tabindex="-1"></a><span class="co">#     draw all snake segments using for loop  </span></span>
+<span id="cb145-25"><a href="seminar-02-01.html#cb145-25" aria-hidden="true" tabindex="-1"></a><span class="co">#     flip the window</span></span>
+<span id="cb145-26"><a href="seminar-02-01.html#cb145-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb145-27"><a href="seminar-02-01.html#cb145-27" aria-hidden="true" tabindex="-1"></a><span class="co">#     if escape key was pressed:</span></span>
+<span id="cb145-28"><a href="seminar-02-01.html#cb145-28" aria-hidden="true" tabindex="-1"></a><span class="co">#         set gameover to True</span></span>
+<span id="cb145-29"><a href="seminar-02-01.html#cb145-29" aria-hidden="true" tabindex="-1"></a><span class="co">#     if key is left or right:</span></span>
+<span id="cb145-30"><a href="seminar-02-01.html#cb145-30" aria-hidden="true" tabindex="-1"></a><span class="co">#         set new_direction based on direction and pressed key using NEW_DIRECTION dictionary </span></span>
+<span id="cb145-31"><a href="seminar-02-01.html#cb145-31" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb145-32"><a href="seminar-02-01.html#cb145-32" aria-hidden="true" tabindex="-1"></a><span class="co">#     Check whether elapsed time is greater than SNAKE_TIME_INTERVAL, </span></span>
+<span id="cb145-33"><a href="seminar-02-01.html#cb145-33" aria-hidden="true" tabindex="-1"></a><span class="co">#         set direction to new_direction</span></span>
+<span id="cb145-34"><a href="seminar-02-01.html#cb145-34" aria-hidden="true" tabindex="-1"></a><span class="co">#         move snake translating direction variable into (dx, dy) pair from DXY</span></span>
+<span id="cb145-35"><a href="seminar-02-01.html#cb145-35" aria-hidden="true" tabindex="-1"></a><span class="co">#         reset clock or countdown timer, if that is the case</span></span>
+<span id="cb145-36"><a href="seminar-02-01.html#cb145-36" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb145-37"><a href="seminar-02-01.html#cb145-37" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb145-38"><a href="seminar-02-01.html#cb145-38" aria-hidden="true" tabindex="-1"></a><span class="co"># close PsychoPy window</span></span></code></pre></div>
+<div class="infobox program">
+<p>Put your code into <em>exercise08.py</em>.</p>
+</div>
+</div>
+<div id="turning-the-hard-way" class="section level2" number="13.11">
+<h2><span class="header-section-number">13.11</span> Turning the hard way</h2>
+<p>Let us implement the same “figure out new direction” code in a more complicated way. The purpose of the exercise is to challenge you, show you new methods of the list, and to demonstrate how you can think about a change of the direction as moving through the list. We won’t use this in the main code, so implement it as a function <code>compute_new_direction(current_direction, pressed_key)</code>, which will take two parameters (current direction and pressed key) and will return the new direction of rotation. I strongly recommend writing and debugging code in Jupyter Notebook first and copying it to <em>utilities.py</em> at the very end. Also, do not implement it as a function to begin with. Define parameters as two variable with some preset values and debug the rest of the code.</p>
+<p>Here is the idea. Imagine that you have a list <code>["left", "up", "right", "down"]</code>. For this list, rotation clockwise would correspond to moving through the list to the right (assuming that you jump to the beginning once you move past the last item). Conversely, rotation counterclockwise corresponds to moving to the left (again, assuming that you jump to the end of the list, once you went past the first item). As you see, rotation is expressed as a very intuitive “motion through the list”.</p>
+<p>For the actual implementation, first, define a constant list in the order I’ve described. Next, you need to identify the location of the current direction within the list using <a href="https://docs.python.org/3/tutorial/datastructures.html#more-on-lists">index()</a> method. Then, you need to figure out whether you increase or decrease that index (to move to the right or to the left), based on <code>pressed_key</code> parameter (you can use dictionary approach or a conditional assignment). Finally, you need to control for range, so that index of <code>-1</code> becomes <code>3</code> (you went too far to the left) and index of <code>4</code> should become <code>0</code>. The most elegant way to do this, is using <code>%</code> <a href="https://python-reference.readthedocs.io/en/latest/docs/operators/modulus.html">modulus</a> operation. Hint, <code>4 % 4</code> is <code>0</code>. What about <code>1 % 4</code>, <code>0 % 4</code>, or even <code>-1 % 4</code>? Check it by hand to get an idea of what I am hinting at. And, of course, do not use <code>4</code> for division, use the length of the list, as it determines the range of values.</p>
+<div class="infobox program">
+<p>Put function compute_new_direction into <em>utilities.py</em>.</p>
+</div>
+</div>
+<div id="to-be-continued-1" class="section level2" number="13.12">
+<h2><span class="header-section-number">13.12</span> To be continued…</h2>
+<p>We covered a lot of ground today. Next time, we will continue by adding the possibility of killing yourself but also of growing into a longer and cooler snake by eating apples.</p>
+
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="11">
+<li id="fn11"><p>Sneaky preview: You will start learning about object-oriented programming during our next seminar and we will turn it into object-based game.<a href="seminar-02-01.html#fnref11" class="footnote-back">↩︎</a></p></li>
+<li id="fn12"><p>You can “Save as…” the previous exercise to avoid copy-pasting things by hand.<a href="seminar-02-01.html#fnref12" class="footnote-back">↩︎</a></p></li>
+<li id="fn13"><p>Not very exciting, I know. But one has to start somewhere!<a href="seminar-02-01.html#fnref13" class="footnote-back">↩︎</a></p></li>
+<li id="fn14"><p>A single segment snake is a special case, as its head is also its tail!<a href="seminar-02-01.html#fnref14" class="footnote-back">↩︎</a></p></li>
+<li id="fn15"><p>You don’t <em>really</em> need it for a single segment snake we have now but there is no other way to do it later, so let us do it properly from the start<a href="seminar-02-01.html#fnref15" class="footnote-back">↩︎</a></p></li>
+<li id="fn16"><p>We could also have used <code>dqueue</code> class from <em>collections</em> library instead of the <code>list</code>. It is, essentially, a list that allows appending and poping from the left as well.<a href="seminar-02-01.html#fnref16" class="footnote-back">↩︎</a></p></li>
+<li id="fn17"><p>To be honest, I have initially implemented it as a single <code>move_snake()</code> function , wrote things up to eating apples, realized the problem, returned and rewrote the notes. So, it is a hindsight type of strategic thinking.<a href="seminar-02-01.html#fnref17" class="footnote-back">↩︎</a></p></li>
+<li id="fn18"><p>Re-read about <a href="#mutable-objects">mutable objects</a>, if you forgot how it works.<a href="seminar-02-01.html#fnref18" class="footnote-back">↩︎</a></p></li>
+<li id="fn19"><p>Note that speed does not need to be an integer number of squares per second. It can move at 1.5 squares per second, so 3 squares every two seconds.<a href="seminar-02-01.html#fnref19" class="footnote-back">↩︎</a></p></li>
+<li id="fn20"><p>Why two constants that express the same information? We could define only the <code>SNAKE_TIME_INTERVAL</code> but for a human it makes it harder to understand just how fast the movement will be. In cases like these, I prefer to have two constants, one human-oriented, another computer-oriented. Remember, it is not just about writing a working code, it is about writing a code that is easy for a human to understand.<a href="seminar-02-01.html#fnref20" class="footnote-back">↩︎</a></p></li>
+<li id="fn21"><p>They work the same they, it is just a question of whether you start from zero and check whether time is over <code>SNAKE_TIME_INTERVAL</code> (<a href="https://www.psychopy.org/api/clock.html#psychopy.clock.Clock">clock</a>) or you start at <code>SNAKE_TIME_INTERVAL</code> and check whether the time ran out/is already negative (<a href="https://www.psychopy.org/api/clock.html#psychopy.clock.CountdownTimer">timer</a>).<a href="seminar-02-01.html#fnref21" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="the-skill-of-programming.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="seminar-02-02.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["python-for-experimental-psychology.pdf", "python-for-experimental-psychology.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

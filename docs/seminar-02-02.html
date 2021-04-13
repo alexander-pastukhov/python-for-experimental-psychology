@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Seminar 8 Gettings start with PsychoPy | Python for social and experimental psychology</title>
+  <title>Seminar 14 Snake game, part 2 | Python for social and experimental psychology</title>
   <meta name="description" content="Material and exercises for ‘Python for social and experimental psychology’ seminar." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Seminar 8 Gettings start with PsychoPy | Python for social and experimental psychology" />
+  <meta property="og:title" content="Seminar 14 Snake game, part 2 | Python for social and experimental psychology" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Seminar 8 Gettings start with PsychoPy | Python for social and experimental psychology" />
+  <meta name="twitter:title" content="Seminar 14 Snake game, part 2 | Python for social and experimental psychology" />
   
   <meta name="twitter:description" content="Material and exercises for ‘Python for social and experimental psychology’ seminar." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="seminar07.html"/>
-<link rel="next" href="seminar09.html"/>
+<link rel="prev" href="seminar-02-01.html"/>
+<link rel="next" href="seminar-02-03.html"/>
 <script src="libs/header-attrs-2.7/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -414,217 +414,123 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="seminar08" class="section level1" number="8">
-<h1><span class="header-section-number">Seminar 8</span> Gettings start with PsychoPy</h1>
-<p>Before we program our first game using <a href="https://psychopy.org/">PsychoPy</a>, we need to spend some time figuring out its basics. It is not the most suitable library for writing games, for that you might want to use <a href="https://arcade.academy/">Python Arcade</a> or <a href="https://www.pygame.org/">PyGame</a>). However, it is (IMHO) the best Python library for developing psychophysical experiments, which is why we will use it in our course.</p>
-<p>For this and following projects, we won’t use Jupyter Notebooks but will develop a Python program using IDE environment of your choice (I would recommend <a href="getting-started.html#install-vs-code">Visual Studio Code</a>). You still could and should use Jupyter for playing with and testing small code snippets, though. I’ve added a section on setting up <a href="getting-started.html#debug-in-vs-code">debugging in VS Code</a> in <a href="getting-started.html#getting-started">Getting Started</a>, take a look once you are ready to run the code.</p>
-<p>From now on, create a separate subfolder for each seminar (e.g. <em>Seminar 08</em> for today) and create a separate file (or files, later on) for each exercise<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> (e.g., <em>exercise01.py</em>, <em>exercise02.py</em>, etc.). This is not the most efficient implementation of a version control and will certainly clutter the folder. But it would allow me to see your solutions on every step, which will make it easier for me to write comments. For submitting the assignment, just zip the folder and submit the zip-file.</p>
-<div id="minimal-psychopy-code" class="section level2" number="8.1">
-<h2><span class="header-section-number">8.1</span> Minimal PsychoPy code</h2>
-<p>In the subfolder for the current seminar, create file <em>exercise01.py</em> (I would recommend using lead zero in <em>01</em>, as it will ensure correct file sorting once we get to exercise 10, 11, etc.). Copy-paste the following code:</p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb97-1"><a href="seminar08.html#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;</span></span>
-<span id="cb97-2"><a href="seminar08.html#cb97-2" aria-hidden="true" tabindex="-1"></a><span class="co">A minimal PsychoPy code.</span></span>
-<span id="cb97-3"><a href="seminar08.html#cb97-3" aria-hidden="true" tabindex="-1"></a><span class="co">&quot;&quot;&quot;</span></span>
-<span id="cb97-4"><a href="seminar08.html#cb97-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-5"><a href="seminar08.html#cb97-5" aria-hidden="true" tabindex="-1"></a><span class="co"># this imports two modules from psychopy</span></span>
-<span id="cb97-6"><a href="seminar08.html#cb97-6" aria-hidden="true" tabindex="-1"></a><span class="co"># visual has all the visual stimuli, including the Window class</span></span>
-<span id="cb97-7"><a href="seminar08.html#cb97-7" aria-hidden="true" tabindex="-1"></a><span class="co"># that we need to create a program window</span></span>
-<span id="cb97-8"><a href="seminar08.html#cb97-8" aria-hidden="true" tabindex="-1"></a><span class="co"># event has function for working with mouse and keyboard</span></span>
-<span id="cb97-9"><a href="seminar08.html#cb97-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> psychopy <span class="im">import</span> visual, event</span>
-<span id="cb97-10"><a href="seminar08.html#cb97-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-11"><a href="seminar08.html#cb97-11" aria-hidden="true" tabindex="-1"></a><span class="co"># creating a 800 x 600 window</span></span>
-<span id="cb97-12"><a href="seminar08.html#cb97-12" aria-hidden="true" tabindex="-1"></a>win <span class="op">=</span> visual.Window(size<span class="op">=</span>(<span class="dv">800</span>, <span class="dv">600</span>))</span>
-<span id="cb97-13"><a href="seminar08.html#cb97-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-14"><a href="seminar08.html#cb97-14" aria-hidden="true" tabindex="-1"></a><span class="co"># waiting for any key press</span></span>
-<span id="cb97-15"><a href="seminar08.html#cb97-15" aria-hidden="true" tabindex="-1"></a>event.waitKeys()</span>
-<span id="cb97-16"><a href="seminar08.html#cb97-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-17"><a href="seminar08.html#cb97-17" aria-hidden="true" tabindex="-1"></a><span class="co"># closing the window</span></span>
-<span id="cb97-18"><a href="seminar08.html#cb97-18" aria-hidden="true" tabindex="-1"></a>win.close()</span></code></pre></div>
-<p>Run it to check that PsychoPy work. You should get a gray window with <em>PsychoPy</em> title. Press any key (click on the window, if you switched to another one, so that it registers the key press) and it should close. Not very exciting but does show that everything works as it should.</p>
+<div id="seminar-02-02" class="section level1" number="14">
+<h1><span class="header-section-number">Seminar 14</span> Snake game, part 2</h1>
+<p>Our plan for today is to continue developing the snake game. Our original plan was as follows and we got up to #4.</p>
+<ol style="list-style-type: decimal">
+<li>Create boilerplate code to initialize PsychoPy.</li>
+<li>Figure out how to place a square. We need this because our snake is made of square segments and lives on a rectangular grid made of squares.</li>
+<li>Create a single segment stationary snake.</li>
+<li>Make the snake move assuming a rectangular grid.</li>
+<li>Implement “died by hitting a wall”.</li>
+<li>Add apples and make the snake grow.</li>
+<li>Add check for biting itself.</li>
+<li>Add bells-and-whistles to make game look awesome.</li>
+</ol>
+<p>As before, create a new folder for this seminar, copy the latest version of <em>utilities.py</em> to it and base your further development code on the latest exercise from the previous seminar (should be <em>exercise08.py</em>).</p>
+<div id="hitting-the-wall" class="section level2" number="14.1">
+<h2><span class="header-section-number">14.1</span> Hitting the wall</h2>
+<p>The last thing that we implemented during the previous seminar was our ability to control the snake. However, you could steer it off the screen and make it go through itself. Let us fix the former!</p>
+<p>Develop a new function <code>hit_the_wall</code> and put it into <em>utilities.py</em>. The function should take <code>snake</code> variable as a first parameter and check whether the head of the snake (which segment is it?) is still within the grid that we defined (how do you check for that?). The function should return a logical value. <code>True</code>, if the head of the snake is outside of the grid limits (so, it is true that the snake hit the wall). <code>False</code>, if it is still inside. I mentioned that you should definitely pass the <code>snake</code> as an obvious parameter of the function but do you need other parameters? If yes, which ones? Document the function!</p>
+<p>Test the function by adding a new condition inside the main game loop. Check whether the snake <code>hit_the_wall()</code> and, if that is the case, the game should be over. Think about the optimal place where to check for this. You could do it on every iteration but there is a more logical place for it, inside that main loop. Where is it?</p>
 <div class="infobox program">
-<p>Put your code into <em>exercise01.py</em>.</p>
+<p>Put function <em>hit_the_wall</em> into <em>utilities.py</em> and your updated code into <em>exercise01.py</em>.</p>
 </div>
-<p>Let me explain what we are doing here line-by-line.</p>
-<ul>
-<li><code>from psychopy import visual, event</code> here we import two (out of many) PsychoPy modules that give us <em>visual</em> stimuli and main program window plus ability to process <em>events</em>, such as keyboard presses or mouse activity.</li>
-<li><code>win = visual.Window(size=(800, 600))</code> we create a new PsychoPy <a href="https://psychopy.org/api/visual/window.html#psychopy.visual.Window">Window</a> <em>object</em> (you will learn about classes and objects soon) and define its <code>size</code> as 800 by 600 pixels (you can change that and see how the window also changes its size).</li>
-<li><code>event.waitKeys()</code> function <a href="https://psychopy.org/api/event.html#psychopy.event.waitKeys">waitKeys()</a> waits for a press of a keyboard key. As we didn’t specify which keys we are interested in, <em>any</em> key will do. Later on, you will learn how to make it wait for specific keys.</li>
-<li><code>win.close()</code> this calls a <em>method</em> <code>close</code> (function that belongs to an object, again, you’ll learn about them later) that tells window <code>win</code> to close itself.</li>
-</ul>
 </div>
-<div id="adding-main-loop" class="section level2" number="8.2">
-<h2><span class="header-section-number">8.2</span> Adding main loop</h2>
-<p>Currently, nothing really happens in the code, so let us add the main loop. The loop goes between opening and closing the window:</p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb98-1"><a href="seminar08.html#cb98-1" aria-hidden="true" tabindex="-1"></a>importing libraries</span>
-<span id="cb98-2"><a href="seminar08.html#cb98-2" aria-hidden="true" tabindex="-1"></a>opening the window</span>
-<span id="cb98-3"><a href="seminar08.html#cb98-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb98-4"><a href="seminar08.html#cb98-4" aria-hidden="true" tabindex="-1"></a><span class="op">--&gt;</span> our main loop <span class="op">&lt;--</span></span>
-<span id="cb98-5"><a href="seminar08.html#cb98-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb98-6"><a href="seminar08.html#cb98-6" aria-hidden="true" tabindex="-1"></a>closing the window</span></code></pre></div>
-<p>For this, you need to create a new variable <code>gameover</code> and set it too <code>False</code> (just like we did it in <em>Hunt the Wumpus</em> game) and run the loop for as long as the game is <strong>not</strong> over. Inside the loop, use function <a href="https://psychopy.org/api/event.html#psychopy.event.getKeys">event.getKeys()</a> to check whether <em>escape</em> button was pressed (for this, you need to pass <code>keyList=['escape']</code>). The function returns a list of keys, if any of them were pressed in the meantime or an empty list, if no keys from the list were pressed. Accordingly, you need to check whether the return value as an empty list. There are two ways to do this. First, you can check whether length of the list is larger than zero (so, it has elements) using function <a href="https://docs.python.org/3/library/functions.html#len">len()</a>. Alternatively, an empty list evaluates to <code>False</code> when converted to a logical value either explicitly (via <code>bool()</code> type conversion) or when evaluated inside of the condition in an <code>if</code> or <code>while</code> statement:</p>
-<div class="sourceCode" id="cb99"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb99-1"><a href="seminar08.html#cb99-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> []</span>
-<span id="cb99-2"><a href="seminar08.html#cb99-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> x:</span>
-<span id="cb99-3"><a href="seminar08.html#cb99-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&quot;List is not empty&quot;</span>)</span>
-<span id="cb99-4"><a href="seminar08.html#cb99-4" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb99-5"><a href="seminar08.html#cb99-5" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&quot;List is definitely empty&quot;</span>)</span></code></pre></div>
-<pre><code>## List is definitely empty</code></pre>
-<p>If list is <em>not</em> empty, you should change <code>gameover</code> to <code>True</code>. Think, how can you do it <em>without</em> an <code>if</code> statement, computing the logical value directly?</p>
+<div id="is-this-the-snake" class="section level2" number="14.2">
+<h2><span class="header-section-number">14.2</span> Is this the snake?</h2>
+<p>In the next section, we will be adding apples to the game. The catch is that these apples should appear at a location that is <em>not</em> occupied by the snake. Otherwise, we would generate apples directly into snake’s stomach. Practical for the snake but defeats the purpose of the game. To rephrase this problem, we need a function that checks whether a particular grid location is occupied by the snake.</p>
+<p>Develop a new function <code>is_inside_the_snake</code> that takes the snake as a first parameter and a tuple with a grid location as a second parameter and returns a logical value whether that grid location is occupied by the snake (<code>True</code>) or not (<code>False</code>). Document the function!</p>
+<p>My approach would be to work on this function in a Jupyter Notebook first. To debug it, create a snake by hand hardcoding the list of dictionaries. Note that you only need <code>pos</code> part of the segment’s dictionary for this function, so can happily ignore the <code>visuals</code> key. Once you feel the function works, copy it to <em>utilities.py</em>.</p>
 <div class="infobox program">
-<p>Put your code into <em>exercise02.py</em>.</p>
+<p>Put function <em>is_inside_the_snake</em> into <em>utilities.py</em>.</p>
 </div>
 </div>
-<div id="adding-text-message" class="section level2" number="8.3">
-<h2><span class="header-section-number">8.3</span> Adding text message</h2>
-<p>Although we are now running a nice loop, we still have only a boring gray window to look at. Let us create a text stimulus, which would say “Press escape to exit” and display it during the loop. For this we will use <a href="https://psychopy.org/api/visual/textstim.html">visual.TextStim</a> class from PsychoPy library.</p>
-<p>First, you need to create the <code>press_escape_text</code> object (instance of the <code>TextStim</code> class) before the main loop. There are quite a few parameters that you can play with but minimally, you need to pass the program window (our <code>win</code> variable) and the actual text you want to display (<code>"Press escape to exit"</code>). For all other settings PsychoPy will use its defaults (default font family, color and size, placed right the screen center).</p>
-<div class="sourceCode" id="cb101"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb101-1"><a href="seminar08.html#cb101-1" aria-hidden="true" tabindex="-1"></a>press_escape_text <span class="op">=</span> visual.TextStim(win, <span class="st">&quot;Press escape to exit&quot;</span>)</span></code></pre></div>
-<p>To show the visuals in PsychoPy, you first <em>draw</em> each element by calling its <code>draw()</code> method (thus, in our case, <code>press_escape_text.draw()</code>) and then put the “drawing” on the screen by <em>flipping</em> we window (<code>win.flip()</code> method). These two calls should go inside the main loop either before (my preference) or after the keyboard check.</p>
-<div class="sourceCode" id="cb102"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb102-1"><a href="seminar08.html#cb102-1" aria-hidden="true" tabindex="-1"></a>importing libraries</span>
-<span id="cb102-2"><a href="seminar08.html#cb102-2" aria-hidden="true" tabindex="-1"></a>opening the window</span>
-<span id="cb102-3"><a href="seminar08.html#cb102-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb102-4"><a href="seminar08.html#cb102-4" aria-hidden="true" tabindex="-1"></a><span class="op">--&gt;</span> create press_escape_text here <span class="op">&lt;--</span></span>
-<span id="cb102-5"><a href="seminar08.html#cb102-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb102-6"><a href="seminar08.html#cb102-6" aria-hidden="true" tabindex="-1"></a>gameover <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb102-7"><a href="seminar08.html#cb102-7" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="kw">not</span> gameover:</span>
-<span id="cb102-8"><a href="seminar08.html#cb102-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">--&gt;</span> draw press_escape_text <span class="op">&lt;--</span></span>
-<span id="cb102-9"><a href="seminar08.html#cb102-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">--&gt;</span> flip the window  <span class="op">&lt;--</span></span>
-<span id="cb102-10"><a href="seminar08.html#cb102-10" aria-hidden="true" tabindex="-1"></a>    check keyboard <span class="cf">for</span> escape button press</span>
-<span id="cb102-11"><a href="seminar08.html#cb102-11" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb102-12"><a href="seminar08.html#cb102-12" aria-hidden="true" tabindex="-1"></a>close the window</span></code></pre></div>
-<p>Now, you should have a nice, although static, message that tells you how you can exit the game. Check out the manual page for <a href="https://psychopy.org/api/visual/textstim.html">visual.TextStim</a> and try changing it by passing additional parameters to the object constructor call. For example you can change its <code>color</code>, whether text is <code>bold</code> and/or <code>italic</code>, how it is aligned, etc. However, if you want to change <em>where</em> the text is displayed, read on below.</p>
+<div id="an-inedible-apple" class="section level2" number="14.3">
+<h2><span class="header-section-number">14.3</span> An inedible apple</h2>
+<p>Let us add that highly desirable fruit: the apple! We will represent it as a <em>differently</em> colored square and snake won’t be able to eat it yet. I assume that you used green color for the snake, so apples would yellow, red, or orange (but feel free to pick any color of your fancy). Just like a snake segment, an apple is characterized by its position on the grid and by its visuals, so you can use the same dictionary structure as for the snake’s segment.</p>
+<p>You need to write a new function <code>create_apple</code> that will be fairly similar to <code>create_snake_segment()</code> function you developed the last time. It should also return a dictionary with <code>pos</code> and <code>visuals</code> field. However, instead of taking a predefined grid location, it should generate one randomly within the grid making sure it is <em>not</em> on the snake. The <code>is_inside_the_snake</code> function will help you to ensure the latter. Think about parameters that you need for this function. Remember to document it!</p>
+<p>In the main loop, create a new variable <code>apple</code> and initialize it via <code>create_apple()</code> function. Think about where and when do you need to initialize it. Also, you need to drawi the apple in the main loop. Again, think about where should you do it.</p>
 <div class="infobox program">
-<p>Put your code into <em>exercise03.py</em>.</p>
+<p>Put function <em>create_apple</em> into <em>utilities.py</em> and your updated code into <em>exercise02.py</em>.</p>
 </div>
 </div>
-<div id="adding-a-square-and-placing-it-not-at-the-center-of-the-window" class="section level2" number="8.4">
-<h2><span class="header-section-number">8.4</span> Adding a square and placing it <em>not</em> at the center of the window</h2>
-<p>Now, let us figure out how create and move visuals to an arbitrary location on the screen. In principle, this is very straightforward as every visual stimulus (including <code>TextStim</code> we used just above) has <code>pos</code> property that specifies (you guessed it!) its position. However, to make your life easier, PsychoPy first complicates it by having <a href="https://psychopy.org/general/units.html"><strong>five</strong> different units systems</a>.</p>
-<p>Before we start exploring the units, let us create a simple white square. The visual class we need is <a href="https://psychopy.org/api/visual/rect.html">visual.Rect</a>. Just like the <code>TextStim</code> above, it requires <code>win</code> variable (so it knows which window it belongs to), <code>width</code> (defaults to 0.5 of that mysterious units), <code>height</code> (also defaults to 0.5), <code>pos</code> (defaults to (0,0)), <code>lineColor</code> (defaults to <code>white</code>) and <code>fillColor</code> (defaults to <code>None</code>). Thus, to get a “standard” white square with size of <code>(0.5, 0.5)</code> units at <code>(0, 0)</code> location you only need pass the <code>win</code> variable: <code>white_square = visual.Rect(win)</code>. You draw the square just like you drew the text stimulus, via its <code>draw()</code> method. Create the code, run it to see a very white square, and read on.</p>
-<div class="sourceCode" id="cb103"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb103-1"><a href="seminar08.html#cb103-1" aria-hidden="true" tabindex="-1"></a>importing libraries</span>
-<span id="cb103-2"><a href="seminar08.html#cb103-2" aria-hidden="true" tabindex="-1"></a>opening the window</span>
-<span id="cb103-3"><a href="seminar08.html#cb103-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb103-4"><a href="seminar08.html#cb103-4" aria-hidden="true" tabindex="-1"></a><span class="op">--&gt;</span> create white_square here <span class="op">&lt;--</span></span>
-<span id="cb103-5"><a href="seminar08.html#cb103-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb103-6"><a href="seminar08.html#cb103-6" aria-hidden="true" tabindex="-1"></a>gameover <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb103-7"><a href="seminar08.html#cb103-7" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="kw">not</span> gameover:</span>
-<span id="cb103-8"><a href="seminar08.html#cb103-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">--&gt;</span> draw white_square <span class="kw">and</span> flip the window here <span class="op">&lt;--</span></span>
-<span id="cb103-9"><a href="seminar08.html#cb103-9" aria-hidden="true" tabindex="-1"></a>    check keyboard <span class="cf">for</span> escape button press</span>
-<span id="cb103-10"><a href="seminar08.html#cb103-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb103-11"><a href="seminar08.html#cb103-11" aria-hidden="true" tabindex="-1"></a>close the window</span></code></pre></div>
+<div id="eating-an-apple" class="section level2" number="14.4">
+<h2><span class="header-section-number">14.4</span> Eating an apple</h2>
+<p>Apples exist for snakes to eat them! Let us add this functionality. The general idea is very simple. If the <em>head</em> of the snake moves on to the grid location with an apple, you should not trim its tail. See how useful it was to split growing and trimming into two separate functions? Told you, strategic thinking!</p>
+<p>You need to add a conditional statement that if the snake’s head <em>is</em> on the apple, you should generate a new one the same way as you generated it initially (add the next apple). What should you do, if there is no apple at that location?</p>
+<p>Also, if you haven’t already done that, modify you code so that you start with a single segment snake.</p>
 <div class="infobox program">
-<p>Put your code into <em>exercise04.py</em>.</p>
+<p>Put your updated code into <em>exercise03.py</em>.</p>
 </div>
-<p>What did you say, your square was not really a square? Well, I told you, <strong>five</strong> units systems!</p>
 </div>
-<div id="five-units-systems" class="section level2" number="8.5">
-<h2><span class="header-section-number">8.5</span> Five units systems</h2>
-<div id="height-units" class="section level3" number="8.5.1">
-<h3><span class="header-section-number">8.5.1</span> Height units</h3>
-<p>With height units everything is specified in the units of window height. The center of the window is at <code>(0,0)</code> and the window goes vertically from <code>-0.5</code> to <code>0.5</code>. However, its horizontal limits depend on the aspect ratio. For our 800×600 window, it will go from -0.666 to 0.666 (the window is 1.3333 window heights wide). For a 600×800 window from -0.375 to 0.375 (the window is 0.75 window heights wide), for a square window 600×600 from -0.5 to 0.5 (again, in all these cases it goes from -0.5 to 0.5 vertically). This means that the actual on-screen distance for the units is the same for both axes. So that a square of <code>size=(0.5, 0.5)</code> is actually a square (it spans the same distance vertically and horizontally). Thus, it makes <em>sizing</em> objects easier but <em>placing them on horizontal axis correctly</em> harder (as you need to know the aspect ratio).</p>
-<p>Modify your code by specifying the unit system when you create the window: <code>win = visual.Window(..., units="height")</code>. Play with your code by specifying position of the square when you create it. You just need to pass an extra parameter <code>pos=(&lt;x&gt;, &lt;y&gt;)</code>. Which was is up, when y is below or above zero?</p>
+<div id="eating-yourself" class="section level2" number="14.5">
+<h2><span class="header-section-number">14.5</span> Eating yourself</h2>
+<p>Once our snake grows beyond four segments, it has an opportunity to bite itself<a href="#fn22" class="footnote-ref" id="fnref22"><sup>22</sup></a>. For this, we need to check that, <em>after</em> the snake moved, its head is <em>not</em> at the same location as one of the segments of its body. Create a new function <code>snake_bit_itself()</code> that takes the snake as a single parameter and returns <code>True</code> or <code>False</code> based on whether that is the case. The function is very similar but not identical to <code>is_inside_the_snake()</code> function you implemented earlier. What is the critical difference and why cannot you simply reuse that function?</p>
+<p>Once you implemented <code>snake_bit_itself()</code> function, you should check for that eventually after it moved and, if that is the case, the game should be over.</p>
 <div class="infobox program">
-<p>Put your code into <em>exercise05.py</em>.</p>
+<p>Put function <em>snake_bit_itself</em> into <em>utilities.py</em> and your updated code into <em>exercise04.py</em>.</p>
 </div>
-<p>Unfortunately, unlike x-axis, the y-axis can go both ways. For PsychoPy y-axis points up (so negative values move the square down and positive up). However, if you would use an Eyelink eye tracker to record where participants looked <em>on the screen</em>, it assumes that y-axis starts at the top of the screen and points down (which could be very confusing, if you forget about this when overlaying gaze data on the image you used and wondering what on Earth the participants were doing).</p>
-<p>Now, modify the size of the square (and turn it into a non-square rectangle) by passing <code>width=&lt;some-width-value&gt;</code> and <code>height=&lt;some-height-value&gt;</code>.</p>
+</div>
+<div id="bells-and-whistles-score" class="section level2" number="14.6">
+<h2><span class="header-section-number">14.6</span> Bells and whistles: score</h2>
+<p>Now that we have a fully functional game, we can start adding non-essential but nice features to it. The first one will be the score that is equal to the length of the snake. It should read <em>Score: XXX</em>. Place it at the top of the window. You will need to use <a href="https://www.psychopy.org/api/visual/textstim.html#psychopy.visual.TextStim">TextStim</a> class for this. Think about when to create the text stimulus, when to draw it, and how and when to update the text.</p>
 <div class="infobox program">
-<p>Put your code into <em>exercise06.py</em>.</p>
+<p>Put your updated code into <em>exercise05.py</em>.</p>
 </div>
 </div>
-<div id="normalized-units" class="section level3" number="8.5.2">
-<h3><span class="header-section-number">8.5.2</span> Normalized units</h3>
-<p>These units are default ones and assume that the window goes from -1 to 1 both along x- and x-axis. Again, (0,0) is the center of the screen but the bottom-left corner is (-1, -1) whereas the top-right is (1, 1). This makes <em>placing</em> your objects easier but <em>sizing</em> them harder (you need to know the aspect ratio to ensure that a square is a square).</p>
-<p>Modify your code, so that it uses <code>"norm"</code> units when you create the window and size the <code>Rect</code> stimulus, so it does look like a square.</p>
+<div id="bells-and-whistels-three-lives" class="section level2" number="14.7">
+<h2><span class="header-section-number">14.7</span> Bells and whistels: three lives</h2>
+<p>Let us give the player three attempts to achieve the top score. They have three lives, every time the snake dies, the game <em>but not the score</em> resets: A single segment snake appears at the center and a new random apple appears elsewhere (where should you put the code to create them?). Once the snake dies three times, the game is over. Think how you can implement this three repetitions.</p>
+<p>The score should be cumulative, so at the beginning of round two it should be equal to the final score of round one plus current length of the snake (1 at the very beginning). Think how you can achieve this. <em>Another important point</em>: now you have two nested loop, one is for the game, one is for the round. When the snake dies, the round is over and, if you run out of lives, the game as well. When the player presses <em>escape</em> both round <strong>and</strong> the game are over. Think about how you can implement it.</p>
 <div class="infobox program">
-<p>Put your code into <em>exercise07.py</em>.</p>
+<p>Put your updated code into <em>exercise06.py</em>.</p>
 </div>
 </div>
-<div id="pixels-on-screen" class="section level3" number="8.5.3">
-<h3><span class="header-section-number">8.5.3</span> Pixels on screen</h3>
-<p>In this case, the window center is still at <code>(0,0)</code> but it goes from <code>-&lt;width-in-pixels&gt;/2</code> to <code>&lt;width-in-pixels&gt;/2</code> horizontally (from -400 to 400 in our case) and <code>-&lt;height-in-pixels&gt;/2</code> to <code>&lt;height-in-pixels&gt;/2</code> vertically (from -300 to 300). These units could be more intuitive when you are working with a fixed sized window, as the span is the same along the both axes (like for the height units). However, they spell trouble if your window size was changed or you are using a full screen window on some monitor with an unknown resolution.</p>
-<p>Modify your code to use <code>"pix"</code> units and briefly test sizing and placing your square within the window.</p>
+<div id="bells-and-whistels-showing-lives" class="section level2" number="14.8">
+<h2><span class="header-section-number">14.8</span> Bells and whistels: showing lives</h2>
+<p>Let us not just repeat the game three times but show the player how many lives they still have. Download the <a href="material/heart.png">heart.png</a><a href="#fn23" class="footnote-ref" id="fnref23"><sup>23</sup></a> and use it show remaining lives at the top-left corner of the screen: three hearts in round one, two hearts in round two, and just a single heart in round three. You will need to use (ImageStim)[<a href="https://www.psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim" class="uri">https://www.psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim</a>] for this. Think about the size of images and their location.</p>
 <div class="infobox program">
-<p>Put your code into <em>exercise08.py</em>.</p>
+<p>Put your updated code into <em>exercise07.py</em>.</p>
 </div>
 </div>
-<div id="degrees-of-visual-angle" class="section level3" number="8.5.4">
-<h3><span class="header-section-number">8.5.4</span> Degrees of visual angle</h3>
-<p>Unlike the three units above, these require you knowing a physical size of the screen, its resolution, and your viewing distance (how far your eyes are away from the screen). They are <em>the</em> measurement units used in visual psychophysics as they describe stimulus size as it appears on the retina (see <a href="https://en.wikipedia.org/wiki/Visual_angle">Wikipedia</a> for details). Thus, these are the units you want to use when running an actual experiment in the lab but for our purposes we will stick to one of the three units systems above.</p>
-</div>
-<div id="centimeters-on-screen" class="section level3" number="8.5.5">
-<h3><span class="header-section-number">8.5.5</span> Centimeters on screen</h3>
-<p>Here, you would need know the physical size of your screen and its resolution. These are fairly exotic units for very specific situations<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>.</p>
-</div>
-</div>
-<div id="make-your-square-jump" class="section level2" number="8.6">
-<h2><span class="header-section-number">8.6</span> Make your square jump!</h2>
-<p>So far, we fixed the location of the square when we created it. However, you can move it at any time by assigning a new <code>(&lt;x&gt;, &lt;y&gt;)</code> coordinates to its <code>pos</code> property. <em>E.g.</em>, <code>white_square.pos = (-0.1, 0.2)</code>. Let us experiment by moving the square to a random location on every iteration of the loop (this could cause a lot of flashing, so if you have a photosensitive epilepsy that can be triggered by flashing lights, you probably should do it just once before the loop). Use the units of your choice (I would recommend <code>"norm"</code>) and generate a new position using <a href="https://docs.python.org/3/library/random.html#random.uniform">random.uniform(a, b)</a> function, that generates a random value within <em>a..b</em> range. You need to generate two values (one for x, one for y) and your range is the same for <code>"norm"</code> units (from -1 to 1) but is different (and depends on the aspect ratio) for <code>"height"</code> units.</p>
-<div class="sourceCode" id="cb104"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb104-1"><a href="seminar08.html#cb104-1" aria-hidden="true" tabindex="-1"></a>importing libraries, now also the random library</span>
-<span id="cb104-2"><a href="seminar08.html#cb104-2" aria-hidden="true" tabindex="-1"></a><span class="bu">open</span> the window</span>
-<span id="cb104-3"><a href="seminar08.html#cb104-3" aria-hidden="true" tabindex="-1"></a>create white_square here</span>
-<span id="cb104-4"><a href="seminar08.html#cb104-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb104-5"><a href="seminar08.html#cb104-5" aria-hidden="true" tabindex="-1"></a>gameover <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb104-6"><a href="seminar08.html#cb104-6" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="kw">not</span> gameover:</span>
-<span id="cb104-7"><a href="seminar08.html#cb104-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">--&gt;</span> move the square to a random position <span class="op">&lt;--</span></span>
-<span id="cb104-8"><a href="seminar08.html#cb104-8" aria-hidden="true" tabindex="-1"></a>    draw white_square <span class="kw">and</span> flip the window here</span>
-<span id="cb104-9"><a href="seminar08.html#cb104-9" aria-hidden="true" tabindex="-1"></a>    check keyboard <span class="cf">for</span> escape button press</span>
-<span id="cb104-10"><a href="seminar08.html#cb104-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb104-11"><a href="seminar08.html#cb104-11" aria-hidden="true" tabindex="-1"></a>close the window</span></code></pre></div>
+<div id="bells-and-whistles-difficulty" class="section level2" number="14.9">
+<h2><span class="header-section-number">14.9</span> Bells and whistles: difficulty</h2>
+<p>At the moment, the difficulty of the game, the speed with which the snake moves, is fixed and the player has no way of choosing it. Let us create dialog that appears <em>before</em> we create the window and start the game that will allow the player to choose between <em>easy</em>, <em>normal</em>, and <em>difficult</em><a href="#fn24" class="footnote-ref" id="fnref24"><sup>24</sup></a>. I leave it up to you to decide which snake speeds correspond to each difficulty (and you can have more than three options, if you want).</p>
+<p>To create and run the dialog, use <a href="https://www.psychopy.org/api/gui.html#dlg">Dlg</a> class from
+<a href="https://www.psychopy.org/api/gui.html">giu</a> module of PsychoPy. Your challenge for today is to figure out how to use it based on the manual along. Take a look at the example and experiment with in a separate file.</p>
 <div class="infobox program">
-<p>Put your code into <em>exercise09.py</em>.</p>
+<p>Put your updated code into <em>exercise08.py</em>.</p>
 </div>
 </div>
-<div id="make-the-square-jump-on-your-command" class="section level2" number="8.7">
-<h2><span class="header-section-number">8.7</span> Make the square jump on your command!</h2>
-<p>This was very flashy, so let us make the square jump only when you press <em>Space</em> button. For this, we need to expand the code that processes keyboard input. So far, we restricted it to just “escape” button and checked whether any (hence, “escape”) button was pressed. In my case, the code looks like that</p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb105-1"><a href="seminar08.html#cb105-1" aria-hidden="true" tabindex="-1"></a>gameover <span class="op">=</span> event.getKeys(keyList<span class="op">=</span>[<span class="st">&#39;escape&#39;</span>])</span></code></pre></div>
-<p>But I could have written it as</p>
-<div class="sourceCode" id="cb106"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb106-1"><a href="seminar08.html#cb106-1" aria-hidden="true" tabindex="-1"></a>keys_pressed <span class="op">=</span> event.getKeys(keyList<span class="op">=</span>[<span class="st">&#39;escape&#39;</span>])</span>
-<span id="cb106-2"><a href="seminar08.html#cb106-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> keys_pressed <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb106-3"><a href="seminar08.html#cb106-3" aria-hidden="true" tabindex="-1"></a>    game_over <span class="op">=</span> <span class="va">True</span></span></code></pre></div>
-<p>Let us use the <em>second</em> version, where we explicitly store the output of <code>event.getKeys()</code> function in <code>keys_pressed</code>. First, you need to add <code>"space"</code> to the <code>keyList</code> parameter. Second, because <code>event.getKeys()</code> function returns a <strong>list</strong> of keys that were pressed, we need to loop over that list (which in most cases will contain no or just one element) and use conditional statements inside that loop to make the square jump or to exit the program.</p>
-<p>Use for <code>for</code> loop to loop over the elements of the list. Note that no iterations will occur if the list is empty, you can test this in a Jupyter cell:</p>
-<div class="sourceCode" id="cb107"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb107-1"><a href="seminar08.html#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> []:</span>
-<span id="cb107-2"><a href="seminar08.html#cb107-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;No one will ever see me...&quot;</span>)</span></code></pre></div>
-<p>When you loop over <code>keys_pressed</code>, your current loop variable value will be the string with the name of the button pressed (so, either <code>"escape"</code> or <code>"space"</code>). Now, you need to use conditional statements, so that the square jumps if the key was <code>"space"</code> and game is over if the key was <code>"escape"</code>. You code should look roughly like that</p>
-<div class="sourceCode" id="cb108"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb108-1"><a href="seminar08.html#cb108-1" aria-hidden="true" tabindex="-1"></a>importing libraries, now also the random library</span>
-<span id="cb108-2"><a href="seminar08.html#cb108-2" aria-hidden="true" tabindex="-1"></a><span class="bu">open</span> the window</span>
-<span id="cb108-3"><a href="seminar08.html#cb108-3" aria-hidden="true" tabindex="-1"></a>create white_square</span>
-<span id="cb108-4"><a href="seminar08.html#cb108-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-5"><a href="seminar08.html#cb108-5" aria-hidden="true" tabindex="-1"></a>gameover <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb108-6"><a href="seminar08.html#cb108-6" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="kw">not</span> gameover:</span>
-<span id="cb108-7"><a href="seminar08.html#cb108-7" aria-hidden="true" tabindex="-1"></a>    draw white_square <span class="kw">and</span> flip the window here</span>
-<span id="cb108-8"><a href="seminar08.html#cb108-8" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb108-9"><a href="seminar08.html#cb108-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ----- New code -----</span></span>
-<span id="cb108-10"><a href="seminar08.html#cb108-10" aria-hidden="true" tabindex="-1"></a>    keys_pressed <span class="op">=</span> event.getKeys(keyList<span class="op">=</span>[<span class="st">&#39;escape&#39;</span>, <span class="st">&#39;space&#39;</span>])</span>
-<span id="cb108-11"><a href="seminar08.html#cb108-11" aria-hidden="true" tabindex="-1"></a>    loop over keys_pressed:</span>
-<span id="cb108-12"><a href="seminar08.html#cb108-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> participant pressed space key:</span>
-<span id="cb108-13"><a href="seminar08.html#cb108-13" aria-hidden="true" tabindex="-1"></a>            move the square to a random location</span>
-<span id="cb108-14"><a href="seminar08.html#cb108-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> participant pressed escape key:</span>
-<span id="cb108-15"><a href="seminar08.html#cb108-15" aria-hidden="true" tabindex="-1"></a>            <span class="bu">set</span> gameover to <span class="va">False</span></span>
-<span id="cb108-16"><a href="seminar08.html#cb108-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ----- End of new code -----</span></span>
-<span id="cb108-17"><a href="seminar08.html#cb108-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-18"><a href="seminar08.html#cb108-18" aria-hidden="true" tabindex="-1"></a>close the window</span></code></pre></div>
+<div id="bells-and-whistles-sounds" class="section level2" number="14.10">
+<h2><span class="header-section-number">14.10</span> Bells and whistles: sounds</h2>
+<p>Download <a href="material/game-over-arcade.wav">game-over-arcade.wav</a><a href="#fn25" class="footnote-ref" id="fnref25"><sup>25</sup></a> and <a href="material%20/8-bit-game-over-sound.wav">8-bit-game-over-sound.wav</a><a href="#fn26" class="footnote-ref" id="fnref26"><sup>26</sup></a>. Use the former whenever the snake dies and use the latter when the player runs out of lives. You will need to use <a href="https://www.psychopy.org/api/sound.html#sound">Sound</a> class from <a href="https://www.psychopy.org/api/sound.html">sound</a> module of PsychoPy.</p>
 <div class="infobox program">
-<p>Put your code into <em>exercise10.py</em>.</p>
+<p>Put your updated code into <em>exercise09.py</em>.</p>
 </div>
 </div>
-<div id="i-like-to-move-it-move-it" class="section level2" number="8.8">
-<h2><span class="header-section-number">8.8</span> I like to move it, move it!</h2>
-<p>Let us exert more control over our rectangle by moving it around using arrow buttons (<code>"up"</code>, <code>"down"</code>, <code>"left"</code>, and <code>"right"</code> in PsychoPy). Add these keys to the <code>keyList</code> parameter of the <code>event.getKeys()</code> call and add more conditional statements when processing the pressed key. In PsychoPy you can change position by adding to it via <code>+=</code> or <code>-=</code> operations (other operations are also supported, see <a href="https://psychopy.org/coder/codeStimuli.html#attrib-operations">manual</a>). Thus, you can move your square to the right by 0.1 units (whatever they are) by writing <code>white_square.pos += (0.1, 0)</code>. Please note that you <strong>cannot</strong> write <code>white_square.pos = white_square.pos + (0.1, 0)</code>!</p>
-<p>Expand your code, so you move the rectangle around by 0.05 units in the direction of the key pressed.</p>
+<div id="bells-and-whistles-blinking-game-over-message" class="section level2" number="14.11">
+<h2><span class="header-section-number">14.11</span> Bells and whistles: blinking game over message</h2>
+<p>Once the game is over, show a blinking “Game Over” message <em>superimposed</em> over the final static game screen. Thus, you need to draw all the game objects and messages (but without moving the snake) plus you show a text message that is on for 0.5 second and off for 0.5 seconds until the player presses <em>Space</em> button. Hint, it should be a separate loop after the main game loop over rounds and clock/timers have definitely something to do with it.</p>
 <div class="infobox program">
-<p>Put your code into <em>exercise11.py</em>.</p>
+<p>Put your updated code into <em>exercise10.py</em>.</p>
 </div>
-<p>When we continue, we will expand on this to build a Memory game. In the meantime, experiment with stimuli (you can have a circle or a line rather than a square). Try showing more than one stimulus (<em>e.g.</em>, add back the “press escape to exit” message), etc.</p>
+</div>
+<div id="next-stop-classes-and-objects" class="section level2" number="14.12">
+<h2><span class="header-section-number">14.12</span> Next stop: classes and objects</h2>
+<p>Nice game! Next time you will learn about classes and objects and you will rewrite the Snake Game using them. This way, we can concentrate on figuring out classes, as you already know how the game works.</p>
 
 </div>
 </div>
 <div class="footnotes">
 <hr />
-<ol start="3">
-<li id="fn3"><p>You can “Save as…” the previous exercise to avoid copy-pasting things by hand.<a href="seminar08.html#fnref3" class="footnote-back">↩︎</a></p></li>
-<li id="fn4"><p>so specific that I can’t think of one, to be honest.<a href="seminar08.html#fnref4" class="footnote-back">↩︎</a></p></li>
+<ol start="22">
+<li id="fn22"><p>Why at least five? Draw it on the grid and figure out whether it can do so with four.<a href="seminar-02-02.html#fnref22" class="footnote-back">↩︎</a></p></li>
+<li id="fn23"><p>This image was downloaded from <a href="https://openclipart.org/">openclipart.org</a> and was created by <a href="https://openclipart.org/artist/cliparteles">cliparteles</a><a href="seminar-02-02.html#fnref23" class="footnote-back">↩︎</a></p></li>
+<li id="fn24"><p>Or, if you played Doom, between <em>I’m Too Young To Die</em>, <em>Hey, Not Too Rough</em>, <em>Hurt Me Plenty</em>, <em>Ultra-Violence</em>, and <em>Nightmare</em>.<a href="seminar-02-02.html#fnref24" class="footnote-back">↩︎</a></p></li>
+<li id="fn25"><p>Downloaded from <a href="https://freesound.org/">freesound.org</a> and created by <a href="https://freesound.org/people/myfox14/">myfox14</a><a href="seminar-02-02.html#fnref25" class="footnote-back">↩︎</a></p></li>
+<li id="fn26"><p>Also downloaded from <a href="https://freesound.org/">freesound.org</a> and created by <a href="https://freesound.org/people/EVRetro/">EVRetro</a><a href="seminar-02-02.html#fnref26" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -632,8 +538,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="seminar07.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="seminar09.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="seminar-02-01.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="seminar-02-03.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

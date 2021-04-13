@@ -117,7 +117,7 @@
 
 \title{Python for social and experimental psychology}
 \author{Alexander (Sasha) Pastukhov}
-\date{2021-02-03}
+\date{2021-04-13}
 
 \begin{document}
 \maketitle
@@ -3341,7 +3341,7 @@ Put your code into \emph{exercise06.py}.
 \hypertarget{random-order}{%
 \section{Random order}\label{random-order}}
 
-Randomize order of conditons before the main loop.
+Randomize order of conditions before the main loop.
 
 Put your code into \emph{exercise07.py}.
 
@@ -3358,6 +3358,1156 @@ Put your code into \emph{exercise08.py}.
 \section{We want more!}\label{we-want-more}}
 
 Now you have a real working experiment with randomized condition order, logging, feedback, etc. Think about how you can improve it further. Instructions? More/less feedback?
+
+\hypertarget{the-skill-of-programming}{%
+\chapter{The skill of programming}\label{the-skill-of-programming}}
+
+\hypertarget{writing-the-code}{%
+\section{Writing the code}\label{writing-the-code}}
+
+Programming is not about writing code that works. That, obviously, must be true but it is only the minimal requirement. Programming is about writing a clear easy-to-read code that others and, perhaps even more importantly, you-two-weeks later can understand. Below are several suggestions on how you can improve your code.
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Use a linter.} In VS Code, press \emph{Ctrl + Shift + P} and start typing \texttt{Python:\ Select\ linter}. You will be offered a number of choices, pick \emph{pylint} (that's the one I use) or \emph{flake8} (it is more strict). VS Code will offer you to install the actual linter package, if it is missing. Then, the linter will analyze your code after every save and highlight issues it finds: spaces where should be none, no spaces where should be some, wrong names, trailing spaces, overly long lines, etc. Try to address all the problems as it will make you code look consisten, ``standard'', and, therefore, readable. However, use your better judgment because sometimes longer-than-linter-likes line is more readable than two shorter ones. Similarly, a ``bad'' variable name by linter standards can be a meaningful name for a psychologist. Remember, your code is for people, not for the linter.
+\item
+  \textbf{Document your code.} Every time you create a new function: document it. New class: document it. New constant: unless it is super clear from the name alone, document it. First, VS Code is smart enough to parse Numpy docstring on the fly, so it will show this help to you whenever you use your own functions. Second, it forces you to think and formulate (in human language!) what the function is doing, what type the arguments are, what is the range of valid values, what are the defaults, what should it return, etc. More often than not, you will realize that you have overlook some important detail that is not apparent from the code itself.
+\item
+  \textbf{Add some air.} Separate chunks of code with some empty lines. Think paragraphs in the normal text, you wouldn't your book to be a single paragraph nightmare? Put a comment before each chunk that explains what it does but not \emph{how} it does it. E.g., in our typical PsychoPy-based game there is a point when we draw all stimuli and flip the window buffers. That is a nice self-contained chunk that can be described as \texttt{\#\ drawing\ all\ stimuli}. The code provides details on what exactly is drawn, what is the drawing order, etc. But that single comment will help you understand what this chunk is about and whether it is relevant for you at the moment. Same goes for \texttt{\#\ processing\ key\ presses} or \texttt{\#\ checking\ gameover\ conditions}, etc. But be careful and make sure that the comment describes the code correctly. E.g., if the comment says \texttt{\#\ drawing\ all\ stimuli} where should be no stimuli-drawing code anywhere else!
+\item
+  \textbf{Write your code one teeny-tiny step a time.} Your motto should be ``Slow but steady''. This is the way I guide you through the assignments. Start with a something simple like a static rectangle or image. Make sure it works. Add a minor functionality (change in color, position, another rectangle, storing it as an attribute, etc.). Make sure it works. Never go to the next step unless you fully understand what your current code is doing and you are 100\% certain that it behaves as it should. This tortoise-speed approach may feel silly and overly slow but it is still faster than writing a large chunk of code and then trying to make sure that it all works. It is much easier to solve simple problems one at a time than a lot of them simultaneously.
+\end{itemize}
+
+Unfortunately, these tricks won't work it you do not use them! So you should \emph{always} use them and they should become your \emph{good habits}, like using a seat belt. It does nothing on most (hopefully, all) days but you wear it because it might suddenly become extremely useful and you can never be sure when this will happen. Same with coding. Quite often you will be tempted to write ``quick-n-dirty'' code because this is just a ``simple test'', temporary solution, a prototype, pilot experiment, etc. But, as they say in Russia ``There is nothing more permanent than a temporary solution'', and you may find that your toy code grew into a full blown experiment and it is a mess. Or you want to come back to that pilot experiment but realize that it is easier to start from scratch than to understand how that monster works\footnote{Happened to me more often than I dare to admit.}. Thus, resist the temptation! Form the good habits and you future-you will be very grateful!
+
+\hypertarget{reading-the-code}{%
+\section{Reading the code}\label{reading-the-code}}
+
+My experience with programming in general and on this seminar in particular is that most problems you get stuck with are simple (to be point of being dumb) and obvious in retrospect\footnote{Hindsight is always 20/20!}. Unfortunately, this knowledge is of little comfort while you are trying to figure out why the bloody thing does not work! Here are several suggestions that could help you to resolve them faster.
+
+\begin{itemize}
+\item
+  \textbf{Think like a computer.} Read the code line-by-line and ``execute'' it the way the compute would. Use pen-and-paper to keep the track of variables. Trace which chunks of code can be reached when. Slow yourself down and make sure you understand each line and are able to keep track of the variables. Once you do that it will be easy to spot a mistake.
+\item
+  \textbf{Pretend that you've never seen this code in your life.} Assume that you have no idea what it is doing. Quite often you \emph{literally} do not see a mistake because your brain fills-in details and bends the reality to match your expectations. You \emph{know} what this chunk of code should be doing, so instead of reading it you skim through it and, unless it looks obviously terribly wrong, assume that it does what it should. This is not just programming-specific thing but a general feature of our perception. If you ever proof-read your writing for typos, you know how mind-boggling difficult it is to spot them\footnote{Advice, read each paragraph backwards: Last sentence, penultimate sentence, etc. This breaks the flow of the text and helps you concentrate on words rather than on the meaning and the story.}! Turning your expectations off is hard but is immensely helpful.
+\item
+  \textbf{Use the debugger.} Put breakpoints and execute the code step-by-step. Check values of variables using ``Watch'' tab. Use debug console to check whether functions return the results that they should. For complex conditions or mathematical formulas, split them into small bits, copy and execute these bits in the debug console and check whether numbers add up. Make sure that a code chunk checks out and then proceed to analyze the next one. Debugging is particularly helpful to identify the code that is not reached or reached at the wrong moment.
+\end{itemize}
+
+\hypertarget{zen-of-python}{%
+\section{Zen of Python}\label{zen-of-python}}
+
+I also found \href{https://www.python.org/dev/peps/pep-0020/}{Zen of Python} to be good inspiration on how to approach programming.
+
+\hypertarget{seminar-02-01}{%
+\chapter{Snake game}\label{seminar-02-01}}
+
+Welcome back! The purpose of today's seminar to refresh your knowledge of Python acquired previously. We will use dictionaries and lists, as well as conditional statements and loops. Plus, you will need to write functions.\footnote{Sneaky preview: You will start learning about object-oriented programming during our next seminar and we will turn it into object-based game.}
+
+\hypertarget{assignments}{%
+\section{Assignments}\label{assignments}}
+
+For this and following projects, use Python IDE of your choice (I would recommend \protect\hyperlink{install-vs-code}{Visual Studio Code}). You still could and should use Jupyter for playing with and testing small code snippets, though. I've added a section on setting up \protect\hyperlink{debug-in-vs-code}{debugging in VS Code} in \protect\hyperlink{getting-started}{Getting Started}, take a look once you are ready to run the code.
+
+From now on, create a separate subfolder for each seminar (e.g.~\emph{Seminar 01} for today) and create a separate file (or files, later on) for each exercise\footnote{You can ``Save as\ldots{}'' the previous exercise to avoid copy-pasting things by hand.} (e.g., \emph{exercise01.py}, \emph{exercise02.py}, etc.). This is not the most efficient implementation of a version control and will certainly clutter the folder. But it would allow me to see your solutions on every step, which will make it easier for me to comment on them. For submitting the assignment, just zip the folder and upload the zip-file.
+
+\hypertarget{snake-game-an-overview}{%
+\section{Snake game: an overview}\label{snake-game-an-overview}}
+
+Today, we will program a good old classic: the snake game! The story is simple: you control a snake trying to eat as many apples as you can. Every time you consume an apple, snake's length increases. However, if you hit the wall or bite yourself, the game is over (or you lose one of your lives and game is over once you run out of lives).
+
+Here is how the final product will look like.
+
+As before, we will program the game step by step, starting with an empty gray PsychoPy window. Here is the general outline of how we will proceed:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Create boilerplate code to initialize PsychoPy.
+\item
+  Figure out how to place a square. We need this because our snake is made of square segments and lives on a rectangular grid made of squares.
+\item
+  Create a single segment stationary snake\footnote{Not very exciting, I know. But one has to start somewhere!}.
+\item
+  Make the snake move assuming a rectangular grid.
+\item
+  Implement ``died by hitting a wall''.
+\item
+  Add apples and make the snake grow.
+\item
+  Add check for biting itself (and dying).
+\item
+  Add bells-and-whistles to make game look awesome.
+\end{enumerate}
+
+As you can see, each new step builds on the previous one. Because of that, remember, do not proceed to the next step until the current one works and you fully(!) understand what each line of code does. Any leftover uncertainty will linger, grow and complicate your life disproportionately!
+
+\hypertarget{initializing-psychopy}{%
+\section{Initializing PsychoPy}\label{initializing-psychopy}}
+
+To remind yourself on how you initialize PsychoPy window, see \protect\hyperlink{seminar08}{here}. Let us plan ahead and decide on windows size and its units. Recall that PsychoPy has \protect\hyperlink{psychopy-units}{five different units} for size and position. Given that our snake will be composed of square segments and move on a grid made out of squares, which units should we pick? Read on \protect\hyperlink{psychopy-units}{units} and think which units you would pick before continuing
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+My suggestion would be \texttt{"norm"} units as they make sizing squares easy, as long as we use a suitable aspect ratio. Thus, let us think about the grid. We can define its width and height in \emph{squares}, e.g., a 30 × 20 grid should give us enough space to try things out but we can always increase the resolution of the game later. Create a \href{}{constant} \texttt{GRID\_SIZE} and assign a \href{https://docs.python.org/3/tutorial/datastructures.html\#tuples-and-sequences}{tuple} of \texttt{(width,\ height)} to it. Note that window's aspect ratio will depend on the size of the grid that we pick. If you want to have a square window, use a 30 × 30 grid.
+
+We also need to define an \emph{absolute} size of a square in pixels (call the constant \texttt{SQUARE\_SIZE\_PIX}), which will determine how large each square will look on the screen and, therefore, will determine the absolute size of the window: \(window~height = window~height~in~squares * square~size~in~pixels\) (same goes for the width). Note that this parameter determines how the game looks, double the size of the square in pixels and that will double both width and height of the window.
+
+Put it all together. You could should look roughly as follows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# import all libraries and modules you need}
+
+\CommentTok{\# define constants GRID\_SIZE and SQUARE\_SIZE\_PIX}
+
+\CommentTok{\# create PsychoPy window, computing it size in pixels from the two constants}
+
+\CommentTok{\# wait for any key press (just so that window stays on the screen)}
+
+\CommentTok{\# close PsychoPy window}
+\end{Highlighting}
+\end{Shaded}
+
+Experiment with different grid and square sizes and pick the one that fits your screen.
+
+Put your code into \emph{exercise01.py}.
+
+\hypertarget{adding-a-square}{%
+\section{Adding a square}\label{adding-a-square}}
+
+As I already wrote, our game will be made of squares. Snake is made of squares. Grid it lives on is made of squares. An apple is a square. Which means we need to know the size of that square in the units of the window and we need to know \emph{where} should each square go in the window, based on its coordinates on the grid.
+
+Computing the size of the square in units of window size is easy, so let us start with it first. If you used \texttt{"norm"} units for the PsychoPy window, we know that both its width and its height go from -1 (bottom) to 1 (top). We also know that we have to fit in \texttt{GRID\_SIZE{[}0{]}} squares horizontally and \texttt{GRID\_SIZE{[}1{]}} vertically (recall that \texttt{GRID\_SIZE} defines the size of our grid in number of squares). Create a new constant \texttt{SQUARE\_SIZE} that is a \emph{tuple} and compute square size in units of \texttt{"norm"} based on total width/height of the window in the \texttt{"norm"} units (not the pixels!) and number of squares we need to fit in horizontally/vertically.
+
+Next, let us create a function that maps a position on the grid to a position in the window. This way, we can think about position of the snake or apples in terms of the grid but draw them in the window coordinates. Create a new file \emph{utilities.py} and create a function \texttt{map\_grid\_to\_win()} that takes a tuple of integers \texttt{(x\_index,\ y\_index)} with grid position (I called this argument \texttt{ipos}) plus a second parameter with a square size (that we just computed) and returns a tuple of floats \texttt{(x\_pos,\ y\_pos)} with the coordinates of the \emph{center} of the square in \emph{window} coordinates. Take a look at the drawing below to see the logic of the computation. The red text show location of red points in \emph{window norm} units, whereas the black font shows location of a square in \emph{grid index} units. Note that you need to compute where the \emph{center} of the square should go.
+
+\includegraphics[width=14.74in]{images/snake-grid}
+
+I suggest using Jupyter notebook to create and debug this function and then copying it into \emph{utilities.py}. Remember to document the function following \href{https://numpydoc.readthedocs.io/en/latest/format.html}{NumPy docstring format}.
+
+Put function map\_grid\_to\_win into \emph{utilities.py}.
+
+Now, test this function by creating a square (you remember which constant defines its size, right?) and placing it at different locations of the grid. Check \protect\hyperlink{seminar08-add-square}{here}, if you forgot how to create squares in PsychoPy. Run the code several times, using different grid indexes or adding several squares to check that it work as intended. Your code should look roughly as follows
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# import all libraries and modules you need}
+
+\CommentTok{\# import map\_grid\_to\_win function from utilities.py file}
+
+\CommentTok{\# define constants GRID\_SIZE and SQUARE\_SIZE\_PIX}
+\CommentTok{\# compute SQUARE\_SIZE constant}
+
+\CommentTok{\# create PsychoPy window, computing it size in pixels from the two constants}
+
+\CommentTok{\# create a square (Rect stimulus) with size of SQUARE\_SIZE and position computed}
+\CommentTok{\#   via grid\_to\_win function from a pair of grid coordinates}
+
+\CommentTok{\# draw square and flip the window}
+
+\CommentTok{\# wait for any key press (just so that window stays on the screen)}
+
+\CommentTok{\# close PsychoPy window}
+\end{Highlighting}
+\end{Shaded}
+
+Put your code into \emph{exercise02.py}.
+
+\hypertarget{adding-the-snake}{%
+\section{Adding the snake}\label{adding-the-snake}}
+
+Now, let us think about how can we represent a snake. It consist of one or more segments. The first one is its head, while the last one is its tail\footnote{A single segment snake is a special case, as its head is also its tail!}. Thus, we can think about it as a \href{https://docs.python.org/3/tutorial/datastructures.html\#more-on-lists}{list} of individual segments.
+
+Now let us consider an individual segment. We need to 1) keep track of its location in \emph{grid} coordinate system and 2) have its visual representation --- a square, just like the one you create during the previous exercise --- positioned in \emph{window} coordinate system. Good news is, you already have a function that maps the former on the latter, so as long as you know where the segment is on the grid, placing its square within the window is easy. As each segment has \emph{two} pieces of information associated with it, it makes sense to represent it as a \href{https://docs.python.org/3/tutorial/datastructures.html\#dictionaries}{dictionary} with two keys: \texttt{"pos"} (tuple of x and y in grid coordinates) and \texttt{"visuals"} (the square).
+
+To keep code nicely compartmentalized and isolated, add a new function to \emph{utilities.py} called \texttt{create\_snake\_segment}. It should take three arguments:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  a variable with PsychoPy window, which you need to create an square visual.
+\item
+  a tuple \texttt{(x,\ y)} with segment position within the grid.
+\item
+  a square size, which you need for \texttt{map\_grid\_to\_win} function.
+\end{enumerate}
+
+It should return a dictionary with \texttt{"pos"} and \texttt{"visuals"} field, as we agreed upon above.
+
+In the main code, create a variable \texttt{snake} that is a list with a single segment in the center of the screen (you need to compute it from \texttt{GRID\_SIZE} using floor division operator \href{https://python-reference.readthedocs.io/en/latest/docs/operators/floor_division.html}{//}). Instead of drawing a single square one call at a time, as in the previous exercise, you will need to draw all segments of the snake using a \emph{for} loop\footnote{You don't \emph{really} need it for a single segment snake we have now but there is no other way to do it later, so let us do it properly from the start}. Here is the outline:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# import all libraries and modules you need}
+
+\CommentTok{\# import map\_grid\_to\_win and create\_snake\_segment functions from utilities.py file}
+
+\CommentTok{\# define constants GRID\_SIZE and SQUARE\_SIZE\_PIX}
+\CommentTok{\# compute SQUARE\_SIZE constant}
+
+\CommentTok{\# create PsychoPy window, computing it size in pixels from the two constants}
+
+\CommentTok{\# create the snake variable as a list with a single segment at the center of the screen }
+
+
+\CommentTok{\# draw all snake segments using for loop  }
+\CommentTok{\# flip the window}
+
+\CommentTok{\# wait for any key press (just so that window stays on the screen)}
+
+\CommentTok{\# close PsychoPy window}
+\end{Highlighting}
+\end{Shaded}
+
+Put function \emph{create\_snake\_segment} into \emph{utilities.py} and your modified code into \emph{exercise03.py}.
+
+\hypertarget{adding-main-game-loop}{%
+\section{Adding main game loop}\label{adding-main-game-loop}}
+
+Our current game is not \emph{very} dynamic: it draws the (very small) snake once and waits for a key press before closing the window. Let us add the necessary scaffolding of a main game loop. The game should run \href{https://docs.python.org/3/reference/compound_stmts.html\#the-while-statement}{while} variable \texttt{gameover} is \texttt{False}. Inside the main loop, on each iteration you should draw the snake (and flip the window after that) and check whether participant press \texttt{"escape"} key via \href{https://www.psychopy.org/api/event.html\#psychopy.event.getKeys}{event.getKeys()}. If they did, \texttt{gameover} should become \texttt{True}.
+
+The code outline is
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# import all libraries and modules you need}
+
+\CommentTok{\# import map\_grid\_to\_win and create\_snake\_segment functions from utilities.py file}
+
+\CommentTok{\# define constants GRID\_SIZE and SQUARE\_SIZE\_PIX}
+\CommentTok{\# compute SQUARE\_SIZE constant}
+
+\CommentTok{\# create PsychoPy window, computing it size in pixels from the two constants}
+
+\CommentTok{\# create the snake variable as a list with a single segment at the center of the screen }
+
+\CommentTok{\# set gameover to False}
+
+\CommentTok{\# while not gameover:}
+\CommentTok{\#     draw all snake segments using for loop  }
+\CommentTok{\#     flip the window}
+
+\CommentTok{\#     if escape key was pressed:}
+\CommentTok{\#         set gameover to True}
+
+\CommentTok{\# close PsychoPy window}
+\end{Highlighting}
+\end{Shaded}
+
+Put your code into \emph{exercise04.py}.
+
+\hypertarget{get-a-move-on}{%
+\section{Get a move on!}\label{get-a-move-on}}
+
+Now we need to understand how we will move the snake given that it consist of many segments. Assume that we have a four segment snake that moves up, as in the picture below.
+
+\includegraphics[width=14.36in]{images/snake-movement}
+
+Technically, we need to move each segment to a new position. The very first ``head'' segment moves to the position above the snake. The second segment moves to where the head was before. The third moves into the previous position of the forth one, etc. We \emph{can} implement movement like that but instead we will utilize the fact that, unless colored as in the figure above, all segments look identical. Look at the uniformly colored snake below. We can ``move'' it by adding a new segment at a new location (growing a new head at the bity end of the snake, marked as red) and clipping off the last tail segment (marked by the cross), so that the previously penultimate segment becomes the tail. The rest can stay where they are, saving us a lot of hustle when the snake is long!
+
+\includegraphics[width=14.36in]{images/snake-movement-2}
+
+In the program, we \href{https://docs.python.org/3/tutorial/datastructures.html\#more-on-lists}{list.insert(index, value)}\footnote{We could also have used \texttt{dqueue} class from \emph{collections} library instead of the \texttt{list}. It is, essentially, a list that allows appending and poping from the left as well.} the new head segment at index 0 and we remove the tail via \href{https://docs.python.org/3/tutorial/datastructures.html\#more-on-lists}{list.pop()}.
+
+To keep things neat and tidy, we will implement two functions: \texttt{grow\_snake()} and \texttt{trim\_snake()}. Why not combine both actions into a single function? Strategic thinking! Once we add apples to the game, the snake will grow after consuming them by not shedding the tail. Thus, separating these two functions now will simplify our lives later on\footnote{To be honest, I have initially implemented it as a single \texttt{move\_snake()} function , wrote things up to eating apples, realized the problem, returned and rewrote the notes. So, it is a hindsight type of strategic thinking.}.
+
+The \texttt{grow\_snake()} function should take the following parameters:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  parameter for the snake itself, which we will modify. To minimize the potential confusion, do not call it \texttt{snake} but something (slightly) different, e.g., \texttt{the\_snake}. This way it will be easier to remember that this is a parameter, not the global vairable.
+\item
+  a variable with PsychoPy window, which you need to create a new head segment.
+\item
+  a tuple \texttt{(x,\ y)} with \emph{direction of movement} (call it \texttt{dxy} for change in xy coordinates). I.e., it will be \texttt{(-1,\ 0)} for leftward moving snake, \texttt{(1,\ 0)} for right moving, \texttt{(-1,\ 0)} for up, and \texttt{(1,\ 0)} for down.
+\item
+  a square size, which you need for \texttt{create\_snake\_segment} function.
+\end{enumerate}
+
+Inside the function, you compute the coordinates for the new head segment based on the position of the current head (the very first element of the snake) and the direction of motion, (the third parameter \texttt{dxy},) create a new snake segment at that location (you wrote a function for that!) and insert it before all other elements.
+
+Somewhat counterintuitively, this function does not need to return anything because the snake, which we are passing to it as a first parameter, is a \emph{mutable} list. Therefore, it is passed \emph{by reference} and any changes that we apply to it inside the function will affect the global variable itself\footnote{Re-read about \protect\hyperlink{mutable-objects}{mutable objects}, if you forgot how it works.}.
+
+The \texttt{trim\_snake()} function is even simpler as it takes the snake as the only parameter and trims its tail. Again, because the snake is a mutable list, you do not need to return anything.
+
+To test these functions, let us create a three-segment long snake at location \texttt{(10,9)}, \texttt{(11,\ 9)}, and \texttt{(12,\ 9)} and move it (grow, then trim) upwards every time the player presses \texttt{"space"} button. This does not look like a real game but will make it easier to debug, as you can put a break-point to check computation step-by-step. Also note that, eventually, the snake will crawl out of the window but we will worry about this later. Here is the code outline:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# import all libraries and modules you need}
+
+\CommentTok{\# import all functions you need from from utilities.py file}
+
+\CommentTok{\# define constants GRID\_SIZE and SQUARE\_SIZE\_PIX}
+\CommentTok{\# compute SQUARE\_SIZE constant}
+
+\CommentTok{\# create PsychoPy window, computing it size in pixels from the two constants}
+
+\CommentTok{\# create the snake variable as a list with three segments}
+
+\CommentTok{\# set gameover to False}
+
+\CommentTok{\# while not gameover:}
+\CommentTok{\#     draw all snake segments using for loop  }
+\CommentTok{\#     flip the window}
+
+\CommentTok{\#     if escape key was pressed:}
+\CommentTok{\#         set gameover to True}
+\CommentTok{\#     else if the key was "space":}
+\CommentTok{\#         move snake up  }
+\CommentTok{\#}
+\CommentTok{\#}
+\CommentTok{\# close PsychoPy window}
+\end{Highlighting}
+\end{Shaded}
+
+Put functions \emph{grow\_snake} and \emph{trim\_snake} into \emph{utilities.py} and your modified code into \emph{exercise05.py}.
+
+\hypertarget{self-motion}{%
+\section{Self-motion}\label{self-motion}}
+
+Our snake should move by itself, not when the player presses \emph{space} button. For this, we can call \texttt{grow\_snake()} and \texttt{trim\_snake()} functions on every iteration of the main game loop. However, by default, when you call \texttt{win.flip()} it will synchronize your loop with the refresh rate of the screen (typically, 60 Hz). This means that we would call these functions 60 times per second or, to put it differently, the snake will move 60 squares per second. This is waaaay too fast, given that our original grid size was just 30×20 squares. To appreciate just how fast this is, remove \texttt{if\ key\ was\ space:...} conditional statement, and call grow/trim snake functions on every iteration and see the snake fly off the screen.
+
+Instead, we should decide on snake's speed, e.g., 4 squares per second, and define it as a new constant \texttt{SNAKE\_SPEED}\footnote{Note that speed does not need to be an integer number of squares per second. It can move at 1.5 squares per second, so 3 squares every two seconds.}. From that we can compute a new constant (\texttt{SNAKE\_TIME\_INTERVAL}) that expresses the time interval between calls of grow/trim functions, so that it is called \texttt{SNAKE\_SPEED} times per second\footnote{Why two constants that express the same information? We could define only the \texttt{SNAKE\_TIME\_INTERVAL} but for a human it makes it harder to understand just how fast the movement will be. In cases like these, I prefer to have two constants, one human-oriented, another computer-oriented. Remember, it is not just about writing a working code, it is about writing a code that is easy for a human to understand.}. For 4 squares/second, that time interval will be 0.25 seconds. Do not hard code it, compute it from \texttt{SNAKE\_SPEED}!
+
+Now, we just need to use a \href{https://www.psychopy.org/api/clock.html\#psychopy.clock.Clock}{clock} or a \href{https://www.psychopy.org/api/clock.html\#psychopy.clock.CountdownTimer}{countdown timer}\footnote{They work the same they, it is just a question of whether you start from zero and check whether time is over \texttt{SNAKE\_TIME\_INTERVAL} (\href{https://www.psychopy.org/api/clock.html\#psychopy.clock.Clock}{clock}) or you start at \texttt{SNAKE\_TIME\_INTERVAL} and check whether the time ran out/is already negative (\href{https://www.psychopy.org/api/clock.html\#psychopy.clock.CountdownTimer}{timer}).} We create it just before the main loop. Inside the loop, we check whether the elapsed time is equal to or greater than \texttt{SNAKE\_TIME\_INTERVAL}. If it is, move the snake and reset the timer. Try setting different speed and see whether the snake moves consistently.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# import all libraries and modules you need}
+
+\CommentTok{\# import all functions you need from from utilities.py file}
+
+\CommentTok{\# define constants GRID\_SIZE and SQUARE\_SIZE\_PIX}
+\CommentTok{\# compute SQUARE\_SIZE constant}
+\CommentTok{\# define SNAKE\_SPEED and compute SNAKE\_TIME\_INTERVAL}
+
+\CommentTok{\# create PsychoPy window, computing it size in pixels from the two constants}
+
+\CommentTok{\# create the snake variable as a list with three segments}
+
+\CommentTok{\# set gameover to False}
+\CommentTok{\# create a clock or a countdown timer}
+\CommentTok{\# while not gameover:}
+\CommentTok{\#     draw all snake segments using for loop  }
+\CommentTok{\#     flip the window}
+
+\CommentTok{\#     if escape key was pressed:}
+\CommentTok{\#         set gameover to True}
+\CommentTok{\#}
+\CommentTok{\#     Check whether elapsed time is greater than SNAKE\_TIME\_INTERVAL, }
+\CommentTok{\#         move snake up and reset clock or countdown timer, if that is the case}
+\CommentTok{\#}
+\CommentTok{\#}
+\CommentTok{\# close PsychoPy window}
+\end{Highlighting}
+\end{Shaded}
+
+Put your code into \emph{exercise06.py}.
+
+\hypertarget{describing-direction-using-words}{%
+\section{Describing direction using words}\label{describing-direction-using-words}}
+
+In our current design, we describe direction as a tuple \texttt{(dx,\ dy)}. Let us change it, so that it is described using words \texttt{"up"}, \texttt{"down"}, \texttt{"left"}, and \texttt{"right"}. This is not strictly necessary but will make our lives somewhat easier later on when we add steering controls. More importantly, it will serve a didactic purpose as well, showing how you can use dictionaries to translate values from one representation to another.
+
+Thus, let us create a new string variable \texttt{direction} and set it to \texttt{"up"} (or any other direction you like). We will keep the \texttt{grow\_snake()} function as is and will translate individual strings to pairs of \texttt{(dx,\ dy)} values. E.g., \texttt{"up"} corresponds to \texttt{(0,\ -1)}, \texttt{"right"} to \texttt{(1,\ 0)}, etc.
+
+We can implement this translation via if-elif conditional statements:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if} \BuiltInTok{dir} \OperatorTok{==} \StringTok{"up"}\NormalTok{:}
+\NormalTok{  dxy }\OperatorTok{=}\NormalTok{ (}\DecValTok{0}\NormalTok{, }\OperatorTok{{-}}\DecValTok{1}\NormalTok{)}
+\ControlFlowTok{elif} \BuiltInTok{dir} \OperatorTok{==} \StringTok{"right"}\NormalTok{:}
+\NormalTok{  dxy }\OperatorTok{=}\NormalTok{ (}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)}
+\NormalTok{  ...}
+\end{Highlighting}
+\end{Shaded}
+
+However, this approach introduces a lot of repetitive code and does not scale particularly well. Instead, we can use a dictionary (let us call it \texttt{DXY} as it is another constant) with \texttt{"up"}, \texttt{"right"}, etc. string as keys and tuples \texttt{(0,\ -1)}, \texttt{(1,\ 0)}, etc. as values. This way, we can use current value of \texttt{dir} variable as a key to get the \texttt{(dx,\ dy)} pair from \texttt{DXY} dictionary. Note that you should do it in the function call, \textbf{do not} create a temporary variable as in the if-elif examples above.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# import all libraries and modules you need}
+
+\CommentTok{\# import all functions you need from from utilities.py file}
+
+\CommentTok{\# define constants GRID\_SIZE and SQUARE\_SIZE\_PIX}
+\CommentTok{\# compute SQUARE\_SIZE constant}
+\CommentTok{\# define SNAKE\_SPEED and compute SNAKE\_TIME\_INTERVAL}
+
+\CommentTok{\# define DXY dictionary with (dx, dy) entries for each "up", "down", "right",}
+\CommentTok{\#     and "left" keys}
+
+\CommentTok{\# create PsychoPy window, computing it size in pixels from the two constants}
+
+\CommentTok{\# create the snake variable as a list with three segments}
+
+\CommentTok{\# initialize direction variable to one of the four directions}
+\CommentTok{\# set gameover to False}
+\CommentTok{\# create a clock or a countdown timer}
+\CommentTok{\# while not gameover:}
+\CommentTok{\#     draw all snake segments using for loop  }
+\CommentTok{\#     flip the window}
+
+\CommentTok{\#     if escape key was pressed:}
+\CommentTok{\#         set gameover to True}
+\CommentTok{\#}
+\CommentTok{\#     Check whether elapsed time is greater than SNAKE\_TIME\_INTERVAL, }
+\CommentTok{\#         move snake translating direction variable into (dx, dy) pair from DXY}
+\CommentTok{\#         reset clock or countdown timer, if that is the case}
+\CommentTok{\#}
+\CommentTok{\#}
+\CommentTok{\# close PsychoPy window}
+\end{Highlighting}
+\end{Shaded}
+
+Put your code into \emph{exercise07.py}.
+
+\hypertarget{it-is-all-about-control}{%
+\section{It is all about control}\label{it-is-all-about-control}}
+
+Playing the game would be more fun, if we could steer the snake! If the player presses \emph{right arrow} key, the snake should turn \emph{clockwise}. Conversely, \emph{left arrow} key, should turn the snake \emph{counterclockwise}. We need to figure out two things. First, how to determine a new direction of motion given the current one and the key that was pressed. Second, we must decide when and how to change the value of \texttt{direction} variable. Let us tackle these problems one at a time.
+
+Determining the new direction of motion is fairly straightforward. If current is \texttt{"up"} and key was \emph{right} (\emph{clockwise} rotation), the new direction should be \texttt{"right"}. If current is \texttt{"down"} and key was \emph{left}, the new direction is again \texttt{"right"}, etc. You could implement it as a bunch of \texttt{if-elif} statements or, better still, use the dictionary look up approach we implemented in the previous exercise. Here, you need a nested dictionary (dictionary inside a dictionary) \texttt{NEW\_DIRECTION{[}key{]}{[}direction{]}}. The first level has two keys \texttt{"left"} and \texttt{"right"} (so, effectively, counterclockwise and clockwise rotation) that selects which translation should be used and the second level is the dictionary that translates current direction into the new direction of motion. E.g., if current direction is \texttt{"down"} and key was \texttt{"right"}, \texttt{NEW\_DIRECTION{[}"right"{]}{[}"down"{]}} should be \texttt{"left"} (rotating clockwise from \texttt{"down"} gets us to \texttt{"left"}). You know how define a simple dictionary. Good news, defining nested dictionaries follows the same rules, so should be straightforward.
+
+Now let us think about when and how should we change value of \texttt{direction} variable. The simplest approach would be to change it as soon as the player presses the key. However, because our snake does not move on every frame this could lead to some odd behavior. Imagine that our game is on ``easy'' mode, so that the snake moves very slowly (one square per second). In this case, the player could easily press \emph{left} twice during that second that would make snake move backwards, because direction was changed by 180°. Snakes, at least our snake, cannot do this. Thus, we need a temporary variable, let us call it \texttt{new\_direction}, which we will set every time the player presses the key but whose value will be transferred to \texttt{direction} only when it is time to move the snake. We will compute it from the current \texttt{direction} and the key pressed. This way, even when the player presses \emph{left} key several times, the snake would still turn only once because we compute the each turn using the same \texttt{direction} value but not the changing \texttt{new\_direction} variable. This also means that players can ``change their mind'', as the last key press before the snake moves will determine the direction of motion.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# import all libraries and modules you need}
+
+\CommentTok{\# import all functions you need from from utilities.py file}
+
+\CommentTok{\# define constants GRID\_SIZE and SQUARE\_SIZE\_PIX}
+\CommentTok{\# compute SQUARE\_SIZE constant}
+\CommentTok{\# define SNAKE\_SPEED and compute SNAKE\_TIME\_INTERVAL}
+
+\CommentTok{\# define DXY dictionary with (dx, dy) entries for each "up", "down", "right",}
+\CommentTok{\#     and "left" keys}
+
+\CommentTok{\# define NEW\_DIRECTION nested dictionary}
+
+\CommentTok{\# create PsychoPy window, computing it size in pixels from the two constants}
+
+\CommentTok{\# create the snake variable as a list with three segments}
+
+\CommentTok{\# initialize direction variable to one of the four directions}
+\CommentTok{\# initialize new\_direction(!!!!) to the same value as direction, why do you need to do this?}
+
+\CommentTok{\# set gameover to False}
+\CommentTok{\# create a clock or a countdown timer}
+\CommentTok{\# while not gameover:}
+\CommentTok{\#     draw all snake segments using for loop  }
+\CommentTok{\#     flip the window}
+
+\CommentTok{\#     if escape key was pressed:}
+\CommentTok{\#         set gameover to True}
+\CommentTok{\#     if key is left or right:}
+\CommentTok{\#         set new\_direction based on direction and pressed key using NEW\_DIRECTION dictionary }
+\CommentTok{\#}
+\CommentTok{\#     Check whether elapsed time is greater than SNAKE\_TIME\_INTERVAL, }
+\CommentTok{\#         set direction to new\_direction}
+\CommentTok{\#         move snake translating direction variable into (dx, dy) pair from DXY}
+\CommentTok{\#         reset clock or countdown timer, if that is the case}
+\CommentTok{\#}
+\CommentTok{\#}
+\CommentTok{\# close PsychoPy window}
+\end{Highlighting}
+\end{Shaded}
+
+Put your code into \emph{exercise08.py}.
+
+\hypertarget{turning-the-hard-way}{%
+\section{Turning the hard way}\label{turning-the-hard-way}}
+
+Let us implement the same ``figure out new direction'' code in a more complicated way. The purpose of the exercise is to challenge you, show you new methods of the list, and to demonstrate how you can think about a change of the direction as moving through the list. We won't use this in the main code, so implement it as a function \texttt{compute\_new\_direction(current\_direction,\ pressed\_key)}, which will take two parameters (current direction and pressed key) and will return the new direction of rotation. I strongly recommend writing and debugging code in Jupyter Notebook first and copying it to \emph{utilities.py} at the very end. Also, do not implement it as a function to begin with. Define parameters as two variable with some preset values and debug the rest of the code.
+
+Here is the idea. Imagine that you have a list \texttt{{[}"left",\ "up",\ "right",\ "down"{]}}. For this list, rotation clockwise would correspond to moving through the list to the right (assuming that you jump to the beginning once you move past the last item). Conversely, rotation counterclockwise corresponds to moving to the left (again, assuming that you jump to the end of the list, once you went past the first item). As you see, rotation is expressed as a very intuitive ``motion through the list''.
+
+For the actual implementation, first, define a constant list in the order I've described. Next, you need to identify the location of the current direction within the list using \href{https://docs.python.org/3/tutorial/datastructures.html\#more-on-lists}{index()} method. Then, you need to figure out whether you increase or decrease that index (to move to the right or to the left), based on \texttt{pressed\_key} parameter (you can use dictionary approach or a conditional assignment). Finally, you need to control for range, so that index of \texttt{-1} becomes \texttt{3} (you went too far to the left) and index of \texttt{4} should become \texttt{0}. The most elegant way to do this, is using \texttt{\%} \href{https://python-reference.readthedocs.io/en/latest/docs/operators/modulus.html}{modulus} operation. Hint, \texttt{4\ \%\ 4} is \texttt{0}. What about \texttt{1\ \%\ 4}, \texttt{0\ \%\ 4}, or even \texttt{-1\ \%\ 4}? Check it by hand to get an idea of what I am hinting at. And, of course, do not use \texttt{4} for division, use the length of the list, as it determines the range of values.
+
+Put function compute\_new\_direction into \emph{utilities.py}.
+
+\hypertarget{to-be-continued-1}{%
+\section{To be continued\ldots{}}\label{to-be-continued-1}}
+
+We covered a lot of ground today. Next time, we will continue by adding the possibility of killing yourself but also of growing into a longer and cooler snake by eating apples.
+
+\hypertarget{seminar-02-02}{%
+\chapter{Snake game, part 2}\label{seminar-02-02}}
+
+Our plan for today is to continue developing the snake game. Our original plan was as follows and we got up to \#4.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Create boilerplate code to initialize PsychoPy.
+\item
+  Figure out how to place a square. We need this because our snake is made of square segments and lives on a rectangular grid made of squares.
+\item
+  Create a single segment stationary snake.
+\item
+  Make the snake move assuming a rectangular grid.
+\item
+  Implement ``died by hitting a wall''.
+\item
+  Add apples and make the snake grow.
+\item
+  Add check for biting itself.
+\item
+  Add bells-and-whistles to make game look awesome.
+\end{enumerate}
+
+As before, create a new folder for this seminar, copy the latest version of \emph{utilities.py} to it and base your further development code on the latest exercise from the previous seminar (should be \emph{exercise08.py}).
+
+\hypertarget{hitting-the-wall}{%
+\section{Hitting the wall}\label{hitting-the-wall}}
+
+The last thing that we implemented during the previous seminar was our ability to control the snake. However, you could steer it off the screen and make it go through itself. Let us fix the former!
+
+Develop a new function \texttt{hit\_the\_wall} and put it into \emph{utilities.py}. The function should take \texttt{snake} variable as a first parameter and check whether the head of the snake (which segment is it?) is still within the grid that we defined (how do you check for that?). The function should return a logical value. \texttt{True}, if the head of the snake is outside of the grid limits (so, it is true that the snake hit the wall). \texttt{False}, if it is still inside. I mentioned that you should definitely pass the \texttt{snake} as an obvious parameter of the function but do you need other parameters? If yes, which ones? Document the function!
+
+Test the function by adding a new condition inside the main game loop. Check whether the snake \texttt{hit\_the\_wall()} and, if that is the case, the game should be over. Think about the optimal place where to check for this. You could do it on every iteration but there is a more logical place for it, inside that main loop. Where is it?
+
+Put function \emph{hit\_the\_wall} into \emph{utilities.py} and your updated code into \emph{exercise01.py}.
+
+\hypertarget{is-this-the-snake}{%
+\section{Is this the snake?}\label{is-this-the-snake}}
+
+In the next section, we will be adding apples to the game. The catch is that these apples should appear at a location that is \emph{not} occupied by the snake. Otherwise, we would generate apples directly into snake's stomach. Practical for the snake but defeats the purpose of the game. To rephrase this problem, we need a function that checks whether a particular grid location is occupied by the snake.
+
+Develop a new function \texttt{is\_inside\_the\_snake} that takes the snake as a first parameter and a tuple with a grid location as a second parameter and returns a logical value whether that grid location is occupied by the snake (\texttt{True}) or not (\texttt{False}). Document the function!
+
+My approach would be to work on this function in a Jupyter Notebook first. To debug it, create a snake by hand hardcoding the list of dictionaries. Note that you only need \texttt{pos} part of the segment's dictionary for this function, so can happily ignore the \texttt{visuals} key. Once you feel the function works, copy it to \emph{utilities.py}.
+
+Put function \emph{is\_inside\_the\_snake} into \emph{utilities.py}.
+
+\hypertarget{an-inedible-apple}{%
+\section{An inedible apple}\label{an-inedible-apple}}
+
+Let us add that highly desirable fruit: the apple! We will represent it as a \emph{differently} colored square and snake won't be able to eat it yet. I assume that you used green color for the snake, so apples would yellow, red, or orange (but feel free to pick any color of your fancy). Just like a snake segment, an apple is characterized by its position on the grid and by its visuals, so you can use the same dictionary structure as for the snake's segment.
+
+You need to write a new function \texttt{create\_apple} that will be fairly similar to \texttt{create\_snake\_segment()} function you developed the last time. It should also return a dictionary with \texttt{pos} and \texttt{visuals} field. However, instead of taking a predefined grid location, it should generate one randomly within the grid making sure it is \emph{not} on the snake. The \texttt{is\_inside\_the\_snake} function will help you to ensure the latter. Think about parameters that you need for this function. Remember to document it!
+
+In the main loop, create a new variable \texttt{apple} and initialize it via \texttt{create\_apple()} function. Think about where and when do you need to initialize it. Also, you need to drawi the apple in the main loop. Again, think about where should you do it.
+
+Put function \emph{create\_apple} into \emph{utilities.py} and your updated code into \emph{exercise02.py}.
+
+\hypertarget{eating-an-apple}{%
+\section{Eating an apple}\label{eating-an-apple}}
+
+Apples exist for snakes to eat them! Let us add this functionality. The general idea is very simple. If the \emph{head} of the snake moves on to the grid location with an apple, you should not trim its tail. See how useful it was to split growing and trimming into two separate functions? Told you, strategic thinking!
+
+You need to add a conditional statement that if the snake's head \emph{is} on the apple, you should generate a new one the same way as you generated it initially (add the next apple). What should you do, if there is no apple at that location?
+
+Also, if you haven't already done that, modify you code so that you start with a single segment snake.
+
+Put your updated code into \emph{exercise03.py}.
+
+\hypertarget{eating-yourself}{%
+\section{Eating yourself}\label{eating-yourself}}
+
+Once our snake grows beyond four segments, it has an opportunity to bite itself\footnote{Why at least five? Draw it on the grid and figure out whether it can do so with four.}. For this, we need to check that, \emph{after} the snake moved, its head is \emph{not} at the same location as one of the segments of its body. Create a new function \texttt{snake\_bit\_itself()} that takes the snake as a single parameter and returns \texttt{True} or \texttt{False} based on whether that is the case. The function is very similar but not identical to \texttt{is\_inside\_the\_snake()} function you implemented earlier. What is the critical difference and why cannot you simply reuse that function?
+
+Once you implemented \texttt{snake\_bit\_itself()} function, you should check for that eventually after it moved and, if that is the case, the game should be over.
+
+Put function \emph{snake\_bit\_itself} into \emph{utilities.py} and your updated code into \emph{exercise04.py}.
+
+\hypertarget{bells-and-whistles-score}{%
+\section{Bells and whistles: score}\label{bells-and-whistles-score}}
+
+Now that we have a fully functional game, we can start adding non-essential but nice features to it. The first one will be the score that is equal to the length of the snake. It should read \emph{Score: XXX}. Place it at the top of the window. You will need to use \href{https://www.psychopy.org/api/visual/textstim.html\#psychopy.visual.TextStim}{TextStim} class for this. Think about when to create the text stimulus, when to draw it, and how and when to update the text.
+
+Put your updated code into \emph{exercise05.py}.
+
+\hypertarget{bells-and-whistels-three-lives}{%
+\section{Bells and whistels: three lives}\label{bells-and-whistels-three-lives}}
+
+Let us give the player three attempts to achieve the top score. They have three lives, every time the snake dies, the game \emph{but not the score} resets: A single segment snake appears at the center and a new random apple appears elsewhere (where should you put the code to create them?). Once the snake dies three times, the game is over. Think how you can implement this three repetitions.
+
+The score should be cumulative, so at the beginning of round two it should be equal to the final score of round one plus current length of the snake (1 at the very beginning). Think how you can achieve this. \emph{Another important point}: now you have two nested loop, one is for the game, one is for the round. When the snake dies, the round is over and, if you run out of lives, the game as well. When the player presses \emph{escape} both round \textbf{and} the game are over. Think about how you can implement it.
+
+Put your updated code into \emph{exercise06.py}.
+
+\hypertarget{bells-and-whistels-showing-lives}{%
+\section{Bells and whistels: showing lives}\label{bells-and-whistels-showing-lives}}
+
+Let us not just repeat the game three times but show the player how many lives they still have. Download the \href{material/heart.png}{heart.png}\footnote{This image was downloaded from \href{https://openclipart.org/}{openclipart.org} and was created by \href{https://openclipart.org/artist/cliparteles}{cliparteles}} and use it show remaining lives at the top-left corner of the screen: three hearts in round one, two hearts in round two, and just a single heart in round three. You will need to use (ImageStim){[}\url{https://www.psychopy.org/api/visual/imagestim.html\#psychopy.visual.ImageStim}{]} for this. Think about the size of images and their location.
+
+Put your updated code into \emph{exercise07.py}.
+
+\hypertarget{bells-and-whistles-difficulty}{%
+\section{Bells and whistles: difficulty}\label{bells-and-whistles-difficulty}}
+
+At the moment, the difficulty of the game, the speed with which the snake moves, is fixed and the player has no way of choosing it. Let us create dialog that appears \emph{before} we create the window and start the game that will allow the player to choose between \emph{easy}, \emph{normal}, and \emph{difficult}\footnote{Or, if you played Doom, between \emph{I'm Too Young To Die}, \emph{Hey, Not Too Rough}, \emph{Hurt Me Plenty}, \emph{Ultra-Violence}, and \emph{Nightmare}.}. I leave it up to you to decide which snake speeds correspond to each difficulty (and you can have more than three options, if you want).
+
+To create and run the dialog, use \href{https://www.psychopy.org/api/gui.html\#dlg}{Dlg} class from
+\href{https://www.psychopy.org/api/gui.html}{giu} module of PsychoPy. Your challenge for today is to figure out how to use it based on the manual along. Take a look at the example and experiment with in a separate file.
+
+Put your updated code into \emph{exercise08.py}.
+
+\hypertarget{bells-and-whistles-sounds}{%
+\section{Bells and whistles: sounds}\label{bells-and-whistles-sounds}}
+
+Download \href{material/game-over-arcade.wav}{game-over-arcade.wav}\footnote{Downloaded from \href{https://freesound.org/}{freesound.org} and created by \href{https://freesound.org/people/myfox14/}{myfox14}} and \href{material\%20/8-bit-game-over-sound.wav}{8-bit-game-over-sound.wav}\footnote{Also downloaded from \href{https://freesound.org/}{freesound.org} and created by \href{https://freesound.org/people/EVRetro/}{EVRetro}}. Use the former whenever the snake dies and use the latter when the player runs out of lives. You will need to use \href{https://www.psychopy.org/api/sound.html\#sound}{Sound} class from \href{https://www.psychopy.org/api/sound.html}{sound} module of PsychoPy.
+
+Put your updated code into \emph{exercise09.py}.
+
+\hypertarget{bells-and-whistles-blinking-game-over-message}{%
+\section{Bells and whistles: blinking game over message}\label{bells-and-whistles-blinking-game-over-message}}
+
+Once the game is over, show a blinking ``Game Over'' message \emph{superimposed} over the final static game screen. Thus, you need to draw all the game objects and messages (but without moving the snake) plus you show a text message that is on for 0.5 second and off for 0.5 seconds until the player presses \emph{Space} button. Hint, it should be a separate loop after the main game loop over rounds and clock/timers have definitely something to do with it.
+
+Put your updated code into \emph{exercise10.py}.
+
+\hypertarget{next-stop-classes-and-objects}{%
+\section{Next stop: classes and objects}\label{next-stop-classes-and-objects}}
+
+Nice game! Next time you will learn about classes and objects and you will rewrite the Snake Game using them. This way, we can concentrate on figuring out classes, as you already know how the game works.
+
+\hypertarget{seminar-02-03}{%
+\chapter{Snake game: object-oriented programming}\label{seminar-02-03}}
+
+We will not be programming a new game today. Rather, you will learn about object-oriented approach in Python and will use it to simplify your code of the Snake game that you already programmed. Yes, it would be more fun to program a new game but this way you get to concentrate on the concepts rather than on the game logic.
+
+\hypertarget{object-oriented-programming}{%
+\section{Object-oriented programming}\label{object-oriented-programming}}
+
+The core idea is in the name: Instead of having variables/data and functions separately, you combine them in an object that has attrbutes/properties (its own variables) and methods (functions). This approach uses our natural tendency to perceive the world as a collection of interacting objects and has several advantages that I will discuss below.
+
+\hypertarget{classes-and-objects-instances-of-classes}{%
+\subsection{Classes and objects (instances of classes)}\label{classes-and-objects-instances-of-classes}}
+
+Before we continue, I need to make an important distinction between \emph{classes} and \emph{objects}. A \emph{class} is a ``blue print'' that describes properties and behavior (methods) of objects of that class. This ``blue print'' is used to create an \emph{instance} of that class, which is called an \emph{object}. For example, Homo sapiens is a \emph{class} that describes species that have certain properties, such as height, and can do certain things, such as running. However, Homo sapiens as a class only has a concept of height but no specific height itself. E.g., you cannot ask ``What is height of Homo sapiens?'' only what is an average (mean, median, etc.) height of individuals of that class. Similarly, you cannot say ``Run, Homo sapiens! Run!'' as abstract concepts have trouble with real actions like that. Instead, it is Alexander Pastukhov who is an \emph{instance} of Homo sapiens class with a specific height and a specific (not particularly good) ability to run. Other instances of Homo sapiens (other people) will have different height and a different (typically better) ability to run. Thus, class describes what kind of properties and methods objects have. This means that whenever you meet a Homo sapien, you could be sure that they have height. However, individual objects have different values for this properties and so calling their methods may result in different outcomes.
+
+Another, a more applied, example would be your use of \texttt{ImageStim} \emph{class} to create multiple \emph{instances} of front side of a card in ``Memory'' game. Again, the \emph{class} defines properties (\texttt{image}, \texttt{pos}, \texttt{size}, etc.) and methods (e.g., method \texttt{draw()}) that individual \emph{objects} will have. You created these objects to serve as front side of cards. You set \emph{different} values for same properties (\texttt{image}, \texttt{pos}) and that ensured that when you call their method \texttt{draw()}, each card was drawn at its own location and with it own image.
+
+\hypertarget{encapsulation}{%
+\subsection{Encapsulation}\label{encapsulation}}
+
+Putting all the data (properties) and behavior (methods) inside the class simplifies programming by ensuring that all relevant information can be found in its definition. Thus, you have a single place that should hold \emph{everything} that defines object's behavior. Contrast this with our approach in previous two seminars where snake data (e.g., variable \texttt{snake}) was defined at one place and functions that used and altered it (e.g., \texttt{snake\_bit\_itself()} or \texttt{grow\_snake()}) were defined elsewhere. Moreover, we had to resort to using \emph{snake} or \emph{apple} in function names just to remind ourselves that they belong to the snake or an apple. This also necessitated creating functions with multiple arguments that ensured that all information is available within each function. And, we modified \texttt{snake} inside the function creating further uncertainty about when and where it can be changed. Today, you will see how encapsulating everything into classes turns this mess into a simpler and easier-to-understand code.
+
+\hypertarget{inheritance-generalization}{%
+\section{Inheritance / Generalization}\label{inheritance-generalization}}
+
+In object-oriented programming, a class can be derived from some other \emph{ancestor} class and thus \emph{inherit} its properties and methods. Moreover, several classes can be derived from a single ancestor producing a mix of unique and shared functionality. This means that instead of rewriting the same code for each class, you can define a common code in an ancestor class and focus on differences or additional methods and properties in descendants.
+
+Using the Homo sapiens example from above. Humans, chimpanzees and gorillas are all different species but we share a common ancestor. Hence, we are different in many respect, yet, you could think about all of us as ``apes'' that have common properties such as binocular trichromatic vision. On other words, if you are interested in color vision, you do not care what specific species you are looking it, as all apes are the same in that respect. Or, you can move further down the evolution tree and think about us as ``mammals'' that, again, have common properties and behavior, such as thermoregulation and lactation. Again, if you are interested \emph{only} in whether an animal has thermoregulation, knowing that it is a mammal is enough.
+
+Similarly, in PsychoPy various visual stimuli that we used (\texttt{ImageStim}, \texttt{TextStim}, \texttt{Rect}) have same properties (e.g., \texttt{pos}, \texttt{size}, etc.) and methods (most notably, \texttt{draw()}). This is because they are all descendants from a common ancestor \texttt{BaseVisualStim} that defines their common properties and methods\footnote{\texttt{BaseVisualStim} does not actually define \texttt{draw()} method, only that it must be present.}. This means that you can assume that \emph{any} visual stimulus (as long as it descends from \texttt{BaseVisualStim}) will have \texttt{size}, \texttt{pos}, \texttt{ori} and can be drawn. This, in turn, means that you can have a list of various PsychoPy visual stimuli and move or draw all of them in a single loop without thinking which \emph{specific} visual stimulus you are moving or drawing. Also note that you cannot assume these same proporties of \emph{sound} stimuli because they are \emph{not} descendants of \texttt{BaseVisualStim} but of \texttt{\_SoundBase} class.
+
+Where is another way of achieving common behavior (generalization) in Python without inheritance. It is called ``duck typing''\footnote{Yes, it is really called ``duck typing''.} and it will be the topic of a different seminar.
+
+\hypertarget{polymorphism}{%
+\section{Polymorphism}\label{polymorphism}}
+
+As you've learned in the previous section, inheritance allows different descendants to share common properties and behavior, so that in certain cases you can view them as being equivalent to an ancestor. E.g., any visual stimulus (a descendant of \texttt{BaseVisualStim} class) can be drawn, so you just call its \texttt{draw()} method. However, it is clear that these different stimuli implement drawing \emph{differently}, as the \texttt{Rect} stimulus looks different from the \texttt{ImageStim} or \texttt{TextStim}. This is called ``polymorphism'' and the idea is to keep the common interface (same \texttt{draw()} call) while abstracting away the actual implementation. This allows you to think about what you want an object to do (or what to do with an object), instead of thinking how exactly it is implemented.
+
+\hypertarget{a-minimal-class-example}{%
+\section{A minimal class example}\label{a-minimal-class-example}}
+
+Enough of the theory, let us see how classes are implemented in Python. Here is a very simple class that has nothing but the \emph{constructor} \texttt{\_\_init\_\_()} method, which is called whenever a new object (class instance) is created, and a single attribute / property \texttt{total}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Accumulator:}
+    \CommentTok{"""}
+\CommentTok{    Simple class that accumulates (sums up) values.}
+
+\CommentTok{    Properties}
+\CommentTok{    {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{    total : float}
+\CommentTok{        Total accumulated value}
+\CommentTok{    """}
+
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+        \CommentTok{"""}
+\CommentTok{        Constructor, initializes the total value to zero.}
+\CommentTok{        """}
+        \VariableTok{self}\NormalTok{.total }\OperatorTok{=} \DecValTok{0}
+        
+\CommentTok{\# here we create an object number\_sum, which is an instance of class Accumulator.}
+\NormalTok{number\_sum }\OperatorTok{=}\NormalTok{ Accumulator()}
+\end{Highlighting}
+\end{Shaded}
+
+Let's go through it line by line. First line \texttt{class\ Accumulator:} shows that this is a declaration of a \texttt{class} whose name is \texttt{Accumulator}. Note that the first letter is capitalized. This is not required per se, so Python police won't be knocking on your door if you write it all in lower or upper case. However, the general recommendation is that \textbf{class} names are written using \texttt{UpperCaseCamelCase} whereas \textbf{object} (instances of the class) names are written using \texttt{lower\_case\_snake\_case}. This makes distinguishing between classes and objects easier, so you should follow this convention.
+
+The definition of the class are the remaining \emph{indented} lines. As with functions or loops, it is the indentation that defines what is inside and what is outside of the class. The only method we defined is \texttt{def\ \_\_init\_\_(self):}. This is a \emph{special} method\footnote{There are more special methods that you will learn about later, they all follow \texttt{\_\_methodname\_\_()} convention.} that is called when an object (instance of the class) is created. This allows you to initialize the object based on parameters that were passed to this function (if any). You do not call this function directly, rather it is called whenever an object is created, \emph{e.g.} \texttt{number\_sum\ =\ Accumulator()} (last line). Also, it does not return any value explicitly via \texttt{return}. Instead, \texttt{self} (the very first parameter, more on it below) is returned automatically.
+
+All class methods (apart from special cases we currently do not concern ourselves with) must have one special first parameter that is \emph{the object} itself. By convention it is called \texttt{self}\footnote{Again, you can use any name but that will surely confuse everyone.}. It is passed to the method automatically, so whenever you write \texttt{square.draw()} (no explicit parameters written in the function call), the actual method still receives one parameter that is the \emph{reference} to the \texttt{square} variable whose method you called. Inside a method, you use this variable to refer to the object itself.
+
+Let us go back to the constructor \texttt{\_\_init()\_\_} to see how you can use \texttt{self}. Here, we add a new \emph{persistent} attribute/property to the object and assign a value to it: \texttt{self.total\ =\ 0}. It is \emph{persistent}, because even though we created it inside the method, the mutable object is passed by reference and, therefore, we assigned it to the object itself. Now you can use this property either from inside \texttt{self.total} or from outside \texttt{number\_sum.total}. You can think of properties as being similar to field/value pairs in the dictionary we used during previous seminar but for syntax: \texttt{object.property} versus \texttt{dictonary{[}"field"{]}}\footnote{This is actually how all properties and methods are stored, in a \texttt{\_\_dict\_\_} attribute, so you can write \texttt{number\_sum.\_\_dict\_\_{[}"total"{]}} to get it.}. Technically, you can create new properties in any method or even from outside (e.g., nothing prevents you from writing \texttt{number\_sum.color\ =\ "red"}). However, this makes understanding the code much harder, so the general recommendation is to create \emph{all} properties inside the constructor \texttt{\_\_init\_\_()} method, even if this means assigning \texttt{None} to them\footnote{If you use a linter, it will complain whenever it sees a property not defined in the constructor}.
+
+\hypertarget{add-method}{%
+\section{\texorpdfstring{\texttt{add} method}{add method}}\label{add-method}}
+
+Let us add a method that adds 1 to the \texttt{total} property.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Accumulator:}
+\NormalTok{    ... }\CommentTok{\# I am skipping all previous code here}
+    
+    \KeywordTok{def}\NormalTok{ add(}\VariableTok{self}\NormalTok{):}
+        \CommentTok{"""}
+\CommentTok{        Add 1 to total}
+\CommentTok{        """}
+        \VariableTok{self}\NormalTok{.total }\OperatorTok{+=} \DecValTok{1}
+\end{Highlighting}
+\end{Shaded}
+
+It has first special argument \texttt{self} that is the object itself and we simply add 1 to its \texttt{total} property. Again, remember that \texttt{self} is passed automatically whenever you call the method, meaning that an actual call looks like \texttt{number\_sum.add()}.
+
+Create a Jupyter notebook (you will need to submit it as part of the assignment) and copy-paste the code for \texttt{Accumulator} class, including the \texttt{.add()} method. Create \textbf{two} objects, call them \texttt{counter1} and \texttt{counter2}. Call \texttt{.add()} method twice for \texttt{counter2} and thrice for \texttt{counter1} (bonus: do it using \texttt{for} loop). What is the value of the \texttt{.total} property of each object? Check it by printing it out.
+
+Copy-paste and test \texttt{Accumulator} class code in a Jupiter notebook.
+
+\hypertarget{flexible-accumulator-with-a-subtract-method}{%
+\section{\texorpdfstring{Flexible accumulator with a \texttt{subtract} method}{Flexible accumulator with a subtract method}}\label{flexible-accumulator-with-a-subtract-method}}
+
+Now lets us create a new class that is a \emph{descendant} of the \texttt{Accumulator}. We will call it \texttt{FlexibleAccumulator} as it will allow you to also \emph{subtract} from the total count. You specify ancestors (could be more than one!) in round brackets after the class name
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ FlexibleAccumulator(Accumulator):}
+    \ControlFlowTok{pass} \CommentTok{\# You must have at least one non{-}empty line, and pass means "do nothing"}
+\end{Highlighting}
+\end{Shaded}
+
+Now you have a new class that is a descendant of \texttt{Accumulator} but, so far, is a perfect copy of it. Add \texttt{subtract} method to the class. It should subtract \texttt{1} from the \texttt{.total} property (don't forget to \emph{document} it!). Check that it works. Create one instance of \texttt{Accumulator} and another one of \texttt{FlexibleAccumulator} class and check that you can call \texttt{add()} on both of them but \texttt{subtract()} only for the latter.
+
+Add \texttt{subtract} method to the \texttt{FlexibleAccumulator} class in a Jupiter notebook. Add testing.
+
+\hypertarget{method-arguments}{%
+\section{Method arguments}\label{method-arguments}}
+
+Now, create a new class \texttt{SuperFlexibleAccumulator} that will be able to both \texttt{add()} and \texttt{subtract()} \emph{arbitrary} value! Think about which class it should inherit from. Redefine both \texttt{.add()} and \texttt{.subtract()} method in that new class by adding \texttt{value} argument to both method and add/subtract this value rather than \texttt{1}. Note that now you have \emph{two} arguments in each method \texttt{(self,\ value)} but when you call you only need to pass the latter (again, \texttt{self} is passed automatically). Don't forget to document \texttt{value} argument (but you do not need to document \texttt{self} as its meaning is fixed).
+
+Create \texttt{SuperFlexibleAccumulator} class and define super flexible \texttt{add} and \texttt{subtract} methods that have \texttt{value} parameter ( in a Jupiter notebook). Test them!
+
+\hypertarget{constructor-arguments}{%
+\section{Constructor arguments}\label{constructor-arguments}}
+
+Although constructor \texttt{\_\_init(...)\_\_} is special, it is still a method. Thus, you can pass arguments to it just like you did it for other methods. You pass these arguments when you create an object, so in our case, you put it inside the bracket for \texttt{counter\ =\ SuperFlexibleAccumulator(...)}.
+
+Modify the code so that you pass the initial value that total is set to, instead of zero.
+::: \{.infobox .program\}
+Add \texttt{initial\_value} parameter to the constructor of the \texttt{SuperFlexibleAccumulator} class in a Jupiter notebook. Test it!
+:::
+
+\hypertarget{calling-methods-from-other-methods}{%
+\section{Calling methods from other methods}\label{calling-methods-from-other-methods}}
+
+You can call a function or object's method at any point of time, so, logically, you can use methods inside methods. Let's modify our code, realizing that \emph{subtracting} a value is like \emph{adding a negative} value. Modify your code, so that \texttt{.subtract()} only negates the value before passing is to \texttt{.add()} for actual processing. Thus, \texttt{total} is modified \emph{only} inside the \texttt{add()} method.
+
+Modify \texttt{subtract()} method of \texttt{SuperFlexibleAccumulator} to utilize \texttt{add()} in a Jupiter notebook. Test it!
+
+\hypertarget{local-variables}{%
+\section{Local variables}\label{local-variables}}
+
+Just like normal functions, you methods can have local variables. They are local (visible and accessible only from within the method) and are not persistent (their values do not survive between the calls). Conceptually, you separate variables that need to be persistent (retain their value the whole time object exists) as attributes/properties and temporary variables that are need only for the computation itself as local method variables. What would be value of property \texttt{.total} in this example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Accumulator:}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, initial):}
+\NormalTok{        temp }\OperatorTok{=}\NormalTok{ initial }\OperatorTok{*} \DecValTok{2}
+        \VariableTok{self}\NormalTok{.total }\OperatorTok{=}\NormalTok{ inital}
+        
+\NormalTok{counter }\OperatorTok{=}\NormalTok{ Accumulator(}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+What about in this case?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Accumulator:}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, initial):}
+\NormalTok{        temp }\OperatorTok{=}\NormalTok{ initial }\OperatorTok{*} \DecValTok{2}
+        \VariableTok{self}\NormalTok{.total }\OperatorTok{=}\NormalTok{ temp}
+        
+\NormalTok{counter }\OperatorTok{=}\NormalTok{ Accumulator(}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{refactoring-the-snake-game}{%
+\section{Refactoring the Snake game}\label{refactoring-the-snake-game}}
+
+Got the basic idea about using classes? Let us practice by partially refactoring the snake game. In principle, we can factor it into three classes / objects:
+
+\begin{itemize}
+\tightlist
+\item
+  a window class that will incorporate grid information and mapping
+\item
+  an apple class
+\item
+  a snake class
+\end{itemize}
+
+Here, we will cover the first two but I encourage you to think about how to convert snake-bits into a class as well. Before you begin, create a new folder (\emph{snake2}, \emph{snake-oop}, etc.) and copy your old code where.
+
+\hypertarget{gridwindow-class}{%
+\section{GridWindow class}\label{gridwindow-class}}
+
+One of the most annoying things about our current code was the necessity to pass grid information (\texttt{GRID\_SIZE}, \texttt{SQUARE\_SIZE}, etc.) as well as window variable every time we needed to create a new segment, or an apple, or grow snake, etc. It would be much simpler, if our window object would also include information on the grid (grid and square sizes) as well as the function that maps grid-to-window coordinates (\texttt{map\_grid\_to\_win()}). In this case, we would only need to pass the window variable that has all information that snake or apple function and classes will need.
+
+We still want the window to behave like PsychoPy window, so our \texttt{GridWindow} will \emph{inherit} from it. Create a new file \emph{gridwindow.py} and create a new class as follows. We will discuss the specific bits below.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 1. import }
+
+\KeywordTok{class}\NormalTok{ GridWindow(Window):}
+    \CommentTok{"""}
+\CommentTok{    Grid window, inherits from PsychoPy window and adds grid attributes and functions.}
+\CommentTok{    """}
+
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, grid\_size, square\_size\_pix):}
+        \CommentTok{"""}
+\CommentTok{        Parameters}
+\CommentTok{        {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{        grid\_size : tuple}
+\CommentTok{            Size of the grid}
+\CommentTok{        square\_size\_pix : integer}
+\CommentTok{            size of a single square in pixels}
+\CommentTok{        """}
+        
+        \CommentTok{\# 2. store grid\_size as an attribute, so that later on you}
+        \CommentTok{\#     could use it as self.grid\_size (from inside) and }
+        \CommentTok{\#     win.grid\_size (from outside)}
+        
+        \CommentTok{\# 3. compute square\_size attribute}
+        
+        \CommentTok{\# 4. call the constructor of the ancestor}
+        \BuiltInTok{super}\NormalTok{().}\FunctionTok{\_\_init\_\_}\NormalTok{(units}\OperatorTok{=}\StringTok{"norm"}\NormalTok{, size}\OperatorTok{=}\NormalTok{(however}\OperatorTok{{-}}\NormalTok{you}\OperatorTok{{-}}\NormalTok{computed}\OperatorTok{{-}}\NormalTok{it))}
+        
+    \KeywordTok{def}\NormalTok{ map\_grid\_to\_win(}\VariableTok{self}\NormalTok{, ipos):}
+        \CommentTok{"""}
+\CommentTok{        Converts grid coordinates to window coordinates in height units.}
+
+\CommentTok{        Parameters}
+\CommentTok{        {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{        ipos : tuple}
+\CommentTok{            (x, y) coordiantes on the grid}
+
+\CommentTok{        Returns}
+\CommentTok{        {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{        tuple}
+\CommentTok{            (norm\_x, norm\_y) coordinates in the window}
+\CommentTok{        """}
+        
+        \CommentTok{\# 5. code that computed the transformation but that uses}
+        \CommentTok{\#    class attribute for square size}
+        
+\end{Highlighting}
+\end{Shaded}
+
+Let us go through the code!
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  You do need to import some modules, which ones?
+\item
+  We pass the \texttt{grid\_size} as a parameter to the constructor but we need to retain in for future computation. Hence, we should store it as a persistent attributed of the class. You can (should) use the same name but remember this is an attribute not a constant, so you should use \texttt{snake\_lower\_case} for the name.
+\item
+  In the original code, you store the computed square size as a constant. Here, you store it as a persistent attribute but, otherwise, the idea is the same.
+\item
+  New and somewhat complicated bit! In the original code, we created a window and specified its size in pixels (computing it from the grid size and size of the square in pixels) and \texttt{"norm"} units. We still need to do this, so that the window is initialized properly. In the constructor we wrote the code that takes care of \emph{new} bits but we need to ensure that the ancestor class does the \emph{old} bits. For this, we need to call its constructor (\texttt{\_\_init\_\_()} method). But there is a catch, we \emph{overwrote} it with a brand new \texttt{\_\_init\_\_()} method of our own, so we cannot just call it via \texttt{self.\_\_init\_\_()}\footnote{Well, we can write that but we will be calling out brand new \texttt{\_\_init\_\_()} again.}. Instead, Python has \texttt{super()} function that refers to the ancestor of the class. Hence, \texttt{super().\_\_init\_\_(your-arguments-inside)} initializes the window. Note that you need \texttt{super()} only if you \emph{override} the original method, as we did with \texttt{\_\_init\_\_()}. E.g., you do not need it to call \texttt{flip()} method defined in the original class.
+\item
+  The code is essentially the same but you can use square size attribute, so no need to pass it as a separate argument.
+\end{enumerate}
+
+And in the main code, you now create the window as
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{win }\OperatorTok{=}\NormalTok{ GridWindow(GRID\_SIZE, SQUARE\_SIZE\_PIX)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{apple-class}{%
+\section{Apple class}\label{apple-class}}
+
+Create it in a separate \emph{apples.py} file. The apple class has no ancestors and we just need to put all methods and variables together. Here are lists of attributes and methods.
+
+Attributes:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{win} : you should pass window variable to the constructor of an \texttt{Apple} class and store it as an attribute for later use when you (re)create the apple at random position.
+\item
+  \texttt{pos} : same as the field in the original dictionary but now as an attribute.
+\item
+  \texttt{visuals} : same as the field in the original dictionary but now as an attribute.
+\end{itemize}
+
+Methods:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{\_\_init\_\_(self,\ win)} should store window as attribute and create \emph{empty} attributes \texttt{pos} and \texttt{visuals}.
+\item
+  \texttt{reset(self,\ snake)} : modified version of \texttt{create\_apple()} function but you use grid size and square size attributes of the \texttt{self.win} instead of passing them as arguments. It should overwrite any old values of \texttt{self.pos} and \texttt{self.visuals} instead of returning the dictionary.
+\item
+  \texttt{draw()} : should draw the apple!
+\end{itemize}
+
+Now, you need to create an \texttt{apple} object \emph{after} you create the window and \texttt{reset()} it whenever you need a new apple (at the beginning of each round and once the snake ate the apple).
+
+\hypertarget{refactoring-the-code}{%
+\section{Refactoring the code}\label{refactoring-the-code}}
+
+Start by changing with window class to \texttt{GridWindow} without doing anything else. The code should ``just work'' as our \texttt{GridWindow} has all the functionality of PsychoPy \texttt{Window} that we relied upon. Next, go through the \emph{snake} code (the apple has its own class, so we will deal with it later) to use window attributes instead of constants and simplify functions. E.g., \texttt{create\_snake\_segment(win,\ ipos,\ square\_size)} does not need the third argument anymore, as you can get it from \texttt{win} itself. Similarly, you do not need it for \texttt{grow\_snake()} function. Alter one function at a time and test your code.
+
+Next, use \texttt{Apple} class for the apple and adjust the code accordingly using attributes and \texttt{draw()} method. Here, you have to do all alterations in one go, of course, as changes we introduced are breaking.
+
+Remember, one step at a time, check your code before continuing. Put breakpoints and use debug console, if you are unsure about the changes.
+
+\hypertarget{seminar-02-04}{%
+\chapter{Moon lander game}\label{seminar-02-04}}
+
+Today we will create a moon lander game. You job is simple: land your ship on the pad but do not crash it! Here is a brief video of my implementation of the game
+
+We will program it using object-oriented approach from the beginning by defining two classes: the \texttt{MoonLander} and the \texttt{LandingPad}. Here is the general outline of how we will proceed:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Create a basic PsychoPy window and main experimental loop.
+\item
+  Define a basic \texttt{MoonLander} class with a static image and add its drawing to the main loop.
+\item
+  Randomize position of the lander.
+\item
+  Add gravity pull.
+\item
+  Add vertical thruster that counter-act gravity.
+\item
+  Add horizontal thrusters, so you can maneuver around.
+\item
+  Define \texttt{LandingPad} class.
+\item
+  Learn about virtual attributes and implement them for both classes.
+\item
+  Implement landing / crashing checks.
+\item
+  Add more runs.
+\item
+  Limit the fuel.
+\end{enumerate}
+
+This time most of the code will be in classes, so making versions of them will be quite cumbersome. Thus, submit only the final game. I would suggest calling files \emph{main.py} (main script), \emph{moonlander.py} (\texttt{MoonLander} class), and \emph{landingpad.py} (\texttt{LandingPad} class).
+
+\hypertarget{create-window}{%
+\section{Create window}\label{create-window}}
+
+Create a PsychoPy window 640 × 480 in size. Add a main game loop with \texttt{gameover} variable that can be exited by pressing \emph{escape}.
+
+Put your code into \emph{main.py}.
+
+\hypertarget{create-moonlander-class}{%
+\section{Create MoonLander class}\label{create-moonlander-class}}
+
+In \emph{moonlander.py}, create a new \texttt{MoonLander} class. It should have an ImageStim as an attribute (that will be the visuals of the ship) created using \href{material/ufo.png}{ufo.png} image. For the moment, place it at its default location at the center. Also, implement \texttt{draw()} method that should draw all visual elements of the lander (we have one now but there will be more later on).
+
+Create an instance of \texttt{MoonLander} class in the main script and draw it in the main game loop. You should see a static picture of the ship at the center of the screen.
+
+Create \texttt{MoonLander} class and use it in the main game loop.
+
+\hypertarget{randomize-position}{%
+\section{Randomize position}\label{randomize-position}}
+
+Implement a new method \texttt{reset()} that resets the lander for the next round. At the moment, the only thing it should do is to randomize position of the image. Use range of -0.5..0.5 horizontally and 0.8..0.9 vertically. Call it in the constructor and test it in the main loop by calling it every time you press \emph{space} button.
+
+Add \texttt{reset()} method to \texttt{MoonLander} class and use it in the main game loop.
+
+\hypertarget{gravity}{%
+\section{Gravity}\label{gravity}}
+
+Next we need to create a gravitational force that will pull the lander down. Create a constant \texttt{GRAVITY\ =\ 0.0001}\footnote{The constant itself does not mean anything, I adjusted it to be reasonable for the image and window size that we are using.} and create a new attribute \texttt{speed\ =\ {[}0,\ 0{]}} that is horizontal and vertical speed of the lander. Note that it should be reset to \texttt{(0,\ 0)} in the \texttt{reset()} method.
+
+The position of the lander (\texttt{self.image.pos}) must adjusted based on the the speed on every frame. But before that, speed itself must be adjusted based on the forces from gravity and thrusters that act upon the lander. Create a new method \texttt{update()} where you first adjust \emph{vertical} speed based on gravity alone (we will add the effect of thrusters later) and when adjust \emph{vertical} position based on vertical speed (we will worry about the horizontal speed, once we start working on horizontal thrusters). Call \texttt{update()} method before the \texttt{draw()} in the main loop. Your lander should fall down at accelerated rate (you can play with \texttt{GRAVITY} constant to see how it changes the speed of falling). Once it is off the screen, press space and see it go again.
+
+Update \texttt{MoonLander} class for the effect of gravity and use this in the main loop.
+
+\hypertarget{vertical-thurster}{%
+\section{Vertical thurster}\label{vertical-thurster}}
+
+PsychoPy allows you to get key presses or, using \href{https://www.psychopy.org/api/hardware/keyboard.html}{hardware.keyboard} to get both press and release time. Unfortunately, you get both only \emph{after} the key was released. But in our game, the thursters must be active for as long as the player presses the key. Thus, we need to know whether a key is \emph{currently} pressed, not that it was pressed and released at some time in the past. For this, we will use \emph{pyglet} library (that is a backend used by PsychoPy) directly. First, in your \emph{moonlander.py} add \texttt{import\ pyglet} and then include the following code inside the constructor of the class.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# setting up keyboard monitoring}
+\VariableTok{self}\NormalTok{.key }\OperatorTok{=}\NormalTok{ pyglet.window.key}
+\VariableTok{self}\NormalTok{.keyboard }\OperatorTok{=} \VariableTok{self}\NormalTok{.key.KeyStateHandler()}
+\NormalTok{win.winHandle.push\_handlers(}\VariableTok{self}\NormalTok{.keyboard)}
+\end{Highlighting}
+\end{Shaded}
+
+This installs a ``handler'' that monitors the state of the keyboard. Now, you can read out the state of, say, \emph{down arrow} key as\texttt{self.keyboard{[}self.key.DOWN{]}} (\texttt{True} if pressed, \texttt{False} otherwise). We will use \texttt{DOWN} for the vertical thruster and \texttt{LEFT} and \texttt{RIGHT} for the horizontal ones.
+
+Define a \texttt{VERTICAL\_ACC} to be twice the gravity (but you can use some other number, of course) and update the \texttt{update()}\footnote{Pun intended.}, so that the total vertical acceleration is \texttt{VERTICAL\_ACC\ +\ GRAVITY} if the the user is pressing \emph{down} key (use \texttt{self.keyboard} and \texttt{self.key} to figure that out) but \texttt{GRAVITY} alone, if not.
+
+Test you that vertical thruster works!
+
+Update \texttt{MoonLander} class for the counter-effect of a vertical thruster.
+
+\hypertarget{horizontal-thursters}{%
+\section{Horizontal thursters}\label{horizontal-thursters}}
+
+Now implement the same logic, computing acceleration, speed, and position but for horizontal thrusters (define \texttt{HORIZONTAL\_ACC}, decide on its value yourself). Remember, the \emph{right} thruster pushes the lander to the \emph{left} and vice versa! Assume that only one of the keys, \emph{left} or \emph{right}, can be pressed at a time. Test it by flying around!
+
+Add horizontal thrusters to \texttt{MoonLander}.
+
+\hypertarget{landing-pad-visuals}{%
+\section{Landing pad: visuals}\label{landing-pad-visuals}}
+
+The purpose of the game is to land on a landing pad. Let us add one! Create a new file \emph{landing\_pad.py} and a new class \texttt{LandingPad}. In the constructor, create a rectangle that is \texttt{0.5} units wide and is located at the bottom of the window but at a random position within the window horizontally. Pick the fill and line colors that you like. The only other method the class needs is \texttt{draw()}.
+
+In the main code, create an object of class \texttt{LandingPad} and draw it in the main loop, along with the lander itself.
+
+Create \texttt{LandingPad} class and use it in the main loop.
+
+\hypertarget{computing-edges-of-game-objects}{%
+\section{Computing edges of game objects}\label{computing-edges-of-game-objects}}
+
+The aim of the game is a soft touchdown on a landing pad. For this, we need to know where the \emph{top} of the landing pad is, as well as where the \emph{bottom} of the lander is and where \emph{left} and \emph{right} limits of each object are. Let us think about \emph{bottom} of the lander first, as the rest are very similar.
+
+We do not have information about it \emph{directly}. We have the vertical position of the lander in \texttt{self.image.pos{[}1{]}} (I assume here that the visuals attribute is called image) and its height in \texttt{self.image.size{[}1{]}}. From this, it is easy to compute the bottom edge (but remember that position is about the \emph{center} of the rectangle). Accordingly, you could create a method called \texttt{bottom()} that would return the computed value when it is called (e.g., \texttt{lander.bottom()}).
+
+Implement \texttt{bottom()} method for the \texttt{MoonLander} class.
+
+\hypertarget{virtual-attributes-via-getters-and-setters}{%
+\section{Virtual attributes via getters and setters}\label{virtual-attributes-via-getters-and-setters}}
+
+Our approach of using \texttt{lander.bottom()} works but it is \emph{semantically} inconsistent. Calling methods is about manipulating objects, e.g., drawing them, updating them, comparing them. However, \texttt{bottom} is, effectively, an \emph{attribute} of an object, like its position or size, it is just where the bottom of it is. We \emph{could} create and compute a \texttt{bottom} attribute inside the constructor, solving the problem of semantics, as now you could write \texttt{lander.bottom}. Note that as the lander moves all of its edge attributes (\texttt{bottom}, \texttt{left} and \texttt{right}) need to be recomputed after every update. This is unavoidable but a \emph{real} attribute approach still creates another problem: What if someone \emph{changes} it? In that case, its value will not be correct, as \texttt{bottom} value depends on both position and size, so changing it without a corresponding change in those two attributes makes no sense! And it is really hard to decide whether change in the \texttt{bottom} should mean a change in position, or size, or, perhaps, both? Thus, ideally, it should be a read-only attribute.
+
+For cases like these, Python has special \emph{decorators}\footnote{These are functions that ``decorate'' you function and are called \emph{before} your function is called. They are like gatekeeps or face control, so they can alter whether your function or how it is executed. They are very useful in certain scenarios and we will meet them again later. However, we will not talk about them in detail here.}: \texttt{@property} and \texttt{@\textless{}name\textgreater{}.setter}. The former one decorates a method that allows you to \emph{get} an attribute's value and, typically, is called a ``getter''. The latter one, is for a ``setter'' method that \emph{sets} a new value to an attribute. The idea is to isolate an actual attribute value from the outside influence. It is particularly helpful, if you need to control whether a new value of an attribute is a valid one, needs to converted, etc. For example, \texttt{color} attribute of the rectangle stimulus uses this approach, which is why it can take RGB triplets, hexadecimal codes, or plain color names as a value and set the color correctly.
+
+Here is a sketch of how it could work but note that today, we will only use the \emph{getter} bit. To have a virtual attribute for \texttt{color}, one typically creates an \emph{internal} attribute with almost the same name, e.g., \texttt{\_color} or \texttt{\_\_color} (see below for the difference). The value is stored and read from that internal attribute by getter and setter methods:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ ExampleClass:}
+
+  \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+    \VariableTok{self}\NormalTok{.\_\_color }\OperatorTok{=} \StringTok{"red"}
+
+  \AttributeTok{@property}
+  \KeywordTok{def}\NormalTok{ color(}\VariableTok{self}\NormalTok{):}
+    \CommentTok{"""}
+\CommentTok{    This is a getter method for virtual color}
+\CommentTok{    attribute.}
+\CommentTok{    """}
+    \CommentTok{\# Here, we simply return the value. But we could }
+    \CommentTok{\# compute it from some other attribute(s) instead.}
+    \ControlFlowTok{return} \VariableTok{self}\NormalTok{.\_\_color}
+    
+  \AttributeTok{@color.setter} \CommentTok{\# not the most elegant syntax, IMHO}
+  \KeywordTok{def}\NormalTok{ color(}\VariableTok{self}\NormalTok{, newvalue):}
+    \CommentTok{"""}
+\CommentTok{    Note that the setter name has THE SAME name as the getter!}
+\CommentTok{    It sets a new value and does not return anything.}
+\CommentTok{    """}
+  
+    \CommentTok{\# Here, you can have checks, conversion, }
+    \CommentTok{\# additional changes to other attributes, etc.}
+    \VariableTok{self}\NormalTok{.\_\_color }\OperatorTok{=}\NormalTok{ newvalue}
+    
+    
+\NormalTok{example }\OperatorTok{=}\NormalTok{ ExampleClass()}
+
+\CommentTok{\# get the value, note the lack of () after color}
+\BuiltInTok{print}\NormalTok{(example.color)}
+
+\CommentTok{\# set the value}
+\NormalTok{example.color }\OperatorTok{=} \StringTok{"blue"}
+\end{Highlighting}
+\end{Shaded}
+
+Note that there is no \emph{actual} attribute \texttt{color}, yet, our code works as if it does exist.
+
+There is another twist to the story. If you only define the getter \texttt{@property} method but no setter method, your property is read-only\footnote{Note that you cannot have write-only property, you must have either getter alone or both.}! And this exactly what we wanted. Turning out \texttt{bottom()} method into a getter of an attribute is as easy as adding the \texttt{@property} decorator to it. After that, we can use it as a read-only attribute \texttt{lander.bottom}. Do this and also create similar read-only attributes for \texttt{top}, \texttt{left}, and \texttt{right} of the pad and for \texttt{left}, and \texttt{right} of the lander class.
+
+Implement virtual properties for \texttt{MoonLander} and \texttt{LandingPad} classes.
+
+\hypertarget{access-restrictions}{%
+\section{Access restrictions}\label{access-restrictions}}
+
+In the example on getter/setter methods, I used \texttt{\_\_color} name with \emph{two} leading underscores. This is a Python way to make things (almost) private, that is, invisible from outside. If you copy-paste the class code from above and try to access the attribute directly via \texttt{example.\_\_color}, you will get an error "`ExampleClass' object has no attribute '\_\_color'". However, as I wrote, it is \emph{almost} private, so you still can access it! The code format is \texttt{object.\_\textless{}ClassName\textgreater{}\textless{}hidden\ attribute\ name\textgreater{}}, so in our case \texttt{example.\_ExampleClass\_\_color}\footnote{Try it and see that it works.}. However, this is a last resort sort of thing that you should use only if you absolutely must access that attribute or method and, hopefully, know what you doing.
+
+You can also come across attributes with a \emph{single} leading underscore in the name, e.g.~\texttt{\_color}. These are not private and are fully visible. However, the leading underscore \emph{hints} that this attribute or method should be \emph{considered} private. So, if you see an attribute like \texttt{\_color}, you should pretend that you know not of its existence and, therefore, you never read or modify it directly. Of course, this is only an \emph{agreement}, so you can always ignore it and work with that attribute directly\footnote{On a side note of doing crazy things that you shouldn't: You can replace a class method with your own at run time, this is called ``monkey patching''!}. However, this almost certainly will break the code in unexpected and hard-to-trace ways.
+
+\hypertarget{landing}{%
+\section{Landing}\label{landing}}
+
+We should check for landing whenever the bottom edge of the lander is at or below the top edge of the landing pad. A successful landing must satisfy several conditions:
+
+\begin{itemize}
+\tightlist
+\item
+  The lander must be within the limits of the lander pad horizontally.
+\item
+  The vertical speed must be zero or negative (otherwise, the lander flies up) but below a certain threshold that we will define as a constant \texttt{VERTICAL\_SPEED\_THRESHOLD\ =\ 0.05}.
+\item
+  The absolute horizontal speed must be below a certain threshold, also defined as a constant \texttt{HORIZONTAL\_SPEED\_THRESHOLD\ =\ 0.05}.
+\end{itemize}
+
+If \emph{any} of these three conditions are false, the lander has crashed. Either way, the game is over, so you should record the outcome (whether the landing was successful) and set \texttt{gameover} to \texttt{False}. After the loop, inform the player about the outcome. Draw all game objects plus the message about the outcome (e.g., ``You did it!'' / ``Oh, no!'' or something else) and wait for a space key press.
+
+The condition above will be quite long, so fitting it into a single line will make it hard to read. In Python, you can split the line by putting \texttt{\textbackslash{}} at the end of it. So here, a multiline if statement will look as follows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ lander\_is\_within\_horizontal\_limits }\KeywordTok{and} \OperatorTok{\textbackslash{}}
+\NormalTok{   lander\_vertical\_speed\_is\_good }\KeywordTok{and} \OperatorTok{\textbackslash{}}
+\NormalTok{   lander\_horizontal\_speed\_is\_good:}
+\NormalTok{   ...}
+\ControlFlowTok{else}\NormalTok{:}
+\NormalTok{  ...}
+\end{Highlighting}
+\end{Shaded}
+
+Implement landing checks.
+
+\hypertarget{more-rounds-1}{%
+\section{More rounds}\label{more-rounds-1}}
+
+Extend the game to have more than one round after the player either landed or crashed. Remember to reset the position of the lander before each new round. You can also add a \texttt{reset()} method to the landing pad as well, randomizing it horizontal position. Importantly, \emph{escape} key should quit the game, not just the round, and there should be no ``success''/``failure'' message in that case. Think how you would implement this.
+
+Add more rounds.
+
+\hypertarget{limited-fuel}{%
+\section{Limited fuel}\label{limited-fuel}}
+
+Let us add a fuel limit to make things more interesting, so that thrursters would work \emph{only} if there is any fuel left. For this, define a new constant \texttt{FULL\_TANK} (I've picked it to be \texttt{100} but you can have more) and add a new attribute \texttt{fuel} to the lander class (remember that you need to explicitly define all attributes in the constructor). The \texttt{fuel} level should be set to \texttt{FULL\_TANK} whenever you reset the lander.
+
+Every use of a thruster should reduce this by 1 and thrusters should work \emph{only} if there is fuel. You need to take care of this in the \texttt{update} method. Think about how you would do it for both vertical and horizontal thrusters.
+
+We also need to tell the player how much the fuel is left. I've implemented it as a bar gauge but you can implement it as text stimulus as well. Create the appropriate visual attribute in the constructor and remember to update it every time the level of the fuel changes and to draw it whenever you draw the lander itself. As a nice touch, you can change the color to indicate how much of the fuel is left. I've used \emph{green} for more than 2/3, \emph{yellow} for more than 1/3, and \emph{red} if less than that.
+
+Add fuel and fuel gauge.
+
+\hypertarget{add-to-it}{%
+\section{Add to it!}\label{add-to-it}}
+
+We already have a functioning game but you can add so much more to it: visuals for the thrusters, sounds, background, etc. Experiment at your will!
 
 \hypertarget{cross-references}{%
 \chapter*{Cross references}\label{cross-references}}
