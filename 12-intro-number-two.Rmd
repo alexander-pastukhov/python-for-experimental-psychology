@@ -1,24 +1,23 @@
-# Introduction to the second part / semester {-}
+# The skill of programming
+
+## Writing the code
+
+Programming is not about writing code that works. That, obviously, must be true but it is only the minimal requirement. Programming is about writing a clear easy-to-read code that others and, perhaps even more importantly, you-two-weeks later can understand. Below are several suggestions on how you can improve your code. 
+
+* Install a linter. In VS Code, press _Ctrl + Shift + P_ and start typing `Python: Select linter`. You will be offered a number of choices, pick  _pylint_ (that's the one I use) or _flake8_ (it is more strict). VS Code will offer you to install the actual linter package, if it is missing. Then, the linter will analyze your code after every save and highlight issues it finds: spaces where should be none, no spaces where should be some, wrong names, trailing spaces, overly long lines, etc. Try to address all the problems as it will make you code look consisten, "standard", and, therefore, readable. However, use your better judgment because sometimes longer-than-linter-likes line is more readable than two shorter ones. Similarly, a "bad" variable name by linter standards can be a meaningful name for a psychologist. Remember, your code is for people, not for the linter.
+* Document your code! Every time you create a new function: document it. New class: document it. New constant: unless it is super clear from the name alone, document it. First, VS Code is smart enough to parse Numpy docstring on the fly, so it will show this help to you whenever you use your own functions. Second, it forces you to think and formulate (in human language!) what the function is doing,  what type the arguments are, what is the range of valid values, what are the defaults, what should it return, etc. More often than not, you will realize that you have overlook some important detail that is not apparent from the code itself.
+* Add some air! Separate chunks of code with some empty lines and put a comment before each chunk that explains what it does (but not _how_ it does it). E.g., in our typical PsychoPy-based game, there is a point when we draw all stimuli and flip the window buffers. That is a nice self-contained chunk that can be described as `# drawing all stimuli`. The code provides details on what exactly is drawn, what is the drawing order, etc. But that single comment will help you understand what this chunk is about and whether it is relevant for you at the moment. Same goes for `# processing key presses` or `# checking game-over conditions`, etc. But be careful and make sure that the comment describes the code correctly. E.g., if the comment says `# drawing all stimuli` where should be no stimuli-drawing code anywhere else!
+* Write your code one teeny-tiny step a time: Slow but steady! This is the way I guide you through the assigments. Start with a something simple like a static rectangle or image. Make sure it works. Add a minor functionality (change in color, position, another rectangle, storing it as an attribute, etc.). Make sure it works. Never go to the next step unless you fully understand what your current code is doing and you are 100% certain that it behaves as it should. This tortoise-speed approach may feel silly and overly slow but it is still faster than writing a large chunk of code and then trying to make sure that it all works. It is much easier to solve simple problems one at a time than a lot of them simultaneously.
+
+Unfortunately, these tricks won't work it you do not use them! So you should _always_ use them and they should become your _good habits_, like using a seat belt. It does nothing on most (hopefully, all) days but you wear it because it might suddenly become extremely useful and you can never be sure when this will happen. Same with coding. Quite often you will be tempted to write "quick-n-dirty" code cause this is just a "simple test", temporary solution, a prototype, etc. But, as they say in Russia "There is nothing more permanent than a temporary solution" and you may find that you toy code grew into a full blown experiment and it is a mess. Or you want to come back to that pilot experiment but realize that it is easier to start from scratch than to understand how that monster works^[Happened to me more often than I dare to admit.]. Thus, resist the temptation! Form the good habits and you future-you will be very grateful!
+
+## Reading the code
+My experience with programming in general and on this seminar in particular is that most problems you get stuck with are basic and obvious in retrospect^[Hindsight is always 20/20!]. Unfortunately, this knowledge is of little comfort while you are trying to figure out why the bloody thing does not work! Here are several suggestions that could either minimize these problems or help you to resolve them faster.
+
+* Pretend that you've never seen this code in your life and you have no idea what it is doing. Quite often you _literally_ do not see a mistake because your brain fills-in details and bends the reality to match your expectations. You _know_ what this chunk of code should be doing, so instead of reading it you skim it and, unless it looks terribly wrong, assume that it does what it should. This is not just programming-specific thing but a general feature of our perception. If you ever proof-read your writing for typos, you know how mind-bogglingly difficult it is to spot them^[Advice, read each paragraph backwards: Last sentence, penultimate sentence, etc. This breaks the coherence of the text and helps you concentrate on words rather than on the meaning.]! 
 
 
-## Grading
-To pass the course, you need to complete all the assignments and score no less than 60% of points on each assignment. For a grade, you need the following percentages:
 
-* 1.0: ≥95% of points on _each_ assignment.
-* 1.3: ≥90%
-* 1.7: ≥85%
-* 2.0: ≥80%
-* 2.3: ≥75%
-* 2.7: ≥70%
-* 3.0: ≥60%
-* 4.0: <60%
 
-## Seminar outline
 
-1. Refresh your memory by implementing a Snake game.
-2. Object-oriented programming: properties, method, constructors. We will re-implement the Snake game using OOP approach.
-3. Duck-typing, special methods, interfaces for object properties, computed properties.
-4. Iterators and generators in Python for generating pseudo-random trial sequences in experiments. Using staircase procedure to control difficulty of the task. We will use both in a "Guitar Hero" game clone (sans Guitars and Heroes).
-5. Numpy library for matrices, mathematics, and linear algebra. We will implement a classic "Game of Life".
-6. Pandas library for working with tables.
 
