@@ -123,7 +123,7 @@ Put your code into _exercise04.py_.
 
 What did you say, your square was not really a square? Well, I told you, **five** units systems!
 
-## Five units systems
+## Five units systems {#psychopy-units}
 
 ### Height units
 With height units everything is specified in the units of window height. The center of the window is at `(0,0)` and the window goes vertically from `-0.5` to `0.5`. However, its horizontal limits depend on the aspect ratio. For our 800×600 window, it will go from -0.666 to 0.666 (the window is 1.3333 window heights wide). For a 600×800 window from -0.375 to 0.375 (the window is 0.75 window heights wide), for a square window 600×600 from -0.5 to 0.5 (again, in all these cases it goes from -0.5 to 0.5 vertically). This means that the actual on-screen distance for the units is the same for both axes. So that a square of `size=(0.5, 0.5)` is actually a square (it spans the same distance vertically and horizontally). Thus, it makes _sizing_ objects easier but _placing them on horizontal axis correctly_ harder (as you need to know the aspect ratio).
