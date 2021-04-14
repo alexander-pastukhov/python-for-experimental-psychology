@@ -5,7 +5,7 @@ bookdown::gitbook:
       before: |
         <li><a href="./">Python for social and experimental psychology</a></li>
       after: |
-        <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+        <li><a href="https://alexander-pastukhov.github.io/">Alexander (Sasha) Pastukhov</li>.
     download: ["pdf", "epub"]
 bookdown::pdf_book:
   includes:
