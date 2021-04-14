@@ -24,7 +24,7 @@
 <meta name="author" content="Alexander (Sasha) Pastukhov" />
 
 
-<meta name="date" content="2021-04-13" />
+<meta name="date" content="2021-04-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -135,6 +135,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a>
 <ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#about-the-material"><i class="fa fa-check"></i>About the material</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#about-the-seminar"><i class="fa fa-check"></i>About the seminar</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#note-on-exercises"><i class="fa fa-check"></i>Note on exercises</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#why-python"><i class="fa fa-check"></i>Why Python?</a></li>
@@ -248,7 +249,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.2" data-path="seminar08.html"><a href="seminar08.html#adding-main-loop"><i class="fa fa-check"></i><b>8.2</b> Adding main loop</a></li>
 <li class="chapter" data-level="8.3" data-path="seminar08.html"><a href="seminar08.html#adding-text-message"><i class="fa fa-check"></i><b>8.3</b> Adding text message</a></li>
 <li class="chapter" data-level="8.4" data-path="seminar08.html"><a href="seminar08.html#adding-a-square-and-placing-it-not-at-the-center-of-the-window"><i class="fa fa-check"></i><b>8.4</b> Adding a square and placing it <em>not</em> at the center of the window</a></li>
-<li class="chapter" data-level="8.5" data-path="seminar08.html"><a href="seminar08.html#five-units-systems"><i class="fa fa-check"></i><b>8.5</b> Five units systems</a>
+<li class="chapter" data-level="8.5" data-path="seminar08.html"><a href="seminar08.html#psychopy-units"><i class="fa fa-check"></i><b>8.5</b> Five units systems</a>
 <ul>
 <li class="chapter" data-level="8.5.1" data-path="seminar08.html"><a href="seminar08.html#height-units"><i class="fa fa-check"></i><b>8.5.1</b> Height units</a></li>
 <li class="chapter" data-level="8.5.2" data-path="seminar08.html"><a href="seminar08.html#normalized-units"><i class="fa fa-check"></i><b>8.5.2</b> Normalized units</a></li>
@@ -395,7 +396,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path="cross-references.html"><a href="cross-references.html"><i class="fa fa-check"></i>Cross references</a></li>
 <li class="divider"></li>
-<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+<li><a href="https://alexander-pastukhov.github.io/">Alexander (Sasha) Pastukhov</li>.
 
 </ul>
 
@@ -443,9 +444,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="initializing-psychopy" class="section level2" number="13.3">
 <h2><span class="header-section-number">13.3</span> Initializing PsychoPy</h2>
-<p>To remind yourself on how you initialize PsychoPy window, see <a href="seminar08.html#seminar08">here</a>. Let us plan ahead and decide on windows size and its units. Recall that PsychoPy has <a href="#psychopy-units">five different units</a> for size and position. Given that our snake will be composed of square segments and move on a grid made out of squares, which units should we pick? Read on <a href="#psychopy-units">units</a> and think which units you would pick before continuing</p>
+<p>To remind yourself on how you initialize PsychoPy window, see <a href="seminar08.html#seminar08">here</a>. Let us plan ahead and decide on windows size and its units. Recall that PsychoPy has <a href="seminar08.html#psychopy-units">five different units</a> for size and position. Given that our snake will be composed of square segments and move on a grid made out of squares, which units should we pick? Read on <a href="seminar08.html#psychopy-units">units</a> and think which units you would pick before continuing</p>
 <hr />
-<p>My suggestion would be <code>"norm"</code> units as they make sizing squares easy, as long as we use a suitable aspect ratio. Thus, let us think about the grid. We can define its width and height in <em>squares</em>, e.g., a 30 × 20 grid should give us enough space to try things out but we can always increase the resolution of the game later. Create a <a href="">constant</a> <code>GRID_SIZE</code> and assign a <a href="https://docs.python.org/3/tutorial/datastructures.html#tuples-and-sequences">tuple</a> of <code>(width, height)</code> to it. Note that window’s aspect ratio will depend on the size of the grid that we pick. If you want to have a square window, use a 30 × 30 grid.</p>
+<p>My suggestion would be <code>"norm"</code> units as they make sizing squares easy, as long as we use a suitable aspect ratio. Thus, let us think about the grid. We can define its width and height in <em>squares</em>, e.g., a 30 × 20 grid should give us enough space to try things out but we can always increase the resolution of the game later. Create a <a href="seminar01.html#constants">constant</a> <code>GRID_SIZE</code> and assign a <a href="https://docs.python.org/3/tutorial/datastructures.html#tuples-and-sequences">tuple</a> of <code>(width, height)</code> to it. Note that window’s aspect ratio will depend on the size of the grid that we pick. If you want to have a square window, use a 30 × 30 grid.</p>
 <p>We also need to define an <em>absolute</em> size of a square in pixels (call the constant <code>SQUARE_SIZE_PIX</code>), which will determine how large each square will look on the screen and, therefore, will determine the absolute size of the window: <span class="math inline">\(window~height = window~height~in~squares * square~size~in~pixels\)</span> (same goes for the width). Note that this parameter determines how the game looks, double the size of the square in pixels and that will double both width and height of the window.</p>
 <p>Put it all together. You could should look roughly as follows:</p>
 <div class="sourceCode" id="cb137"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb137-1"><a href="seminar-02-01.html#cb137-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import all libraries and modules you need</span></span>

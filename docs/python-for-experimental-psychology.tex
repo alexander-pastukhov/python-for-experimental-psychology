@@ -117,7 +117,7 @@
 
 \title{Python for social and experimental psychology}
 \author{Alexander (Sasha) Pastukhov}
-\date{2021-04-13}
+\date{2021-04-14}
 
 \begin{document}
 \maketitle
@@ -129,6 +129,12 @@
 \hypertarget{introduction}{%
 \chapter*{Introduction}\label{introduction}}
 \addcontentsline{toc}{chapter}{Introduction}
+
+\hypertarget{about-the-material}{%
+\section*{About the material}\label{about-the-material}}
+\addcontentsline{toc}{section}{About the material}
+
+This material is \textbf{free to use} and is licensed under the \href{https://creativecommons.org/licenses/by-nc-nd/4.0/}{Creative Commons Attribution-NonCommercial-NoDerivatives V4.0 International License}.
 
 \hypertarget{about-the-seminar}{%
 \section*{About the seminar}\label{about-the-seminar}}
@@ -2455,8 +2461,8 @@ Put your code into \emph{exercise04.py}.
 
 What did you say, your square was not really a square? Well, I told you, \textbf{five} units systems!
 
-\hypertarget{five-units-systems}{%
-\section{Five units systems}\label{five-units-systems}}
+\hypertarget{psychopy-units}{%
+\section{Five units systems}\label{psychopy-units}}
 
 \hypertarget{height-units}{%
 \subsection{Height units}\label{height-units}}
@@ -3451,7 +3457,7 @@ To remind yourself on how you initialize PsychoPy window, see \protect\hyperlink
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-My suggestion would be \texttt{"norm"} units as they make sizing squares easy, as long as we use a suitable aspect ratio. Thus, let us think about the grid. We can define its width and height in \emph{squares}, e.g., a 30 × 20 grid should give us enough space to try things out but we can always increase the resolution of the game later. Create a \href{}{constant} \texttt{GRID\_SIZE} and assign a \href{https://docs.python.org/3/tutorial/datastructures.html\#tuples-and-sequences}{tuple} of \texttt{(width,\ height)} to it. Note that window's aspect ratio will depend on the size of the grid that we pick. If you want to have a square window, use a 30 × 30 grid.
+My suggestion would be \texttt{"norm"} units as they make sizing squares easy, as long as we use a suitable aspect ratio. Thus, let us think about the grid. We can define its width and height in \emph{squares}, e.g., a 30 × 20 grid should give us enough space to try things out but we can always increase the resolution of the game later. Create a \protect\hyperlink{constants}{constant} \texttt{GRID\_SIZE} and assign a \href{https://docs.python.org/3/tutorial/datastructures.html\#tuples-and-sequences}{tuple} of \texttt{(width,\ height)} to it. Note that window's aspect ratio will depend on the size of the grid that we pick. If you want to have a square window, use a 30 × 30 grid.
 
 We also need to define an \emph{absolute} size of a square in pixels (call the constant \texttt{SQUARE\_SIZE\_PIX}), which will determine how large each square will look on the screen and, therefore, will determine the absolute size of the window: \(window~height = window~height~in~squares * square~size~in~pixels\) (same goes for the width). Note that this parameter determines how the game looks, double the size of the square in pixels and that will double both width and height of the window.
 

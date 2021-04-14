@@ -79,7 +79,7 @@ minimal-psychopy-code
 adding-main-loop
 adding-text-message
 adding-a-square-and-placing-it-not-at-the-center-of-the-window
-five-units-systems
+psychopy-units
 height-units
 normalized-units
 pixels-on-screen
