@@ -15,6 +15,9 @@ rmarkdown::find_pandoc(dir = "c:/Program Files/Pandoc", cache=FALSE)
 
 # Introduction {-}
 
+## About the material {-}
+This material is **free to use** and is licensed under the [Creative Commons Attribution-NonCommercial-NoDerivatives V4.0 International License](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+
 
 ## About the seminar {-}
 This is a material for _Python for social and experimental psychology_ seminar. Each chapter covers a single seminar, introducing necessary ideas and is accompanied by a notebook with exercises that you need to complete and submit. The material assumes no foreknowledge of Python or programming from the reader. Its purpose is to gradually build up your knowledge and allow you to create more and more complex games. Yes, games! Of course, the real research is about performing experiments but there is little difference between the two. The basic ingredients are the same and, arguably, experiments are just boring games. And, be assured, if you can program a game, you certainly can program an experiment.
