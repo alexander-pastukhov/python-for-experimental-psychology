@@ -101,7 +101,7 @@ Put your updated code into _exercise08.py_.
 
 ## Bells and whistles: sounds
 
-Download [game-over-arcade.wav](material/game-over-arcade.wav)^[Downloaded from [freesound.org](https://freesound.org/) and created by [myfox14](https://freesound.org/people/myfox14/)] and [8-bit-game-over-sound.wav](material /8-bit-game-over-sound.wav)^[Also downloaded from [freesound.org](https://freesound.org/) and created by [EVRetro](https://freesound.org/people/EVRetro/)]. Use the former whenever the snake dies and use the latter when the player runs out of lives. You will need to use [Sound](https://www.psychopy.org/api/sound.html#sound) class from [sound](https://www.psychopy.org/api/sound.html) module of PsychoPy.
+Download [game-over-arcade.wav](material/game-over-arcade.wav)^[Downloaded from [freesound.org](https://freesound.org/) and created by [myfox14](https://freesound.org/people/myfox14/)] and [8-bit-game-over-sound.wav](material/8-bit-game-over-sound.wav)^[Also downloaded from [freesound.org](https://freesound.org/) and created by [EVRetro](https://freesound.org/people/EVRetro/)]. Use the former whenever the snake dies and use the latter when the player runs out of lives. You will need to use [Sound](https://www.psychopy.org/api/sound.html#sound) class from [sound](https://www.psychopy.org/api/sound.html) module of PsychoPy.
 
 ::: {.infobox .program}
 Put your updated code into _exercise09.py_.
