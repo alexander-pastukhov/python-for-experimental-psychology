@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Seminar 17 Space invaders: mixins and duck typing | Python for social and experimental psychology</title>
+  <meta name="description" content="Material and exercises for ‘Python for social and experimental psychology’ seminar." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Seminar 17 Space invaders: mixins and duck typing | Python for social and experimental psychology" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Material and exercises for ‘Python for social and experimental psychology’ seminar." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Seminar 17 Space invaders: mixins and duck typing | Python for social and experimental psychology" />
+  
+  <meta name="twitter:description" content="Material and exercises for ‘Python for social and experimental psychology’ seminar." />
+  
+
+<meta name="author" content="Alexander (Sasha) Pastukhov" />
+
+
+<meta name="date" content="2021-05-04" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="seminar-02-04.html"/>
+<link rel="next" href="cross-references.html"/>
+<script src="libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="index.html">Python for social and experimental psychology</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#about-the-material"><i class="fa fa-check"></i>About the material</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#about-the-seminar"><i class="fa fa-check"></i>About the seminar</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#note-on-exercises"><i class="fa fa-check"></i>Note on exercises</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#why-python"><i class="fa fa-check"></i>Why Python?</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="getting-started.html"><a href="getting-started.html"><i class="fa fa-check"></i>Getting Started</a>
+<ul>
+<li class="chapter" data-level="" data-path="getting-started.html"><a href="getting-started.html#install-anaconda"><i class="fa fa-check"></i>Installing Anaconda environment</a></li>
+<li class="chapter" data-level="" data-path="getting-started.html"><a href="getting-started.html#install-vs-code"><i class="fa fa-check"></i>Installing Visual Studio Code</a></li>
+<li class="chapter" data-level="" data-path="getting-started.html"><a href="getting-started.html#debug-in-vs-code"><i class="fa fa-check"></i>Debugging in VIsual Studio Code</a></li>
+<li class="chapter" data-level="" data-path="getting-started.html"><a href="getting-started.html#install-psychopy"><i class="fa fa-check"></i>Installing PsychoPy</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="seminar01.html"><a href="seminar01.html"><i class="fa fa-check"></i><b>1</b> Python basics</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="seminar01.html"><a href="seminar01.html#variables"><i class="fa fa-check"></i><b>1.1</b> Variables</a></li>
+<li class="chapter" data-level="1.2" data-path="seminar01.html"><a href="seminar01.html#assignments-are-not-equations"><i class="fa fa-check"></i><b>1.2</b> Assignments are not equations!</a></li>
+<li class="chapter" data-level="1.3" data-path="seminar01.html"><a href="seminar01.html#constants"><i class="fa fa-check"></i><b>1.3</b> Constants</a></li>
+<li class="chapter" data-level="1.4" data-path="seminar01.html"><a href="seminar01.html#value-types"><i class="fa fa-check"></i><b>1.4</b> Value types</a></li>
+<li class="chapter" data-level="1.5" data-path="seminar01.html"><a href="seminar01.html#printing-output"><i class="fa fa-check"></i><b>1.5</b> Printing output</a></li>
+<li class="chapter" data-level="1.6" data-path="seminar01.html"><a href="seminar01.html#string-formatting"><i class="fa fa-check"></i><b>1.6</b> String formatting</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="seminar02.html"><a href="seminar02.html"><i class="fa fa-check"></i><b>2</b> Guess the Number</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="seminar02.html"><a href="seminar02.html#game-description"><i class="fa fa-check"></i><b>2.1</b> Game description</a></li>
+<li class="chapter" data-level="2.2" data-path="seminar02.html"><a href="seminar02.html#lets-pick-the-number-exercise-1"><i class="fa fa-check"></i><b>2.2</b> Let’s pick the number (Exercise 1)</a></li>
+<li class="chapter" data-level="2.3" data-path="seminar02.html"><a href="seminar02.html#input-function"><i class="fa fa-check"></i><b>2.3</b> Asking user for a guess (Exercise 2)</a></li>
+<li class="chapter" data-level="2.4" data-path="seminar02.html"><a href="seminar02.html#conditional-if-statement"><i class="fa fa-check"></i><b>2.4</b> Conditional <em>if</em> statement</a></li>
+<li class="chapter" data-level="2.5" data-path="seminar02.html"><a href="seminar02.html#conditions-and-comparisons-exercises-3-8"><i class="fa fa-check"></i><b>2.5</b> Conditions and comparisons (exercises 3-8)</a></li>
+<li class="chapter" data-level="2.6" data-path="seminar02.html"><a href="seminar02.html#grouping-statements-via-identation-exercise-9"><i class="fa fa-check"></i><b>2.6</b> Grouping statements via identation (exercise #9)</a></li>
+<li class="chapter" data-level="2.7" data-path="seminar02.html"><a href="seminar02.html#checking-the-answer-exercise-11"><i class="fa fa-check"></i><b>2.7</b> Checking the answer (Exercise 11)</a></li>
+<li class="chapter" data-level="2.8" data-path="seminar02.html"><a href="seminar02.html#picking-number-randomly-exercise-12"><i class="fa fa-check"></i><b>2.8</b> Picking number randomly (Exercise 12)</a></li>
+<li class="chapter" data-level="2.9" data-path="seminar02.html"><a href="seminar02.html#one-armed-bandit-exercise-13"><i class="fa fa-check"></i><b>2.9</b> One-armed bandit (Exercise 13)</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="seminar03.html"><a href="seminar03.html"><i class="fa fa-check"></i><b>3</b> Guess the Number, the Sequel</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="seminar03.html"><a href="seminar03.html#while-loop"><i class="fa fa-check"></i><b>3.1</b> While loop (Exercises 1-2)</a></li>
+<li class="chapter" data-level="3.2" data-path="seminar03.html"><a href="seminar03.html#counting-attempts-exercise-3"><i class="fa fa-check"></i><b>3.2</b> Counting attempts (Exercise #3)</a></li>
+<li class="chapter" data-level="3.3" data-path="seminar03.html"><a href="seminar03.html#break"><i class="fa fa-check"></i><b>3.3</b> Breaking (and exiting, Exercise #4)</a></li>
+<li class="chapter" data-level="3.4" data-path="seminar03.html"><a href="seminar03.html#limiting-number-of-attempts-via-break-exercise-5"><i class="fa fa-check"></i><b>3.4</b> Limiting number of attempts via break (Exercise 5)</a></li>
+<li class="chapter" data-level="3.5" data-path="seminar03.html"><a href="seminar03.html#correct-end-of-game-message-exercise-6"><i class="fa fa-check"></i><b>3.5</b> Correct end-of-game message (Exercise 6)</a></li>
+<li class="chapter" data-level="3.6" data-path="seminar03.html"><a href="seminar03.html#limiting-number-of-attempts-with-a-break-exercise-7"><i class="fa fa-check"></i><b>3.6</b> Limiting number of attempts with a break (Exercise 7)</a></li>
+<li class="chapter" data-level="3.7" data-path="seminar03.html"><a href="seminar03.html#show-remaining-attempts-exercise-8"><i class="fa fa-check"></i><b>3.7</b> Show remaining attempts (Exercise 8)</a></li>
+<li class="chapter" data-level="3.8" data-path="seminar03.html"><a href="seminar03.html#repeating-the-game-exercise-9"><i class="fa fa-check"></i><b>3.8</b> Repeating the game (Exercise 9)</a></li>
+<li class="chapter" data-level="3.9" data-path="seminar03.html"><a href="seminar03.html#best-score-exercise-10"><i class="fa fa-check"></i><b>3.9</b> Best score (Exercise 10)</a></li>
+<li class="chapter" data-level="3.10" data-path="seminar03.html"><a href="seminar03.html#counting-game-rounds-exercise-11"><i class="fa fa-check"></i><b>3.10</b> Counting game rounds (Exercise 11)</a></li>
+<li class="chapter" data-level="3.11" data-path="seminar03.html"><a href="seminar03.html#wrap-up"><i class="fa fa-check"></i><b>3.11</b> Wrap up</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="seminar04.html"><a href="seminar04.html"><i class="fa fa-check"></i><b>4</b> Hunt the Wumpus, part 1</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="seminar04.html"><a href="seminar04.html#lists"><i class="fa fa-check"></i><b>4.1</b> Lists</a></li>
+<li class="chapter" data-level="4.2" data-path="seminar04.html"><a href="seminar04.html#caves"><i class="fa fa-check"></i><b>4.2</b> Caves</a></li>
+<li class="chapter" data-level="4.3" data-path="seminar04.html"><a href="seminar04.html#wandering-around"><i class="fa fa-check"></i><b>4.3</b> Wandering around</a></li>
+<li class="chapter" data-level="4.4" data-path="seminar04.html"><a href="seminar04.html#checking-whether-a-value-is-in-the-list"><i class="fa fa-check"></i><b>4.4</b> Checking whether a value is <em>in</em> the list</a></li>
+<li class="chapter" data-level="4.5" data-path="seminar04.html"><a href="seminar04.html#checking-valid-cave-index"><i class="fa fa-check"></i><b>4.5</b> Checking valid cave index</a></li>
+<li class="chapter" data-level="4.6" data-path="seminar04.html"><a href="seminar04.html#checking-that-string-can-be-converted-to-an-integer"><i class="fa fa-check"></i><b>4.6</b> Checking that string can be converted to an integer</a></li>
+<li class="chapter" data-level="4.7" data-path="seminar04.html"><a href="seminar04.html#checking-valid-integer-input"><i class="fa fa-check"></i><b>4.7</b> Checking valid integer input</a></li>
+<li class="chapter" data-level="4.8" data-path="seminar04.html"><a href="seminar04.html#wrap-up-1"><i class="fa fa-check"></i><b>4.8</b> Wrap up</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="seminar05.html"><a href="seminar05.html"><i class="fa fa-check"></i><b>5</b> Hunt the Wumpus, part 2</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="seminar05.html"><a href="seminar05.html#function"><i class="fa fa-check"></i><b>5.1</b> Functions</a>
+<ul>
+<li class="chapter" data-level="" data-path="seminar05.html"><a href="seminar05.html#function-performs-a-single-computation"><i class="fa fa-check"></i>Function performs a single computation</a></li>
+<li class="chapter" data-level="" data-path="seminar05.html"><a href="seminar05.html#function-isolates-code-from-the-rest-of-the-program"><i class="fa fa-check"></i>Function isolates code from the rest of the program</a></li>
+<li class="chapter" data-level="" data-path="seminar05.html"><a href="seminar05.html#function-makes-code-easier-to-test"><i class="fa fa-check"></i>Function makes code easier to test</a></li>
+<li class="chapter" data-level="" data-path="seminar05.html"><a href="seminar05.html#function-makes-code-reusable"><i class="fa fa-check"></i>Function makes code reusable</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="seminar05.html"><a href="seminar05.html#defining-a-function-in-python"><i class="fa fa-check"></i><b>5.2</b> Defining a function in Python</a></li>
+<li class="chapter" data-level="5.3" data-path="seminar05.html"><a href="seminar05.html#function-arguments"><i class="fa fa-check"></i><b>5.3</b> Function arguments</a></li>
+<li class="chapter" data-level="5.4" data-path="seminar05.html"><a href="seminar05.html#functions-returned-value-output"><i class="fa fa-check"></i><b>5.4</b> Functions’ returned value (output)</a></li>
+<li class="chapter" data-level="5.5" data-path="seminar05.html"><a href="seminar05.html#scopes-for-immutable-values"><i class="fa fa-check"></i><b>5.5</b> Scopes (for immutable values)</a></li>
+<li class="chapter" data-level="5.6" data-path="seminar05.html"><a href="seminar05.html#create-input_int"><i class="fa fa-check"></i><b>5.6</b> Create <em>input_int()</em></a></li>
+<li class="chapter" data-level="5.7" data-path="seminar05.html"><a href="seminar05.html#documenting-input_int"><i class="fa fa-check"></i><b>5.7</b> Documenting <em>input_int()</em></a></li>
+<li class="chapter" data-level="5.8" data-path="seminar05.html"><a href="seminar05.html#adding-prompt-parameter-to-input_int"><i class="fa fa-check"></i><b>5.8</b> Adding prompt parameter to <em>input_int()</em></a></li>
+<li class="chapter" data-level="5.9" data-path="seminar05.html"><a href="seminar05.html#using-the-function-in-the-code"><i class="fa fa-check"></i><b>5.9</b> Using the function in the code</a></li>
+<li class="chapter" data-level="5.10" data-path="seminar05.html"><a href="seminar05.html#create-input_cave-function"><i class="fa fa-check"></i><b>5.10</b> Create <em>input_cave()</em> function</a></li>
+<li class="chapter" data-level="5.11" data-path="seminar05.html"><a href="seminar05.html#create-find_empty_cave-function"><i class="fa fa-check"></i><b>5.11</b> Create <em>find_empty_cave()</em> function</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="seminar06.html"><a href="seminar06.html"><i class="fa fa-check"></i><b>6</b> Hunt the Wumpus, part 3</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="seminar06.html"><a href="seminar06.html#recall-variables-as-boxes-immutable-objects"><i class="fa fa-check"></i><b>6.1</b> Recall, Variables as Boxes (immutable objects)</a></li>
+<li class="chapter" data-level="6.2" data-path="seminar06.html"><a href="seminar06.html#variables-as-post-it-stickers-mutable-objects"><i class="fa fa-check"></i><b>6.2</b> Variables as post-it stickers (mutable objects)</a></li>
+<li class="chapter" data-level="6.3" data-path="seminar06.html"><a href="seminar06.html#tuple-a-frozen-list"><i class="fa fa-check"></i><b>6.3</b> Tuple: a frozen list</a></li>
+<li class="chapter" data-level="6.4" data-path="seminar06.html"><a href="seminar06.html#keeping-track-of-occupied-caves"><i class="fa fa-check"></i><b>6.4</b> Keeping track of occupied caves</a></li>
+<li class="chapter" data-level="6.5" data-path="seminar06.html"><a href="seminar06.html#for-loop"><i class="fa fa-check"></i><b>6.5</b> For loop</a></li>
+<li class="chapter" data-level="6.6" data-path="seminar06.html"><a href="seminar06.html#range"><i class="fa fa-check"></i><b>6.6</b> range()</a></li>
+<li class="chapter" data-level="6.7" data-path="seminar06.html"><a href="seminar06.html#placing-bottomless-pits"><i class="fa fa-check"></i><b>6.7</b> Placing bottomless pits</a></li>
+<li class="chapter" data-level="6.8" data-path="seminar06.html"><a href="seminar06.html#falling-into-a-bottomless-pit"><i class="fa fa-check"></i><b>6.8</b> Falling into a bottomless pit</a></li>
+<li class="chapter" data-level="6.9" data-path="seminar06.html"><a href="seminar06.html#warning-about-a-bottomless-pit"><i class="fa fa-check"></i><b>6.9</b> Warning about a bottomless pit</a></li>
+<li class="chapter" data-level="6.10" data-path="seminar06.html"><a href="seminar06.html#placing-bats"><i class="fa fa-check"></i><b>6.10</b> Placing bats</a></li>
+<li class="chapter" data-level="6.11" data-path="seminar06.html"><a href="seminar06.html#warned-about-bats"><i class="fa fa-check"></i><b>6.11</b> Warned about bats</a></li>
+<li class="chapter" data-level="6.12" data-path="seminar06.html"><a href="seminar06.html#transported-by-bats-to-a-random-cave"><i class="fa fa-check"></i><b>6.12</b> Transported by bats to a random cave</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="seminar07.html"><a href="seminar07.html"><i class="fa fa-check"></i><b>7</b> Hunt the Wumpus, part 4</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="seminar07.html"><a href="seminar07.html#adding-wumpus."><i class="fa fa-check"></i><b>7.1</b> Adding Wumpus.</a></li>
+<li class="chapter" data-level="7.2" data-path="seminar07.html"><a href="seminar07.html#giving-player-a-chance."><i class="fa fa-check"></i><b>7.2</b> Giving player a chance.</a></li>
+<li class="chapter" data-level="7.3" data-path="seminar07.html"><a href="seminar07.html#flight-of-a-crooked-arrow"><i class="fa fa-check"></i><b>7.3</b> Flight of a crooked arrow</a></li>
+<li class="chapter" data-level="7.4" data-path="seminar07.html"><a href="seminar07.html#random-cave-but-no-180-turn"><i class="fa fa-check"></i><b>7.4</b> Random cave but no 180° turn</a></li>
+<li class="chapter" data-level="7.5" data-path="seminar07.html"><a href="seminar07.html#going-distance"><i class="fa fa-check"></i><b>7.5</b> Going distance</a></li>
+<li class="chapter" data-level="7.6" data-path="seminar07.html"><a href="seminar07.html#hitting-a-target"><i class="fa fa-check"></i><b>7.6</b> Hitting a target</a></li>
+<li class="chapter" data-level="7.7" data-path="seminar07.html"><a href="seminar07.html#almost-where"><i class="fa fa-check"></i><b>7.7</b> Almost where</a></li>
+<li class="chapter" data-level="7.8" data-path="seminar07.html"><a href="seminar07.html#move-or-shoot"><i class="fa fa-check"></i><b>7.8</b> Move or shoot?</a></li>
+<li class="chapter" data-level="7.9" data-path="seminar07.html"><a href="seminar07.html#how-far"><i class="fa fa-check"></i><b>7.9</b> How far?</a></li>
+<li class="chapter" data-level="7.10" data-path="seminar07.html"><a href="seminar07.html#input_cave-prompt"><i class="fa fa-check"></i><b>7.10</b> input_cave prompt</a></li>
+<li class="chapter" data-level="7.11" data-path="seminar07.html"><a href="seminar07.html#putting-it-all-together"><i class="fa fa-check"></i><b>7.11</b> Putting it all together</a></li>
+<li class="chapter" data-level="7.12" data-path="seminar07.html"><a href="seminar07.html#wrap-up-2"><i class="fa fa-check"></i><b>7.12</b> Wrap up</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="seminar08.html"><a href="seminar08.html"><i class="fa fa-check"></i><b>8</b> Gettings start with PsychoPy</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="seminar08.html"><a href="seminar08.html#minimal-psychopy-code"><i class="fa fa-check"></i><b>8.1</b> Minimal PsychoPy code</a></li>
+<li class="chapter" data-level="8.2" data-path="seminar08.html"><a href="seminar08.html#adding-main-loop"><i class="fa fa-check"></i><b>8.2</b> Adding main loop</a></li>
+<li class="chapter" data-level="8.3" data-path="seminar08.html"><a href="seminar08.html#adding-text-message"><i class="fa fa-check"></i><b>8.3</b> Adding text message</a></li>
+<li class="chapter" data-level="8.4" data-path="seminar08.html"><a href="seminar08.html#adding-a-square-and-placing-it-not-at-the-center-of-the-window"><i class="fa fa-check"></i><b>8.4</b> Adding a square and placing it <em>not</em> at the center of the window</a></li>
+<li class="chapter" data-level="8.5" data-path="seminar08.html"><a href="seminar08.html#psychopy-units"><i class="fa fa-check"></i><b>8.5</b> Five units systems</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="seminar08.html"><a href="seminar08.html#height-units"><i class="fa fa-check"></i><b>8.5.1</b> Height units</a></li>
+<li class="chapter" data-level="8.5.2" data-path="seminar08.html"><a href="seminar08.html#normalized-units"><i class="fa fa-check"></i><b>8.5.2</b> Normalized units</a></li>
+<li class="chapter" data-level="8.5.3" data-path="seminar08.html"><a href="seminar08.html#pixels-on-screen"><i class="fa fa-check"></i><b>8.5.3</b> Pixels on screen</a></li>
+<li class="chapter" data-level="8.5.4" data-path="seminar08.html"><a href="seminar08.html#degrees-of-visual-angle"><i class="fa fa-check"></i><b>8.5.4</b> Degrees of visual angle</a></li>
+<li class="chapter" data-level="8.5.5" data-path="seminar08.html"><a href="seminar08.html#centimeters-on-screen"><i class="fa fa-check"></i><b>8.5.5</b> Centimeters on screen</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="seminar08.html"><a href="seminar08.html#make-your-square-jump"><i class="fa fa-check"></i><b>8.6</b> Make your square jump!</a></li>
+<li class="chapter" data-level="8.7" data-path="seminar08.html"><a href="seminar08.html#make-the-square-jump-on-your-command"><i class="fa fa-check"></i><b>8.7</b> Make the square jump on your command!</a></li>
+<li class="chapter" data-level="8.8" data-path="seminar08.html"><a href="seminar08.html#i-like-to-move-it-move-it"><i class="fa fa-check"></i><b>8.8</b> I like to move it, move it!</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="seminar09.html"><a href="seminar09.html"><i class="fa fa-check"></i><b>9</b> Memory game, part 1</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="seminar09.html"><a href="seminar09.html#minimal-code"><i class="fa fa-check"></i><b>9.1</b> Minimal code</a></li>
+<li class="chapter" data-level="9.2" data-path="seminar09.html"><a href="seminar09.html#drawing-an-image"><i class="fa fa-check"></i><b>9.2</b> Drawing an image</a></li>
+<li class="chapter" data-level="9.3" data-path="seminar09.html"><a href="seminar09.html#python-function-argumentsparameters"><i class="fa fa-check"></i><b>9.3</b> Python function arguments/parameters</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="seminar09.html"><a href="seminar09.html#position-and-name-keyword"><i class="fa fa-check"></i><b>9.3.1</b> Position and name (keyword)</a></li>
+<li class="chapter" data-level="9.3.2" data-path="seminar09.html"><a href="seminar09.html#using-os-library"><i class="fa fa-check"></i><b>9.3.2</b> Using <em>os</em> library</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="seminar09.html"><a href="seminar09.html#ordnung-muss-sein"><i class="fa fa-check"></i><b>9.4</b> Ordnung muss sein!</a></li>
+<li class="chapter" data-level="9.5" data-path="seminar09.html"><a href="seminar09.html#placing-an-image"><i class="fa fa-check"></i><b>9.5</b> Placing an image</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="seminar09.html"><a href="seminar09.html#using-your-own-modules"><i class="fa fa-check"></i><b>9.5.1</b> Using your own modules</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="seminar09.html"><a href="seminar09.html#back-side-of-the-card"><i class="fa fa-check"></i><b>9.6</b> Back side of the card</a></li>
+<li class="chapter" data-level="9.7" data-path="seminar09.html"><a href="seminar09.html#dictionaries"><i class="fa fa-check"></i><b>9.7</b> Dictionaries</a></li>
+<li class="chapter" data-level="9.8" data-path="seminar09.html"><a href="seminar09.html#using-dictionary-to-represent-a-card"><i class="fa fa-check"></i><b>9.8</b> Using dictionary to represent a card</a>
+<ul>
+<li class="chapter" data-level="9.8.1" data-path="seminar09.html"><a href="seminar09.html#card-factory"><i class="fa fa-check"></i><b>9.8.1</b> Card factory</a></li>
+<li class="chapter" data-level="9.8.2" data-path="seminar09.html"><a href="seminar09.html#adding-presentationinputs-loop"><i class="fa fa-check"></i><b>9.8.2</b> Adding presentation/inputs loop</a></li>
+<li class="chapter" data-level="9.8.3" data-path="seminar09.html"><a href="seminar09.html#detecting-a-mouse-click"><i class="fa fa-check"></i><b>9.8.3</b> Detecting a mouse click</a></li>
+</ul></li>
+<li class="chapter" data-level="9.9" data-path="seminar09.html"><a href="seminar09.html#position-to-index"><i class="fa fa-check"></i><b>9.9</b> Position to index</a></li>
+<li class="chapter" data-level="9.10" data-path="seminar09.html"><a href="seminar09.html#flip-on-click"><i class="fa fa-check"></i><b>9.10</b> Flip on click</a></li>
+<li class="chapter" data-level="9.11" data-path="seminar09.html"><a href="seminar09.html#flip-flop"><i class="fa fa-check"></i><b>9.11</b> Flip-flop</a></li>
+<li class="chapter" data-level="9.12" data-path="seminar09.html"><a href="seminar09.html#to-be-continued"><i class="fa fa-check"></i><b>9.12</b> To be continued…</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="seminar10.html"><a href="seminar10.html"><i class="fa fa-check"></i><b>10</b> Memory game, part 2</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="seminar10.html"><a href="seminar10.html#getting-list-of-image-files."><i class="fa fa-check"></i><b>10.1</b> Getting list of image files.</a></li>
+<li class="chapter" data-level="10.2" data-path="seminar10.html"><a href="seminar10.html#list-comprehension"><i class="fa fa-check"></i><b>10.2</b> List comprehension</a></li>
+<li class="chapter" data-level="10.3" data-path="seminar10.html"><a href="seminar10.html#getting-list-of-relevant-files"><i class="fa fa-check"></i><b>10.3</b> Getting list of relevant files</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="seminar10.html"><a href="seminar10.html#list-operations"><i class="fa fa-check"></i><b>10.3.1</b> List operations</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="seminar10.html"><a href="seminar10.html#lots-of-cards-using-list-enumeration"><i class="fa fa-check"></i><b>10.4</b> Lots of cards, using list enumeration</a></li>
+<li class="chapter" data-level="10.5" data-path="seminar10.html"><a href="seminar10.html#mouse-interaction-for-every-card"><i class="fa fa-check"></i><b>10.5</b> Mouse interaction for every card</a></li>
+<li class="chapter" data-level="10.6" data-path="seminar10.html"><a href="seminar10.html#limiting-flipping-to-just-two-cards"><i class="fa fa-check"></i><b>10.6</b> Limiting flipping to just two cards</a></li>
+<li class="chapter" data-level="10.7" data-path="seminar10.html"><a href="seminar10.html#remembering-which-cards-were-turned"><i class="fa fa-check"></i><b>10.7</b> Remembering which cards were turned</a></li>
+<li class="chapter" data-level="10.8" data-path="seminar10.html"><a href="seminar10.html#visible-card-flag"><i class="fa fa-check"></i><b>10.8</b> “Visible” card flag</a></li>
+<li class="chapter" data-level="10.9" data-path="seminar10.html"><a href="seminar10.html#removing-matching-cards"><i class="fa fa-check"></i><b>10.9</b> “Removing” matching cards</a></li>
+<li class="chapter" data-level="10.10" data-path="seminar10.html"><a href="seminar10.html#game-over-if-you-run-out-of-cards"><i class="fa fa-check"></i><b>10.10</b> Game over, if you run out of cards</a></li>
+<li class="chapter" data-level="10.11" data-path="seminar10.html"><a href="seminar10.html#game-over-message"><i class="fa fa-check"></i><b>10.11</b> Game over message</a></li>
+<li class="chapter" data-level="10.12" data-path="seminar10.html"><a href="seminar10.html#counting-attempts"><i class="fa fa-check"></i><b>10.12</b> Counting attempts</a></li>
+<li class="chapter" data-level="10.13" data-path="seminar10.html"><a href="seminar10.html#record-time"><i class="fa fa-check"></i><b>10.13</b> Record time</a></li>
+<li class="chapter" data-level="10.14" data-path="seminar10.html"><a href="seminar10.html#randomness"><i class="fa fa-check"></i><b>10.14</b> Randomness</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="seminar11.html"><a href="seminar11.html"><i class="fa fa-check"></i><b>11</b> Memory game, part 3</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="seminar11.html"><a href="seminar11.html#sound-effects"><i class="fa fa-check"></i><b>11.1</b> Sound effects</a></li>
+<li class="chapter" data-level="11.2" data-path="seminar11.html"><a href="seminar11.html#sound-from-file"><i class="fa fa-check"></i><b>11.2</b> Sound from file</a></li>
+<li class="chapter" data-level="11.3" data-path="seminar11.html"><a href="seminar11.html#feedback-sounds"><i class="fa fa-check"></i><b>11.3</b> Feedback sounds</a></li>
+<li class="chapter" data-level="11.4" data-path="seminar11.html"><a href="seminar11.html#keeping-sounds-organized-dictionary-comprehension"><i class="fa fa-check"></i><b>11.4</b> Keeping sounds organized: dictionary comprehension</a></li>
+<li class="chapter" data-level="11.5" data-path="seminar11.html"><a href="seminar11.html#logging-data"><i class="fa fa-check"></i><b>11.5</b> Logging data</a></li>
+<li class="chapter" data-level="11.6" data-path="seminar11.html"><a href="seminar11.html#more-rounds"><i class="fa fa-check"></i><b>11.6</b> More rounds</a></li>
+<li class="chapter" data-level="11.7" data-path="seminar11.html"><a href="seminar11.html#random-order"><i class="fa fa-check"></i><b>11.7</b> Random order</a></li>
+<li class="chapter" data-level="11.8" data-path="seminar11.html"><a href="seminar11.html#abba-order"><i class="fa fa-check"></i><b>11.8</b> ABBA order</a></li>
+<li class="chapter" data-level="11.9" data-path="seminar11.html"><a href="seminar11.html#we-want-more"><i class="fa fa-check"></i><b>11.9</b> We want more!</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="the-skill-of-programming.html"><a href="the-skill-of-programming.html"><i class="fa fa-check"></i><b>12</b> The skill of programming</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="the-skill-of-programming.html"><a href="the-skill-of-programming.html#writing-the-code"><i class="fa fa-check"></i><b>12.1</b> Writing the code</a></li>
+<li class="chapter" data-level="12.2" data-path="the-skill-of-programming.html"><a href="the-skill-of-programming.html#reading-the-code"><i class="fa fa-check"></i><b>12.2</b> Reading the code</a></li>
+<li class="chapter" data-level="12.3" data-path="the-skill-of-programming.html"><a href="the-skill-of-programming.html#zen-of-python"><i class="fa fa-check"></i><b>12.3</b> Zen of Python</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="seminar-02-01.html"><a href="seminar-02-01.html"><i class="fa fa-check"></i><b>13</b> Snake game</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="seminar-02-01.html"><a href="seminar-02-01.html#assignments"><i class="fa fa-check"></i><b>13.1</b> Assignments</a></li>
+<li class="chapter" data-level="13.2" data-path="seminar-02-01.html"><a href="seminar-02-01.html#snake-game-an-overview"><i class="fa fa-check"></i><b>13.2</b> Snake game: an overview</a></li>
+<li class="chapter" data-level="13.3" data-path="seminar-02-01.html"><a href="seminar-02-01.html#initializing-psychopy"><i class="fa fa-check"></i><b>13.3</b> Initializing PsychoPy</a></li>
+<li class="chapter" data-level="13.4" data-path="seminar-02-01.html"><a href="seminar-02-01.html#adding-a-square"><i class="fa fa-check"></i><b>13.4</b> Adding a square</a></li>
+<li class="chapter" data-level="13.5" data-path="seminar-02-01.html"><a href="seminar-02-01.html#adding-the-snake"><i class="fa fa-check"></i><b>13.5</b> Adding the snake</a></li>
+<li class="chapter" data-level="13.6" data-path="seminar-02-01.html"><a href="seminar-02-01.html#adding-main-game-loop"><i class="fa fa-check"></i><b>13.6</b> Adding main game loop</a></li>
+<li class="chapter" data-level="13.7" data-path="seminar-02-01.html"><a href="seminar-02-01.html#get-a-move-on"><i class="fa fa-check"></i><b>13.7</b> Get a move on!</a></li>
+<li class="chapter" data-level="13.8" data-path="seminar-02-01.html"><a href="seminar-02-01.html#self-motion"><i class="fa fa-check"></i><b>13.8</b> Self-motion</a></li>
+<li class="chapter" data-level="13.9" data-path="seminar-02-01.html"><a href="seminar-02-01.html#describing-direction-using-words"><i class="fa fa-check"></i><b>13.9</b> Describing direction using words</a></li>
+<li class="chapter" data-level="13.10" data-path="seminar-02-01.html"><a href="seminar-02-01.html#it-is-all-about-control"><i class="fa fa-check"></i><b>13.10</b> It is all about control</a></li>
+<li class="chapter" data-level="13.11" data-path="seminar-02-01.html"><a href="seminar-02-01.html#turning-the-hard-way"><i class="fa fa-check"></i><b>13.11</b> Turning the hard way</a></li>
+<li class="chapter" data-level="13.12" data-path="seminar-02-01.html"><a href="seminar-02-01.html#to-be-continued-1"><i class="fa fa-check"></i><b>13.12</b> To be continued…</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="seminar-02-02.html"><a href="seminar-02-02.html"><i class="fa fa-check"></i><b>14</b> Snake game, part 2</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="seminar-02-02.html"><a href="seminar-02-02.html#hitting-the-wall"><i class="fa fa-check"></i><b>14.1</b> Hitting the wall</a></li>
+<li class="chapter" data-level="14.2" data-path="seminar-02-02.html"><a href="seminar-02-02.html#is-this-the-snake"><i class="fa fa-check"></i><b>14.2</b> Is this the snake?</a></li>
+<li class="chapter" data-level="14.3" data-path="seminar-02-02.html"><a href="seminar-02-02.html#an-inedible-apple"><i class="fa fa-check"></i><b>14.3</b> An inedible apple</a></li>
+<li class="chapter" data-level="14.4" data-path="seminar-02-02.html"><a href="seminar-02-02.html#eating-an-apple"><i class="fa fa-check"></i><b>14.4</b> Eating an apple</a></li>
+<li class="chapter" data-level="14.5" data-path="seminar-02-02.html"><a href="seminar-02-02.html#eating-yourself"><i class="fa fa-check"></i><b>14.5</b> Eating yourself</a></li>
+<li class="chapter" data-level="14.6" data-path="seminar-02-02.html"><a href="seminar-02-02.html#bells-and-whistles-score"><i class="fa fa-check"></i><b>14.6</b> Bells and whistles: score</a></li>
+<li class="chapter" data-level="14.7" data-path="seminar-02-02.html"><a href="seminar-02-02.html#bells-and-whistels-three-lives"><i class="fa fa-check"></i><b>14.7</b> Bells and whistels: three lives</a></li>
+<li class="chapter" data-level="14.8" data-path="seminar-02-02.html"><a href="seminar-02-02.html#bells-and-whistels-showing-lives"><i class="fa fa-check"></i><b>14.8</b> Bells and whistels: showing lives</a></li>
+<li class="chapter" data-level="14.9" data-path="seminar-02-02.html"><a href="seminar-02-02.html#bells-and-whistles-difficulty"><i class="fa fa-check"></i><b>14.9</b> Bells and whistles: difficulty</a></li>
+<li class="chapter" data-level="14.10" data-path="seminar-02-02.html"><a href="seminar-02-02.html#bells-and-whistles-sounds"><i class="fa fa-check"></i><b>14.10</b> Bells and whistles: sounds</a></li>
+<li class="chapter" data-level="14.11" data-path="seminar-02-02.html"><a href="seminar-02-02.html#bells-and-whistles-blinking-game-over-message"><i class="fa fa-check"></i><b>14.11</b> Bells and whistles: blinking game over message</a></li>
+<li class="chapter" data-level="14.12" data-path="seminar-02-02.html"><a href="seminar-02-02.html#next-stop-classes-and-objects"><i class="fa fa-check"></i><b>14.12</b> Next stop: classes and objects</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="seminar-02-03.html"><a href="seminar-02-03.html"><i class="fa fa-check"></i><b>15</b> Snake game: object-oriented programming</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="seminar-02-03.html"><a href="seminar-02-03.html#object-oriented-programming"><i class="fa fa-check"></i><b>15.1</b> Object-oriented programming</a>
+<ul>
+<li class="chapter" data-level="15.1.1" data-path="seminar-02-03.html"><a href="seminar-02-03.html#classes-and-objects-instances-of-classes"><i class="fa fa-check"></i><b>15.1.1</b> Classes and objects (instances of classes)</a></li>
+<li class="chapter" data-level="15.1.2" data-path="seminar-02-03.html"><a href="seminar-02-03.html#encapsulation"><i class="fa fa-check"></i><b>15.1.2</b> Encapsulation</a></li>
+</ul></li>
+<li class="chapter" data-level="15.2" data-path="seminar-02-03.html"><a href="seminar-02-03.html#inheritance-generalization"><i class="fa fa-check"></i><b>15.2</b> Inheritance / Generalization</a></li>
+<li class="chapter" data-level="15.3" data-path="seminar-02-03.html"><a href="seminar-02-03.html#polymorphism"><i class="fa fa-check"></i><b>15.3</b> Polymorphism</a></li>
+<li class="chapter" data-level="15.4" data-path="seminar-02-03.html"><a href="seminar-02-03.html#a-minimal-class-example"><i class="fa fa-check"></i><b>15.4</b> A minimal class example</a></li>
+<li class="chapter" data-level="15.5" data-path="seminar-02-03.html"><a href="seminar-02-03.html#add-method"><i class="fa fa-check"></i><b>15.5</b> <code>add</code> method</a></li>
+<li class="chapter" data-level="15.6" data-path="seminar-02-03.html"><a href="seminar-02-03.html#flexible-accumulator-with-a-subtract-method"><i class="fa fa-check"></i><b>15.6</b> Flexible accumulator with a <code>subtract</code> method</a></li>
+<li class="chapter" data-level="15.7" data-path="seminar-02-03.html"><a href="seminar-02-03.html#method-arguments"><i class="fa fa-check"></i><b>15.7</b> Method arguments</a></li>
+<li class="chapter" data-level="15.8" data-path="seminar-02-03.html"><a href="seminar-02-03.html#constructor-arguments"><i class="fa fa-check"></i><b>15.8</b> Constructor arguments</a></li>
+<li class="chapter" data-level="15.9" data-path="seminar-02-03.html"><a href="seminar-02-03.html#calling-methods-from-other-methods"><i class="fa fa-check"></i><b>15.9</b> Calling methods from other methods</a></li>
+<li class="chapter" data-level="15.10" data-path="seminar-02-03.html"><a href="seminar-02-03.html#local-variables"><i class="fa fa-check"></i><b>15.10</b> Local variables</a></li>
+<li class="chapter" data-level="15.11" data-path="seminar-02-03.html"><a href="seminar-02-03.html#refactoring-the-snake-game"><i class="fa fa-check"></i><b>15.11</b> Refactoring the Snake game</a></li>
+<li class="chapter" data-level="15.12" data-path="seminar-02-03.html"><a href="seminar-02-03.html#gridwindow-class"><i class="fa fa-check"></i><b>15.12</b> GridWindow class</a></li>
+<li class="chapter" data-level="15.13" data-path="seminar-02-03.html"><a href="seminar-02-03.html#apple-class"><i class="fa fa-check"></i><b>15.13</b> Apple class</a></li>
+<li class="chapter" data-level="15.14" data-path="seminar-02-03.html"><a href="seminar-02-03.html#refactoring-the-code"><i class="fa fa-check"></i><b>15.14</b> Refactoring the code</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="seminar-02-04.html"><a href="seminar-02-04.html"><i class="fa fa-check"></i><b>16</b> Moon lander game</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="seminar-02-04.html"><a href="seminar-02-04.html#create-window"><i class="fa fa-check"></i><b>16.1</b> Create window</a></li>
+<li class="chapter" data-level="16.2" data-path="seminar-02-04.html"><a href="seminar-02-04.html#create-moonlander-class"><i class="fa fa-check"></i><b>16.2</b> Create MoonLander class</a></li>
+<li class="chapter" data-level="16.3" data-path="seminar-02-04.html"><a href="seminar-02-04.html#randomize-position"><i class="fa fa-check"></i><b>16.3</b> Randomize position</a></li>
+<li class="chapter" data-level="16.4" data-path="seminar-02-04.html"><a href="seminar-02-04.html#gravity"><i class="fa fa-check"></i><b>16.4</b> Gravity</a></li>
+<li class="chapter" data-level="16.5" data-path="seminar-02-04.html"><a href="seminar-02-04.html#vertical-thurster"><i class="fa fa-check"></i><b>16.5</b> Vertical thurster</a></li>
+<li class="chapter" data-level="16.6" data-path="seminar-02-04.html"><a href="seminar-02-04.html#horizontal-thursters"><i class="fa fa-check"></i><b>16.6</b> Horizontal thursters</a></li>
+<li class="chapter" data-level="16.7" data-path="seminar-02-04.html"><a href="seminar-02-04.html#landing-pad-visuals"><i class="fa fa-check"></i><b>16.7</b> Landing pad: visuals</a></li>
+<li class="chapter" data-level="16.8" data-path="seminar-02-04.html"><a href="seminar-02-04.html#computing-edges-of-game-objects"><i class="fa fa-check"></i><b>16.8</b> Computing edges of game objects</a></li>
+<li class="chapter" data-level="16.9" data-path="seminar-02-04.html"><a href="seminar-02-04.html#virtual-attributes-via-getters-and-setters"><i class="fa fa-check"></i><b>16.9</b> Virtual attributes via getters and setters</a></li>
+<li class="chapter" data-level="16.10" data-path="seminar-02-04.html"><a href="seminar-02-04.html#access-restrictions"><i class="fa fa-check"></i><b>16.10</b> Access restrictions</a></li>
+<li class="chapter" data-level="16.11" data-path="seminar-02-04.html"><a href="seminar-02-04.html#landing"><i class="fa fa-check"></i><b>16.11</b> Landing</a></li>
+<li class="chapter" data-level="16.12" data-path="seminar-02-04.html"><a href="seminar-02-04.html#more-rounds-1"><i class="fa fa-check"></i><b>16.12</b> More rounds</a></li>
+<li class="chapter" data-level="16.13" data-path="seminar-02-04.html"><a href="seminar-02-04.html#limited-fuel"><i class="fa fa-check"></i><b>16.13</b> Limited fuel</a></li>
+<li class="chapter" data-level="16.14" data-path="seminar-02-04.html"><a href="seminar-02-04.html#add-to-it"><i class="fa fa-check"></i><b>16.14</b> Add to it!</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="seminar-02-05.html"><a href="seminar-02-05.html"><i class="fa fa-check"></i><b>17</b> Space invaders: mixins and duck typing</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="seminar-02-05.html"><a href="seminar-02-05.html#mixins"><i class="fa fa-check"></i><b>17.1</b> Mixins</a></li>
+<li class="chapter" data-level="17.2" data-path="seminar-02-05.html"><a href="seminar-02-05.html#duck-typing"><i class="fa fa-check"></i><b>17.2</b> Duck typing</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="cross-references.html"><a href="cross-references.html"><i class="fa fa-check"></i>Cross references</a></li>
+<li class="divider"></li>
+<li><a href="https://alexander-pastukhov.github.io/">Alexander (Sasha) Pastukhov</li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Python for social and experimental psychology</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="seminar-02-05" class="section level1" number="17">
+<h1><span class="header-section-number">Seminar 17</span> Space invaders: mixins and duck typing</h1>
+<p>Today we will program a classic Space Invaders game with a twist. We will be using object-oriented programming but you will learn about <em>mixins</em> and <em>duck typing</em>. Previously, you have learned how to ensure generalization — common behavior for different classes — via inheritance. E.g., when all visual stimuli inherit from the save <code>BaseVisualStim</code> class, you can be sure that they all have <code>size</code>, <code>ori</code>, and <code>pos</code> properties and that you can <code>draw()</code> them. However, this approach may not be best suited for cases when the same class must behave as different several classes. One solution is to use <em>multiple inheritance</em>, so that a class is a descendant of several classes and, thus, get behavior from many of them. This is the canonical way of ensuring generalization but you can achieve same means differently.</p>
+<div id="mixins" class="section level2" number="17.1">
+<h2><span class="header-section-number">17.1</span> Mixins</h2>
+<p>One way to infuse <em>common</em> behavior into <em>different</em> classes is via a mixin classes. These are classes that only define a single <em>behavior</em> and nothing else. No constructor, typically no attributes. Thus, they are too limited to be used on their own but can be inherited from (mixed into the proper class) enabling that single behavior in the descendant.</p>
+<p>Think about all creatures that can fly: insects, birds, bats, astronauts, etc. They do have a common ancestor but that common ancestor did not have the ability to fly. Instead, each line evolved that ability independently and all have evolutionary “cousins” that cannot fly. When programming, you can follow the same pattern of creating a common ancestor for flying and non-flying insects, then implementing ability to fly in the former. Do the same for birds, bats, astronauts, etc. If your implementation must be very detailed and creature-specific, this might be unavoidable. However, if your ability to “fly” is very abstract and, therefore, the same for all creatures in question, you will end up writing the same code for every insect, bird, bar class. An easy copy-paste, of course, but that means you get multiple places with identical implementation, so when you need to change it, you will have to make sure that you do it in all the places (and you gonna miss some, I always do). Alternative? Mixins! You create a class <code>FlightAbility</code> that implements that common abstract “flying” and, then, you inherit from that class whenever you need a flying someone. Mix a non-flying bird with the <code>FlightAbility</code> and it can fly! Mix it with an insect: Flying insect!</p>
+<p>You may not need mixins frequently but they are a powerful way of creating an isolated behavior that different classes might need without enforcing strict ancestral history. PsychoPy is big on mixins. For example, it has <code>ColorMixin</code> that could be mixed-in to a visual class that needs to color, so it implements all the repetitive code for translating an arbitrary color representation (string, hexadecimal code, RGB triplet, HSL triplet, single grayscale value, etc.) into the actual machine color value. It also has <code>TextureMixin</code> for classes that use textures for drawing objects. In our <em>Space Invaders</em> game, we will use a Mixin class to mix in a “vanishing from screen” behavior, common to both aliens and the player’s ship.</p>
+</div>
+<div id="duck-typing" class="section level2" number="17.2">
+<h2><span class="header-section-number">17.2</span> Duck typing</h2>
+<p>Alternatively, you might need your object to behave in a certain way but having a proper class hierarchy is an overkill because you might want some but not all the functionality. The idea is to use “duck typing”, which comes from saying “If it walks like a duck, and it quacks like a duck, then it must be a duck.” In other words, if the only things you care about are walking and quacking, do you actually need it to be an actual duck<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>? Will a goose that can walk and quack the same way do? Obviously, the correct answer is “it depends” but in a lot of situations you are interested in a common behavior rather than in a common ancestor.</p>
+<p>Duck typing is a popular method in Python. For example, <code>len(object_instance)</code> is a common way to compute length of an object. That object could be a string <code>len("four")</code>, or a list <code>len([1, 2, 3, 4])</code>, a tuple <code>len(tuple(1, 4, 2))</code>, a dictionary <code>len({"A": 1, "B": 5})</code>, etc. The idea is that as long as a class has a concept of length (number of elements, number of characters, etc.), you should be able compute length via <code>len()</code>. This is achieved by adding a special method <code>def __len__(self):</code> to the class. This is called a “hook method”, as it is never called directly but is “hooked” to the <code>len()</code> function call. Thus, whenever you write <code>len(object)</code>, it is translated to <code>object.__len()__</code><a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>.</p>
+
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="4">
+<li id="fn4"><p>A man is hailing a taxi on a sidewalk. A car stops next to him. The guy looks at it and says “But there is the taxi sign on the roof?”. The driver replies: “Do you need a taxi sign or a ride?”<a href="seminar-02-05.html#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p>Why not implement it as a method <code>object.len()</code> or, even better as a read-only property <code>object.len</code>? Read <a href="https://mail.python.org/pipermail/python-3000/2006-November/004643.html">here</a> for the reasoning!<a href="seminar-02-05.html#fnref5" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="seminar-02-04.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="cross-references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["python-for-experimental-psychology.pdf", "python-for-experimental-psychology.epub"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
