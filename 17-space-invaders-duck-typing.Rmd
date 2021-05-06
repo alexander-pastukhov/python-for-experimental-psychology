@@ -25,6 +25,6 @@ Below, you will practice duck typing but implementing both `__len()__` and two s
 We will program a simply version of the game with aliean armada going gradualy descending. You task is to capture all aliens by firing a teleport beam before one of them rams your ship. Below, you can see my version of the game.
 
 
-As per usual, the plan is to move slowly in small increments to keep the complexity of changes low. For the assignment, you will need to submit the final product. However, I strongly recommend an iterative _submit-get comments-adjust-add another step or two-submit-get comments-..._ approach. It will be much easier, both for you and for me, if we catch errors or potentially problematic code early^[Number of submission is unlimited with reason.].
+As per usual, the plan is to move slowly in small increments to keep the complexity of changes low. For the assignment, you will need to submit the final product. However, I strongly recommend an iterative _submit-get comments-adjust-add another step or two-submit-get comments-..._ approach. It will be much easier, both for you and for me, if we catch errors or potentially problematic code early^[Number of submissions is unlimited with reason.].
 
 ## 
