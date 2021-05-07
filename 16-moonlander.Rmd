@@ -28,30 +28,28 @@ We will program it using object-oriented approach from the beginning by defining
 This time most of the code will be in classes, so making versions of them will be quite cumbersome. Thus, submit only the final game. I would suggest calling files _main.py_ (main script), _moonlander.py_ (`MoonLander` class), and _landingpad.py_ (`LandingPad` class).
 
 ## Create window
-Create a PsychoPy window 640 × 480 in size. Add a main game loop with `gameover` variable that can be exited by pressing _escape_.
+Create our usual boilerplate code in _exercise01.py_ (you will use the same files for classes but use versioning of the main file, it makes it easier for me to check your code). Create a PsychoPy window 640 × 480 in size. Add a main game loop with `gameover` variable that can be exited by pressing _escape_.
 
 
 ::: {.infobox .program}
-Put your code into _main.py_.
+Put your code into _exercise01.py_.
 :::
 
-
 ## Create MoonLander class
-In _moonlander.py_, create a new `MoonLander` class. It should have an ImageStim as an attribute (that will be the visuals of the ship) created using [ufo.png](material/ufo.png) image. For the moment, place it at its default location at the center. Also, implement `draw()` method that should draw all visual elements of the lander (we have one now but there will be more later on).
+In _moonlander.py_, create a new `MoonLander` class. It should have an `ImageStim` attribute (that will be the visuals of the ship) created using [ufo.png](material/ufo.png) image. For the moment, place it at its default location at the center. Also, implement `draw()` method that should draw all visual elements of the lander (we have one now but there will be more later on).
 
 Create an instance of `MoonLander` class in the main script and draw it in the main game loop. You should see a static picture of the ship at the center of the screen.
 
 
 ::: {.infobox .program}
-Create `MoonLander` class and use it in the main game loop.
+Put updated code into _exercise02.py_. Create `MoonLander` class and use it in the main game loop.
 :::
-
 
 ## Randomize position
 Implement a new method `reset()` that resets the lander for the next round. At the moment, the only thing it should do is to randomize position of the image. Use range of -0.5..0.5 horizontally and 0.8..0.9 vertically. Call it in the constructor and test it in the main loop by calling it every time you press _space_ button.
 
 ::: {.infobox .program}
-Add `reset()` method to `MoonLander` class and use it in the main game loop.
+Put updated code into _exercise03.py_. Add `reset()` method to `MoonLander` class and use it in the main game loop.
 :::
 
 ## Gravity
@@ -60,7 +58,7 @@ Next we need to create a gravitational force that will pull the lander down. Cre
 The position of the lander (`self.image.pos`) must adjusted based on the the speed on every frame. But before that, speed itself must be adjusted based on the forces from gravity and thrusters that act upon the lander.  Create a new method `update()` where you first adjust _vertical_ speed based on gravity alone (we will add the effect of thrusters later) and when adjust _vertical_ position based on vertical speed (we will worry about the horizontal speed, once we start working on horizontal thrusters). Call `update()` method before the `draw()` in the main loop. Your lander should fall down at accelerated rate (you can play with `GRAVITY` constant to see how it changes the speed of falling). Once it is off the screen, press space and see it go again.
 
 ::: {.infobox .program}
-Update `MoonLander` class for the effect of gravity and use this in the main loop.
+Put updated code into _exercise04.py_. Update `MoonLander` class for the effect of gravity and use this in the main loop.
 :::
 
 
@@ -81,26 +79,29 @@ Define a `VERTICAL_ACC` to be twice the gravity (but you can use some other numb
 Test you that vertical thruster works!
 
 ::: {.infobox .program}
-Update `MoonLander` class for the counter-effect of a vertical thruster.
+Put updated code into _exercise05.py_. Update `MoonLander` class for the counter-effect of a vertical thruster.
 :::
 
 ## Horizontal thursters
 Now implement the same logic, computing acceleration, speed, and position but for horizontal thrusters (define `HORIZONTAL_ACC`, decide on its value yourself). Remember, the _right_ thruster pushes the lander to the _left_ and vice versa! Assume that only one of the keys, _left_ or _right_, can be pressed at a time. Test it by flying around!
 
 ::: {.infobox .program}
-Add horizontal thrusters to `MoonLander`.
+Put updated code into _exercise06.py_. Add horizontal thrusters to `MoonLander`.
 :::
 
 ## Landing pad: visuals
-The purpose of the game is to land on a landing pad. Let us add one! Create a new file _landing_pad.py_ and a new class `LandingPad`. In the constructor, create a rectangle that is `0.5` units wide and is located at the bottom of the window but at a random position within the window horizontally. Pick the fill and line colors that you like. The only other method the class needs is `draw()`. 
+The purpose of the game is to land on a landing pad. Let us add one! Create a new file _landing_pad.py_ and a new class `LandingPad`. A landing pad is just a rectangle with some additional methods and properties. So it stands to reason to make it a descendant of the `visual.Rect` class. This way, the original class will do all the heavy lifting and provide properties like `size` and `pos` and we can concentrate on the added value.
+
+The only parameter you need to pass to its constructor is window variable. Inside, you only need to call the constructor of the _ancestor_ via `super().__init__(win, ...)`. Set the parameter so at to create a rectangle that is `0.5` units wide and is located at the bottom of the window but at a random position within the window horizontally. Pick the fill and line colors that you like.
 
 In the main code, create an object of class `LandingPad` and draw it in the main loop, along with the lander itself.
 
 ::: {.infobox .program}
-Create `LandingPad` class and use it in the main loop.
+Put updated code into _exercise07.py_. Create `LandingPad` class and use it in the main loop.
 :::
 
 ## Computing edges of game objects
+
 The aim of the game is a soft touchdown on a landing pad. For this, we need to know where the _top_ of the landing pad is, as well as where the _bottom_ of the lander is and where _left_ and _right_ limits of each object are. Let us think about _bottom_ of the lander first, as the rest are very similar.
 
 We do not have information about it _directly_. We have the vertical position of the lander in `self.image.pos[1]` (I assume here that the visuals attribute is called image) and its height in `self.image.size[1]`. From this, it is easy to compute the bottom edge (but remember that position is about the _center_ of the rectangle). Accordingly, you could create a method called `bottom()` that would return the computed value when it is called (e.g., `lander.bottom()`). 
@@ -110,11 +111,11 @@ We do not have information about it _directly_. We have the vertical position of
 Implement `bottom()` method for the `MoonLander` class.
 :::
 
-
 ## Virtual attributes via getters and setters {#getter-setter}
-Our approach of using `lander.bottom()` works but it is _semantically_ inconsistent. Calling methods is about manipulating objects, e.g., drawing them, updating them, comparing them. However, `bottom` is, effectively, an _attribute_ of an object, like its position or size, it is just where the bottom of it is. We _could_ create and compute a `bottom` attribute inside the constructor, solving the problem of semantics, as now you could write `lander.bottom`. Note that as the lander moves all of its edge attributes (`bottom`, `left` and `right`) need to be recomputed after every update. This is unavoidable but a _real_ attribute approach still creates another problem: What if someone _changes_ it? In that case, its value will not be correct, as `bottom` value depends on both position and size, so changing it without a corresponding change in those two attributes makes no sense! And it is really hard to decide whether change in the `bottom` should mean a change in position, or size, or, perhaps, both? Thus, ideally, it should be a read-only attribute.
 
-For cases like these, Python has special _decorators_^[These are functions that "decorate" you function and are called _before_ your function is called. They are like gatekeeps or face control, so they can alter whether your function or how it is executed. They are very useful in certain scenarios and we will meet them again later. However, we will not talk about them in detail here.]: `@property` and `@<name>.setter`. The former one decorates a method that allows you to _get_ an attribute's value and, typically, is called a "getter". The latter one, is for a "setter" method that _sets_ a new value to an attribute. The idea is to isolate an actual attribute value from the outside influence. It is particularly helpful, if you need to control whether a new value of an attribute is a valid one, needs to converted, etc. For example, `color` attribute of the rectangle stimulus uses this approach, which is why it can take RGB triplets, hexadecimal codes, or plain color names as a value and set the color correctly.
+Our approach of using `lander.bottom()` works but it is _semantically_ inconsistent. Calling methods is about manipulating objects, e.g., drawing them, updating them, comparing them. However, `bottom` is, effectively, an _attribute_ of an object, like its position or size. We _could_ create and compute a `bottom` attribute inside the constructor, solving the problem of semantics, as now you could write `lander.bottom`. Note that as the lander moves all of its edge attributes (`bottom`, `left` and `right`) need to be recomputed after every update. This is unavoidable but a _real_ attribute approach still creates another problem: What if someone _changes_ it? In that case, its value will not be correct, as `bottom` value depends on both position and size, so changing it without a corresponding change in those two attributes makes no sense! And it is really hard to decide whether change in the `bottom` should mean a change in position, or size, or, perhaps, both? Thus, ideally, it should be a read-only attribute.
+
+For cases like these, Python has special _decorators_^[These are functions that "decorate" you function and are called _before_ your function is called. They are like gatekeepers or face control, so they can alter whether or how your function is executed. They are very useful in certain scenarios and we will meet them again later. However, we will not talk about them in detail here.]: `@property` and `@<name>.setter`. The former one decorates a method that allows you to _get_ an attribute's value and, typically, is called a "getter". The latter one, is for a "setter" method that _sets_ a new value to an attribute. The idea is to isolate an actual attribute value from the outside influence. It is particularly helpful, if you need to control whether a new value of an attribute is a valid one, needs to converted, etc. For example, `color` attribute of the rectangle stimulus uses this approach, which is why it can take RGB triplets, hexadecimal codes, or plain color names as a value and set the color correctly.
 
 Here is a sketch of how it could work but note that today, we will only use the _getter_ bit. To have a virtual attribute for `color`, one typically creates an _internal_ attribute with almost the same name, e.g., `_color` or `__color` (see below for the difference). The value is stored and read from that internal attribute by getter and setter  methods:
 ```python
@@ -154,18 +155,19 @@ print(example.color)
 example.color = "blue"
 ```
 
-Note that there is no _actual_ attribute `color`, yet, our code works as if it does exist. 
+Note that there is no _actual_ attribute `color`^[Just like there is no physical phenomenon called "color".], yet, our code works as if it does exist. 
 
-There is another twist to the story. If you only define the getter `@property` method but no setter method, your property is read-only^[Note that you cannot have write-only property, you must have either getter alone or both.]! And this exactly what we wanted. Turning out `bottom()` method into a getter of an attribute is as easy as adding the `@property` decorator to it. After that, we can use it as a read-only attribute `lander.bottom`. Do this and also create similar read-only attributes for `top`, `left`, and `right` of the pad and for `left`, and `right` of the lander class.
+There is another twist to the story. If you only define the getter `@property` method but no setter method, your property is read-only^[Note that you cannot have write-only property, you must have either getter alone or both.]! And this exactly what we wanted. Turning our `bottom()` method into a getter of an attribute is as easy as adding the `@property` decorator above it. After that, we can use it as a read-only attribute `lander.bottom`. Do this and also create similar read-only attributes for `top`, `left`, and `right` of the pad and for `left`, and `right` of the lander class.
 
 ::: {.infobox .program}
 Implement virtual properties for `MoonLander` and `LandingPad` classes.
 :::
 
 ## Access restrictions
+
 In the example on getter/setter methods, I used `__color` name with _two_ leading underscores. This is a Python way to make things (almost) private, that is, invisible from outside. If you copy-paste the class code from above and try to access the attribute directly via `example.__color`, you will get an error "'ExampleClass' object has no attribute '__color'". However, as I wrote, it is _almost_ private, so you still can access it! The code format is `object._<ClassName><hidden attribute name>`, so in our case `example._ExampleClass__color`^[Try it and see that it works.]. However, this is a last resort sort of thing that you should use only if you absolutely must access that attribute or method and, hopefully, know what you doing.
   
-You can also come across attributes with a _single_ leading underscore in the name, e.g. `_color`. These are not private and are fully visible. However, the leading underscore _hints_ that this attribute or method should be _considered_ private. So, if you see an attribute like `_color`, you should pretend that you know not of its existence and, therefore, you never read or modify it directly. Of course, this is only an _agreement_, so you can always ignore it and work with that attribute directly^[On a side note of doing crazy things that you shouldn't: You can replace a class method with your own at run time, this is called "monkey patching"!]. However, this almost certainly will break the code in unexpected and hard-to-trace ways.
+You can also come across attributes with a _single_ leading underscore in the name, e.g. `_color`. These are not private and are fully visible. However, the leading underscore  _hints_ that this attribute or method should be _considered_ private. So, if you see an attribute like `_color`, you should pretend that you know not of its existence and, therefore, you never read or modify it directly. Of course, this is only an _agreement_, so you can always ignore it and work with that attribute directly^[On a side note of doing crazy things that you shouldn't: You can replace a class method without inheritance with your own at run time, this is called "monkey patching"!]. However, this almost certainly will break the code in unexpected and hard-to-trace ways.
 
 ## Landing
 We should check for landing whenever the bottom edge of the lander is at or below the top edge of the landing pad. A successful landing must satisfy several conditions:
@@ -187,25 +189,25 @@ else:
 ```
 
 ::: {.infobox .program}
-Implement landing checks.
+Put updated code into _exercise08.py_. Implement landing checks.
 :::
 
 ## More rounds
 Extend the game to have more than one round after the player either landed or crashed. Remember to reset the position of the lander before each new round. You can also add a `reset()` method to the landing pad as well, randomizing it horizontal position. Importantly, _escape_ key should quit the game, not just the round, and there should be no "success"/"failure" message in that case. Think how you would implement this.
 
 ::: {.infobox .program}
-Add more rounds.
+Put updated code into _exercise09.py_. Add more rounds. Add `reset()` method to the `LandingPad` class.
 :::
 
 ## Limited fuel
-Let us add a fuel limit to make things more interesting, so that thrursters would work _only_ if there is any fuel left. For this, define a new constant `FULL_TANK` (I've picked it to be `100` but you can have more) and add a new attribute `fuel` to the lander class (remember that you need to explicitly define all attributes in the constructor). The `fuel` level should be set to `FULL_TANK` whenever you reset the lander. 
+Let us add a fuel limit to make things more interesting, so that thrursters would work _only_ if there is any fuel left. For this, define a new constant `FULL_TANK` (I've picked it to be `100` but you can have more) and add a new attribute `fuel` to the `Lander` class (remember that you need to explicitly define all attributes in the constructor). The `fuel` level should be set to `FULL_TANK` whenever you reset the lander. 
 
 Every use of a thruster should reduce this by 1 and thrusters should work _only_ if there is fuel. You need to take care of this in the `update` method. Think about how you would do it for both vertical and horizontal thrusters.
 
 We also need to tell the player how much the fuel is left. I've implemented it as a bar gauge but you can implement it as text stimulus as well. Create the appropriate visual attribute in the constructor and remember to update it every time the level of the fuel changes and to draw it whenever you draw the lander itself. As a nice touch, you can change the color to indicate how much of the fuel is left. I've used _green_ for more than 2/3, _yellow_ for more than 1/3, and _red_ if less than that.
 
 ::: {.infobox .program}
-Add fuel and fuel gauge.
+Put updated code into _exercise10.py_. Add fuel and fuel gauge to `Lander` class.
 :::
 
 ## Add to it!
