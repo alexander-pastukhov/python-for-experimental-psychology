@@ -243,7 +243,7 @@ Create a game over message (a blinking one would be cool but this is up to you) 
 * "Crash! Boom! Bang!", if the player was hit.
 * "They got away!", if the armada got past the player.
 
-One way to simplify you life is to rename `gameover` variable into the `gamestate` variable. Initially, it could be `"playing"`, so your loop repeats `while gamestate == "playing"`. Then, you can set it based on the type of the event, e.g., `"abort"` for _escape_ button press, `"victory"` when player wins, etc. and use it after the main loop to determine which message to show. Better still, use dictionary for this instead of if-else.
+One way to simplify you life is to rename `gameover` variable into the `gamestate` variable. Initially, it could be `"playing"`, so your loop repeats `while gamestate == "playing"`. Then, you can set it based on the type of the event, e.g., `"abort"` for _escape_ button press, `"victory"` when player wins, etc. and use it after the main loop to determine which message to show. Better still, use dictionary for this instead of if-else. Or "cheat" and store the message in the variable itself.
 
 ::: {.infobox .program}
 Put your updated code into _exercise17.py_.
