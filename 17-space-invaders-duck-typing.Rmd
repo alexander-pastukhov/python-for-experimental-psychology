@@ -20,9 +20,16 @@ Note that iterator does not require an implementation of the `__len()__` method!
 
 Below, you will practice duck typing but implementing both `__len()__` and two special iterator methods as part of our `AlienArmada` class.
 
+## Which one to use?
+Now you know _three_ methods to produce common behavior: proper inheritance, mixins, and duck typing. Which one should you use? Depends on what you need. If you have many classes and you can have a well defined inheritance tree, use it. However, if you have some specific behavior that you need in some classes that is hard to fit with the inheritance tree, use mixins. If you have a single class that needs very specific functionality: use duck typing. Any one of them, does not preclude you using others. But be moderate, using too many different paradigms will be confusing for you and a reader.
+
 ## Space Invaders
 
 We will program a simply version of the game with aliean armada going gradualy descending. You task is to capture all aliens by firing a teleport beam before one of them rams your ship. Below, you can see my version of the game.
+
+
+
+
 
 
 As per usual, the plan is to move slowly in small increments to keep the complexity of changes low. For the assignment, you will need to submit the final product. However, I strongly recommend an iterative _submit-get comments-adjust-add another step or two-submit-get comments-..._ approach. It will be much easier, both for you and for me, if we catch errors or potentially problematic code early^[Number of submissions is unlimited with reason.].
