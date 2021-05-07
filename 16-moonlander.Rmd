@@ -209,4 +209,4 @@ Add fuel and fuel gauge.
 :::
 
 ## Add to it!
-We already have a functioning game but you can add so much more to it: visuals for the thrusters, sounds, background, etc. Experiment at your will!
+We already have a functioning game but you can add so much more to it: visuals for the thrusters, sounds, background, etc. Experiment at will!
