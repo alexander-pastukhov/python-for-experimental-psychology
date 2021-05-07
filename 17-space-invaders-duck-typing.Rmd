@@ -85,7 +85,7 @@ knitr::include_graphics("images/alien-armada.png")
 Put your updated code into _exercise05.py_, plus create the `AlienArmada` class.
 :::
 
-## The laser appears
+## A laser shot appears
 Now we need to create `Laser` class (in a separate file). Eventually, when a player presses left mouse button, the laser should appear at the location just above and fly up with a certain speed. Let us take care of the first step. Create `Laser` class as a descendant of `visual.ImageStim` (just like our `Spaceship` and `Alien` classes). It should take `win` and `pos` as arguments and call the ancestor constructor. The `pos` argument will hold the position of the ship but the laser must appear _above_ it, so you need to adjust `pos[1]` for that. Hint, you can get window height from `win.size[1]` and you know sprites are 32 pixels high. The algebra should be straightforward.
 
 For testing, create a laser object right after you create the ship itself and draw it in the main loop. It won't move but you will be able to see whether you've got the height right.
@@ -94,7 +94,7 @@ For testing, create a laser object right after you create the ship itself and dr
 Put your updated code into _exercise06.py_, plus create the `Laser` class.
 :::
 
-## The laser flies
+## The laser shot flies
 Let us add `fly()` method to the laser. It will be very simple, every time it is called the laser should move upwards by some arbitrary value of units (I've used 0.05 but pick the speed you like). Once it flies off the screen, we should be mark it for deletion, as we won't need it anymore. Thus, create a new attribute `expired` and set to `False`. In the `fly()` method, move the laser only if laser has not `expired` and, once you move it, check whether it is off the screen (its vertical position is 1 + half-height). If it is, mark it as expired.
 
 Remember to call `fly()` method in the main loop and see how the laser flies up and off the screen. Once it is gone, set a breakpoint to check that its `expired` flag is indeed `True`.
@@ -104,24 +104,24 @@ Put your updated code into _exercise07.py_, update the `Laser` class.
 :::
 
 ## We want more lasers!
-Now we will create a `LaserGun` class that will take care of individual laser shots. It will create a new `Laser` object whenever it is `fire()`d, ensure that it does not overheat by allowing only one shot every N seconds (let's say 0.3), call `draw()` and `fly()` methods for all laser shots, and remove the expired ones via `cleanup()`. 
+Now we will create a `LaserGun` class that will take care of individual laser shots. It will 1) create a new `Laser` object whenever it is `fire()`d, 2) ensure that it does not overheat by allowing only one shot every N seconds (let's say 0.3), 3) call `draw()` and `fly()` methods for all laser shots, and 4) remove the expired ones via `cleanup()`.
 
 Create the class `LaserGun` in the same file as the `Laser`.
 
-Constructor `__init()__`. In the constructor, pass PsychoPy window variable and store it as an attribute (you will need it when you create a new laser object), initialize `lasershots` attribute with empty list, and create a timer (`timer`?) attribute via `clock.CountdownTimer()`. We will use it inside the `fire()` method later on.
+Constructor `__init()__`. In the constructor, pass PsychoPy window variable and store it as an attribute (you will need it when you create a new laser object), initialize `lasershots` attribute with empty list, and create a `timer` attribute via `clock.CountdownTimer()` (decode on the minimal interval between the shots, I've picked 300 ms). We will use it inside the `fire()` method later on.
 
-`fire(self, pos)`. It should take `pos` tuple with position of the ship as a single parameter. If enough time passed since the last short (check `.timer` for that), create a new `Laser` at the supplied position and add it to the `lasershots` list and reset the timer.
+`fire(self, pos)`. It should take `pos` tuple with position of the ship as a single parameter. If enough time passed since the last shot (check `.timer` for that), create a new `Laser` at the supplied position, add it to the `lasershots` list, and reset the timer.
 
 `draw()` and `fly()` simply draw or fly all `lasershots`.
 
-`cleanup()`. This is both simple and tricky! Simple: you loop over `lasershots` and delete any object that is `expired`. You can do it via list comprehension (deleting objects by not including them in the update list) but for didactic reasons we will use [del](https://docs.python.org/3/tutorial/datastructures.html#the-del-statement) instead. If you have a list and you want to delete a second element, you write
+`cleanup()`. This is both simple and tricky! Conceptually simple: you loop over `lasershots` and delete any object that is `expired`. You can do it via list comprehension (deleting objects by not including them in the updated list) but for didactic reasons we will use [del](https://docs.python.org/3/tutorial/datastructures.html#the-del-statement) instead. If you have a list and you want to delete a second element, you write
 ```{python}
 x = [1, 2, 3, 4, 5]
 del x[1]
 print(x)
 ```
 
-However, there is a catch. Imagine that you want to delete second and forth elements one, so that the result will be `[1, 3, 5]`. If you just delete second and then forth, you won't get what you want:
+However, there is a catch. Imagine that you want to delete second and forth elements, so that the result should be `[1, 3, 5]`. If you just delete second and then forth elements, you won't get what you want:
 ```{python}
 x = [1, 2, 3, 4, 5]
 del x[1]
@@ -143,13 +143,52 @@ for ishot in backwards-index-built-via-range-function:
     delete that self.lasershots[ishot]
 ```
 
-For testing, you need to replace you `Laser` with `LaserGun` class. Both have same `draw()` and `fly()` methods that you should be calling already. Add `cleanup()` call to the main loop right after the `fly()`. Also in the main loop, check if left mouse button is [pressed](https://psychopy.org/api/event.html#psychopy.event.Mouse.getPressed). If it is, `fire()` the laser gun, passing current position of the ship to it. Once you fired a few shots and they are off the screen, put a breakpoint and check that the `.lasershots` is empty (you `cleanup()` works as it should).
+For testing, use `LaserGun` in place of the `Laser`. Both have same `draw()` and `fly()` methods that you should be calling already. Add `cleanup()` call to the main loop right after the `fly()` (that will automatically delete expired shots). Also in the main loop, check if left mouse button is [pressed](https://psychopy.org/api/event.html#psychopy.event.Mouse.getPressed). If it is, `fire()` the laser gun, passing current position of the ship to it. Once you fired a few shots and they are off the screen, put a breakpoint and check that the `.lasershots` is empty (you `cleanup()` works as it should).
 
 ::: {.infobox .program}
 Put your updated code into _exercise07.py_, update the `Laser` class.
 :::
 
+## I am hit! I am hit!
+Now we need to check whether a lasershot hit an alien. In that case, all the relevant aliens and shots must be removed. It is easy for lasershots, we just set them as `expired` and `cleanup()` does the rest. Clearly, we need the same mechanism for the aliens.
 
+Add `teleported` attribute to the `Alien` class and initialize to `False`. In `AlienArmade` class, implement a `cleanup()` method, analogous to one in `LaserGun` that will delete any `teleported` aliens. Add the call to it in the main loop at the same location as for the `LaserGun`. You can test it by setting `teleported` to `True` for one of the aliens and it should be missing.
+
+Now for the actual check. You should loop over all aliens and laser shots checking whether whether they [overlap](https://psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim.overlaps). If they do, set laser shot to `expired` and the alien as `teleported`. Do this check _before_ the clean up but after the laser shots fly.
+
+Test it!
+
+::: {.infobox .program}
+Put your updated code into _exercise08.py_, update `Alien` and `AlienArmade` classes.
+:::
+
+
+## Duck typiing iterators
+In the precious exercise, you used `aliens` and `lasershots` attributes directly in the loop. However, let us inject some coolness into our code and turn `AlienArmada` and `LaserGun` classes into iterators. Recall that you need to implement two special methods for this: `__iter__(self)` and `__next__(self)__`. The first one, initializes the loop, the second one yields the next item. The actual implementation is very simple. You need to create a new attribute that will be used to track which item you need to yield, call it `iter`. Initialize it to `None` in the constructor.
+
+In the `__iter__(self)`, initialize the counter to `0` and return `self`, returning the reference to the iterator, which is the object itself^[You can cheat and return the reference to the list attribute itself and it'll do the rest. Don't do it for didactic purposes.]. In the `__next__(self)`, check if `iter` is within the list length. If it is not (i.e., you ran out aliens/shots to iterate over), `raise StopIteration()`. If it is, increase the iteration counter and return the element it was indexing _before_ that: Think about why you need to return `self.aliens[self.iter-1]` rather than `self.aliens[self.iter-1]` or how you can use a different starting value and range check to avoid this. 
+
+Do this for both classes and use them in for loops directly, instead of `aliens.aliens` and `laser.lasershots`.
+
+Test it! It should work as before, of course, but with cooler duck typing inside!
+
+::: {.infobox .program}
+Put your updated code into _exercise09.py_, update `LaserGun` and `AlienArmade` classes.
+:::
+
+## Got'em all!
+Now, implement `__len()__` method for `AlienArmada` class that so returns the number of remaining aliens. In the main loop, use it via `len()` function to check whether you won: no aliens left, the game is over. Use `len()` with the object, not with the list attribute!
+
+::: {.infobox .program}
+Put your updated code into _exercise10.py_, update `LaserGun` and `AlienArmade` classes.
+:::
+
+## Ping!
+Now let us use a `TeleportSoundMixin` class that defines a single `teleport()` method that plays the _teleport.wav_ sound (created by Sergenious and obtained from [freesound.org](https://freesound.org/people/Sergenious/sounds/55853/)) is in [materials](material/space-invaders.zip). Thus, it can be a single line method when you both create and play the sound in one go, no temporary variable or an attribute are required. Then, use it as an ancestor for the `Alien` class. Now it has that `teleport()` method. Call it when you set _teleported_ to `True`.
+
+::: {.infobox .program}
+Put your updated code into _exercise11.py_, create `TeleportSoundMixin` class and update `Alien` class.
+:::
 
 
 ## An alien armada jumps
