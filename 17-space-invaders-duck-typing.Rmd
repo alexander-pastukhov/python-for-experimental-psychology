@@ -190,10 +190,10 @@ Now let us use a `TeleportSoundMixin` class that defines a single `teleport()` m
 Put your updated code into _exercise11.py_, create `TeleportSoundMixin` class and update `Alien` class.
 :::
 
-## An alien armada jumps
+## The alien armada jumps
 Currently, our aliens are sitting ducks. No fun! They need to get a move on. But before we can move alien armada around, we need to be able to change its position. Recall that we have `__pos` attribute in `AlienArmada` class. I've made it (kinda) private via `__pos` on purpose, so we can define getter and setter methods for it and call the virtual attribute `pos` to make it consistent with the rest. If you forgot what getter/setter methods are, [read again](#getter-setter).
 
-To start with, define a getter. We do not _really_ need it, as we will not use it but you cannot have a setter alone without one. It only needs to return the value of the hidden position attribute.
+To start with, define a getter. It only needs to return the value of the hidden position attribute.
 
 Now, to more complicated and, hence, fun bit! Remember, we need to move _all_ individual aliens relative to the center of the armada. For this, 1) compute the _change_ in position, 2) use it to alter position of individual aliens based on their current position, 3) store the new position in the hidden attribute.
 
@@ -203,7 +203,53 @@ Test it by making armada jump to a random location every time you press _space_ 
 Put your updated code into _exercise12.py_, update `AlienArmada` class.
 :::
 
+## The alien armada moves
+Our alien armada will move downwards along a sine trajectory. Thus, we need to define a `fly()` method that will move it downwards by some small step (I've used 0.001, which is quite fast for 60 Hz, as it will move 0.06 units per second). And the horizontal position will be computed as a sine wave. The general formula is:
+$$x = x_{max} \cdot sin(2 \pi f \cdot (y-y_{origin})) $$
+where $x_{max}$ is maximal deviation of the armada from the middle of the screen (I've set it to 0.25), the $f$ is the frequency, i.e., how fast is horizontal movement (I've set to 3), $y$ is the current vertical coordinate of the armada and $y_{origin}$ is the initial one (0.5 in my case). Experiment with values to see how they affect the movement.
 
+Once you computed both components, assign the tuple to the `pos` and it will move the entire armada. In the main loop, call `fly()` when you call it for laser gun.
 
+::: {.infobox .program}
+Put your updated code into _exercise13.py_, update `AlienArmada` class.
+:::
+
+## The alien armada wins: crash!
+So far, the player always wins. Let us make it more dangerous! They will lose if either an alien crashes into the spaceship or if the armada goes past the ship. Implement the former the same way as you checked whether laser shot hit an alien: loop of aliens and see if the overlap with the spaceship (game over if they do). Implement and test.
+
+::: {.infobox .program}
+Put your updated code into _exercise14.py_.
+:::
+
+## The alien armada wins: missed them!
+The second way to lose the game, is if at least one alien got past the ship. For this, we need to check the position of the _lowest_ alien and if it is lower than that of the spaceship, the game is over. You can do it in the same loop you are checking for the hit but, for didactic reasons, let us practice `@proprety` a bit more. Implement a new read-only property `lowest_y` of the `AlienArmada` class that will return the y-coordinate of the lowest alien in the armada. You need to loop over individual aliens to find the lowest y and return it. There are different way to do it, come up with one yourself! In the main code, add the check and make sure the game is over, if aliens got past the player.
+
+::: {.infobox .program}
+Put your updated code into _exercise15.py_, update `AlienArmada` class.
+:::
+
+## Mixin teleport
+Mix in the teleport sound method to the `Spaceship` and play it if alien crashed into it.
+
+::: {.infobox .program}
+Put your updated code into _exercise16.py_, update `Spaceship` class.
+:::
+
+## Game over message
+Create a game over message (a blinking one would be cool but this is up to you) that will reflect the outcome. Something like this but use your imagination:
+
+* "Coward!", if the player pressed escape.
+* "Congrats!", if the player won.
+* "Crash! Boom! Bang!", if the player was hit.
+* "They got away!", if the armada got past the player.
+
+One way to simplify you life is to rename `gameover` variable into the `gamestate` variable. Initially, it could be `"playing"`, so your loop repeats `while gamestate == "playing"`. Then, you can set it based on the type of the event, e.g., `"abort"` for _escape_ button press, `"victory"` when player wins, etc. and use it after the main loop to determine which message to show. Better still, use dictionary for this instead of if-else.
+
+::: {.infobox .program}
+Put your updated code into _exercise17.py_.
+:::
+
+## We want more!
+You have a solid game but it can be improved in many ways. Currently, we move all game object assuming constant frame rate. That might not be the case, so it would be wiser to use inter-frame timer and use time elapsed since the last update. And it can use more feature. Score? Difficulty? More levels? Aliens shooting back at you? Anything is possible!
 
 
