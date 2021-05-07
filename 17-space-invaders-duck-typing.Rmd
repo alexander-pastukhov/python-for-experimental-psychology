@@ -190,9 +190,8 @@ Now let us use a `TeleportSoundMixin` class that defines a single `teleport()` m
 Put your updated code into _exercise11.py_, create `TeleportSoundMixin` class and update `Alien` class.
 :::
 
-
 ## An alien armada jumps
-Before we can move alien armada around, we need to be able to change its position. Recall that we have `__pos` attribute in `AlienArmada` class. I've made it (kinda) private via `__pos` on purpose, so we can define getter and setter methods for it and call the virtual attribute `pos` to make it consistent with the rest. If you forgot what getter/setter methods are, [read again](#getter-setter).
+Currently, our aliens are sitting ducks. No fun! They need to get a move on. But before we can move alien armada around, we need to be able to change its position. Recall that we have `__pos` attribute in `AlienArmada` class. I've made it (kinda) private via `__pos` on purpose, so we can define getter and setter methods for it and call the virtual attribute `pos` to make it consistent with the rest. If you forgot what getter/setter methods are, [read again](#getter-setter).
 
 To start with, define a getter. We do not _really_ need it, as we will not use it but you cannot have a setter alone without one. It only needs to return the value of the hidden position attribute.
 
@@ -200,6 +199,9 @@ Now, to more complicated and, hence, fun bit! Remember, we need to move _all_ in
 
 Test it by making armada jump to a random location every time you press _space_ button. The armada should keep its formation!
 
+::: {.infobox .program}
+Put your updated code into _exercise12.py_, update `AlienArmada` class.
+:::
 
 
 
