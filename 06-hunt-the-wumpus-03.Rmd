@@ -10,7 +10,7 @@ This metaphor works nicely and explains why the scopes work the way they do (see
 
 Unfortunately, this is true only for _immutable_ objects (values) such as numbers, strings, logical values, but also [tuples](https://docs.python.org/3/library/stdtypes.html?highlight=tuple#tuple) (see below for what these are). As you could have guessed from the name, this means that there are other _mutable_ objects and they behave very differently.
 
-## Variables as post-it stickers (mutable objects)
+## Variables as post-it stickers (mutable objects){#mutable-objects}
 Mutable objects are lists, dictionaries, and classes. The difference is that _immutable_ objects can be thought as fixed in their size. A number takes up that many bytes to store, same goes for a given string (although a different string would require more or fewer bytes). Still, they do not change, they are created and destroyed when unneeded but never truly updated. 
 
 _Mutable_ objects can be changed. For example, you can add elements to your list, or remove them, or shuffle them. Same goes for [dictionaries](https://docs.python.org/3/tutorial/datastructures.html?highlight=dictionary#dictionaries). Making such object **immutable** would be computationally inefficient (every time you add a value a long list is destroyed and recreated with just that one additional value), which is why Python simply _updates_ the original object. For further computation efficiency, these objects are not copied but _passed by reference_. This means that the variable is no longer a "box" but a "sticker" you put on an object (a list, a dictionary). And, you can put as many stickers on an object as you want **and it still will be the same object!**
