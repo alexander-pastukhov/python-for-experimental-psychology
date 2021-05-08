@@ -1,0 +1,37 @@
+# Guitar Hero: staircase and iterator functions {#seminar-02-06}
+
+## Getting the difficulty just right
+One of the hardest things to get right in game design is the game difficulty. Make your game too easy and it will be boring. Make it too hard and only hardcore fans will play and only for [an achievement](https://www.imdb.com/title/tt4975856/). Thus, you would like to make your game hard enough to push a player to the limit but not much harder than that, so not to frustrate them. One way to solve this conundrum is to create different preset difficulty levels, something we did in our _Snake_ game. An alternative way is to make the game that adopts its difficulty to the player.
+
+The same is true for psychophysical experiments. You want to test ability of your participants to perform the task at their limit for one simple reason: At this _threshold_ point influence of any additional factor, whether positive or negative, is maximal. E.g., use an unusual stimulus configuration or increase attentional load and performance will drop. Allow to preallocate attention via cuing or use a prime that is congruent with a target and performance will improve. Of course, these manipulations will have the same overall effect also when the task is particularly easy or maddeningly hard but it will much more difficult to _measure_ this effect. It is one thing if performance drops from 75% to 65% than if it goes from 98% to %95 or from %53 to %52 (here, I assume that 50% is chance level performance) or vice versa. The silliest thing you can do is to _hope_ that the performance would allow you too see the effect of the factors that you manipulated. In things like these, knowledge and careful design is definitely superior to hope.
+
+Thus, you want performance of your participants to be approximately in the middle between the ceiling (100% performance, fastest response times, super easy) and the floor (chance level performance, slowest response times, super hard). But how do you know where this magic point is for that _particular_ person. Particularly, if the task is novel so you have little to guide to? The solution is to adjust the difficulty on the fly. If you have a two-alternatives-forced-choice task, you can use two-up-one-down staircase (difficulty increases after two correct responses and decreases after one mistake) that targets 70.7% performance threshold. There different methods and even different ways to use the same core method (e.g., does the step stays constant or changes in 2-up-1-down, what is the run termination criteria, etc.), so it is always a good idea to refresh your memory and read about [adaptive procedures](https://doi.org/10.3758/BF03194543) when designing your next experiment.
+
+In our game, we will use a very simple 3-up-1-down staircase: get the three responses correct on a row and things get faster, make a mistake and the game slows down. We'll see how fast you can go!
+
+## Guitar Hero
+Today, we will program Guitar Hero game. In the original game, you must play notes on guitar-shaped controller at the right time, just like when you actually play music on a guitar. On the one hand, it is a straightforward and repetitive motor task. On the other hand, take a fast and complicated music piece and it'll take many minutes or hours of practice to get it right. It is a lot of fun, as music cues and primes your responses. The same idea of music-synchronized-actions was used in _Raymon Legends_ music-run levels where jumps or hits are timed to drums or bass. It is bizarrely cool and satisfying experience, also when watching pros to do it (I happened to have one in my household).
+
+We will program this game sans Guitar and Hero, you can see it in the video below. The player must press a correct key whenever the target crosses the line. Press it to early or too late and you make a mistake. Of course, the faster the targets go, the harder it is to respond on time and with a correct key. As I wrote above, we will use the 3-up-1-down staircase procedure to control for that. 
+
+
+
+As per usual, we will take gradual approach:
+
+* Boilerplate code
+* A moving targets class
+* Finishing line and 
+
+## Boilerplate
+Create our usual boilerplate code in _exercise01.py_ (you will use the same files for classes but use versioning of the main file, it makes it easier for me to check your code):
+
+* Import what is needed from PsychoPy
+* Create a window. I've picked 640×480 but chose whatever looks good on your screen.
+* Create our usual main game loop with `gamover` variable, flipping the window, and checking for _escape_ button press.
+
+::: {.infobox .program}
+Put your boilerplate code into _exercise01.py_.
+:::
+
+## Targets class
+The `Targets` class will be our main workhorse. 
