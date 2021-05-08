@@ -33,5 +33,8 @@ Create our usual boilerplate code in _exercise01.py_ (you will use the same file
 Put your boilerplate code into _exercise01.py_.
 :::
 
-## Targets class
-The `Targets` class will be our main workhorse. 
+## Target and TimedResponseTask classes
+OUr main work horse will be `TimedResponseTask` class. It will take spawn a new random `Target` at random intervals (which will depend on speed), pass speed information to moving targets, and remove targets, once they disappear below the screen. The `Target` class will be a descendant from `visual.Rect` with some extra bells and whistles to make it appear at the right location, move at the right speed, change it line color (if a player got the response for it right), compute whether it is already off the screen, etc. we will start with a single target first.
+
+## Target class
+

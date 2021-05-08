@@ -1,0 +1,6 @@
+
+
+## Settings file
+So far, we either hard-coded values or defined constants. This means that to modify any of them, you need to modify the program itself. A better approach is to have a separate file with settings. This puts all of them in one place and makes easier to edit and check them. Plus, you can have many settings file for different experimental stages, groups, etc.
+
+There multiple formats for settings files: XML, INI, YALM, etc. Experiment designed using PsychoPy Builder interface are stored using XML (Extensible Markup Language) files but with [.psyexp extension](https://www.psychopy.org/psyexp.html).
