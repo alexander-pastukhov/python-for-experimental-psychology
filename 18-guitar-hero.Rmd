@@ -53,11 +53,12 @@ Our targets fall down at speed defined by their `speed` attribute. Later on we w
 To implement the actual falling down, implement a new method, call it `fall()`. The speed is in `norm units per second`, thus, to compute the change in vertical position you also need to know the time elapsed since last position update _in seconds_. The simplest way to do this is by using a [Clock](https://psychopy.org/api/clock.html#psychopy.clock.Clock) class. You create it as an attribute in the constructor and then, in the `fall` method you use its current time to compute (and apply) a change in vertical position of the rectangle. Don't forget to reset the clock!
 
 Include `fall` method call in the main loop and see how the target falls. Experiment with falling speed!
+
 ::: {.infobox .program}
 Put updated code in _exercise03.py_  and update the class `Target`.
 :::
 
-## Iterator function
+## Iterator/Generator functions
 In the next section, we will create a `TimedResponseTask` class that will generate targets at random location and after a random interval. We can, of course, do it directly in the class but instead, we will use this as an opportunity to learn about iterator/generator functions. You already know how to use duck typing to turn any class into a iterator by defining special method `__iter()__` and `__next__()`. But function can also be an iterator if it uses `yield` instead of `return` statement to _yield_ a value. It _yields_ it, because the function itself returns an iterator object that you can iterator over in for loop or via `next()` function. Importantly, `yield` "freezes" execution of the function and the next time you call the function _it continues from that point_ rather than from the start of the function. Once you reach the end of the function, it automatically raises `StopIteration()` exception, so you don't need to worry about this. It may sound confusing but it really simple. Here an example to illustrate this:
 
 ```{python}
@@ -101,8 +102,16 @@ For our `TimedResponseTask` class, we will need two _generators_ (because both w
 
 The `time_to_next_target_generator()` function should take a tuple of float values a its only parameter and _yield_ a random number within this range in an _endless_ loop. We need the endless loop (`while True:` will do) because we do not know how many values we will need, so we just generate as many as needed.
 
-The `next_target_generator()` will be a bit more interesting. It can just return a `random.choice` from 0, 1, and 2 but where is fun in that? Instead, we will make a bit more complicate to ensure that all three targets appear equal number of times within N trials, where N will be a parameter of the iterator. First, you should create a list where each target appears N times. Then, create an endless loop (again, we don't know how many values we need) in which you 1) shuffle elements of the list, 2) yield one element at a time via for loop. Then repeat. And again, and again (endless loop!).
+The `next_target_generator()` will be a bit more interesting. It can just return a `random.choice` from 0, 1, and 2 but where is fun in that? Instead, we will make a bit more complicate to ensure that all three targets appear equal number of times within N trials, where N will be a parameter of the generator. This would ensure random, reasonably unpredictable but balanced targets in the short run. Remember, in the long run random choice will give us a balanced uniform distribution but there is not such guarantee for the shorter runs. First, you should create a list where each target appears N times. Then, create an endless loop (again, we don't know how many values we need) in which you 1) shuffle elements of the list, 2) yield one element at a time via for loop. Then repeat. And again, and again (endless loop!).
 
+I would suggest creating and testing both function in a Jupyter notebook first and then putting them in a separate file (e.g., _generators.py_).
 
+::: {.infobox .program}
+Put both generators into _generators.py_.
+:::
 
+## TimedResponseTask class
+Now we are ready to create the `TimedResponseTask` class. For our first take, it will create random targets after random intervals plus take care of moving and drawing all of them. More bells and whistles (disposing of targets that went past the screen, changing the speed, checking response validity, etc) will come later.
+
+For the constructor, we definitely need PsychoPy window as a parameter (we'll need to pass it to the `Target` constructor). We can also pass initial speed, tuple with range for time intervals between targets and number of target repetitions (for the position generator). We could define those as constants but passing them as parameters will make you code more reusable. Store window and speed as attributes, create attribute `targets` and initialize it to an empty list, create attributes for both generator objects that we need using the appropriate parameters.
 
