@@ -90,9 +90,9 @@ Put updated code into _exercise06.py_. Add horizontal thrusters to `MoonLander`.
 :::
 
 ## Landing pad: visuals
-The purpose of the game is to land on a landing pad. Let us add one! Create a new file _landing_pad.py_ and a new class `LandingPad`. A landing pad is just a rectangle with some additional methods and properties. So it stands to reason to make it a descendant of the `visual.Rect` class. This way, the original class will do all the heavy lifting and provide properties like `size` and `pos` and we can concentrate on the added value.
+The purpose of the game is to land on a landing pad. A landing pad is just a rectangle with some additional methods and properties. So it stands to reason to make it a descendant of the `visual.Rect` class. This way, the original class will do all the heavy lifting and provide properties like `size` and `pos` and we can concentrate on the added value. Unfortunately, for some technical reason I have not figured out yet, this does not work for shape classes like `Rect` or `Circle`. It _does_ work for classes like `ImageStim` and we will use this opportunity when we program out next game.
 
-The only parameter you need to pass to its constructor is window variable. Inside, you only need to call the constructor of the _ancestor_ via `super().__init__(win, ...)`. Set the parameter so at to create a rectangle that is `0.5` units wide and is located at the bottom of the window but at a random position within the window horizontally. Pick the fill and line colors that you like.
+Create a new file _landing_pad.py_ and a new class `LandingPad`. In the constructor, create a rectangle and store it in attribute (you pick the name). It should be `0.5` units wide and located at the bottom of the window but at a random position within the window horizontally. Pick the fill and line colors that you like. The only other method the class needs is `draw()`. 
 
 In the main code, create an object of class `LandingPad` and draw it in the main loop, along with the lander itself.
 
