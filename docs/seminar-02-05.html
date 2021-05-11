@@ -24,7 +24,7 @@
 <meta name="author" content="Alexander (Sasha) Pastukhov" />
 
 
-<meta name="date" content="2021-05-04" />
+<meta name="date" content="2021-05-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="seminar-02-04.html"/>
-<link rel="next" href="cross-references.html"/>
+<link rel="next" href="seminar-02-06.html"/>
 <script src="libs/header-attrs-2.7/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -53,6 +53,69 @@
 
 
 
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -153,7 +216,7 @@
 <li class="chapter" data-level="6" data-path="seminar06.html"><a href="seminar06.html"><i class="fa fa-check"></i><b>6</b> Hunt the Wumpus, part 3</a>
 <ul>
 <li class="chapter" data-level="6.1" data-path="seminar06.html"><a href="seminar06.html#recall-variables-as-boxes-immutable-objects"><i class="fa fa-check"></i><b>6.1</b> Recall, Variables as Boxes (immutable objects)</a></li>
-<li class="chapter" data-level="6.2" data-path="seminar06.html"><a href="seminar06.html#variables-as-post-it-stickers-mutable-objects"><i class="fa fa-check"></i><b>6.2</b> Variables as post-it stickers (mutable objects)</a></li>
+<li class="chapter" data-level="6.2" data-path="seminar06.html"><a href="seminar06.html#mutable-objects"><i class="fa fa-check"></i><b>6.2</b> Variables as post-it stickers (mutable objects)</a></li>
 <li class="chapter" data-level="6.3" data-path="seminar06.html"><a href="seminar06.html#tuple-a-frozen-list"><i class="fa fa-check"></i><b>6.3</b> Tuple: a frozen list</a></li>
 <li class="chapter" data-level="6.4" data-path="seminar06.html"><a href="seminar06.html#keeping-track-of-occupied-caves"><i class="fa fa-check"></i><b>6.4</b> Keeping track of occupied caves</a></li>
 <li class="chapter" data-level="6.5" data-path="seminar06.html"><a href="seminar06.html#for-loop"><i class="fa fa-check"></i><b>6.5</b> For loop</a></li>
@@ -324,7 +387,7 @@
 <li class="chapter" data-level="16.6" data-path="seminar-02-04.html"><a href="seminar-02-04.html#horizontal-thursters"><i class="fa fa-check"></i><b>16.6</b> Horizontal thursters</a></li>
 <li class="chapter" data-level="16.7" data-path="seminar-02-04.html"><a href="seminar-02-04.html#landing-pad-visuals"><i class="fa fa-check"></i><b>16.7</b> Landing pad: visuals</a></li>
 <li class="chapter" data-level="16.8" data-path="seminar-02-04.html"><a href="seminar-02-04.html#computing-edges-of-game-objects"><i class="fa fa-check"></i><b>16.8</b> Computing edges of game objects</a></li>
-<li class="chapter" data-level="16.9" data-path="seminar-02-04.html"><a href="seminar-02-04.html#virtual-attributes-via-getters-and-setters"><i class="fa fa-check"></i><b>16.9</b> Virtual attributes via getters and setters</a></li>
+<li class="chapter" data-level="16.9" data-path="seminar-02-04.html"><a href="seminar-02-04.html#getter-setter"><i class="fa fa-check"></i><b>16.9</b> Virtual attributes via getters and setters</a></li>
 <li class="chapter" data-level="16.10" data-path="seminar-02-04.html"><a href="seminar-02-04.html#access-restrictions"><i class="fa fa-check"></i><b>16.10</b> Access restrictions</a></li>
 <li class="chapter" data-level="16.11" data-path="seminar-02-04.html"><a href="seminar-02-04.html#landing"><i class="fa fa-check"></i><b>16.11</b> Landing</a></li>
 <li class="chapter" data-level="16.12" data-path="seminar-02-04.html"><a href="seminar-02-04.html#more-rounds-1"><i class="fa fa-check"></i><b>16.12</b> More rounds</a></li>
@@ -335,6 +398,39 @@
 <ul>
 <li class="chapter" data-level="17.1" data-path="seminar-02-05.html"><a href="seminar-02-05.html#mixins"><i class="fa fa-check"></i><b>17.1</b> Mixins</a></li>
 <li class="chapter" data-level="17.2" data-path="seminar-02-05.html"><a href="seminar-02-05.html#duck-typing"><i class="fa fa-check"></i><b>17.2</b> Duck typing</a></li>
+<li class="chapter" data-level="17.3" data-path="seminar-02-05.html"><a href="seminar-02-05.html#which-one-to-use"><i class="fa fa-check"></i><b>17.3</b> Which one to use?</a></li>
+<li class="chapter" data-level="17.4" data-path="seminar-02-05.html"><a href="seminar-02-05.html#space-invaders"><i class="fa fa-check"></i><b>17.4</b> Space Invaders</a></li>
+<li class="chapter" data-level="17.5" data-path="seminar-02-05.html"><a href="seminar-02-05.html#boilerplate"><i class="fa fa-check"></i><b>17.5</b> Boilerplate</a></li>
+<li class="chapter" data-level="17.6" data-path="seminar-02-05.html"><a href="seminar-02-05.html#the-shapeship"><i class="fa fa-check"></i><b>17.6</b> The shapeship</a></li>
+<li class="chapter" data-level="17.7" data-path="seminar-02-05.html"><a href="seminar-02-05.html#the-shapeship-moves"><i class="fa fa-check"></i><b>17.7</b> The shapeship moves</a></li>
+<li class="chapter" data-level="17.8" data-path="seminar-02-05.html"><a href="seminar-02-05.html#an-alien-appears"><i class="fa fa-check"></i><b>17.8</b> An alien appears</a></li>
+<li class="chapter" data-level="17.9" data-path="seminar-02-05.html"><a href="seminar-02-05.html#an-alien-armada-appears"><i class="fa fa-check"></i><b>17.9</b> An alien armada appears</a></li>
+<li class="chapter" data-level="17.10" data-path="seminar-02-05.html"><a href="seminar-02-05.html#a-laser-shot-appears"><i class="fa fa-check"></i><b>17.10</b> A laser shot appears</a></li>
+<li class="chapter" data-level="17.11" data-path="seminar-02-05.html"><a href="seminar-02-05.html#the-laser-shot-flies"><i class="fa fa-check"></i><b>17.11</b> The laser shot flies</a></li>
+<li class="chapter" data-level="17.12" data-path="seminar-02-05.html"><a href="seminar-02-05.html#we-want-more-lasers"><i class="fa fa-check"></i><b>17.12</b> We want more lasers!</a></li>
+<li class="chapter" data-level="17.13" data-path="seminar-02-05.html"><a href="seminar-02-05.html#i-am-hit-i-am-hit"><i class="fa fa-check"></i><b>17.13</b> I am hit! I am hit!</a></li>
+<li class="chapter" data-level="17.14" data-path="seminar-02-05.html"><a href="seminar-02-05.html#duck-typiing-iterators"><i class="fa fa-check"></i><b>17.14</b> Duck typiing iterators</a></li>
+<li class="chapter" data-level="17.15" data-path="seminar-02-05.html"><a href="seminar-02-05.html#gotem-all"><i class="fa fa-check"></i><b>17.15</b> Got’em all!</a></li>
+<li class="chapter" data-level="17.16" data-path="seminar-02-05.html"><a href="seminar-02-05.html#ping"><i class="fa fa-check"></i><b>17.16</b> Ping!</a></li>
+<li class="chapter" data-level="17.17" data-path="seminar-02-05.html"><a href="seminar-02-05.html#the-alien-armada-jumps"><i class="fa fa-check"></i><b>17.17</b> The alien armada jumps</a></li>
+<li class="chapter" data-level="17.18" data-path="seminar-02-05.html"><a href="seminar-02-05.html#the-alien-armada-moves"><i class="fa fa-check"></i><b>17.18</b> The alien armada moves</a></li>
+<li class="chapter" data-level="17.19" data-path="seminar-02-05.html"><a href="seminar-02-05.html#the-alien-armada-wins-crash"><i class="fa fa-check"></i><b>17.19</b> The alien armada wins: crash!</a></li>
+<li class="chapter" data-level="17.20" data-path="seminar-02-05.html"><a href="seminar-02-05.html#the-alien-armada-wins-missed-them"><i class="fa fa-check"></i><b>17.20</b> The alien armada wins: missed them!</a></li>
+<li class="chapter" data-level="17.21" data-path="seminar-02-05.html"><a href="seminar-02-05.html#mixin-teleport"><i class="fa fa-check"></i><b>17.21</b> Mixin teleport</a></li>
+<li class="chapter" data-level="17.22" data-path="seminar-02-05.html"><a href="seminar-02-05.html#game-over-message-1"><i class="fa fa-check"></i><b>17.22</b> Game over message</a></li>
+<li class="chapter" data-level="17.23" data-path="seminar-02-05.html"><a href="seminar-02-05.html#we-want-more-1"><i class="fa fa-check"></i><b>17.23</b> We want more!</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="seminar-02-06.html"><a href="seminar-02-06.html"><i class="fa fa-check"></i><b>18</b> Guitar Hero: staircase and iterator functions</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="seminar-02-06.html"><a href="seminar-02-06.html#getting-the-difficulty-just-right"><i class="fa fa-check"></i><b>18.1</b> Getting the difficulty just right</a></li>
+<li class="chapter" data-level="18.2" data-path="seminar-02-06.html"><a href="seminar-02-06.html#guitar-hero"><i class="fa fa-check"></i><b>18.2</b> Guitar Hero</a></li>
+<li class="chapter" data-level="18.3" data-path="seminar-02-06.html"><a href="seminar-02-06.html#boilerplate-1"><i class="fa fa-check"></i><b>18.3</b> Boilerplate</a></li>
+<li class="chapter" data-level="18.4" data-path="seminar-02-06.html"><a href="seminar-02-06.html#target-and-timedresponsetask-classes"><i class="fa fa-check"></i><b>18.4</b> Target and TimedResponseTask classes</a></li>
+<li class="chapter" data-level="18.5" data-path="seminar-02-06.html"><a href="seminar-02-06.html#target-class-static"><i class="fa fa-check"></i><b>18.5</b> Target class: static</a></li>
+<li class="chapter" data-level="18.6" data-path="seminar-02-06.html"><a href="seminar-02-06.html#target-class-moving"><i class="fa fa-check"></i><b>18.6</b> Target class: moving</a></li>
+<li class="chapter" data-level="18.7" data-path="seminar-02-06.html"><a href="seminar-02-06.html#iteratorgenerator-functions"><i class="fa fa-check"></i><b>18.7</b> Iterator/Generator functions</a></li>
+<li class="chapter" data-level="18.8" data-path="seminar-02-06.html"><a href="seminar-02-06.html#timedresponsetask-class"><i class="fa fa-check"></i><b>18.8</b> TimedResponseTask class</a></li>
+<li class="chapter" data-level="18.9" data-path="seminar-02-06.html"><a href="seminar-02-06.html#settings-file"><i class="fa fa-check"></i><b>18.9</b> Settings file</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="cross-references.html"><a href="cross-references.html"><i class="fa fa-check"></i>Cross references</a></li>
 <li class="divider"></li>
@@ -363,21 +459,229 @@
 <div id="mixins" class="section level2" number="17.1">
 <h2><span class="header-section-number">17.1</span> Mixins</h2>
 <p>One way to infuse <em>common</em> behavior into <em>different</em> classes is via a mixin classes. These are classes that only define a single <em>behavior</em> and nothing else. No constructor, typically no attributes. Thus, they are too limited to be used on their own but can be inherited from (mixed into the proper class) enabling that single behavior in the descendant.</p>
-<p>Think about all creatures that can fly: insects, birds, bats, astronauts, etc. They do have a common ancestor but that common ancestor did not have the ability to fly. Instead, each line evolved that ability independently and all have evolutionary “cousins” that cannot fly. When programming, you can follow the same pattern of creating a common ancestor for flying and non-flying insects, then implementing ability to fly in the former. Do the same for birds, bats, astronauts, etc. If your implementation must be very detailed and creature-specific, this might be unavoidable. However, if your ability to “fly” is very abstract and, therefore, the same for all creatures in question, you will end up writing the same code for every insect, bird, bar class. An easy copy-paste, of course, but that means you get multiple places with identical implementation, so when you need to change it, you will have to make sure that you do it in all the places (and you gonna miss some, I always do). Alternative? Mixins! You create a class <code>FlightAbility</code> that implements that common abstract “flying” and, then, you inherit from that class whenever you need a flying someone. Mix a non-flying bird with the <code>FlightAbility</code> and it can fly! Mix it with an insect: Flying insect!</p>
-<p>You may not need mixins frequently but they are a powerful way of creating an isolated behavior that different classes might need without enforcing strict ancestral history. PsychoPy is big on mixins. For example, it has <code>ColorMixin</code> that could be mixed-in to a visual class that needs to color, so it implements all the repetitive code for translating an arbitrary color representation (string, hexadecimal code, RGB triplet, HSL triplet, single grayscale value, etc.) into the actual machine color value. It also has <code>TextureMixin</code> for classes that use textures for drawing objects. In our <em>Space Invaders</em> game, we will use a Mixin class to mix in a “vanishing from screen” behavior, common to both aliens and the player’s ship.</p>
+<p>Think about all creatures that can fly: insects, birds, bats, astronauts, etc. They do have a common ancestor but that common ancestor did not have the ability to fly. Instead, each line evolved that ability independently and all have evolutionary “cousins” that cannot fly. When programming, you can follow the same pattern of creating a common ancestor for flying and non-flying insects, then implementing ability to fly in the former. Do the same for birds, bats, astronauts, etc. If your implementation must be very detailed and creature-specific, this might be unavoidable. However, if your ability to “fly” is very abstract and, therefore, the same for all creatures in question, you will end up writing the same code for every insect, bird, bar class. An easy copy-paste, of course, but that means you get multiple places with identical implementation, so when you need to change it, you will have to make sure that you do it in all the places (and you gonna miss some, I always do). Alternative? Mixins! You create a class <code>FlightAbility</code> that implements that common abstract “flying” and, then, you inherit from that class whenever you need a flying someone. Mix a non-flying bird with the <code>FlightAbility</code> and it can fly! Mix it with an insect: Flying insect! You may also mix in more than one ability. Again, start with a bird that just walks around (chicken?). Add a mixin <code>FlightAbility</code> and you get a flying bird (pigeon?). Take the walking bird again and mix in <code>SwimAbility</code> and you get a swimming bird (penguin?). Mix in <em>both</em> and you get a bird that can both fly and swim (swan?)!</p>
+<p>You may not need mixins frequently but they are a powerful way of creating an isolated behavior that different classes might need without enforcing strict inheritance structure. PsychoPy is big on mixins. For example, it has <code>ColorMixin</code> that could be mixed-in to a visual class that needs to work with color, so it implements all the repetitive<a href="#fn41" class="footnote-ref" id="fnref41"><sup>41</sup></a> code for translating an arbitrary color representation (string, hexadecimal code, RGB triplet, HSL triplet, single grayscale value, etc.) into the internal RGB color value. It also has <code>TextureMixin</code> for classes that use textures for drawing objects. In our <em>Space Invaders</em> game, we will use a Mixin class to mix in a “boom sound when exploded” behavior, common to both aliens and the player’s ship.</p>
 </div>
 <div id="duck-typing" class="section level2" number="17.2">
 <h2><span class="header-section-number">17.2</span> Duck typing</h2>
-<p>Alternatively, you might need your object to behave in a certain way but having a proper class hierarchy is an overkill because you might want some but not all the functionality. The idea is to use “duck typing”, which comes from saying “If it walks like a duck, and it quacks like a duck, then it must be a duck.” In other words, if the only things you care about are walking and quacking, do you actually need it to be an actual duck<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>? Will a goose that can walk and quack the same way do? Obviously, the correct answer is “it depends” but in a lot of situations you are interested in a common behavior rather than in a common ancestor.</p>
-<p>Duck typing is a popular method in Python. For example, <code>len(object_instance)</code> is a common way to compute length of an object. That object could be a string <code>len("four")</code>, or a list <code>len([1, 2, 3, 4])</code>, a tuple <code>len(tuple(1, 4, 2))</code>, a dictionary <code>len({"A": 1, "B": 5})</code>, etc. The idea is that as long as a class has a concept of length (number of elements, number of characters, etc.), you should be able compute length via <code>len()</code>. This is achieved by adding a special method <code>def __len__(self):</code> to the class. This is called a “hook method”, as it is never called directly but is “hooked” to the <code>len()</code> function call. Thus, whenever you write <code>len(object)</code>, it is translated to <code>object.__len()__</code><a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>.</p>
+<p>Alternatively, you might need your object to behave in a certain way but having a proper class hierarchy is an overkill because this is only one class and you might want some but not all the functionality. The idea is to use “duck typing”, which comes from saying “If it walks like a duck, and it quacks like a duck, then it must be a duck.” In other words, if the only things you care about are walking and quacking, do you need it to be an actual duck<a href="#fn42" class="footnote-ref" id="fnref42"><sup>42</sup></a>? Will a goose that can walk and quack the same way do? Will a <em>dog</em> that can walk and quack like a duck do? Obviously, the correct answer is “it depends” but in a lot of situations you are interested in a common behavior rather than in a common ancestor.</p>
+<p>Duck typing is a popular method in Python. For example, <code>len(object)</code> is a canonical way to compute length of an object. That object could be a string <code>len("four")</code>, or a list <code>len([1, 2, 3, 4])</code>, a tuple <code>len(tuple(1, 4, 2))</code>, a dictionary <code>len({"A": 1, "B": 5})</code>, etc. The idea is that as long as a class has a concept of length (number of elements, number of characters, etc.), you should be able compute length via <code>len()</code>. This is achieved by adding a special methodto the class <code>__len__(self)</code> that must return an integer. This is called a “hook method”, as it is never called directly but is “hooked” to the <code>len()</code> function call. Thus, whenever you write <code>len(object)</code>, it is actually translated into <code>object.__len()__</code><a href="#fn43" class="footnote-ref" id="fnref43"><sup>43</sup></a>.</p>
+<p>Another popular duck typing application is an implementation of an iterator: an object that yields one item at a time, so you can do lazy computation<a href="#fn44" class="footnote-ref" id="fnref44"><sup>44</sup></a> or loop over them. It must implement two special methods to enable iteration over its items: <code>__iter__(self)</code> and <code>__next__(self)</code>. The former is called when iteration starts and it should perform all necessary initializations (e.g., setting internal counter to 0, reshuffling elements, etc.) and must return an iterator object (typically, a reference to itself)<a href="#fn45" class="footnote-ref" id="fnref45"><sup>45</sup></a>. The <code>__next()__</code> method is called whenever the next item is needed: if you use iterator in the <code>for</code> loop, it is called automatically or you can call it yourself via <code>next(iterator_object)</code> (try it on a <code>range()</code> iterator). <code>__next()__</code> must return the next item or <code>raise StopIteration()</code> exception, signalling that it ran out of items.</p>
+<p>Note that iterator does not require an implementation of the <code>__len()__</code> method! How come? If you have items you can iterate over, doesn’t it make sense to also know their number (length of an object)? Not necessarily! First, if you use an iterator in a <code>for</code> loop and you just want to iterate over all of the items until you run out of them (which is signalled by the <code>StopIteration()</code> exception). Thus, their total number and, hence, <code>len()</code> method is of little interest. Accordingly, why implement a function that you do not need<a href="#fn46" class="footnote-ref" id="fnref46"><sup>46</sup></a>? Second, what if your iterator is endless (in that case, it is called a <em>generator</em>)? E.g., every time <code>__next__()</code> is called it returns one random item or a random number. This way, it will never run out of items, so the question of “what is its length” is meaningless (unless you take “infinity” for an answer). This lack of need for <code>__len__()</code> for iterators is the spirit of duck typing: implement only the methods you need from your duck, ignore the rest.</p>
+<p>Below, you will practice duck typing by implementing both <code>__len()__</code> and two special iterator methods as part of our <code>AlienArmada</code> class.</p>
+</div>
+<div id="which-one-to-use" class="section level2" number="17.3">
+<h2><span class="header-section-number">17.3</span> Which one to use?</h2>
+<p>Now you know <em>three</em> methods to produce common behavior: proper inheritance, mixins, and duck typing. Which one should you use? Depends on what you need. If you have many classes and you can have a well defined inheritance tree, use it. However, if you have some specific behavior that you need in some classes that is hard to fit with the inheritance tree, use mixins. If you have a single class that needs very specific functionality: use duck typing. Any one of them, does not preclude you using others. But be moderate, using too many different paradigms will be confusing for you and a reader.</p>
+</div>
+<div id="space-invaders" class="section level2" number="17.4">
+<h2><span class="header-section-number">17.4</span> Space Invaders</h2>
+<p>We will program a simply version of the game with aliean armada going gradualy descending. You task is to capture all aliens by firing a teleport beam before one of them rams your ship. Below, you can see my version of the game.</p>
+<p>As per usual, the plan is to move slowly in small increments to keep the complexity of changes low. For the assignment, you will need to submit the final product. However, I strongly recommend an iterative <em>submit-get comments-adjust-add another step or two-submit-get comments-…</em> approach. It will be much easier, both for you and for me, if we catch errors or potentially problematic code early<a href="#fn47" class="footnote-ref" id="fnref47"><sup>47</sup></a>.</p>
+<p>Before we start, grab images that we will use for the game <a href="material/space-invaders.zip">space-invaders.zip</a>, created specifically for our seminar by Andrej Pastukhov, who said you absolutely must look at this link: <a href="https://youtu.be/dQw4w9WgXcQ">Wie die Pixelarts meines Sohnes Andrej entstanden sind</a><a href="#fn48" class="footnote-ref" id="fnref48"><sup>48</sup></a>.</p>
+</div>
+<div id="boilerplate" class="section level2" number="17.5">
+<h2><span class="header-section-number">17.5</span> Boilerplate</h2>
+<p>Create our usual boilerplate code in <em>exercise01.py</em> (you will use the same files for classes but use versioning of the main file, it makes it easier for me to check your code):</p>
+<ul>
+<li>Import what is needed from PsychoPy</li>
+<li>Create a window. I’ve picked 640×480, as our sprites are 32×32 but chose whatever looks good on your screen.</li>
+<li>Create our usual main game loop with <code>gamover</code> variable, flipping the window, and checking for <em>escape</em> button press.</li>
+</ul>
+<div class="infobox program">
+<p>Put your boilerplate code into <em>exercise01.py</em>.</p>
+</div>
+</div>
+<div id="the-shapeship" class="section level2" number="17.6">
+<h2><span class="header-section-number">17.6</span> The shapeship</h2>
+<p>Craete a new file for <code>Shapeship</code> class. It is remarkably boring as it just an image that moves left-right on a horizontal line. Thus, we will create it as a descendant of <code>visual.ImageStim</code> class. The only method that you need to define right now is the constructor <code>__init()</code>. It should take <code>win</code> as the only parameter (apart from <code>self</code>, of course) and call <code>super().__init__(...)</code> with <code>win</code> variable that you’ve got as a parameter, name of the image (<em>raumschiff.png</em>, don’t forget to add the relative path to it), and the <code>pos</code>ition of the image.</p>
+<p>In the main code, create an object and draw it in the main loop. Experiment with the vertical placement. The ship should be somewhere just above the lower edge of the window. For me, vertical position of -0.9 worked quite nicely.</p>
+<div class="infobox program">
+<p>Put your updated code into <em>exercise02.py</em>, plus an <code>Spaceship</code> class into a separate file.</p>
+</div>
+</div>
+<div id="the-shapeship-moves" class="section level2" number="17.7">
+<h2><span class="header-section-number">17.7</span> The shapeship moves</h2>
+<p>Now, let us use the <a href="https://psychopy.org/api/event.html#psychopy.event.Mouse">mouse</a> to control the horizontal position of the ship and, later on, left button to shoot. In the main loop, use <a href="https://psychopy.org/api/event.html#psychopy.event.Mouse.getPos">getPos()</a> method to get the position of the mouse and use <em>horizontal</em> component to alter the position of the ship. We want it to remain at the same position vertically, so we want to keep it constant. Note, however, that you cannot assign just a horizontal or vertical components to the position via <code>.pos[0] = ...</code>. In my PsychoPy 2020.2.10 it does not generate an error but does not change the actual position either. Thus, you need to assign a tuple/list of <code>[new horizontal component, original vertical component]</code>. Test moving your spaceship around. You can make mouse invisible (see documentation on the parameter) to make it more immersive.</p>
+<div class="infobox program">
+<p>Put your updated code into <em>exercise03.py</em>.</p>
+</div>
+</div>
+<div id="an-alien-appears" class="section level2" number="17.8">
+<h2><span class="header-section-number">17.8</span> An alien appears</h2>
+<p>Before we create an alien armada, let us start by creating a single alien. The class will be very basic, just like <code>Spaceship</code>. This is why, we will put both <code>Alien</code> and <code>AlienArmada</code> into the same file (so, think about its filename). The class itself will very similar to the <code>Spaceship</code>. The only differences are that it should take (and pass) <code>pos</code> parameter (unlike the spaceship that always appears at the same location) and that the image should be randomly picked, either <em>alien-1.png</em> or <em>alien-2.png</em>. For testing, place a few alians at arbitrary locations on the screen to check that the image is randomly picked. Do not forget to draw them in the main loop.</p>
+<div class="infobox program">
+<p>Put your updated code into <em>exercise04.py</em>, plus an <code>Alien</code> class into a separate file.</p>
+</div>
+</div>
+<div id="an-alien-armada-appears" class="section level2" number="17.9">
+<h2><span class="header-section-number">17.9</span> An alien armada appears</h2>
+<p>One alien is neither scary, nor challenging enough. We want more! For this, we will create an <code>AlienArmada</code> class with a twist. It will be responsible for creating a grid of aliens, moving them around (we will use getter/setter functions for that), allowing outside processes to iterate over them (iterator duck typing), and reporting the number of remaining aliens (length duck typing). As usual, we will do this one step at a time.</p>
+<p>Start by creating an <code>AlienArmada</code> class, below the <code>Alien</code> class. Our initial version will have constructor, <code>spawn()</code>, and <code>draw()</code> methods plus <code>win</code>, <code>__pos</code> (a tuple with the position within the window) and <code>aliens</code> attributes. The latter will be a list with alien objects. Let us go through methods implementation.</p>
+<p>Constructor <code>__init()__</code>. We will create and place aliens in a separate method <code>spawn()</code>. Thus, our constructor will be very simple. You only need to store its only <code>win</code> parameter as an attribute, initialize <code>__pos</code> to some predefined value (I’ve picked <code>(0, 0.5)</code> but you can always optimize it later on), initialize <code>aliens</code> attribute to an empty list, and call <code>spawn()</code> method.</p>
+<p><code>spawn()</code>. Here, create aliens on 7×3 grid with a step of 0.2 units centered at <code>AlienArmada</code>’s position. All aliens go to <code>aliens</code> attribute, of course. It should look like this:</p>
+<p><img src="images/alien-armada.png" width="320" /></p>
+<p><code>draw()</code>. You simply draw all aliens.</p>
+<div class="infobox program">
+<p>Put your updated code into <em>exercise05.py</em>, plus create the <code>AlienArmada</code> class.</p>
+</div>
+</div>
+<div id="a-laser-shot-appears" class="section level2" number="17.10">
+<h2><span class="header-section-number">17.10</span> A laser shot appears</h2>
+<p>Now we need to create <code>Laser</code> class (in a separate file). Eventually, when a player presses left mouse button, the laser should appear at the location just above and fly up with a certain speed. Let us take care of the first step. Create <code>Laser</code> class as a descendant of <code>visual.ImageStim</code> (just like our <code>Spaceship</code> and <code>Alien</code> classes). It should take <code>win</code> and <code>pos</code> as arguments and call the ancestor constructor. The <code>pos</code> argument will hold the position of the ship but the laser must appear <em>above</em> it, so you need to adjust <code>pos[1]</code> for that. Hint, you can get window height from <code>win.size[1]</code> and you know sprites are 32 pixels high. The algebra should be straightforward.</p>
+<p>For testing, create a laser object right after you create the ship itself and draw it in the main loop. It won’t move but you will be able to see whether you’ve got the height right.</p>
+<div class="infobox program">
+<p>Put your updated code into <em>exercise06.py</em>, plus create the <code>Laser</code> class.</p>
+</div>
+</div>
+<div id="the-laser-shot-flies" class="section level2" number="17.11">
+<h2><span class="header-section-number">17.11</span> The laser shot flies</h2>
+<p>Let us add <code>fly()</code> method to the laser. It will be very simple, every time it is called the laser should move upwards by some arbitrary value of units (I’ve used 0.05 but pick the speed you like). Once it flies off the screen, we should be mark it for deletion, as we won’t need it anymore. Thus, create a new attribute <code>expired</code> and set to <code>False</code>. In the <code>fly()</code> method, move the laser only if laser has not <code>expired</code> and, once you move it, check whether it is off the screen (its vertical position is 1 + half-height). If it is, mark it as expired.</p>
+<p>Remember to call <code>fly()</code> method in the main loop and see how the laser flies up and off the screen. Once it is gone, set a breakpoint to check that its <code>expired</code> flag is indeed <code>True</code>.</p>
+<div class="infobox program">
+<p>Put your updated code into <em>exercise07.py</em>, update the <code>Laser</code> class.</p>
+</div>
+</div>
+<div id="we-want-more-lasers" class="section level2" number="17.12">
+<h2><span class="header-section-number">17.12</span> We want more lasers!</h2>
+<p>Now we will create a <code>LaserGun</code> class that will take care of individual laser shots. It will 1) create a new <code>Laser</code> object whenever it is <code>fire()</code>d, 2) ensure that it does not overheat by allowing only one shot every N seconds (let’s say 0.3), 3) call <code>draw()</code> and <code>fly()</code> methods for all laser shots, and 4) remove the expired ones via <code>cleanup()</code>.</p>
+<p>Create the class <code>LaserGun</code> in the same file as the <code>Laser</code>.</p>
+<p>Constructor <code>__init()__</code>. In the constructor, pass PsychoPy window variable and store it as an attribute (you will need it when you create a new laser object), initialize <code>lasershots</code> attribute with empty list, and create a <code>timer</code> attribute via <code>clock.CountdownTimer()</code> (decode on the minimal interval between the shots, I’ve picked 300 ms). We will use it inside the <code>fire()</code> method later on.</p>
+<p><code>fire(self, pos)</code>. It should take <code>pos</code> tuple with position of the ship as a single parameter. If enough time passed since the last shot (check <code>.timer</code> for that), create a new <code>Laser</code> at the supplied position, add it to the <code>lasershots</code> list, and reset the timer.</p>
+<p><code>draw()</code> and <code>fly()</code> simply draw or fly all <code>lasershots</code>.</p>
+<p><code>cleanup()</code>. This is both simple and tricky! Conceptually simple: you loop over <code>lasershots</code> and delete any object that is <code>expired</code>. You can do it via list comprehension (deleting objects by not including them in the updated list) but for didactic reasons we will use <a href="https://docs.python.org/3/tutorial/datastructures.html#the-del-statement">del</a> instead. If you have a list and you want to delete a second element, you write</p>
+<div class="sourceCode" id="cb156"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb156-1"><a href="seminar-02-05.html#cb156-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>]</span>
+<span id="cb156-2"><a href="seminar-02-05.html#cb156-2" aria-hidden="true" tabindex="-1"></a><span class="kw">del</span> x[<span class="dv">1</span>]</span>
+<span id="cb156-3"><a href="seminar-02-05.html#cb156-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x)</span></code></pre></div>
+<pre><code>## [1, 3, 4, 5]</code></pre>
+<p>However, there is a catch. Imagine that you want to delete second and forth elements, so that the result should be <code>[1, 3, 5]</code>. If you just delete second and then forth elements, you won’t get what you want:</p>
+<div class="sourceCode" id="cb158"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb158-1"><a href="seminar-02-05.html#cb158-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>]</span>
+<span id="cb158-2"><a href="seminar-02-05.html#cb158-2" aria-hidden="true" tabindex="-1"></a><span class="kw">del</span> x[<span class="dv">1</span>]</span>
+<span id="cb158-3"><a href="seminar-02-05.html#cb158-3" aria-hidden="true" tabindex="-1"></a><span class="kw">del</span> x[<span class="dv">3</span>]</span>
+<span id="cb158-4"><a href="seminar-02-05.html#cb158-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x)</span></code></pre></div>
+<pre><code>## [1, 3, 4]</code></pre>
+<p>Do you see why? Solution: start deleting from the end, this way indexes of earlier elements won’t be affected:</p>
+<div class="sourceCode" id="cb160"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb160-1"><a href="seminar-02-05.html#cb160-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>]</span>
+<span id="cb160-2"><a href="seminar-02-05.html#cb160-2" aria-hidden="true" tabindex="-1"></a><span class="kw">del</span> x[<span class="dv">3</span>]</span>
+<span id="cb160-3"><a href="seminar-02-05.html#cb160-3" aria-hidden="true" tabindex="-1"></a><span class="kw">del</span> x[<span class="dv">1</span>]</span>
+<span id="cb160-4"><a href="seminar-02-05.html#cb160-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x)</span></code></pre></div>
+<pre><code>## [1, 3, 5]</code></pre>
+<p>Note that you must use <code>del list[index]</code> format, so you need to use indexing for loop for the <code>cleanup()</code> function:</p>
+<div class="sourceCode" id="cb162"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb162-1"><a href="seminar-02-05.html#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ishot <span class="kw">in</span> backwards<span class="op">-</span>index<span class="op">-</span>built<span class="op">-</span>via<span class="op">-</span><span class="bu">range</span><span class="op">-</span>function:</span>
+<span id="cb162-2"><a href="seminar-02-05.html#cb162-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="va">self</span>.lasershots[ishot] needs to be deleted:</span>
+<span id="cb162-3"><a href="seminar-02-05.html#cb162-3" aria-hidden="true" tabindex="-1"></a>    delete that <span class="va">self</span>.lasershots[ishot]</span></code></pre></div>
+<p>For testing, use <code>LaserGun</code> in place of the <code>Laser</code>. Both have same <code>draw()</code> and <code>fly()</code> methods that you should be calling already. Add <code>cleanup()</code> call to the main loop right after the <code>fly()</code> (that will automatically delete expired shots). Also in the main loop, check if left mouse button is <a href="https://psychopy.org/api/event.html#psychopy.event.Mouse.getPressed">pressed</a>. If it is, <code>fire()</code> the laser gun, passing current position of the ship to it. Once you fired a few shots and they are off the screen, put a breakpoint and check that the <code>.lasershots</code> is empty (you <code>cleanup()</code> works as it should).</p>
+<div class="infobox program">
+<p>Put your updated code into <em>exercise07.py</em>, update the <code>Laser</code> class.</p>
+</div>
+</div>
+<div id="i-am-hit-i-am-hit" class="section level2" number="17.13">
+<h2><span class="header-section-number">17.13</span> I am hit! I am hit!</h2>
+<p>Now we need to check whether a lasershot hit an alien. In that case, all the relevant aliens and shots must be removed. It is easy for lasershots, we just set them as <code>expired</code> and <code>cleanup()</code> does the rest. Clearly, we need the same mechanism for the aliens.</p>
+<p>Add <code>teleported</code> attribute to the <code>Alien</code> class and initialize to <code>False</code>. In <code>AlienArmade</code> class, implement a <code>cleanup()</code> method, analogous to one in <code>LaserGun</code> that will delete any <code>teleported</code> aliens. Add the call to it in the main loop at the same location as for the <code>LaserGun</code>. You can test it by setting <code>teleported</code> to <code>True</code> for one of the aliens and it should be missing.</p>
+<p>Now for the actual check. You should loop over all aliens and laser shots checking whether whether they <a href="https://psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim.overlaps">overlap</a>. If they do, set laser shot to <code>expired</code> and the alien as <code>teleported</code>. Do this check <em>before</em> the clean up but after the laser shots fly.</p>
+<p>Test it!</p>
+<div class="infobox program">
+<p>Put your updated code into <em>exercise08.py</em>, update <code>Alien</code> and <code>AlienArmade</code> classes.</p>
+</div>
+</div>
+<div id="duck-typiing-iterators" class="section level2" number="17.14">
+<h2><span class="header-section-number">17.14</span> Duck typiing iterators</h2>
+<p>In the precious exercise, you used <code>aliens</code> and <code>lasershots</code> attributes directly in the loop. However, let us inject some coolness into our code and turn <code>AlienArmada</code> and <code>LaserGun</code> classes into iterators. Recall that you need to implement two special methods for this: <code>__iter__(self)</code> and <code>__next__(self)__</code>. The first one, initializes the loop, the second one yields the next item. The actual implementation is very simple. You need to create a new attribute that will be used to track which item you need to yield, call it <code>iter</code>. Initialize it to <code>None</code> in the constructor.</p>
+<p>In the <code>__iter__(self)</code>, initialize the counter to <code>0</code> and return <code>self</code>, returning the reference to the iterator, which is the object itself<a href="#fn49" class="footnote-ref" id="fnref49"><sup>49</sup></a>. In the <code>__next__(self)</code>, check if <code>iter</code> is within the list length. If it is not (i.e., you ran out aliens/shots to iterate over), <code>raise StopIteration()</code>. If it is, increase the iteration counter and return the element it was indexing <em>before</em> that: Think about why you need to return <code>self.aliens[self.iter-1]</code> rather than <code>self.aliens[self.iter-1]</code> or how you can use a different starting value and range check to avoid this.</p>
+<p>Do this for both classes and use them in for loops directly, instead of <code>aliens.aliens</code> and <code>laser.lasershots</code>.</p>
+<p>Test it! It should work as before, of course, but with cooler duck typing inside!</p>
+<div class="infobox program">
+<p>Put your updated code into <em>exercise09.py</em>, update <code>LaserGun</code> and <code>AlienArmade</code> classes.</p>
+</div>
+</div>
+<div id="gotem-all" class="section level2" number="17.15">
+<h2><span class="header-section-number">17.15</span> Got’em all!</h2>
+<p>Now, implement <code>__len()__</code> method for <code>AlienArmada</code> class that so returns the number of remaining aliens. In the main loop, use it via <code>len()</code> function to check whether you won: no aliens left, the game is over. Use <code>len()</code> with the object, not with the list attribute!</p>
+<div class="infobox program">
+<p>Put your updated code into <em>exercise10.py</em>, update <code>LaserGun</code> and <code>AlienArmade</code> classes.</p>
+</div>
+</div>
+<div id="ping" class="section level2" number="17.16">
+<h2><span class="header-section-number">17.16</span> Ping!</h2>
+<p>Now let us use a <code>TeleportSoundMixin</code> class that defines a single <code>teleport()</code> method that plays the <em>teleport.wav</em> sound (created by Sergenious and obtained from <a href="https://freesound.org/people/Sergenious/sounds/55853/">freesound.org</a>) is in <a href="material/space-invaders.zip">materials</a>. Thus, it can be a single line method when you both create and play the sound in one go, no temporary variable or an attribute are required. Then, use it as an ancestor for the <code>Alien</code> class. Now it has that <code>teleport()</code> method. Call it when you set <em>teleported</em> to <code>True</code>.</p>
+<div class="infobox program">
+<p>Put your updated code into <em>exercise11.py</em>, create <code>TeleportSoundMixin</code> class and update <code>Alien</code> class.</p>
+</div>
+</div>
+<div id="the-alien-armada-jumps" class="section level2" number="17.17">
+<h2><span class="header-section-number">17.17</span> The alien armada jumps</h2>
+<p>Currently, our aliens are sitting ducks. No fun! They need to get a move on. But before we can move alien armada around, we need to be able to change its position. Recall that we have <code>__pos</code> attribute in <code>AlienArmada</code> class. I’ve made it (kinda) private via <code>__pos</code> on purpose, so we can define getter and setter methods for it and call the virtual attribute <code>pos</code> to make it consistent with the rest. If you forgot what getter/setter methods are, <a href="seminar-02-04.html#getter-setter">read again</a>.</p>
+<p>To start with, define a getter. It only needs to return the value of the hidden position attribute.</p>
+<p>Now, to more complicated and, hence, fun bit! Remember, we need to move <em>all</em> individual aliens relative to the center of the armada. For this, 1) compute the <em>change</em> in position, 2) use it to alter position of individual aliens based on their current position, 3) store the new position in the hidden attribute.</p>
+<p>Test it by making armada jump to a random location every time you press <em>space</em> button. The armada should keep its formation!</p>
+<div class="infobox program">
+<p>Put your updated code into <em>exercise12.py</em>, update <code>AlienArmada</code> class.</p>
+</div>
+</div>
+<div id="the-alien-armada-moves" class="section level2" number="17.18">
+<h2><span class="header-section-number">17.18</span> The alien armada moves</h2>
+<p>Our alien armada will move downwards along a sine trajectory. Thus, we need to define a <code>fly()</code> method that will move it downwards by some small step (I’ve used 0.001, which is quite fast for 60 Hz, as it will move 0.06 units per second). And the horizontal position will be computed as a sine wave. The general formula is:
+<span class="math display">\[x = x_{max} \cdot sin(2 \pi f \cdot (y-y_{origin})) \]</span>
+where <span class="math inline">\(x_{max}\)</span> is maximal deviation of the armada from the middle of the screen (I’ve set it to 0.25), the <span class="math inline">\(f\)</span> is the frequency, i.e., how fast is horizontal movement (I’ve set to 3), <span class="math inline">\(y\)</span> is the current vertical coordinate of the armada and <span class="math inline">\(y_{origin}\)</span> is the initial one (0.5 in my case). Experiment with values to see how they affect the movement.</p>
+<p>Once you computed both components, assign the tuple to the <code>pos</code> and it will move the entire armada. In the main loop, call <code>fly()</code> when you call it for laser gun.</p>
+<div class="infobox program">
+<p>Put your updated code into <em>exercise13.py</em>, update <code>AlienArmada</code> class.</p>
+</div>
+</div>
+<div id="the-alien-armada-wins-crash" class="section level2" number="17.19">
+<h2><span class="header-section-number">17.19</span> The alien armada wins: crash!</h2>
+<p>So far, the player always wins. Let us make it more dangerous! They will lose if either an alien crashes into the spaceship or if the armada goes past the ship. Implement the former the same way as you checked whether laser shot hit an alien: loop of aliens and see if the overlap with the spaceship (game over if they do). Implement and test.</p>
+<div class="infobox program">
+<p>Put your updated code into <em>exercise14.py</em>.</p>
+</div>
+</div>
+<div id="the-alien-armada-wins-missed-them" class="section level2" number="17.20">
+<h2><span class="header-section-number">17.20</span> The alien armada wins: missed them!</h2>
+<p>The second way to lose the game, is if at least one alien got past the ship. For this, we need to check the position of the <em>lowest</em> alien and if it is lower than that of the spaceship, the game is over. You can do it in the same loop you are checking for the hit but, for didactic reasons, let us practice <code>@proprety</code> a bit more. Implement a new read-only property <code>lowest_y</code> of the <code>AlienArmada</code> class that will return the y-coordinate of the lowest alien in the armada. You need to loop over individual aliens to find the lowest y and return it. There are different way to do it, come up with one yourself! In the main code, add the check and make sure the game is over, if aliens got past the player.</p>
+<div class="infobox program">
+<p>Put your updated code into <em>exercise15.py</em>, update <code>AlienArmada</code> class.</p>
+</div>
+</div>
+<div id="mixin-teleport" class="section level2" number="17.21">
+<h2><span class="header-section-number">17.21</span> Mixin teleport</h2>
+<p>Mix in the teleport sound method to the <code>Spaceship</code> and play it if alien crashed into it.</p>
+<div class="infobox program">
+<p>Put your updated code into <em>exercise16.py</em>, update <code>Spaceship</code> class.</p>
+</div>
+</div>
+<div id="game-over-message-1" class="section level2" number="17.22">
+<h2><span class="header-section-number">17.22</span> Game over message</h2>
+<p>Create a game over message (a blinking one would be cool but this is up to you) that will reflect the outcome. Something like this but use your imagination:</p>
+<ul>
+<li>“Coward!”, if the player pressed escape.</li>
+<li>“Congrats!”, if the player won.</li>
+<li>“Crash! Boom! Bang!”, if the player was hit.</li>
+<li>“They got away!”, if the armada got past the player.</li>
+</ul>
+<p>One way to simplify you life is to rename <code>gameover</code> variable into the <code>gamestate</code> variable. Initially, it could be <code>"playing"</code>, so your loop repeats <code>while gamestate == "playing"</code>. Then, you can set it based on the type of the event, e.g., <code>"abort"</code> for <em>escape</em> button press, <code>"victory"</code> when player wins, etc. and use it after the main loop to determine which message to show. Better still, use dictionary for this instead of if-else. Or “cheat” and store the message in the variable itself.</p>
+<div class="infobox program">
+<p>Put your updated code into <em>exercise17.py</em>.</p>
+</div>
+</div>
+<div id="we-want-more-1" class="section level2" number="17.23">
+<h2><span class="header-section-number">17.23</span> We want more!</h2>
+<p>You have a solid game but it can be improved in many ways. Currently, we move all game object assuming constant frame rate. That might not be the case, so it would be wiser to use inter-frame timer and use time elapsed since the last update. And it can use more feature. Score? Difficulty? More levels? Aliens shooting back at you? Anything is possible!</p>
 
 </div>
 </div>
 <div class="footnotes">
 <hr />
-<ol start="4">
-<li id="fn4"><p>A man is hailing a taxi on a sidewalk. A car stops next to him. The guy looks at it and says “But there is the taxi sign on the roof?”. The driver replies: “Do you need a taxi sign or a ride?”<a href="seminar-02-05.html#fnref4" class="footnote-back">↩︎</a></p></li>
-<li id="fn5"><p>Why not implement it as a method <code>object.len()</code> or, even better as a read-only property <code>object.len</code>? Read <a href="https://mail.python.org/pipermail/python-3000/2006-November/004643.html">here</a> for the reasoning!<a href="seminar-02-05.html#fnref5" class="footnote-back">↩︎</a></p></li>
+<ol start="41">
+<li id="fn41"><p>boilerplate<a href="seminar-02-05.html#fnref41" class="footnote-back">↩︎</a></p></li>
+<li id="fn42"><p>A man is hailing a taxi on a sidewalk. A car stops next to him. The guy looks at it and says “But there is the taxi sign on the roof?”. The driver replies: “Do you need a taxi sign on the roof or a ride?”<a href="seminar-02-05.html#fnref42" class="footnote-back">↩︎</a></p></li>
+<li id="fn43"><p>Why not implement it as a method <code>object.len()</code> or, even better, as a read-only property <code>object.len</code>? Read <a href="https://mail.python.org/pipermail/python-3000/2006-November/004643.html">here</a> for the justification.<a href="seminar-02-05.html#fnref43" class="footnote-back">↩︎</a></p></li>
+<li id="fn44"><p>Lazy computation means that you compute or get only what is necessary right now, rather than computing or getting all items in one go.<a href="seminar-02-05.html#fnref44" class="footnote-back">↩︎</a></p></li>
+<li id="fn45"><p>This is what function <code>range()</code> returns, not a list but an iterator object.<a href="seminar-02-05.html#fnref45" class="footnote-back">↩︎</a></p></li>
+<li id="fn46"><p>Of course, if you <em>do</em> need it, you should implement it. The point is that quite often you do not.<a href="seminar-02-05.html#fnref46" class="footnote-back">↩︎</a></p></li>
+<li id="fn47"><p>Number of submissions is unlimited with reason.<a href="seminar-02-05.html#fnref47" class="footnote-back">↩︎</a></p></li>
+<li id="fn48"><p>No worries, it is safe. He says, you should understand. But I have no idea as, evidently, I am out of touch with modern trends.<a href="seminar-02-05.html#fnref48" class="footnote-back">↩︎</a></p></li>
+<li id="fn49"><p>You can cheat and return the reference to the list attribute itself and it’ll do the rest. Don’t do it for didactic purposes.<a href="seminar-02-05.html#fnref49" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -386,7 +690,7 @@
         </div>
       </div>
 <a href="seminar-02-04.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="cross-references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="seminar-02-06.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -436,6 +740,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

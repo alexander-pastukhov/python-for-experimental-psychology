@@ -24,7 +24,7 @@
 <meta name="author" content="Alexander (Sasha) Pastukhov" />
 
 
-<meta name="date" content="2021-04-21" />
+<meta name="date" content="2021-05-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -216,7 +216,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6" data-path="seminar06.html"><a href="seminar06.html"><i class="fa fa-check"></i><b>6</b> Hunt the Wumpus, part 3</a>
 <ul>
 <li class="chapter" data-level="6.1" data-path="seminar06.html"><a href="seminar06.html#recall-variables-as-boxes-immutable-objects"><i class="fa fa-check"></i><b>6.1</b> Recall, Variables as Boxes (immutable objects)</a></li>
-<li class="chapter" data-level="6.2" data-path="seminar06.html"><a href="seminar06.html#variables-as-post-it-stickers-mutable-objects"><i class="fa fa-check"></i><b>6.2</b> Variables as post-it stickers (mutable objects)</a></li>
+<li class="chapter" data-level="6.2" data-path="seminar06.html"><a href="seminar06.html#mutable-objects"><i class="fa fa-check"></i><b>6.2</b> Variables as post-it stickers (mutable objects)</a></li>
 <li class="chapter" data-level="6.3" data-path="seminar06.html"><a href="seminar06.html#tuple-a-frozen-list"><i class="fa fa-check"></i><b>6.3</b> Tuple: a frozen list</a></li>
 <li class="chapter" data-level="6.4" data-path="seminar06.html"><a href="seminar06.html#keeping-track-of-occupied-caves"><i class="fa fa-check"></i><b>6.4</b> Keeping track of occupied caves</a></li>
 <li class="chapter" data-level="6.5" data-path="seminar06.html"><a href="seminar06.html#for-loop"><i class="fa fa-check"></i><b>6.5</b> For loop</a></li>
@@ -387,12 +387,50 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="16.6" data-path="seminar-02-04.html"><a href="seminar-02-04.html#horizontal-thursters"><i class="fa fa-check"></i><b>16.6</b> Horizontal thursters</a></li>
 <li class="chapter" data-level="16.7" data-path="seminar-02-04.html"><a href="seminar-02-04.html#landing-pad-visuals"><i class="fa fa-check"></i><b>16.7</b> Landing pad: visuals</a></li>
 <li class="chapter" data-level="16.8" data-path="seminar-02-04.html"><a href="seminar-02-04.html#computing-edges-of-game-objects"><i class="fa fa-check"></i><b>16.8</b> Computing edges of game objects</a></li>
-<li class="chapter" data-level="16.9" data-path="seminar-02-04.html"><a href="seminar-02-04.html#virtual-attributes-via-getters-and-setters"><i class="fa fa-check"></i><b>16.9</b> Virtual attributes via getters and setters</a></li>
+<li class="chapter" data-level="16.9" data-path="seminar-02-04.html"><a href="seminar-02-04.html#getter-setter"><i class="fa fa-check"></i><b>16.9</b> Virtual attributes via getters and setters</a></li>
 <li class="chapter" data-level="16.10" data-path="seminar-02-04.html"><a href="seminar-02-04.html#access-restrictions"><i class="fa fa-check"></i><b>16.10</b> Access restrictions</a></li>
 <li class="chapter" data-level="16.11" data-path="seminar-02-04.html"><a href="seminar-02-04.html#landing"><i class="fa fa-check"></i><b>16.11</b> Landing</a></li>
 <li class="chapter" data-level="16.12" data-path="seminar-02-04.html"><a href="seminar-02-04.html#more-rounds-1"><i class="fa fa-check"></i><b>16.12</b> More rounds</a></li>
 <li class="chapter" data-level="16.13" data-path="seminar-02-04.html"><a href="seminar-02-04.html#limited-fuel"><i class="fa fa-check"></i><b>16.13</b> Limited fuel</a></li>
 <li class="chapter" data-level="16.14" data-path="seminar-02-04.html"><a href="seminar-02-04.html#add-to-it"><i class="fa fa-check"></i><b>16.14</b> Add to it!</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="seminar-02-05.html"><a href="seminar-02-05.html"><i class="fa fa-check"></i><b>17</b> Space invaders: mixins and duck typing</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="seminar-02-05.html"><a href="seminar-02-05.html#mixins"><i class="fa fa-check"></i><b>17.1</b> Mixins</a></li>
+<li class="chapter" data-level="17.2" data-path="seminar-02-05.html"><a href="seminar-02-05.html#duck-typing"><i class="fa fa-check"></i><b>17.2</b> Duck typing</a></li>
+<li class="chapter" data-level="17.3" data-path="seminar-02-05.html"><a href="seminar-02-05.html#which-one-to-use"><i class="fa fa-check"></i><b>17.3</b> Which one to use?</a></li>
+<li class="chapter" data-level="17.4" data-path="seminar-02-05.html"><a href="seminar-02-05.html#space-invaders"><i class="fa fa-check"></i><b>17.4</b> Space Invaders</a></li>
+<li class="chapter" data-level="17.5" data-path="seminar-02-05.html"><a href="seminar-02-05.html#boilerplate"><i class="fa fa-check"></i><b>17.5</b> Boilerplate</a></li>
+<li class="chapter" data-level="17.6" data-path="seminar-02-05.html"><a href="seminar-02-05.html#the-shapeship"><i class="fa fa-check"></i><b>17.6</b> The shapeship</a></li>
+<li class="chapter" data-level="17.7" data-path="seminar-02-05.html"><a href="seminar-02-05.html#the-shapeship-moves"><i class="fa fa-check"></i><b>17.7</b> The shapeship moves</a></li>
+<li class="chapter" data-level="17.8" data-path="seminar-02-05.html"><a href="seminar-02-05.html#an-alien-appears"><i class="fa fa-check"></i><b>17.8</b> An alien appears</a></li>
+<li class="chapter" data-level="17.9" data-path="seminar-02-05.html"><a href="seminar-02-05.html#an-alien-armada-appears"><i class="fa fa-check"></i><b>17.9</b> An alien armada appears</a></li>
+<li class="chapter" data-level="17.10" data-path="seminar-02-05.html"><a href="seminar-02-05.html#a-laser-shot-appears"><i class="fa fa-check"></i><b>17.10</b> A laser shot appears</a></li>
+<li class="chapter" data-level="17.11" data-path="seminar-02-05.html"><a href="seminar-02-05.html#the-laser-shot-flies"><i class="fa fa-check"></i><b>17.11</b> The laser shot flies</a></li>
+<li class="chapter" data-level="17.12" data-path="seminar-02-05.html"><a href="seminar-02-05.html#we-want-more-lasers"><i class="fa fa-check"></i><b>17.12</b> We want more lasers!</a></li>
+<li class="chapter" data-level="17.13" data-path="seminar-02-05.html"><a href="seminar-02-05.html#i-am-hit-i-am-hit"><i class="fa fa-check"></i><b>17.13</b> I am hit! I am hit!</a></li>
+<li class="chapter" data-level="17.14" data-path="seminar-02-05.html"><a href="seminar-02-05.html#duck-typiing-iterators"><i class="fa fa-check"></i><b>17.14</b> Duck typiing iterators</a></li>
+<li class="chapter" data-level="17.15" data-path="seminar-02-05.html"><a href="seminar-02-05.html#gotem-all"><i class="fa fa-check"></i><b>17.15</b> Got’em all!</a></li>
+<li class="chapter" data-level="17.16" data-path="seminar-02-05.html"><a href="seminar-02-05.html#ping"><i class="fa fa-check"></i><b>17.16</b> Ping!</a></li>
+<li class="chapter" data-level="17.17" data-path="seminar-02-05.html"><a href="seminar-02-05.html#the-alien-armada-jumps"><i class="fa fa-check"></i><b>17.17</b> The alien armada jumps</a></li>
+<li class="chapter" data-level="17.18" data-path="seminar-02-05.html"><a href="seminar-02-05.html#the-alien-armada-moves"><i class="fa fa-check"></i><b>17.18</b> The alien armada moves</a></li>
+<li class="chapter" data-level="17.19" data-path="seminar-02-05.html"><a href="seminar-02-05.html#the-alien-armada-wins-crash"><i class="fa fa-check"></i><b>17.19</b> The alien armada wins: crash!</a></li>
+<li class="chapter" data-level="17.20" data-path="seminar-02-05.html"><a href="seminar-02-05.html#the-alien-armada-wins-missed-them"><i class="fa fa-check"></i><b>17.20</b> The alien armada wins: missed them!</a></li>
+<li class="chapter" data-level="17.21" data-path="seminar-02-05.html"><a href="seminar-02-05.html#mixin-teleport"><i class="fa fa-check"></i><b>17.21</b> Mixin teleport</a></li>
+<li class="chapter" data-level="17.22" data-path="seminar-02-05.html"><a href="seminar-02-05.html#game-over-message-1"><i class="fa fa-check"></i><b>17.22</b> Game over message</a></li>
+<li class="chapter" data-level="17.23" data-path="seminar-02-05.html"><a href="seminar-02-05.html#we-want-more-1"><i class="fa fa-check"></i><b>17.23</b> We want more!</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="seminar-02-06.html"><a href="seminar-02-06.html"><i class="fa fa-check"></i><b>18</b> Guitar Hero: staircase and iterator functions</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="seminar-02-06.html"><a href="seminar-02-06.html#getting-the-difficulty-just-right"><i class="fa fa-check"></i><b>18.1</b> Getting the difficulty just right</a></li>
+<li class="chapter" data-level="18.2" data-path="seminar-02-06.html"><a href="seminar-02-06.html#guitar-hero"><i class="fa fa-check"></i><b>18.2</b> Guitar Hero</a></li>
+<li class="chapter" data-level="18.3" data-path="seminar-02-06.html"><a href="seminar-02-06.html#boilerplate-1"><i class="fa fa-check"></i><b>18.3</b> Boilerplate</a></li>
+<li class="chapter" data-level="18.4" data-path="seminar-02-06.html"><a href="seminar-02-06.html#target-and-timedresponsetask-classes"><i class="fa fa-check"></i><b>18.4</b> Target and TimedResponseTask classes</a></li>
+<li class="chapter" data-level="18.5" data-path="seminar-02-06.html"><a href="seminar-02-06.html#target-class-static"><i class="fa fa-check"></i><b>18.5</b> Target class: static</a></li>
+<li class="chapter" data-level="18.6" data-path="seminar-02-06.html"><a href="seminar-02-06.html#target-class-moving"><i class="fa fa-check"></i><b>18.6</b> Target class: moving</a></li>
+<li class="chapter" data-level="18.7" data-path="seminar-02-06.html"><a href="seminar-02-06.html#iteratorgenerator-functions"><i class="fa fa-check"></i><b>18.7</b> Iterator/Generator functions</a></li>
+<li class="chapter" data-level="18.8" data-path="seminar-02-06.html"><a href="seminar-02-06.html#timedresponsetask-class"><i class="fa fa-check"></i><b>18.8</b> TimedResponseTask class</a></li>
+<li class="chapter" data-level="18.9" data-path="seminar-02-06.html"><a href="seminar-02-06.html#settings-file"><i class="fa fa-check"></i><b>18.9</b> Settings file</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="cross-references.html"><a href="cross-references.html"><i class="fa fa-check"></i>Cross references</a></li>
 <li class="divider"></li>
