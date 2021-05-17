@@ -81,8 +81,8 @@ print(next(iterator_var))
 print(next(iterator_var))
 print(next(iterator_var))
 
-# will get an exception StopIteration
-print(next(iterator_var))
+# next call will raise an exception StopIteration
+# print(next(iterator_var))
 ```
 
 This format makes writing iterators very easy, just `yield` whatever you want in the order you want and Python will take care of the rest. Also, you can `yield` in a loop, inside an if-else statement, etc.
@@ -93,7 +93,6 @@ def iterator_fun():
       yield e
 
 iterator = iterator_fun()
-next(iterator)
 next(iterator)
 next(iterator)
 ```
