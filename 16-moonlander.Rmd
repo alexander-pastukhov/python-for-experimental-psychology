@@ -4,10 +4,9 @@ Today we will create a moon lander game. You job is simple: land your ship on th
 
 ```{r, eval=knitr::is_html_output(excludes = "epub"), results = 'asis', echo = F}
 cat(
-'<iframe width="636" height="504" 
-  src="videos/moonlander.m4v"
-  frameborder="0" allow="accelerometer; encrypted-media;  gyroscope; picture-in-picture">
-  </iframe>'
+'<div style="text-align:center;"><video controls>
+    <source src="videos/moonlander.m4v" type="video/mp4"> 
+  </video></div>'
 )
 ```
 
