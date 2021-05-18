@@ -117,7 +117,7 @@
 
 \title{Python for social and experimental psychology}
 \author{Alexander (Sasha) Pastukhov}
-\date{2021-05-11}
+\date{2021-05-18}
 
 \begin{document}
 \maketitle
@@ -4554,9 +4554,31 @@ Now you know \emph{three} methods to produce common behavior: proper inheritance
 
 We will program a simply version of the game with aliean armada going gradualy descending. You task is to capture all aliens by firing a teleport beam before one of them rams your ship. Below, you can see my version of the game.
 
-As per usual, the plan is to move slowly in small increments to keep the complexity of changes low. For the assignment, you will need to submit the final product. However, I strongly recommend an iterative \emph{submit-get comments-adjust-add another step or two-submit-get comments-\ldots{}} approach. It will be much easier, both for you and for me, if we catch errors or potentially problematic code early\footnote{Number of submissions is unlimited with reason.}.
+As per usual, the plan is to move slowly in small increments to keep the complexity of changes low. For the assignment, you will need to submit the final product. However, I strongly recommend an iterative \emph{submit-get comments-adjust-add another step or two-submit-get comments-\ldots{}} approach. It will be much easier, both for you and for me, if we catch errors or potentially problematic code early\footnote{Number of submissions is unlimited with reason.}. Here are the steps:
 
-Before we start, grab images that we will use for the game \href{material/space-invaders.zip}{space-invaders.zip}, created specifically for our seminar by Andrej Pastukhov, who said you absolutely must look at this link: \href{https://youtu.be/dQw4w9WgXcQ}{Wie die Pixelarts meines Sohnes Andrej entstanden sind}\footnote{No worries, it is safe. He says, you should understand. But I have no idea as, evidently, I am out of touch with modern trends.}.
+\begin{itemize}
+\tightlist
+\item
+  Start with our usual PsychoPy boilerplate
+\item
+  Add a \texttt{Spaceship} and use mouse to move it along the bottom of the screen
+\item
+  Create an \texttt{Alien} and then th whole \texttt{AlienArmada}
+\item
+  Add \texttt{Laser}, then a \texttt{LaserGun}, so that the player can fire many laser shots by pressing left mouse key.
+\item
+  Add check for hitting aliens with the laser and teleporting them off the screen.
+\item
+  Use mixin to add teleport sound.
+\item
+  Use cool iterators to cycle through lasers and aliens.
+\item
+  Make alien armada move
+\item
+  Check for end-of-game.
+\end{itemize}
+
+Before we start, grab images that we will use for the game \href{material/space-invaders.zip}{space-invaders.zip}, created specifically for our seminar by Andrej Pastukhov, who said you absolutely must look at this link: \href{https://youtu.be/dQw4w9WgXcQ}{Wie die Pixelarts meines Sohnes Andrej entstanden sind}\footnote{No worries, it is safe. He says, you should understand. But I have no idea because, evidently, I am out of touch with modern trends.}.
 
 \hypertarget{boilerplate}{%
 \section{Boilerplate}\label{boilerplate}}
@@ -4575,17 +4597,17 @@ Create our usual boilerplate code in \emph{exercise01.py} (you will use the same
 
 Put your boilerplate code into \emph{exercise01.py}.
 
-\hypertarget{the-shapeship}{%
-\section{The shapeship}\label{the-shapeship}}
+\hypertarget{the-spaceship}{%
+\section{The spaceship}\label{the-spaceship}}
 
-Craete a new file for \texttt{Shapeship} class. It is remarkably boring as it just an image that moves left-right on a horizontal line. Thus, we will create it as a descendant of \texttt{visual.ImageStim} class. The only method that you need to define right now is the constructor \texttt{\_\_init()}. It should take \texttt{win} as the only parameter (apart from \texttt{self}, of course) and call \texttt{super().\_\_init\_\_(...)} with \texttt{win} variable that you've got as a parameter, name of the image (\emph{raumschiff.png}, don't forget to add the relative path to it), and the \texttt{pos}ition of the image.
+Create a new file for \texttt{Spaceship} class. It is remarkably boring as it just an image that moves left-right on a horizontal line. Thus, we will create it as a descendant of \texttt{visual.ImageStim} class. The only method that you need to define right now is the constructor \texttt{\_\_init()}. It should take \texttt{win} as the only parameter (apart from \texttt{self}, of course) and call \texttt{super().\_\_init\_\_(...)} with \texttt{win} variable that you've got as a parameter, name of the image (\emph{raumschiff.png}, don't forget to add the relative path to it), and the \texttt{pos}ition of the image.
 
 In the main code, create an object and draw it in the main loop. Experiment with the vertical placement. The ship should be somewhere just above the lower edge of the window. For me, vertical position of -0.9 worked quite nicely.
 
 Put your updated code into \emph{exercise02.py}, plus an \texttt{Spaceship} class into a separate file.
 
-\hypertarget{the-shapeship-moves}{%
-\section{The shapeship moves}\label{the-shapeship-moves}}
+\hypertarget{the-spaceship-moves}{%
+\section{The spaceship moves}\label{the-spaceship-moves}}
 
 Now, let us use the \href{https://psychopy.org/api/event.html\#psychopy.event.Mouse}{mouse} to control the horizontal position of the ship and, later on, left button to shoot. In the main loop, use \href{https://psychopy.org/api/event.html\#psychopy.event.Mouse.getPos}{getPos()} method to get the position of the mouse and use \emph{horizontal} component to alter the position of the ship. We want it to remain at the same position vertically, so we want to keep it constant. Note, however, that you cannot assign just a horizontal or vertical components to the position via \texttt{.pos{[}0{]}\ =\ ...}. In my PsychoPy 2020.2.10 it does not generate an error but does not change the actual position either. Thus, you need to assign a tuple/list of \texttt{{[}new\ horizontal\ component,\ original\ vertical\ component{]}}. Test moving your spaceship around. You can make mouse invisible (see documentation on the parameter) to make it more immersive.
 
@@ -4912,7 +4934,7 @@ In the next section, we will create a \texttt{TimedResponseTask} class that will
 \end{Shaded}
 
 \begin{verbatim}
-## <generator object iterator_fun at 0x000000002694BBA0>
+## <generator object iterator_fun at 0x0000000028E0BBA0>
 \end{verbatim}
 
 \begin{Shaded}

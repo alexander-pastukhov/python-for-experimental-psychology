@@ -24,7 +24,7 @@
 <meta name="author" content="Alexander (Sasha) Pastukhov" />
 
 
-<meta name="date" content="2021-05-11" />
+<meta name="date" content="2021-05-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -401,8 +401,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="17.3" data-path="seminar-02-05.html"><a href="seminar-02-05.html#which-one-to-use"><i class="fa fa-check"></i><b>17.3</b> Which one to use?</a></li>
 <li class="chapter" data-level="17.4" data-path="seminar-02-05.html"><a href="seminar-02-05.html#space-invaders"><i class="fa fa-check"></i><b>17.4</b> Space Invaders</a></li>
 <li class="chapter" data-level="17.5" data-path="seminar-02-05.html"><a href="seminar-02-05.html#boilerplate"><i class="fa fa-check"></i><b>17.5</b> Boilerplate</a></li>
-<li class="chapter" data-level="17.6" data-path="seminar-02-05.html"><a href="seminar-02-05.html#the-shapeship"><i class="fa fa-check"></i><b>17.6</b> The shapeship</a></li>
-<li class="chapter" data-level="17.7" data-path="seminar-02-05.html"><a href="seminar-02-05.html#the-shapeship-moves"><i class="fa fa-check"></i><b>17.7</b> The shapeship moves</a></li>
+<li class="chapter" data-level="17.6" data-path="seminar-02-05.html"><a href="seminar-02-05.html#the-spaceship"><i class="fa fa-check"></i><b>17.6</b> The spaceship</a></li>
+<li class="chapter" data-level="17.7" data-path="seminar-02-05.html"><a href="seminar-02-05.html#the-spaceship-moves"><i class="fa fa-check"></i><b>17.7</b> The spaceship moves</a></li>
 <li class="chapter" data-level="17.8" data-path="seminar-02-05.html"><a href="seminar-02-05.html#an-alien-appears"><i class="fa fa-check"></i><b>17.8</b> An alien appears</a></li>
 <li class="chapter" data-level="17.9" data-path="seminar-02-05.html"><a href="seminar-02-05.html#an-alien-armada-appears"><i class="fa fa-check"></i><b>17.9</b> An alien armada appears</a></li>
 <li class="chapter" data-level="17.10" data-path="seminar-02-05.html"><a href="seminar-02-05.html#a-laser-shot-appears"><i class="fa fa-check"></i><b>17.10</b> A laser shot appears</a></li>
@@ -477,7 +477,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="space-invaders" class="section level2" number="17.4">
 <h2><span class="header-section-number">17.4</span> Space Invaders</h2>
 <p>We will program a simply version of the game with aliean armada going gradualy descending. You task is to capture all aliens by firing a teleport beam before one of them rams your ship. Below, you can see my version of the game.</p>
-<p>As per usual, the plan is to move slowly in small increments to keep the complexity of changes low. For the assignment, you will need to submit the final product. However, I strongly recommend an iterative <em>submit-get comments-adjust-add another step or two-submit-get comments-…</em> approach. It will be much easier, both for you and for me, if we catch errors or potentially problematic code early<a href="#fn47" class="footnote-ref" id="fnref47"><sup>47</sup></a>.</p>
+<iframe width="636" height="504" src="videos/space-invaders.mp4" frameborder="0" allow="accelerometer; encrypted-media;  gyroscope; picture-in-picture">
+</iframe>
+<p>As per usual, the plan is to move slowly in small increments to keep the complexity of changes low. For the assignment, you will need to submit the final product. However, I strongly recommend an iterative <em>submit-get comments-adjust-add another step or two-submit-get comments-…</em> approach. It will be much easier, both for you and for me, if we catch errors or potentially problematic code early<a href="#fn47" class="footnote-ref" id="fnref47"><sup>47</sup></a>. Here are the steps:</p>
+<ul>
+<li>Start with our usual PsychoPy boilerplate</li>
+<li>Add a <code>Spaceship</code> and use mouse to move it along the bottom of the screen</li>
+<li>Create an <code>Alien</code> and then th whole <code>AlienArmada</code></li>
+<li>Add <code>Laser</code>, then a <code>LaserGun</code>, so that the player can fire many laser shots by pressing left mouse key.</li>
+<li>Add check for hitting aliens with the laser and teleporting them off the screen.</li>
+<li>Use mixin to add teleport sound.</li>
+<li>Use cool iterators to cycle through lasers and aliens.</li>
+<li>Make alien armada move</li>
+<li>Check for end-of-game.</li>
+</ul>
 <p>Before we start, grab images that we will use for the game <a href="material/space-invaders.zip">space-invaders.zip</a>, created specifically for our seminar by Andrej Pastukhov, who said you absolutely must look at this link: <a href="https://youtu.be/dQw4w9WgXcQ">Wie die Pixelarts meines Sohnes Andrej entstanden sind</a><a href="#fn48" class="footnote-ref" id="fnref48"><sup>48</sup></a>.</p>
 </div>
 <div id="boilerplate" class="section level2" number="17.5">
@@ -492,16 +505,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Put your boilerplate code into <em>exercise01.py</em>.</p>
 </div>
 </div>
-<div id="the-shapeship" class="section level2" number="17.6">
-<h2><span class="header-section-number">17.6</span> The shapeship</h2>
-<p>Craete a new file for <code>Shapeship</code> class. It is remarkably boring as it just an image that moves left-right on a horizontal line. Thus, we will create it as a descendant of <code>visual.ImageStim</code> class. The only method that you need to define right now is the constructor <code>__init()</code>. It should take <code>win</code> as the only parameter (apart from <code>self</code>, of course) and call <code>super().__init__(...)</code> with <code>win</code> variable that you’ve got as a parameter, name of the image (<em>raumschiff.png</em>, don’t forget to add the relative path to it), and the <code>pos</code>ition of the image.</p>
+<div id="the-spaceship" class="section level2" number="17.6">
+<h2><span class="header-section-number">17.6</span> The spaceship</h2>
+<p>Create a new file for <code>Spaceship</code> class. It is remarkably boring as it just an image that moves left-right on a horizontal line. Thus, we will create it as a descendant of <code>visual.ImageStim</code> class. The only method that you need to define right now is the constructor <code>__init()</code>. It should take <code>win</code> as the only parameter (apart from <code>self</code>, of course) and call <code>super().__init__(...)</code> with <code>win</code> variable that you’ve got as a parameter, name of the image (<em>raumschiff.png</em>, don’t forget to add the relative path to it), and the <code>pos</code>ition of the image.</p>
 <p>In the main code, create an object and draw it in the main loop. Experiment with the vertical placement. The ship should be somewhere just above the lower edge of the window. For me, vertical position of -0.9 worked quite nicely.</p>
 <div class="infobox program">
 <p>Put your updated code into <em>exercise02.py</em>, plus an <code>Spaceship</code> class into a separate file.</p>
 </div>
 </div>
-<div id="the-shapeship-moves" class="section level2" number="17.7">
-<h2><span class="header-section-number">17.7</span> The shapeship moves</h2>
+<div id="the-spaceship-moves" class="section level2" number="17.7">
+<h2><span class="header-section-number">17.7</span> The spaceship moves</h2>
 <p>Now, let us use the <a href="https://psychopy.org/api/event.html#psychopy.event.Mouse">mouse</a> to control the horizontal position of the ship and, later on, left button to shoot. In the main loop, use <a href="https://psychopy.org/api/event.html#psychopy.event.Mouse.getPos">getPos()</a> method to get the position of the mouse and use <em>horizontal</em> component to alter the position of the ship. We want it to remain at the same position vertically, so we want to keep it constant. Note, however, that you cannot assign just a horizontal or vertical components to the position via <code>.pos[0] = ...</code>. In my PsychoPy 2020.2.10 it does not generate an error but does not change the actual position either. Thus, you need to assign a tuple/list of <code>[new horizontal component, original vertical component]</code>. Test moving your spaceship around. You can make mouse invisible (see documentation on the parameter) to make it more immersive.</p>
 <div class="infobox program">
 <p>Put your updated code into <em>exercise03.py</em>.</p>
@@ -680,7 +693,7 @@ where <span class="math inline">\(x_{max}\)</span> is maximal deviation of the a
 <li id="fn45"><p>This is what function <code>range()</code> returns, not a list but an iterator object.<a href="seminar-02-05.html#fnref45" class="footnote-back">↩︎</a></p></li>
 <li id="fn46"><p>Of course, if you <em>do</em> need it, you should implement it. The point is that quite often you do not.<a href="seminar-02-05.html#fnref46" class="footnote-back">↩︎</a></p></li>
 <li id="fn47"><p>Number of submissions is unlimited with reason.<a href="seminar-02-05.html#fnref47" class="footnote-back">↩︎</a></p></li>
-<li id="fn48"><p>No worries, it is safe. He says, you should understand. But I have no idea as, evidently, I am out of touch with modern trends.<a href="seminar-02-05.html#fnref48" class="footnote-back">↩︎</a></p></li>
+<li id="fn48"><p>No worries, it is safe. He says, you should understand. But I have no idea because, evidently, I am out of touch with modern trends.<a href="seminar-02-05.html#fnref48" class="footnote-back">↩︎</a></p></li>
 <li id="fn49"><p>You can cheat and return the reference to the list attribute itself and it’ll do the rest. Don’t do it for didactic purposes.<a href="seminar-02-05.html#fnref49" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>

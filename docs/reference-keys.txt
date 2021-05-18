@@ -202,8 +202,8 @@ duck-typing
 which-one-to-use
 space-invaders
 boilerplate
-the-shapeship
-the-shapeship-moves
+the-spaceship
+the-spaceship-moves
 an-alien-appears
 an-alien-armada-appears
 a-laser-shot-appears
