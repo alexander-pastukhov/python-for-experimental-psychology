@@ -28,13 +28,28 @@ Now you know _three_ methods to produce common behavior: proper inheritance, mix
 We will program a simply version of the game with aliean armada going gradualy descending. You task is to capture all aliens by firing a teleport beam before one of them rams your ship. Below, you can see my version of the game.
 
 
+```{r, eval=knitr::is_html_output(excludes = "epub"), results = 'asis', echo = F}
+cat(
+'<iframe width="636" height="504" 
+  src="videos/space-invaders.mp4"
+  frameborder="0" allow="accelerometer; encrypted-media;  gyroscope; picture-in-picture">
+  </iframe>'
+)
+```
 
+As per usual, the plan is to move slowly in small increments to keep the complexity of changes low. For the assignment, you will need to submit the final product. However, I strongly recommend an iterative _submit-get comments-adjust-add another step or two-submit-get comments-..._ approach. It will be much easier, both for you and for me, if we catch errors or potentially problematic code early^[Number of submissions is unlimited with reason.]. Here are the steps:
 
+* Start with our usual PsychoPy boilerplate
+* Add a `Spaceship` and use mouse to move it along the bottom of the screen
+* Create an `Alien` and then th whole `AlienArmada`
+* Add `Laser`, then a `LaserGun`, so that the player can fire many laser shots by pressing left mouse key.
+* Add check for hitting aliens with the laser and teleporting them off the screen.
+* Use mixin to add teleport sound.
+* Use cool iterators to cycle through lasers and aliens.
+* Make alien armada move
+* Check for end-of-game.
 
-
-As per usual, the plan is to move slowly in small increments to keep the complexity of changes low. For the assignment, you will need to submit the final product. However, I strongly recommend an iterative _submit-get comments-adjust-add another step or two-submit-get comments-..._ approach. It will be much easier, both for you and for me, if we catch errors or potentially problematic code early^[Number of submissions is unlimited with reason.].
-
-Before we start, grab images that we will use for the game [space-invaders.zip](material/space-invaders.zip), created specifically for our seminar by Andrej Pastukhov, who said you absolutely must look at this link: [Wie die Pixelarts meines Sohnes Andrej entstanden sind](https://youtu.be/dQw4w9WgXcQ)^[No worries, it is safe. He says, you should understand. But I have no idea as, evidently, I am out of touch with modern trends.].
+Before we start, grab images that we will use for the game [space-invaders.zip](material/space-invaders.zip), created specifically for our seminar by Andrej Pastukhov, who said you absolutely must look at this link: [Wie die Pixelarts meines Sohnes Andrej entstanden sind](https://youtu.be/dQw4w9WgXcQ)^[No worries, it is safe. He says, you should understand. But I have no idea because, evidently, I am out of touch with modern trends.].
 
 ## Boilerplate
 Create our usual boilerplate code in _exercise01.py_ (you will use the same files for classes but use versioning of the main file, it makes it easier for me to check your code):
@@ -47,8 +62,8 @@ Create our usual boilerplate code in _exercise01.py_ (you will use the same file
 Put your boilerplate code into _exercise01.py_.
 :::
 
-## The shapeship
-Craete a new file for `Shapeship` class. It is remarkably boring as it just an image that moves left-right on a horizontal line. Thus, we will create it as a descendant of `visual.ImageStim` class. The only method that you need to define right now is the constructor `__init()`. It should take `win` as the only parameter (apart from `self`, of course) and call `super().__init__(...)` with `win` variable that you've got as a parameter, name of the image (_raumschiff.png_, don't forget to add the relative path to it), and the `pos`ition of the image.
+## The spaceship
+Create a new file for `Spaceship` class. It is remarkably boring as it just an image that moves left-right on a horizontal line. Thus, we will create it as a descendant of `visual.ImageStim` class. The only method that you need to define right now is the constructor `__init()`. It should take `win` as the only parameter (apart from `self`, of course) and call `super().__init__(...)` with `win` variable that you've got as a parameter, name of the image (_raumschiff.png_, don't forget to add the relative path to it), and the `pos`ition of the image.
 
 In the main code, create an object and draw it in the main loop. Experiment with the vertical placement. The ship should be somewhere just above the lower edge of the window. For me, vertical position of -0.9 worked quite nicely.
 
@@ -57,7 +72,7 @@ Put your updated code into _exercise02.py_, plus an `Spaceship` class into a sep
 :::
 
 
-## The shapeship moves
+## The spaceship moves
 Now, let us use the [mouse](https://psychopy.org/api/event.html#psychopy.event.Mouse) to control the horizontal position of the ship and, later on, left button to shoot. In the main loop, use [getPos()](https://psychopy.org/api/event.html#psychopy.event.Mouse.getPos) method to get the position of the mouse and use _horizontal_ component to alter the position of the ship. We want it to remain at the same position vertically, so we want to keep it constant. Note, however, that you cannot assign just a horizontal or vertical components to the position via `.pos[0] = ...`. In my PsychoPy 2020.2.10 it does not generate an error but does not change the actual position either. Thus, you need to assign a tuple/list of `[new horizontal component, original vertical component]`. Test moving your spaceship around. You can make mouse invisible (see  documentation on the parameter) to make it more immersive.
 
 ::: {.infobox .program}
