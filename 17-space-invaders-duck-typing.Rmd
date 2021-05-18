@@ -30,9 +30,9 @@ We will program a simply version of the game with aliean armada going gradualy d
 
 ```{r, eval=knitr::is_html_output(excludes = "epub"), results = 'asis', echo = F}
 cat(
-'<video controls>
+'<div style="text-align:center;"><video controls>
     <source src="videos/space-invaders.mp4" type="video/mp4"> 
-  </video>'
+  </video></div>'
 )
 ```
 
