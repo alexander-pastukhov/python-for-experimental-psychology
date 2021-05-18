@@ -3,16 +3,16 @@
 ## Getting the difficulty just right
 One of the hardest things to get right in game design is the game difficulty. Make your game too easy and it will be boring. Make it too hard and only hardcore fans will play and only for [an achievement](https://www.imdb.com/title/tt4975856/). Thus, you would like to make your game hard enough to push a player to the limit but not much harder than that, so not to frustrate them. One way to solve this conundrum is to create different preset difficulty levels, something we did in our _Snake_ game. An alternative way is to make the game that adopts its difficulty to the player.
 
-The same is true for psychophysical experiments. You want to test ability of your participants to perform the task at their limit for one simple reason: At this _threshold_ point influence of any additional factor, whether positive or negative, is maximal. E.g., use an unusual stimulus configuration or increase attentional load and performance will drop. Allow to preallocate attention via cuing or use a prime that is congruent with a target and performance will improve. Of course, these manipulations will have the same overall effect also when the task is particularly easy or maddeningly hard but it will much more difficult to _measure_ this effect. It is one thing if performance drops from 75% to 65% than if it goes from 98% to %95 or from %53 to %52 (here, I assume that 50% is chance level performance) or vice versa. The silliest thing you can do is to _hope_ that the performance would allow you too see the effect of the factors that you manipulated. In things like these, knowledge and careful design is definitely superior to hope.
+The same is true for psychophysical experiments. You want to test ability of your participants to perform the task at their limit for one simple reason: At this _threshold_ point influence of any additional factor, whether positive or negative, is maximal. E.g., use an unusual stimulus configuration or increase attentional load and performance will drop. Allow to preallocate attention via cuing or use a prime that is congruent with a target and performance will improve. Of course, these manipulations will have the same overall effect also when the task is particularly easy or maddeningly hard but it will much more difficult to _measure_ this effect. It is one thing if performance drops from 75% to 65% than if it goes from 98% to 95% or from 53% to 52% (here, I assume that 50% is chance level performance) or vice versa. The silliest thing you can do is to _hope_ that the performance would allow you too see the effect of the factors that you manipulated. In things like these, knowledge and careful design is definitely superior to hope.
 
-Thus, you want performance of your participants to be approximately in the middle between the ceiling (100% performance, fastest response times, super easy) and the floor (chance level performance, slowest response times, super hard). But how do you know where this magic point is for that _particular_ person. Particularly, if the task is novel so you have little to guide to? The solution is to adjust the difficulty on the fly. If you have a two-alternatives-forced-choice task, you can use two-up-one-down staircase (difficulty increases after two correct responses and decreases after one mistake) that targets 70.7% performance threshold. There different methods and even different ways to use the same core method (e.g., does the step stays constant or changes in 2-up-1-down, what is the run termination criteria, etc.), so it is always a good idea to refresh your memory and read about [adaptive procedures](https://doi.org/10.3758/BF03194543) when designing your next experiment.
+Thus, you want performance of your participants to be approximately in the middle between the ceiling (100% performance, fastest response times, super easy) and the floor (chance level performance, slowest response times, super hard). But how do you know where this magic point is for a _particular_ person, particularly if the task is novel so you have little information to guide you? The solution is to adjust the difficulty on the fly based on participant's responses. For example, If you have a two-alternatives-forced-choice task, you can use two-up-one-down staircase (difficulty increases after two correct responses and decreases after one mistake) that targets 70.7% performance threshold. There different methods and even different ways to use the same core method (e.g., does the step stays constant or changes, what is the run termination criteria, etc.), so it is always a good idea to refresh your memory and read about [adaptive procedures](https://doi.org/10.3758/BF03194543) when designing your next experiment.
 
 In our game, we will use a very simple 3-up-1-down staircase: get the three responses correct on a row and things get faster, make a mistake and the game slows down. We'll see how fast you can go!
 
 ## Guitar Hero
-Today, we will program Guitar Hero game. In the original game, you must play notes on guitar-shaped controller at the right time, just like when you actually play music on a guitar. On the one hand, it is a straightforward and repetitive motor task. On the other hand, take a fast and complicated music piece and it'll take many minutes or hours of practice to get it right. It is a lot of fun, as music cues and primes your responses. The same idea of music-synchronized-actions was used in _Raymon Legends_ music-run levels where jumps or hits are timed to drums or bass. It is bizarrely cool and satisfying experience, also when watching pros to do it (I happened to have one in my household).
+Today, we will program Guitar Hero game. In the original game, you must play notes on guitar-shaped controller at the right time, just like when you actually play music on a guitar. On the one hand, it is a straightforward and repetitive motor task. On the other hand, take a fast and complicated music piece and it'll take many minutes or hours of practice to get it right. It is a lot of fun, as music cues and primes your responses. The same idea of music-synchronized-actions was used in _Raymon Legends_ music levels where jumps or hits are timed to drums or bass. It is a bizarrely cool and satisfying experience, also when watching pros to do it (I happened to have one in my household).
 
-We will program this game sans Guitar and Hero, you can see it in the video below. The player must press a correct key whenever the target crosses the line. Press it to early or too late and you make a mistake. Of course, the faster the targets go, the harder it is to respond on time and with a correct key. As I wrote above, we will use the 3-up-1-down staircase procedure to control for that. 
+We will program this game sans Guitar and Hero, you can see it in the video below. The player must press a correct key (_left_, _down_, or _right_) whenever the target crosses the line. Pressing it to early or too late counts as a mistake. Of course, the faster the targets go, the harder it is to respond on time and with a correct key. As I wrote above, we will use the 3-up-1-down staircase procedure to control for that. 
 
 
 
@@ -34,14 +34,14 @@ Put your boilerplate code into _exercise01.py_.
 :::
 
 ## Target and TimedResponseTask classes
-OUr main work horse will be `TimedResponseTask` class. It will take spawn a new random `Target` at random intervals (which will depend on speed), pass speed information to moving targets, and remove targets, once they disappear below the screen. The `Target` class use `visual.Rect`^[Inherting from `visual.Rect` would've make it even simpler but, due to so technical glitch, unfortunately that does not work.] with some extra bells and whistles to make it appear at the right location, move at the right speed, change it line color (if a player got the response for it right), compute whether it is already off the screen, etc. we will start with a single target first.
+Our main work horse will be `TimedResponseTask` class. It will spawn a new random `Target` at random intervals, which will depend on speed, pass speed information to moving targets, and remove targets, once they disappear below the screen. The `Target` class use `visual.Rect`^[Inheriting from `visual.Rect` would've make it even simpler but, due to so technical glitch, unfortunately that does not work.] with some extra bells and whistles to make it appear at the right location, move at the right speed, change it line color, if a player got the response for it right, compute whether it is already off the screen, etc. we will start with a single target first.
 
 ## Target class: static
-First create a `Target` class: a colored rectangle in one of the three positions that starts at the top of the window and moves down at a specific speed. Its constructor should take PsychoPy window as a parameter (you will need it to the rectangle attribute), position index (from 0 to 2), and speed (in norm units per second). The only thing we need to do right now in the constructor is to create a color rectangle (see below) and store `speed` as an attribute for later use.
+First create a `Target` class: a colored rectangle in one of the three positions that starts at the top of the window and moves down at a specific speed. Its constructor should take PsychoPy window as a parameter (you will need it to create the rectangle attribute), position index (from 0 to 2), and speed (in norm units per second). The only thing we need to do right now in the constructor is to create a color rectangle (see below) and store both `ipos` and `speed` as attributes for later use.
 
 The second parameter --- position index --- determines the horizontal position of the target and its color (to make targets more fun and distinct). For my code, I decided to make rectangle 0.4 norm units wide and 0.1 norm units high. The leftmost _red_ rectangle (for `ipos` 0), is centered at -0.5, the middle _green_ one is dead center, and the rightmost _blue_ rectangle is centered at 0.5. I've defined all these as `TARGET_` constants (e.g., `TARGET_COLOR = ...`), so think about how you can compute both color and position without using if-else statements. Also, think about the y-position of the rectangle, so it appears right at the top of the window.
 
-The second method you need is `draw()` which simply draws the rectangle. Test it by creating a target at one of the position (all target at all three positions) and drawing them in the main loop. You should get static rectangle(s).
+The second method you need is `draw()` which simply draws the rectangle. Test it by creating a target at one of the position (or three targets at all three positions) and drawing them in the main loop. You should get nice looking but static rectangle(s).
 
 ::: {.infobox .program}
 Put updated code in _exercise02.py_  and create the class `Target` in a separate file.
@@ -50,7 +50,7 @@ Put updated code in _exercise02.py_  and create the class `Target` in a separate
 ## Target class: moving
 Our targets fall down at speed defined by their `speed` attribute. Later on we will change that attribute dynamically to speed up or slow down their fall.
 
-To implement the actual falling down, implement a new method, call it `fall()`. The speed is in `norm units per second`, thus, to compute the change in vertical position you also need to know the time elapsed since last position update _in seconds_. The simplest way to do this is by using a [Clock](https://psychopy.org/api/clock.html#psychopy.clock.Clock) class. You create it as an attribute in the constructor and then, in the `fall` method you use its current time to compute (and apply) a change in vertical position of the rectangle. Don't forget to reset the clock!
+For the actual falling down, implement a new method, call it `fall()`, that will update target's position on every frame. The speed is in `norm units per second`, thus, to compute the change in vertical position you also need to know the time elapsed since last position update _in seconds_. The simplest way to do this is by using a [Clock](https://psychopy.org/api/clock.html#psychopy.clock.Clock) class. You create it as an attribute in the constructor and then, in the `fall` method you use its current time to compute(and apply a change in vertical position of the rectangle. Don't forget to reset the clock!
 
 Include `fall` method call in the main loop and see how the target falls. Experiment with falling speed!
 
@@ -59,7 +59,7 @@ Put updated code in _exercise03.py_  and update the class `Target`.
 :::
 
 ## Iterator/Generator functions
-In the next section, we will create a `TimedResponseTask` class that will generate targets at random location and after a random interval. We can, of course, do it directly in the class but instead, we will use this as an opportunity to learn about iterator/generator functions. You already know how to use duck typing to turn any class into a iterator by defining special method `__iter()__` and `__next__()`. But function can also be an iterator if it uses `yield` instead of `return` statement to _yield_ a value. It _yields_ it, because the function itself returns an iterator object that you can iterator over in for loop or via `next()` function. Importantly, `yield` "freezes" execution of the function and the next time you call the function _it continues from that point_ rather than from the start of the function. Once you reach the end of the function, it automatically raises `StopIteration()` exception, so you don't need to worry about this. It may sound confusing but it really simple. Here an example to illustrate this:
+In the next section, we will create a `TimedResponseTask` class that will generate targets at random location and after a random interval. We can, of course, do it directly in the class but instead, we will use this as an opportunity to learn about iterator/generator functions. You already know how to use duck typing to turn any class into a iterator by defining special method `__iter()__` and `__next__()`. But function can also be an iterator if it uses `yield` instead of `return` statement to _yield_ a value. It _yields_ it, because the function itself returns an iterator object that you can iterator over in a for loop or via `next()` function. Importantly, `yield` "freezes" execution of the function and the next time you call the function _it continues from that point_ rather than from the start of the function. Once you reach the end of the function, it automatically raises `StopIteration()` exception, so you don't need to worry about how to communicate that you ran out of items. It may sound confusing but it really simple. Here an example to illustrate this:
 
 ```{python}
 def iterator_fun():
@@ -80,12 +80,14 @@ iterator_var = iterator_fun()
 print(next(iterator_var))
 print(next(iterator_var))
 print(next(iterator_var))
-
-# next call will raise an exception StopIteration
-# print(next(iterator_var))
 ```
 
-This format makes writing iterators very easy, just `yield` whatever you want in the order you want and Python will take care of the rest. Also, you can `yield` in a loop, inside an if-else statement, etc.
+```python
+# next call will raise an exception StopIteration
+print(next(iterator_var))
+```
+
+This format makes writing iterators very easy, just `yield` whatever you want in an order you want and Python will take care of the rest. Also, you can `yield` in a loop, inside an if-else statement, etc.
 ```{python}
 def iterator_fun():
   for e in range(4):
@@ -97,11 +99,11 @@ next(iterator)
 next(iterator)
 ```
 
-For our `TimedResponseTask` class, we will need two _generators_ (because both will be endless). One that generates a random delay until the next target and one that generates random target position (0, 1, or 2). Implement both in a separate file.
+For our `TimedResponseTask` class, we will need two _generators_ (_generators_ because both will be endless). One that generates a random delay until the next target and one that generates a random target position (0, 1, or 2). Implement both in a separate file (I called it _generators.py_).
 
-The `time_to_next_target_generator()` function should take a tuple of float values a its only parameter and _yield_ a random number within this range in an _endless_ loop. We need the endless loop (`while True:` will do) because we do not know how many values we will need, so we just generate as many as needed.
+The `time_to_next_target_generator()` function should take a tuple of two float values, whiche define shortest and longest delay, as a parameter and _yield_ a random number within this range in an _endless_ loop. We need the endless loop (`while True:` will do) because we do not know how many values we will need, so we just generate as many as needed.
 
-The `next_target_generator()` will be a bit more interesting. It can just return a `random.choice` from 0, 1, and 2 but where is fun in that? Instead, we will make a bit more complicate to ensure that all three targets appear equal number of times within N trials, where N will be a parameter of the generator. This would ensure random, reasonably unpredictable but balanced targets in the short run. Remember, in the long run random choice will give us a balanced uniform distribution but there is not such guarantee for the shorter runs. First, you should create a list where each target appears N times. Then, create an endless loop (again, we don't know how many values we need) in which you 1) shuffle elements of the list, 2) yield one element at a time via for loop. Then repeat. And again, and again (endless loop!).
+The `next_target_generator()` will be a bit more interesting. It can just return a `random.choice` from 0, 1, and 2 but where is fun in that? Instead, we will make it a bit more complicate to ensure that all three targets appear equal number of times within _N_ trials, where _N_ will be a parameter of the generator function. This would ensure random, reasonably unpredictable but balanced targets in the short run. Remember, in the long run random choice will always give us a balanced uniform distribution but there is not such guarantee for the shorter runs of a few trials. First, you should create a list where each target appears N times (think how you can do it using `range()`, `list()` and `*`). Then, create an endless loop (again, we don't know how many values we will need) in which you 1) shuffle elements of the list, 2) yield one element at a time via for loop. Once you run out of elements, you shuffle them again and yield one by one again. Then repeat. And again, and again (endless loop!).
 
 I would suggest creating and testing both function in a Jupyter notebook first and then putting them in a separate file (e.g., _generators.py_).
 
@@ -110,7 +112,47 @@ Put both generators into _generators.py_.
 :::
 
 ## TimedResponseTask class
-Now we are ready to create the `TimedResponseTask` class. For our first take, it will create random targets after random intervals plus take care of moving and drawing all of them. More bells and whistles (disposing of targets that went past the screen, changing the speed, checking response validity, etc) will come later.
+Now we are ready to create the `TimedResponseTask` class. For our first take, it will create random targets (`next_target_generator()`) after random intervals (`time_to_next_target_generator()`) plus take care of moving and drawing all of them. More bells and whistles (disposing of targets that went past the screen, changing the speed, checking response validity, etc.) will come later.
 
-For the constructor, we definitely need PsychoPy window as a parameter (we'll need to pass it to the `Target` constructor). We can also pass initial speed, tuple with range for time intervals between targets and number of target repetitions (for the position generator). We could define those as constants but passing them as parameters will make you code more reusable. Store window and speed as attributes, create attribute `targets` and initialize it to an empty list, create attributes for both generator objects that we need using the appropriate parameters.
+For the constructor, we definitely need PsychoPy window as a paramete, because we need it every time we create a new target. We can also pass initial speed, a tuple with range for time intervals between targets for `time_to_next_target_generator()` and number of target repetitions for the `next_target_generator()`. We could define those as constants but passing them as parameters will make your code more reusable. Store window and speed as attributes, create attribute `targets` and initialize it to an empty list, create attributes for both generator objects using the appropriate parameters. Finally, we need a [CountdownTimer](https://psychopy.org/api/clock.html#psychopy.clock.CountdownTimer) that will count the time down to the moment when we need to generate a new target. Initialize it to the `next()` item from time-to-next-target generator (remember, you need to use the attribute, which is a generator object that function returned, not the function itself again.).
+
+Now we need to add three methods `draw`, `update`, and `add_next_target`. The first one is easy, it simply draws all `targets` in a for loop. The second is also easy, it makes all targets `fall` plus, after the loop, it should call `add_next_target` method. The latter should check whether the timer counted down to zero (or below, remember, time is float, so do not expect it to be exactly zero) and, if that is indeed the case, create a new random target (get the `next()` position fro, the position generator), add to the list of targets, and reset the timer using `next()` item from the time generator.
+
+In the main file, create `timer_task` object and call its `draw` and `update` methods in the main loop. You should see targets appearing random and falling down consistently.
+
+::: {.infobox .program}
+Put updated code in _exercise04.py_  and create the class `TimedResponseTask`.
+:::
+
+## Disposing of unneed targets
+Currently, our targets keep falling down even when they are below the screen. This will not affect the performance immediatelly but it will be taxing both memory and CPU, so we should dispose of them. In the `Target` class, create a new read-only (computed) property `is_below_the_screen` that return `True` if the upper edge of the target is below the lower edge of the screen (`False` otherwise, of course).
+
+Next, in the `update` method of `TimedResponseTask`, add a second loop (or modify the existing loop) where you delete any object that `is_below_the_screen`. 
+
+For debugging, run the main code, wait untill at least one target fell below the screen, put a break point and check `targets` attribute. Its length should match the number of visible targets, not of the total generated targets.
+
+::: {.infobox .program}
+Update classes `Target` and `TimedResponseTask`.
+:::
+
+## Finishing line
+Add a new visual attribute to the `TimedResponseTask` that is a horizontal [line](https://psychopy.org/api/visual/line.html#psychopy.visual.Line). The task of the player will be to press a corresponding key whenever a target crosses (overlaps with) the line. For now, create it as an attribute in the constructor (pick the vertical location as you like) and draw it inside the `draw` method.
+
+::: {.infobox .program}
+Update class `TimedResponseTask`.
+:::
+
+## Response
+Now the real fun begins! We will allow a player to press keys and check whether a corresponding target is on the line. For this, we need to new methods on both `Target` and `TimedResponseTask` classes. For the `Target`, implement a new method class `overlaps()` that will take a vertical position (of the finishing line) as onlye float number parameter. In the method, first you check that the `score` attribute is `None` (if it _not_ none that means that the player already responded to the target and they are not allowed to respond to it twice). If it is, compute a score using the following formula:
+$$score = int \left(10 - 10 \cdot \frac{|y_{target} - y_{line}|}{h_{target} / 2} \right)
+$$
+where $y_{target}$ is the vertical center of the target, $y_{line}$ is the vertical position of the line (you get it as a function parameter), $h_{target}$ is height of the target, $||$ means absolute value (use [fabs](https://docs.python.org/3/library/math.html#math.fabs) function from _math_ library for that), and `10` is an arbitrary scaling factor (you can use any integer). Study the formula and you will see that score is 10 if the target's center is right on the line but decreases linearly with any displacement. Once the target is off the line, the score becomes negative. We convert it to `int`, because we want simple scores (floats look messy for this). Compute the score and store in a _temporary local variable_. If the value is _positive_, that means success, so you should store this value now permanently in the `score` attribute, change line color of the rectangle to white (to show the player that they got it right), and return `True` (yes, target does overlap with the line). For all other outcomes, you return `False`. This means that either the response was already made or the target does not overlap with the line.
+
+In the `TimerResponseTask` class, we need a new method `check()` that will take position of the target (based on the key press). Loop over targets and if a target's position (`ipos` attribute) matches the position of the key press (parameter of the function) _and_ target overlaps with the line, return the `score` attribute of that target. Note that here the condition order is important, you need to check for the overlap _only_ if target position matches the key. Otherwise, if you ran out of targets to check that means that the player pressed a wrong key or pressed it at the wrong time, so you should return `0` (means "mistake").
+
+In the main loop, add `"left"`, `"down"`, and `"right"` to the key list of [getKeys()](https://psychopy.org/api/event.html#psychopy.event.getKeys) call. Then, if any of these three keys are pressed, translate that into a position, respectively, 0, 1, and 2 (think how you can do it without if-else via a dictionary), and call the new `check` method of the `TimedResponseClass`. Test the code, targets' edges should turn white, if you time your key press correctly!
+
+::: {.infobox .program}
+Put updated code in _exercise05.py_, update `Target` and `TimedResponseTask` classes.
+:::
 
