@@ -14,13 +14,20 @@ Today, we will program Guitar Hero game. In the original game, you must play not
 
 We will program this game sans Guitar and Hero, you can see it in the video below. The player must press a correct key (_left_, _down_, or _right_) whenever the target crosses the line. Pressing it to early or too late counts as a mistake. Of course, the faster the targets go, the harder it is to respond on time and with a correct key. As I wrote above, we will use the 3-up-1-down staircase procedure to control for that. 
 
-
+```{r, eval=knitr::is_html_output(excludes = "epub"), results = 'asis', echo = F}
+cat(
+'<div style="text-align:center;"><video controls>
+    <source src="videos/guitar-hero.mp4" type="video/mp4"> 
+  </video></div>'
+)
+```
 
 As per usual, we will take gradual approach:
 
 * Boilerplate code
-* A moving targets class
-* Finishing line and 
+* Create a class for individual moving targets
+* Create a timed-response task class that will create them (using cool generators), dispose of them, check the response, and adjust staircase.
+* Add bells-and-whistles like score and time limited runs.
 
 ## Boilerplate
 Create our usual boilerplate code in _exercise01.py_ (you will use the same files for classes but use versioning of the main file, it makes it easier for me to check your code):
@@ -114,9 +121,14 @@ Put both generators into _generators.py_.
 ## TimedResponseTask class
 Now we are ready to create the `TimedResponseTask` class. For our first take, it will create random targets (`next_target_generator()`) after random intervals (`time_to_next_target_generator()`) plus take care of moving and drawing all of them. More bells and whistles (disposing of targets that went past the screen, changing the speed, checking response validity, etc.) will come later.
 
-For the constructor, we definitely need PsychoPy window as a paramete, because we need it every time we create a new target. We can also pass initial speed, a tuple with range for time intervals between targets for `time_to_next_target_generator()` and number of target repetitions for the `next_target_generator()`. We could define those as constants but passing them as parameters will make your code more reusable. Store window and speed as attributes, create attribute `targets` and initialize it to an empty list, create attributes for both generator objects using the appropriate parameters. Finally, we need a [CountdownTimer](https://psychopy.org/api/clock.html#psychopy.clock.CountdownTimer) that will count the time down to the moment when we need to generate a new target. Initialize it to the `next()` item from time-to-next-target generator (remember, you need to use the attribute, which is a generator object that function returned, not the function itself again.).
+For the constructor, we definitely need PsychoPy window as a parameter, because we need it every time we create a new target. We can also pass initial speed, a tuple with range for time intervals between targets for `time_to_next_target_generator()` and number of target repetitions for the `next_target_generator()`. We could define those as constants but passing them as parameters will make your code more reusable. Store window and speed as attributes, create attribute `targets` and initialize it to an empty list, create attributes for both generator objects using the appropriate parameters. 
 
-Now we need to add three methods `draw`, `update`, and `add_next_target`. The first one is easy, it simply draws all `targets` in a for loop. The second is also easy, it makes all targets `fall` plus, after the loop, it should call `add_next_target` method. The latter should check whether the timer counted down to zero (or below, remember, time is float, so do not expect it to be exactly zero) and, if that is indeed the case, create a new random target (get the `next()` position fro, the position generator), add to the list of targets, and reset the timer using `next()` item from the time generator.
+Also create a `speed_factor` attribute and set it to 1. We will use it later on to control both the speed of motion and how frequently the targets are generated. The higher is the factor, the faster targets move and the shorter is the interval to the target and vice versa.
+
+Finally, we need [CountdownTimer](https://psychopy.org/api/clock.html#psychopy.clock.CountdownTimer) that will count the time down to the moment when we need to generate a new target. Initialize it it to the `next()` item from time-to-next-target generator (remember, you need to use the attribute, which is a generator object that function returned, not the function itself again.) _divided_ by `scale_factor` (the faster is the speed of the game, the shorter is the interval to the next target).
+
+
+Now we need to add three methods `draw`, `update`, and `add_next_target`. The first one is easy, it simply draws all `targets` in a for loop. The second is also easy, it makes all targets `fall` plus, after the loop, it should call `add_next_target` method. The latter should check whether the timer counted down to zero (or below, remember, time is float, so do not expect it to be exactly zero) and, if that is indeed the case, create a new random target (get the `next()` position from the position generator and remember to pass `speed` _times_ `speed_factor`!), add it to the list of targets, and reset the timer using `next()` item from the time generator (remember to divide it by `speed_factor`!).
 
 In the main file, create `timer_task` object and call its `draw` and `update` methods in the main loop. You should see targets appearing random and falling down consistently.
 
@@ -186,5 +198,24 @@ Put updated code in _exercise06.py_, create `ScoreText` class.
 :::
 
 ## Staircase
-We will implement staircase, as part of the `TimerResponseTask` class.
+We will implement staircase as part of the `TimerResponseTask` class, so it can speed up and slow down itself. For this, we will need an attribute that counts number of _consecutive_ responses (I, typically, call it `correct_in_a_row` or something like that). Create and initialize it to zero in the constructor. 
+
+Next, create a new method `staircase()` that will take a single parameter (beyond `self`) on whether the response was `correct` or not. If it was, increment `correct_in_a_row` by one and check whether it reached 3. If it did, increase the `speed_factor` by _multiplying_ it by some chosen factor (I've picked 1.3) and resetting `correct_in_a_row` to 0. Alternatively, if the response was not correct, _divide_ `speed_factor` by the same number (e.g., 1.3, so slowing things down) and again, reset `correct_in_a_row` to 0. After that, loop over all targets and update their speed based on `speed` and `speed_factor` attributes.
+
+You need to call this method inside the `check` method, think then and how.
+
+::: {.infobox .program}
+Update `TimedTaskResponse` class.
+:::
+
+## Limiting time
+Let us add a competitive edge by limiting the run time to 20 seconds (you can pick your own duration, of course). Create an additional outer loop, so that the game can be played many times over. Once the round is over, show the latest state (redrawing all game objets) plus the "Round over" sign and wait for the player to press either _escape_ (then you exit the game) or _space_ (to start the next round). Remember to recreate all game objects anew for the next round (or create a `reset` method for all of them).
+
+::: {.infobox .program}
+Put updated code in _exercise07.py_, create `ScoreText` class.
+:::
+
+## This is just a start!
+
+
 
