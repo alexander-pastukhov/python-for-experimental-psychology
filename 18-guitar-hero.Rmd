@@ -156,3 +156,35 @@ In the main loop, add `"left"`, `"down"`, and `"right"` to the key list of [getK
 Put updated code in _exercise05.py_, update `Target` and `TimedResponseTask` classes.
 :::
 
+## Score
+Playing is more fun when you can see how well you are doing. Let us a simple score indicator that is updated with response score. You already know how you can do it via [TextStim](https://psychopy.org/api/visual/textstim.html#psychopy.visual.TextStim) stimulus but you also already know how you can inherit from a base class and extend its functionality. This is what we will do here, as the class will record and draw the score (that part is covered by the inheritance).
+
+Create a new class (I have called it `ScoreText`) that inherits from [TextStim](https://psychopy.org/api/visual/textstim.html#psychopy.visual.TextStim). In the constructor, you need to create an integer attribute that will hold current `score` and initialize it 0. Plus, call ancestor's constructor via `super().__init__(...)` to initialize and place the text stimulus (I've picked top left corner). Think about parameters that the constructor and ancestor's constructor need.
+
+Next, we need to update the score (both its numeric form _and_ the text that we draw) every time participant presses a key. We could implement the code _outside_ of the class but that is a fairly bad idea, as it puts class-related code elsewhere. We could also implement a "normal" method, e.g., `add()` that will take care of that. Instead, we will implement a special method [__iadd__](https://docs.python.org/3/reference/datamodel.html#object.__iadd__) that allows to "add to" the object. It takes a single parameter (in addition to compulsory `self`), performs "adding to the self" operation (whatever that means with respect to your object, can be mathematical addition, concatenation of the string, adding to the list, etc.), and **returns back the reference to the object**, i.e., it must return the reference to self! Here's how it works:
+
+```{python}
+class AddIt():
+    def __init__(self):
+        self.number = 0
+        
+    def __iadd__(self, addendum):
+        self.number += addendum
+        return self # important!!!
+
+
+adder = AddIt()
+print(adder.number)
+adder += 10
+print(adder.number)
+```
+
+Implement that special method for your class, so we can do `score_stim +=  timed_task.check(...)`. Remember, you have to update both numeric _and_ visual representations of the score! Add the score to the main code.
+
+::: {.infobox .program}
+Put updated code in _exercise06.py_, create `ScoreText` class.
+:::
+
+## Staircase
+We will implement staircase, as part of the `TimerResponseTask` class.
+
