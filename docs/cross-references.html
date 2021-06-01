@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Cross references | Python for social and experimental psychology</title>
   <meta name="description" content="Material and exercises for ‘Python for social and experimental psychology’ seminar." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Cross references | Python for social and experimental psychology" />
   <meta property="og:type" content="book" />
@@ -24,16 +24,16 @@
 <meta name="author" content="Alexander (Sasha) Pastukhov" />
 
 
-<meta name="date" content="2021-05-18" />
+<meta name="date" content="2021-06-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="seminar-02-06.html"/>
+<link rel="prev" href="game-context.html"/>
 
-<script src="libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -51,6 +51,8 @@
 
 
 
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -116,6 +118,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -430,7 +433,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="18.6" data-path="seminar-02-06.html"><a href="seminar-02-06.html#target-class-moving"><i class="fa fa-check"></i><b>18.6</b> Target class: moving</a></li>
 <li class="chapter" data-level="18.7" data-path="seminar-02-06.html"><a href="seminar-02-06.html#iteratorgenerator-functions"><i class="fa fa-check"></i><b>18.7</b> Iterator/Generator functions</a></li>
 <li class="chapter" data-level="18.8" data-path="seminar-02-06.html"><a href="seminar-02-06.html#timedresponsetask-class"><i class="fa fa-check"></i><b>18.8</b> TimedResponseTask class</a></li>
-<li class="chapter" data-level="18.9" data-path="seminar-02-06.html"><a href="seminar-02-06.html#settings-file"><i class="fa fa-check"></i><b>18.9</b> Settings file</a></li>
+<li class="chapter" data-level="18.9" data-path="seminar-02-06.html"><a href="seminar-02-06.html#disposing-of-unneed-targets"><i class="fa fa-check"></i><b>18.9</b> Disposing of unneed targets</a></li>
+<li class="chapter" data-level="18.10" data-path="seminar-02-06.html"><a href="seminar-02-06.html#finishing-line"><i class="fa fa-check"></i><b>18.10</b> Finishing line</a></li>
+<li class="chapter" data-level="18.11" data-path="seminar-02-06.html"><a href="seminar-02-06.html#response"><i class="fa fa-check"></i><b>18.11</b> Response</a></li>
+<li class="chapter" data-level="18.12" data-path="seminar-02-06.html"><a href="seminar-02-06.html#score"><i class="fa fa-check"></i><b>18.12</b> Score</a></li>
+<li class="chapter" data-level="18.13" data-path="seminar-02-06.html"><a href="seminar-02-06.html#staircase"><i class="fa fa-check"></i><b>18.13</b> Staircase</a></li>
+<li class="chapter" data-level="18.14" data-path="seminar-02-06.html"><a href="seminar-02-06.html#limiting-time"><i class="fa fa-check"></i><b>18.14</b> Limiting time</a></li>
+<li class="chapter" data-level="18.15" data-path="seminar-02-06.html"><a href="seminar-02-06.html#this-is-just-a-start"><i class="fa fa-check"></i><b>18.15</b> This is just a start!</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="game-context.html"><a href="game-context.html"><i class="fa fa-check"></i><b>19</b> Game Context</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="game-context.html"><a href="game-context.html#settings-file"><i class="fa fa-check"></i><b>19.1</b> Settings file</a></li>
+<li class="chapter" data-level="19.2" data-path="game-context.html"><a href="game-context.html#working-with-tables-via-pandas"><i class="fa fa-check"></i><b>19.2</b> Working with tables via Pandas</a></li>
+<li class="chapter" data-level="19.3" data-path="game-context.html"><a href="game-context.html#single-context-to-rule-them-all"><i class="fa fa-check"></i><b>19.3</b> Single context to rule them all</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="cross-references.html"><a href="cross-references.html"><i class="fa fa-check"></i>Cross references</a></li>
 <li class="divider"></li>
@@ -513,8 +528,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p><a href="https://code.visualstudio.com/">Visual Studio Code</a>, a lightweight free open-source editor with strong support for Python. See also <a href="getting-started.html#install-vs-code">installation notes</a>.</p></li>
 </ul>
 </div>
-<div id="w--.unlisted" class="section level4" number="18.9.0.1">
-<h4><span class="header-section-number">18.9.0.1</span> W{- .unlisted}}</h4>
+<div id="w--.unlisted" class="section level4" number="19.3.0.1">
+<h4><span class="header-section-number">19.3.0.1</span> W{- .unlisted}}</h4>
 <ul>
 <li><a href="seminar03.html#while-loop">While</a> loop.</li>
 </ul>
@@ -581,7 +596,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="seminar-02-06.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="game-context.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
     </div>
   </div>
@@ -605,6 +620,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {

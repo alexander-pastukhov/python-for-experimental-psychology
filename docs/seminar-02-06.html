@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Seminar 11 Memory game, part 3 | Python for social and experimental psychology</title>
+  <title>Seminar 18 Guitar Hero: staircase and iterator functions | Python for social and experimental psychology</title>
   <meta name="description" content="Material and exercises for ‘Python for social and experimental psychology’ seminar." />
   <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Seminar 11 Memory game, part 3 | Python for social and experimental psychology" />
+  <meta property="og:title" content="Seminar 18 Guitar Hero: staircase and iterator functions | Python for social and experimental psychology" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Seminar 11 Memory game, part 3 | Python for social and experimental psychology" />
+  <meta name="twitter:title" content="Seminar 18 Guitar Hero: staircase and iterator functions | Python for social and experimental psychology" />
   
   <meta name="twitter:description" content="Material and exercises for ‘Python for social and experimental psychology’ seminar." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="seminar10.html"/>
-<link rel="next" href="the-skill-of-programming.html"/>
+<link rel="prev" href="seminar-02-05.html"/>
+<link rel="next" href="game-context.html"/>
 <script src="libs/header-attrs-2.8/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -468,121 +468,204 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="seminar11" class="section level1" number="11">
-<h1><span class="header-section-number">Seminar 11</span> Memory game, part 3</h1>
-<p>During our previous seminar, we competed the core <strong>Memory Game</strong>. Today we will put more bells-and-whistles on it.</p>
-<p>Before we start, create a new folder <em>Memory03</em> for exercise files. Copy <em>Images</em> subfolder, as well as the <code>utilities.py</code> and <em>exercise11.py</em> (rename it to <em>exercise01.py</em>, as we will use the latter as the staring point) from the previous seminar. Also, download <a href="material/sounds.zip">sounds</a><a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a> file and unzip it into a <em>Sounds</em> subfolder in the seminar directory.</p>
-<div id="sound-effects" class="section level2" number="11.1">
-<h2><span class="header-section-number">11.1</span> Sound effects</h2>
-<p>Let us add “clicking” sounds whenever the player turns the card. For this, we will use <a href="https://psychopy.org/api/sound.html">sound</a> module of PsychoPy library. If your sound does not play, ask me and we will try to set your sound libraries up.</p>
-<p>First, you need to import the <code>Sound</code> class as suggested in the manual:</p>
-<div class="sourceCode" id="cb132"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb132-1"><a href="seminar11.html#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> psychopy.sound <span class="im">import</span> Sound</span></code></pre></div>
-<p>Next, create a new sound and assign it to a variable <code>click_sound</code>, just like you created the visual stimuli. Use a note name (<em>e.g.</em> <code>"C"</code> or <code>"A"</code>) and a short duration (<em>e.g.</em>, <code>0.1</code> or <code>0.2</code> seconds). Do this at the beginning, right after we have created the mouse.</p>
-<p>Finally, you need to <code>.play()</code> this sound just like you <code>.draw()</code> the visual stimuli. However, in PsychoPy by default the sound will not rewind back to the beginning after it finished playing (at least not for the generated sound and the setup I have). So once you play it once, it is “at the end” and the next time you try to play it, there will be no sound (because it has finished playing already). To “rewind” the sound to the beginning, you first <code>.stop()</code> it and then, immediately, <code>.play()</code> it (a bit counterintuitive but works). Do it when the player turns the card over (not just clicks somewhere).</p>
+<div id="seminar-02-06" class="section level1" number="18">
+<h1><span class="header-section-number">Seminar 18</span> Guitar Hero: staircase and iterator functions</h1>
+<div id="getting-the-difficulty-just-right" class="section level2" number="18.1">
+<h2><span class="header-section-number">18.1</span> Getting the difficulty just right</h2>
+<p>In game design, one of the hardest things to get right is difficulty. Make your game too easy and it will be boring. Make it too hard and only hardcore fans will play and only for <a href="https://www.imdb.com/title/tt4975856/">an achievement</a>. Thus, you would like to make your game hard enough to push a player to the limit but not much harder than that, so not to frustrate them. One way to solve this conundrum is to create different preset difficulty levels, something we did in our <a href="seminar-02-02.html#seminar-02-02">Snake</a> game. An alternative way is to make a game that adapts its difficulty to the player.</p>
+<p>The same is true for psychophysical experiments. You want to test ability of your participants to perform a certain task at their limit for one simple reason: At this <em>threshold</em> point influence of any additional factor, whether positive or negative, is most pronounced. For example, use an unusual stimulus configuration or increase attentional load and performance will drop. Allow to preallocate attention via cuing or use a prime that is congruent with a target and performance will improve. Of course, these manipulations will have the same overall effect also when the task is particularly easy or maddeningly hard but it will much more difficult to <em>measure</em> this effect. It is one thing if performance drops from 75% to 65% than if it goes from 98% to 95% or from 53% to 52% (here, I assume that 50% is chance level performance) or vice versa. The silliest thing you can do is to <em>hope</em> that performance will allow you too see the effect of the factors that you manipulated. In things like these, knowledge and careful design is definitely superior to hope.</p>
+<p>Thus, you want performance of your participants to be approximately in the middle between the ceiling (100% performance, fastest response times, super easy) and the floor (chance level performance, slowest response times, super hard or even impossible). But how do you know where this magic point for a <em>particular</em> person is? Particularly, if the task is novel so you have little information to guide you. The solution is to adjust the difficulty on-the-fly based on participant’s responses. For example, If you have a two-alternatives-forced-choice task, you can use a two-up-one-down staircase (difficulty increases after two correct responses and decreases after one mistake) that targets 70.7% performance threshold. There are different methods and even different ways to use the same core method (e.g., does the step stays constant or changes, what is the run termination criteria, etc.), so it is always a good idea to refresh your memory and read about <a href="https://doi.org/10.3758/BF03194543">adaptive procedures</a> when designing your next experiment.</p>
+<p>In our game, we will use a very simple 3-up-1-down staircase: get the three responses correct on a row and things get faster, make a mistake and the game slows down. We’ll see how fast you can go!</p>
+</div>
+<div id="guitar-hero" class="section level2" number="18.2">
+<h2><span class="header-section-number">18.2</span> Guitar Hero</h2>
+<p>Today, we will program Guitar Hero game. In the original game, you must play notes on guitar-shaped controller at the right time, just like when you actually play music on a guitar. On the one hand, it is a straightforward and repetitive motor task. On the other hand, take a fast and complicated music piece and it’ll take many minutes or even hours of practice to get it right. It is a lot of fun, as music cues and primes your responses. The same idea of music-synchronized-actions was used in <em>Raymon Legends</em> music levels where jumps and hits are timed to drums or bass. It is a bizarrely cool dance-like sequence and a very satisfying experience, also when watching pros to do it (I happened to have one in my household).</p>
+<p>We will program this game (sans Guitar and Hero) and you can see it in the video below. The player must press a correct key (<em>left</em>, <em>down</em>, or <em>right</em>) whenever the target crosses the line. Pressing it to early or too late counts as a mistake. Of course, the faster the targets go, the harder it is to respond on time and with a correct key. As I wrote above, we will use the 3-up-1-down staircase procedure to control for that.</p>
+<div style="text-align:center;">
+<video controls>
+<source src="videos/guitar-hero.mp4" type="video/mp4">
+</video>
+</div>
+<p>As per usual, we will take gradual approach:</p>
+<ul>
+<li>Boilerplate code</li>
+<li>Create a class for individual moving targets</li>
+<li>Create a timed-response task class that will create them (using cool generators), dispose of them, check the response, and adjust staircase.</li>
+<li>Add bells-and-whistles like score and time limited runs.</li>
+</ul>
+</div>
+<div id="boilerplate-1" class="section level2" number="18.3">
+<h2><span class="header-section-number">18.3</span> Boilerplate</h2>
+<p>Create our usual boilerplate code in <em>exercise01.py</em> (you will use the same files for classes but use versioning of the main file, it makes it easier for me to check your code):</p>
+<ul>
+<li>Import what is needed from PsychoPy</li>
+<li>Create a window. I’ve picked 640×480 but choose whatever looks good on your screen.</li>
+<li>Create our usual main game loop with <code>gamover</code> variable, flipping the window, and checking for <em>escape</em> button press.</li>
+</ul>
 <div class="infobox program">
-<p>Put your code into <em>exercise01.py</em>.</p>
+<p>Put your boilerplate code into <em>exercise01.py</em>.</p>
 </div>
 </div>
-<div id="sound-from-file" class="section level2" number="11.2">
-<h2><span class="header-section-number">11.2</span> Sound from file</h2>
-<p>Now, let us use more complex prerecorded sounds. Put the files from the <strong>sounds.zip</strong> folder into a <em>Sounds</em> subfolder of the Memory game. Mixing generated sounds (like we used in the example above) with prerecorded does not always work and it is the limitation of the libraries that PsychoPy relies upon. Thus, let us replace the way the create the <code>click_sound</code> by using <em>click.wav</em> instead of the note value. Note that you must specify the path to that file (it is in the <code>"Sounds"</code> folder), so use use <code>os.join.path()</code>.</p>
-<p>Interestingly, at least for my setup, the sound it reset automatically, so you do not need to <code>.stop()</code> it before you <code>.play()</code> it. Thus, you can drop that extra <code>.stop()</code> call.</p>
+<div id="target-and-timedresponsetask-classes" class="section level2" number="18.4">
+<h2><span class="header-section-number">18.4</span> Target and TimedResponseTask classes</h2>
+<p>Our main work horse will be <code>TimedResponseTask</code> class. It will spawn a new random <code>Target</code> at random intervals (which will depend on speed), pass speed information to moving targets, and remove targets, once they disappear below the screen. The <code>Target</code> class use <code>visual.Rect</code><a href="#fn50" class="footnote-ref" id="fnref50"><sup>50</sup></a> with some extra bells and whistles to make it appear at the right location, move at the right speed, change it line color (indicating a correct response), compute whether it is already off the screen, etc. We will start with a single target first.</p>
+</div>
+<div id="target-class-static" class="section level2" number="18.5">
+<h2><span class="header-section-number">18.5</span> Target class: static</h2>
+<p>First create a <code>Target</code> class: a colored rectangle in one of the three positions that starts at the top of the window and moves down at a specific speed. Its constructor should take PsychoPy window as a parameter (you will need it to create the rectangle attribute), position index (from 0 to 2), and speed (in <code>"norm"</code> units <em>per second</em>). The only thing we need to do right now in the constructor is to create a color rectangle (see below) and store both <code>ipos</code> and <code>speed</code> as attributes for later use. In addition, define a <code>score</code> attribute and set it to <code>None</code>. This will hold the score the participant got for this target and <code>None</code> means that it has not been responded upon.</p>
+<p>The second parameter — position index — determines the horizontal position of the target and its color (to make targets more fun and distinct). For my code, I decided to make rectangle 0.4 norm units wide and 0.1 norm units high. The leftmost <em>red</em> rectangle (for <code>ipos</code> 0), is centered at -0.5, the middle <em>green</em> one is dead center, and the rightmost <em>blue</em> rectangle is centered at 0.5. I’ve defined all these as <code>TARGET_</code> constants (e.g., <code>TARGET_COLOR = ...</code>), so think about how you can compute both color and position without using if-else statements. Also, think about the y-position of the rectangle, so it appears right at the top of the window.</p>
+<p>The second method you need is <code>draw()</code> which simply draws the rectangle. Test it by creating a target at one of the position (or three targets at all three positions) and drawing them in the main loop. You should get nice looking but static rectangle(s).</p>
 <div class="infobox program">
-<p>Put your code into <em>exercise02.py</em>.</p>
+<p>Put updated code in <em>exercise02.py</em> and create the class <code>Target</code> in a separate file.</p>
 </div>
 </div>
-<div id="feedback-sounds" class="section level2" number="11.3">
-<h2><span class="header-section-number">11.3</span> Feedback sounds</h2>
-<p>Now let us add two more sounds: <code>correct_sound</code> variable that uses <code>"correct.wav"</code> and <code>error_sound</code> that uses <code>"error.wav"</code>. They should be played when two cards are opened, right before the delay. Play <code>correct_sound</code> if the cards matched, <code>error_sound</code> otherwise.</p>
-<pre><code>if two cards are opened:
-    draw cards
-    
-    if cards match:
-        play correct_sound
-    else:
-        play error_sound
-        
-    clock.wait(0.5)</code></pre>
+<div id="target-class-moving" class="section level2" number="18.6">
+<h2><span class="header-section-number">18.6</span> Target class: moving</h2>
+<p>Our targets fall down at speed defined by their <code>speed</code> attribute. Later on, we will change that attribute dynamically to speed up or slow down their fall.</p>
+<p>For the actual falling down, implement a new method, call it <code>fall()</code>, that will update target’s position on every frame. The speed is in <code>norm units per second</code>, thus, to compute the change in vertical position you also need to know the how much time <em>in seconds</em> has elapsed since last position update. The simplest way to do this is by using a <a href="https://psychopy.org/api/clock.html#psychopy.clock.Clock">Clock</a> class. You create it as an attribute in the constructor and then, in the <code>fall</code> method you use its current time to compute and apply a change in vertical position of the rectangle. Don’t forget to reset the clock after that!</p>
+<p>Include <code>fall</code> method call in the main loop and see how the target falls. Experiment with falling speed!</p>
 <div class="infobox program">
-<p>Put your code into <em>exercise03.py</em>.</p>
+<p>Put updated code in <em>exercise03.py</em> and update the class <code>Target</code>.</p>
 </div>
 </div>
-<div id="keeping-sounds-organized-dictionary-comprehension" class="section level2" number="11.4">
-<h2><span class="header-section-number">11.4</span> Keeping sounds organized: dictionary comprehension</h2>
-<p>We now have three variables for three different sounds. We could be tidier than that by putting them into a dictionary <code>sounds</code> and using them as <code>sounds['correct'].play()</code>. This is a more general, tidier (just one variable rather than lots), and more future-proof approach. You can create this dictionary in a direct way <code>sounds = {"click" : Sound(...), ...}</code> but will learn and use <a href="https://www.python.org/dev/peps/pep-0274/">dictionary comprehension</a> instead.</p>
-<p>Dictionary comprehensions are very similar to list comprehensions. You also loop over a list but you use <code>{}</code> instead of <code>[]</code> and you use an item to generated both a key and the value for a dictionary entry. For example:</p>
-<div class="sourceCode" id="cb134"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb134-1"><a href="seminar11.html#cb134-1" aria-hidden="true" tabindex="-1"></a>index_letters <span class="op">=</span> {i : <span class="bu">chr</span>(<span class="dv">65</span><span class="op">+</span>i) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">4</span>)}</span></code></pre></div>
-<p>Here, you use the item as a key <code>i</code> and generate a string value for it. Note that although keys <strong>must be unique</strong>, the values are not, so you can use the same value for all entries. Imagine that you are keeping the score in the game and all players start with a zero:</p>
-<div class="sourceCode" id="cb135"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb135-1"><a href="seminar11.html#cb135-1" aria-hidden="true" tabindex="-1"></a>players <span class="op">=</span> [<span class="st">&#39;Anna&#39;</span>, <span class="st">&#39;Bob&#39;</span>, <span class="st">&#39;Chris&#39;</span>]</span>
-<span id="cb135-2"><a href="seminar11.html#cb135-2" aria-hidden="true" tabindex="-1"></a>score <span class="op">=</span> {player : <span class="dv">0</span> <span class="cf">for</span> player <span class="kw">in</span> players}</span></code></pre></div>
-<p>Change the code to generate <code>sounds</code> dictionary via comprehension and use it instead of variables. In our case, the three keys should be <code>"click"</code>, <code>"correct"</code>, and <code>"error"</code>. You can generate the filename from these keys, just do not forget to <a href="https://www.w3schools.com/python/gloss_python_string_concatenation.asp">add</a> the <code>".wav"</code> extension.</p>
+<div id="iteratorgenerator-functions" class="section level2" number="18.7">
+<h2><span class="header-section-number">18.7</span> Iterator/Generator functions</h2>
+<p>In the next section, we will create a <code>TimedResponseTask</code> class that will generate targets at a random location and after a random interval. We can, of course, do it directly in the class but where’s fun in that?! Instead, we will use this as an opportunity to learn about iterator/generator functions. You already know how to use duck typing to turn any class into a iterator by defining special method <code>__iter()__</code> and <code>__next__()</code>. But a <em>function</em> can also be an iterator if it uses <code>yield</code> instead of <code>return</code> statement to, well, <em>yield</em> a value. It <em>yields</em> it, because the function itself <em>returns</em> an iterator object that you can iterate over in a for loop or via <code>next()</code> function. Importantly, <code>yield</code> “freezes” execution of the function and the next time you call the function <em>it continues from that point</em> rather than from the start of the function. Once you reach the end of the function, it automatically raises <code>StopIteration()</code> exception, so you don’t need to worry about how to communicate that you ran out of items. It may sound confusing but it really simple. Here an example to illustrate this:</p>
+<div class="sourceCode" id="cb163"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb163-1"><a href="seminar-02-06.html#cb163-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> iterator_fun():</span>
+<span id="cb163-2"><a href="seminar-02-06.html#cb163-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">yield</span> <span class="dv">3</span></span>
+<span id="cb163-3"><a href="seminar-02-06.html#cb163-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">yield</span> <span class="dv">1</span></span>
+<span id="cb163-4"><a href="seminar-02-06.html#cb163-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">yield</span> <span class="st">&quot;wow!&quot;</span></span>
+<span id="cb163-5"><a href="seminar-02-06.html#cb163-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb163-6"><a href="seminar-02-06.html#cb163-6" aria-hidden="true" tabindex="-1"></a><span class="co"># function returns an iterator, not a value!</span></span>
+<span id="cb163-7"><a href="seminar-02-06.html#cb163-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(iterator_fun())</span>
+<span id="cb163-8"><a href="seminar-02-06.html#cb163-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-9"><a href="seminar-02-06.html#cb163-9" aria-hidden="true" tabindex="-1"></a><span class="co"># iterating via for loop</span></span></code></pre></div>
+<pre><code>## &lt;generator object iterator_fun at 0x000000002655BA98&gt;</code></pre>
+<div class="sourceCode" id="cb165"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb165-1"><a href="seminar-02-06.html#cb165-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> elem <span class="kw">in</span> iterator_fun():</span>
+<span id="cb165-2"><a href="seminar-02-06.html#cb165-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(elem)</span>
+<span id="cb165-3"><a href="seminar-02-06.html#cb165-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb165-4"><a href="seminar-02-06.html#cb165-4" aria-hidden="true" tabindex="-1"></a><span class="co"># iterating via next(), note you use an iterator object </span></span>
+<span id="cb165-5"><a href="seminar-02-06.html#cb165-5" aria-hidden="true" tabindex="-1"></a><span class="co"># that function returned, not the function itself!</span></span></code></pre></div>
+<pre><code>## 3
+## 1
+## wow!</code></pre>
+<div class="sourceCode" id="cb167"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb167-1"><a href="seminar-02-06.html#cb167-1" aria-hidden="true" tabindex="-1"></a>an_iterator <span class="op">=</span> iterator_fun()  </span>
+<span id="cb167-2"><a href="seminar-02-06.html#cb167-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-3"><a href="seminar-02-06.html#cb167-3" aria-hidden="true" tabindex="-1"></a><span class="co"># now you can use an_iterator to get a next item from it</span></span>
+<span id="cb167-4"><a href="seminar-02-06.html#cb167-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">next</span>(an_iterator))</span></code></pre></div>
+<pre><code>## 3</code></pre>
+<div class="sourceCode" id="cb169"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb169-1"><a href="seminar-02-06.html#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">next</span>(an_iterator))</span></code></pre></div>
+<pre><code>## 1</code></pre>
+<div class="sourceCode" id="cb171"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb171-1"><a href="seminar-02-06.html#cb171-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">next</span>(an_iterator))</span></code></pre></div>
+<pre><code>## wow!</code></pre>
+<div class="sourceCode" id="cb173"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb173-1"><a href="seminar-02-06.html#cb173-1" aria-hidden="true" tabindex="-1"></a><span class="co"># next call will raise an exception StopIteration(), so I do not run it here.</span></span>
+<span id="cb173-2"><a href="seminar-02-06.html#cb173-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">next</span>(iterator_var))</span></code></pre></div>
+<p>This format makes writing iterators very easy, just <code>yield</code> whatever you want in an order you want and Python will take care of the rest. You can also <code>yield</code> in a loop, inside an if-else statement, etc. Look at the code below and figure out what will be printed out before running it.</p>
+<div class="sourceCode" id="cb174"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb174-1"><a href="seminar-02-06.html#cb174-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> iterator_fun():</span>
+<span id="cb174-2"><a href="seminar-02-06.html#cb174-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> e <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">4</span>):</span>
+<span id="cb174-3"><a href="seminar-02-06.html#cb174-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> e <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb174-4"><a href="seminar-02-06.html#cb174-4" aria-hidden="true" tabindex="-1"></a>      <span class="cf">yield</span> e</span>
+<span id="cb174-5"><a href="seminar-02-06.html#cb174-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb174-6"><a href="seminar-02-06.html#cb174-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> item <span class="kw">in</span> iterator_fun():</span>
+<span id="cb174-7"><a href="seminar-02-06.html#cb174-7" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(item)</span></code></pre></div>
+<p>For our <code>TimedResponseTask</code> class, we will need two <em>generators</em>. They are <em>generators</em> rather than <em>iterators</em> because both will be endless. One that generates a random delay until the next target and one that generates a random target position (0, 1, or 2). Implement both in a separate file (I called it <em>generators.py</em>).</p>
+<p>The <code>time_to_next_target_generator()</code> function should take a tuple of two float values, which define shortest and longest allowed delays, as a parameter and <em>yield</em> a random number within this range in an <em>endless</em> loop. We need the endless loop (<code>while True:</code> will do) because we do not know how many values we will need, so we just generate as many as needed.</p>
+<p>The <code>next_target_generator()</code> will be a bit more interesting. It can just return a <code>random.choice</code> from 0, 1, and 2 but where is fun in that? Instead, we will make it a bit more complicated to ensure that all three targets appear equal number of times within <em>3N</em> trials, where <em>N</em> will be a parameter of the generator function. This would ensure random, reasonably unpredictable but balanced targets in the short run. Remember, in the long run random choice will always give us a balanced uniform distribution but there is not such guarantee for the shorter runs of a few trials. First, you should create a list where each target appears N times (think how you can do it using <code>range()</code>, <code>list()</code> and <code>*</code>). Then, create an endless loop (again, we don’t know how many values we will need) in which you 1) shuffle elements of the list, 2) yield one element at a time via for loop. Once you run out of elements, you shuffle them again and yield one by one again. Then repeat. And again, and again. Endless loop!</p>
+<p>I would suggest creating and testing both function in a Jupyter notebook first and then putting them in a separate file (e.g., <em>generators.py</em>). Be careful if you decide to use a for loop instead of <code>next()</code> for testing. Remember, both a generates and will never run out of items to yield for a for loop!</p>
 <div class="infobox program">
-<p>Put your code into <em>exercise04.py</em>.</p>
+<p>Put both generators into <em>generators.py</em>.</p>
 </div>
 </div>
-<div id="logging-data" class="section level2" number="11.5">
-<h2><span class="header-section-number">11.5</span> Logging data</h2>
-<p>Although we recorded basic stats like the number of attempts or the total amount of time a player required, for a real experiment you would want to record as much information as possible. In our case, we would want to record every card flip. In the real experiment, that would inform us which chicken that are easier or harder to memorize.</p>
-<p>For this, we will use <a href="https://psychopy.org/api/data.html#experimenthandler">ExperimentHandler</a>, which is a part of experimental scheduling and data logging tools of PsychoPy. Basically, we need to have three additional pieces of code: 1) one that creates the handler, 2) one that logs the information about the click (card, time, and attempt number), 3) one that save the log to a file.</p>
-<ol style="list-style-type: decimal">
-<li>Create an <code>ExperimentHandler()</code> object and assign it to the <code>exp</code> variable. Do it near the place where you created the window. There are multiple options you can specify but for out intents and purposes the defaults will do.</li>
-<li>To log information about each click, you need to first <a href="https://psychopy.org/api/data.html#psychopy.data.TrialHandler.addData">.addData(key, value)</a> for each variable (key) and value you want to record. In our case you need to call it three times for <code>"card"</code> (value is the <code>"filename"</code> of the card the player clicked on), <code>"attempt"</code> (value is the index of the current attempt), and <code>"time"</code> (value is the time since the start, you already have a <code>timer</code> variable that you can use for this). After all three <code>.addData()</code> calls, you need to tell the handler to advance to the next row of you log table using <a href="https://psychopy.org/api/data.html#psychopy.data.ExperimentHandler.nextEntry">.nextEntry()</a> method. Put this code right after your “flipped” the card.</li>
-<li>To save information to a file, you need to call <a href="https://psychopy.org/api/data.html#psychopy.data.ExperimentHandler.saveAsWideText">.saveAsWideText(…)</a> method of the <code>exp</code>. You need to supply the <code>filename</code> parameter and, possibly, further options such as a delimiter (<code>delim</code>). My suggestion would be to use a filename such as <code>"log.csv"</code> and <code>","</code> for a delimiter symbol (this would make a standard comma-separated-values file that any program can read). Put this code at the very end after the game over message.</li>
-</ol>
+<div id="timedresponsetask-class" class="section level2" number="18.8">
+<h2><span class="header-section-number">18.8</span> TimedResponseTask class</h2>
+<p>Now we are ready to create the <code>TimedResponseTask</code> class. For our first take, it will create targets at a random location (<code>next_target_generator()</code>) after a random interval (<code>time_to_next_target_generator()</code>) plus take care of moving and drawing all of them. More bells and whistles (disposing of targets that went past the screen, changing the speed, checking response validity, etc.) will come later.</p>
+<p>For the constructor, we definitely need PsychoPy window as a parameter, because we need it every time we create a new target. We can also pass initial speed, a tuple with range for time intervals between targets for <code>time_to_next_target_generator()</code>, and number of target repetitions for the <code>next_target_generator()</code>. We could define those as constants but passing them as parameters will make your code more reusable. Store window and speed as attributes, create attribute <code>targets</code> and initialize it to an empty list, create attributes for both generator objects using the appropriate parameters.</p>
+<p>Also create a <code>speed_factor</code> attribute and set it to 1. We will use it later to control both the speed of motion and how frequently the targets are generated. The higher is the factor, the faster targets move and the shorter is the interval to the target and vice versa.</p>
+<p>Finally, we need <a href="https://psychopy.org/api/clock.html#psychopy.clock.CountdownTimer">CountdownTimer</a> that will count the time down to the moment when we need to generate a new target. Initialize it it to the <code>next()</code> item from time-to-next-target generator (remember, you need to use the attribute, which is a generator object that function returned, not the function itself) <em>divided</em> by <code>scale_factor</code> (the faster is the speed of the game, the shorter is the interval to the next target).</p>
+<p>Now we need to add three methods <code>draw</code>, <code>update</code>, and <code>add_next_target</code>. The first one is easy, it simply draws all <code>targets</code> in a for loop. The second is also easy, it makes all targets <code>fall</code> plus, after the loop, it should call <code>add_next_target</code> method. The latter should check whether the timer has counted down to zero (or below, remember, time is float, so do not expect it to be exactly zero) and, if that is indeed the case, create a new random target (get the <code>next()</code> position from the position generator and remember to pass <code>speed</code> <em>times</em> <code>speed_factor</code>!), add it to the list of targets, and reset the timer using <code>next()</code> item from the time generator (remember to divide it by <code>speed_factor</code>!).</p>
+<p>In the main file, create <code>TimedResponsTask</code> object (use a name you like) and call its <code>draw</code> and <code>update</code> methods in the main loop. You should see targets appearing at random and falling down consistently.</p>
 <div class="infobox program">
-<p>Put your code into <em>exercise05.py</em>.</p>
+<p>Put updated code in <em>exercise04.py</em> and create the class <code>TimedResponseTask</code>.</p>
 </div>
 </div>
-<div id="more-rounds" class="section level2" number="11.6">
-<h2><span class="header-section-number">11.6</span> More rounds</h2>
-<p>We have been using left-facing chicken (the image files that start with <code>"l"</code>) but we also have right-facing chicken (the image files that start with <code>"r"</code>). Let us use both sets, so that games run for two rounds, first left- then right-facing chicken.</p>
-<p>For this, we will need to create a variable with the list of conditions. Let us, inventively, call it <code>conditions</code> and it will be a simple list of two items: <code>"'l'"</code> and <code>"r"</code>. Create this variable in the beginning, <strong>before</strong> you create cards.</p>
-<p>Next, create an outer loop over the conditions. You code should look roughly like that</p>
-<pre><code>imports
-creating window, mouse, sounds, experiment handler, etc.
-create conditions list
-for condition in conditions:
-    create cards using condition letter to filter files
-    prepare everything for the round (gameover variable, timer, attempts counter, etc.)
-    while not gameover:
-        visuals
-        mouse handling
-        keyboard handling
-    game over message (change it to block results message)
-        
-save logs
-close window</code></pre>
-<p>When you create cards use the <code>condition</code> (assuming that you used <code>for condition in conditions:</code>) instead of the hardcoded <code>"l"</code> to filter the files. You also to need to log the condition. Add a <code>exp.addData()</code> call for it along the other ones.</p>
-<p>Finally, modify your “game-over” message to be “end-of-the-block” message. You still should show the stats, change only with wording.</p>
+<div id="disposing-of-unneed-targets" class="section level2" number="18.9">
+<h2><span class="header-section-number">18.9</span> Disposing of unneed targets</h2>
+<p>Currently, our targets keep falling down even when they are below the screen. This will not affect the performance <em>immediately</em> but it will be taxing both memory and CPU, so we should dispose of them. In the <code>Target</code> class, create a new read-only (computed) property <code>is_below_the_screen</code> that returns <code>True</code> if the upper edge of the target is below the lower edge of the screen (<code>False</code> otherwise, of course and you definitely do not need if-else!).</p>
+<p>Next, in the <code>update</code> method of <code>TimedResponseTask</code>, add a second loop (or modify the existing loop) where you delete any object that <code>is_below_the_screen</code> (if you are not sure how to do it, take a look back at our <a href="seminar-02-05.html#seminar-02-05">Space Invaders</a> game).</p>
+<p>For debugging, run the main code, wait until at least one target falls below the screen, put a break point and check <code>targets</code> attribute. Its length should match the number of visible targets, not of the total generated targets.</p>
 <div class="infobox program">
-<p>Put your code into <em>exercise06.py</em>.</p>
+<p>Update classes <code>Target</code> and <code>TimedResponseTask</code>.</p>
 </div>
 </div>
-<div id="random-order" class="section level2" number="11.7">
-<h2><span class="header-section-number">11.7</span> Random order</h2>
-<p>Randomize order of conditions before the main loop.</p>
+<div id="finishing-line" class="section level2" number="18.10">
+<h2><span class="header-section-number">18.10</span> Finishing line</h2>
+<p>Add a new visual attribute to the <code>TimedResponseTask</code> that is a horizontal <a href="https://psychopy.org/api/visual/line.html#psychopy.visual.Line">line</a>. The task of the player will be to press a corresponding key whenever a target crosses (overlaps with) the line. For now, create it as an attribute in the constructor (pick the vertical location you like) and draw it inside the <code>draw</code> method.</p>
 <div class="infobox program">
-<p>Put your code into <em>exercise07.py</em>.</p>
+<p>Update class <code>TimedResponseTask</code>.</p>
 </div>
 </div>
-<div id="abba-order" class="section level2" number="11.8">
-<h2><span class="header-section-number">11.8</span> ABBA order</h2>
-<p>When running an actual experiment, you may want to account for the learning effect. If conditions are presented in separate blocks (as in our case), the ones that occur later will benefit from learning (although they will also suffer because of fatigue). One way to even things out, is present conditions twice in a direct and, then, a reverse order (ABBA). This way, a condition which was used first (no learning) is also the last one (maximal learning).</p>
-<p>Once you randomized the order of the first two blocks, you need to add the same list but in a reverse order. One possibility is a <a href="https://docs.python.org/3/tutorial/datastructures.html">.reverse()</a> method. However, it reverses the list itself in-place. Instead you should use <a href="https://docs.python.org/3/reference/expressions.html?highlight=slicing#slicings">slicing</a> to create a <em>new</em> reversed list before adding it to the original one. Read again on <a href="seminar04.html#lists">lists</a>, if you forgot how it works. The idea is simply to <code>conditions = conditions + conditions-that-are-sliced-to-be-in-reverse-order</code>. You can test this code in a Jupyter cell, before putting into the main code.</p>
+<div id="response" class="section level2" number="18.11">
+<h2><span class="header-section-number">18.11</span> Response</h2>
+<p>Now the real fun begins! We will allow a player to press keys and check whether a corresponding target is on the line. For this, we need new methods for both <code>Target</code> and <code>TimedResponseTask</code> classes. For the <code>Target</code>, implement a new method class <code>overlaps()</code> that will take a vertical position (of the finishing line) as the only float number parameter. In the method, first you check that the <code>score</code> attribute is <code>None</code>. If it <em>not</em> none that means that the player already responded on to the target and they are not allowed to respond to it twice. If it is <code>None</code>, compute a score using the following formula:
+<span class="math display">\[score = int \left(10 - 10 \cdot \frac{|y_{target} - y_{line}|}{h_{target} / 2} \right)\]</span>
+where <span class="math inline">\(y_{target}\)</span> is the vertical center of the target, <span class="math inline">\(y_{line}\)</span> is the vertical position of the line (you get it as a function parameter), <span class="math inline">\(h_{target}\)</span> is height of the target, <span class="math inline">\(||\)</span> means absolute value (use <a href="https://docs.python.org/3/library/math.html#math.fabs">fabs</a> function from <em>math</em> library for that), and <code>10</code> is an arbitrary scaling factor (you can use any integer). Study the formula and you will see that score is 10 if the target’s center is right on the line but decreases linearly with any displacement. Once the target is off the line, the score becomes negative. We convert it to <code>int</code>, because we want simple scores (floats look messy for this). Compute the score and store in a <em>temporary local variable</em>. If the value is <em>positive</em>, that means success, so you should store this value now permanently in the <code>score</code> attribute, change line color of the rectangle to white (to show the player that they got it right), and return <code>True</code> (yes, target does overlap with the line!). For all other outcomes, you return <code>False</code>. This means that either the response was already made or the target does not overlap with the line.</p>
+<p>In the <code>TimerResponseTask</code> class, we need a new method <code>check()</code> that will take position of the target based on the key press (so if a player pressed <em>left</em> key, the position will 0, <em>down</em> is 1, and <em>right</em> is 2). Loop over targets and if a target’s position (<code>ipos</code> attribute) matches the position of the key press (parameter of the function) <em>and</em> target overlaps with the line (the <code>overlaps()</code> method returns <code>Treu</code>), return the <code>score</code> attribute of that target. Note that the condition order is important here! You need to check for the overlap <em>only</em> if target position matches the key. If you ran out of targets to check that means that the player pressed a wrong key or at the wrong time, so you should return <code>0</code> (means “mistake”).</p>
+<p>In the main loop, add <code>"left"</code>, <code>"down"</code>, and <code>"right"</code> to the key list of <a href="https://psychopy.org/api/event.html#psychopy.event.getKeys">getKeys()</a> call. Then, if any of these three keys are pressed, translate that into a position, respectively, 0, 1, and 2 (think how you can do it without if-else via a dictionary), and call the new <code>check</code> method of the <code>TimedResponseClass</code>. Test the code, targets’ edges should turn white, if you time your key press correctly!</p>
 <div class="infobox program">
-<p>Put your code into <em>exercise08.py</em>.</p>
+<p>Put updated code in <em>exercise05.py</em>, update <code>Target</code> and <code>TimedResponseTask</code> classes.</p>
 </div>
 </div>
-<div id="we-want-more" class="section level2" number="11.9">
-<h2><span class="header-section-number">11.9</span> We want more!</h2>
-<p>Now you have a real working experiment with randomized condition order, logging, feedback, etc. Think about how you can improve it further. Instructions? More/less feedback?</p>
+<div id="score" class="section level2" number="18.12">
+<h2><span class="header-section-number">18.12</span> Score</h2>
+<p>Playing is more fun when you can see how well you are doing. Let us add a simple score indicator that is updated with response score. You already know how you can do it via <a href="https://psychopy.org/api/visual/textstim.html#psychopy.visual.TextStim">TextStim</a> stimulus but you also already know how you can inherit from a base class and extend its functionality. This is what we will do here, as the class will record and draw the score (that part is covered by the inheritance).</p>
+<p>Create a new class (I have called it <code>ScoreText</code>) that inherits from <a href="https://psychopy.org/api/visual/textstim.html#psychopy.visual.TextStim">TextStim</a>. In the constructor, you need to create an integer attribute that will hold current <code>score</code> and initialize it 0. Plus, call ancestor’s constructor via <code>super().__init__(...)</code> to initialize and place the text stimulus (I’ve picked top left corner). Think about parameters that the constructor and ancestor’s constructor need.</p>
+<p>Next, we need to update the score (both its numeric form <em>and</em> the text that we draw) every time participant presses a key. We could implement the code <em>outside</em> of the class but that is a fairly bad idea, as it puts class-related code elsewhere. We could also implement a “normal” method, e.g., <code>add()</code> that will take care of that. Instead, we will implement a <em>special</em> method <a href="https://docs.python.org/3/reference/datamodel.html#object.__iadd__"><strong>iadd</strong></a> that allows to “add to” the object. It takes a single parameter (in addition to the compulsory <code>self</code>, of course), performs “adding to the self” operation (whatever that means with respect to your object, can be mathematical addition for an attribute, concatenation of the string, adding to the list, etc.), and <strong>returns back the reference to itself</strong>, i.e., returns <code>self</code> not a value of any attribute! Here’s how it works:</p>
+<div class="sourceCode" id="cb175"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb175-1"><a href="seminar-02-06.html#cb175-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> AddIt():</span>
+<span id="cb175-2"><a href="seminar-02-06.html#cb175-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
+<span id="cb175-3"><a href="seminar-02-06.html#cb175-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.number <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb175-4"><a href="seminar-02-06.html#cb175-4" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb175-5"><a href="seminar-02-06.html#cb175-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__iadd__</span>(<span class="va">self</span>, addendum):</span>
+<span id="cb175-6"><a href="seminar-02-06.html#cb175-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.number <span class="op">+=</span> addendum</span>
+<span id="cb175-7"><a href="seminar-02-06.html#cb175-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span> <span class="co"># important!!!</span></span>
+<span id="cb175-8"><a href="seminar-02-06.html#cb175-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb175-9"><a href="seminar-02-06.html#cb175-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb175-10"><a href="seminar-02-06.html#cb175-10" aria-hidden="true" tabindex="-1"></a>adder <span class="op">=</span> AddIt()</span>
+<span id="cb175-11"><a href="seminar-02-06.html#cb175-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(adder.number)</span></code></pre></div>
+<pre><code>## 0</code></pre>
+<div class="sourceCode" id="cb177"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb177-1"><a href="seminar-02-06.html#cb177-1" aria-hidden="true" tabindex="-1"></a>adder <span class="op">+=</span> <span class="dv">10</span></span>
+<span id="cb177-2"><a href="seminar-02-06.html#cb177-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(adder.number)</span></code></pre></div>
+<pre><code>## 10</code></pre>
+<p>Implement that special method for your class, so we can do <code>score_stim +=  timed_task.check(...)</code>. Remember, you have to update both numeric <em>and</em> visual representations of the score in that method! Add the score to the main code.</p>
+<div class="infobox program">
+<p>Put updated code in <em>exercise06.py</em>, create <code>ScoreText</code> class.</p>
+</div>
+</div>
+<div id="staircase" class="section level2" number="18.13">
+<h2><span class="header-section-number">18.13</span> Staircase</h2>
+<p>We will implement the staircase as part of the <code>TimerResponseTask</code> class, so it can speed up and slow down itself. For this, we will need an attribute that counts number of <em>consecutive</em> correct responses (I, typically, call it <code>correct_in_a_row</code> or something like that). Create and initialize it to zero in the constructor.</p>
+<p>Next, create a new method <code>staircase()</code> that will take a single parameter (beyond <code>self</code>) on whether the response was <code>correct</code> or not. If it was, increment <code>correct_in_a_row</code> by one and check whether it reached 3. If it did, increase the <code>speed_factor</code> by <em>multiplying</em> it by some chosen factor (I’ve picked 1.3) and resetting <code>correct_in_a_row</code> to 0. Alternatively, if the response was not correct, <em>divide</em> <code>speed_factor</code> by the same number (e.g., 1.3, so slowing things down) and again, reset <code>correct_in_a_row</code> to 0. After that, loop over all targets and update their speed based on <code>speed</code> and <code>speed_factor</code> attributes.</p>
+<p>You need to call this method inside the <code>check</code> method, think then and how.</p>
+<div class="infobox program">
+<p>Update <code>TimedTaskResponse</code> class.</p>
+</div>
+</div>
+<div id="limiting-time" class="section level2" number="18.14">
+<h2><span class="header-section-number">18.14</span> Limiting time</h2>
+<p>Let us add a competitive edge by limiting the run time to 20 seconds (you can pick your own duration, of course). Create an additional outer loop, so that the game can be played many times over. Once the round is over, show the latest state (redrawing all game objects) plus the “Round over” sign and wait for the player to press either <em>escape</em> (then you exit the game) or <em>space</em> (to start the next round). Remember to recreate all game objects anew for the next round (or create a <code>reset</code> method for all of them).</p>
+<div class="infobox program">
+<p>Put updated code in <em>exercise07.py</em>, create <code>ScoreText</code> class.</p>
+</div>
+</div>
+<div id="this-is-just-a-start" class="section level2" number="18.15">
+<h2><span class="header-section-number">18.15</span> This is just a start!</h2>
+<p>As per usual, think about how you can extend the game. A clock showing the remaining time is definitely missing. Auditory feedback would be nice. More positions? Random colors to confuse a player?</p>
 
 </div>
 </div>
 <div class="footnotes">
 <hr />
-<ol start="7">
-<li id="fn7"><p>The files are public domain from <a href="https://freesound.org/">freesound.org</a>.<a href="seminar11.html#fnref7" class="footnote-back">↩︎</a></p></li>
+<ol start="50">
+<li id="fn50"><p>Inheriting from <code>visual.Rect</code> would’ve make it even simpler but, due to so technical glitch, unfortunately that does not work.<a href="seminar-02-06.html#fnref50" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -590,8 +673,8 @@ close window</code></pre>
           </div>
         </div>
       </div>
-<a href="seminar10.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="the-skill-of-programming.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="seminar-02-05.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="game-context.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

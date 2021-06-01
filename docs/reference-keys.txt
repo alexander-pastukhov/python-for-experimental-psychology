@@ -229,5 +229,15 @@ target-class-static
 target-class-moving
 iteratorgenerator-functions
 timedresponsetask-class
+disposing-of-unneed-targets
+finishing-line
+response
+score
+staircase
+limiting-time
+this-is-just-a-start
+game-context
 settings-file
+working-with-tables-via-pandas
+single-context-to-rule-them-all
 w--.unlisted
