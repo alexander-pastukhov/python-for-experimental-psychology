@@ -1,9 +1,98 @@
-# Game Context
+# Context and control
 
-## Settings file
-So far, we either hard-coded values or defined constants. This means that to modify any of them, you need to modify the program itself. A better approach is to have a separate file with settings. This puts all of them in one place and makes easier to edit and check them. Plus, you can have many settings file for different experimental stages, groups, etc.
+Today, we will reuse our lovely [Guitar Hero](#seminar-02-06) game and see how we simplify our life via having settings in a separate file. Plus we will be using context to isolate repetitive initialization / clean-up code and exceptions to control the flow.
 
-There multiple formats for settings files: XML, INI, YALM, etc. Experiment designed using PsychoPy Builder interface are stored using XML (Extensible Markup Language) files but with [.psyexp extension](https://www.psychopy.org/psyexp.html).
+## Settings file formats
+So far, we either hard-coded specific values or defined them as constants (a better of these two approaches). However, this means that if you want to run your game with different settings, you need to modify the program itself. And if you want to have two versions of the game (two experimental conditions), you would need to have two programs with all the problems of maintaining virtually identical code in several places at once.
+
+A better approach is to have separate files with settings, so you can keep the code constant and alter specific parameters by specifying which settings file the program should use. This is helpful even you plan to have a single set of setting as it separates code from constants, puts the latter all in one place and makes easier to edit and check them. There are multiple formats for settings files: XML, INI, JSON, YALM, etc. 
+
+
+### XML
+[XML](https://en.wikipedia.org/wiki/XML) --- an Extensible Markup Language --- looks similar to HTML (HyperText Markup Language). Experiments designed using PsychoPy Builder interface are stored using XML files but with [.psyexp extension](https://www.psychopy.org/psyexp.html). A settings file for Guitar Hero in XML could look like this
+```XML
+<Target>
+  <width>0.4</width>
+  <height>0.1</height>
+  <locations>
+    <location>-0.5</location>
+    <location>0</location>
+    <location>0.5</location>
+  </locations>
+</Target>
+```
+
+
+The advantage of XML is that it is very flexible yet structured and you can use [native Python interface](https://docs.python.org/3/library/xml.html) to work with them. However, XML is not easy for humans to read, it is overpowered for our purposes of having  a simple set of unique constants and its power means that using it is fairly cumbersome.
+
+```python
+from xml.dom import minidom
+settings = minidom.parse('test.xml')
+settings.getElementsByTagName("target")[0].getElementsByTagName("width")[0].firstChild.data # this will give you string "0.4"
+```
+
+### INI
+This is a format with a structure similar to that found in MS Windows INI files.
+```ini
+[Target]
+width = 0.4
+height = 0.1
+locations = -0.5, 0, 0.5
+```
+
+As you can see it is easier to read and Python has a special [configparser](https://docs.python.org/3/library/configparser.html) library to work with them. The object you get is, effectively, a dictionary with additional methods and attributes. Note, however, that `ConfigParser` does not try to guess the type of data, so all values are stored as _strings_ and it is your job to convert them to whatever type you need, e.g. integer, list, etc.
+
+```python
+import configparser
+settings = configparser.ConfigParser()
+settings.read('settings.ini')
+settings["Target"]["width"] # this will give you a string '0.4'
+```
+
+### JSON
+[JSON](https://en.wikipedia.org/wiki/JSON) (JavaScript Object Notation) is a popular format for web applications that use it to exchange data between server and client. 
+```json
+{
+  "Target": {
+    "width": 0.4,
+    "height": 0.1,
+    "locations": [-0.5, 0, 0.5]
+  }
+}
+```
+
+You can parse any _string_ with JSON format into a dictionary in Python using [json](https://docs.python.org/3/library/json.html) module. Its advantage over INI files is that JSON explicitly specifies data type, so it converts it automatically. Note that unlike configparse, json module does not work with files direction, so you need to open it manually.
+```python
+import json
+with open('settings.json') as json_file:
+    settings = json.load(json_file)
+    
+settings["Target"]["width"] # this will give a float number 0.4
+```
+
+### YAML
+[YAML](https://en.wikipedia.org/wiki/YAML) (YAML Ain't Markup Language, rhymes with camel) is very similar to JSON but its config files are more human-readable. It has fewer special symbols and brackets but, as in Python, you must watch the indentations as they determine the hierarchy.
+```yaml
+Target:
+  width : 0.4
+  height : 0.1
+  locations : [-0.5, 0, 0.5]
+```
+
+You will need to install a third-party library [pyyaml](https://pyyaml.org/) to work with YAML files. Otherwise, you get the same dictionary as for the JSON
+```python
+import yaml
+with open("settings.yaml") as yaml_stream:
+    settings = yaml.load(yaml_stream)
+    
+settings["Target"]["width"] # this will give a float number 0.4
+```
+
+## Settings file for Guitar Hero
+
+
+
+
 
 ## Working with tables via Pandas
 
