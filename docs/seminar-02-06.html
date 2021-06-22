@@ -24,7 +24,7 @@
 <meta name="author" content="Alexander (Sasha) Pastukhov" />
 
 
-<meta name="date" content="2021-06-09" />
+<meta name="date" content="2021-06-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,8 +32,8 @@
   
   
 <link rel="prev" href="seminar-02-05.html"/>
-<link rel="next" href="game-context.html"/>
-<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<link rel="next" href="context-settings-and-exceptions.html"/>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -441,11 +441,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="18.14" data-path="seminar-02-06.html"><a href="seminar-02-06.html#limiting-time"><i class="fa fa-check"></i><b>18.14</b> Limiting time</a></li>
 <li class="chapter" data-level="18.15" data-path="seminar-02-06.html"><a href="seminar-02-06.html#this-is-just-a-start"><i class="fa fa-check"></i><b>18.15</b> This is just a start!</a></li>
 </ul></li>
-<li class="chapter" data-level="19" data-path="game-context.html"><a href="game-context.html"><i class="fa fa-check"></i><b>19</b> Game Context</a>
+<li class="chapter" data-level="19" data-path="context-settings-and-exceptions.html"><a href="context-settings-and-exceptions.html"><i class="fa fa-check"></i><b>19</b> Context, settings, and exceptions</a>
 <ul>
-<li class="chapter" data-level="19.1" data-path="game-context.html"><a href="game-context.html#settings-file"><i class="fa fa-check"></i><b>19.1</b> Settings file</a></li>
-<li class="chapter" data-level="19.2" data-path="game-context.html"><a href="game-context.html#working-with-tables-via-pandas"><i class="fa fa-check"></i><b>19.2</b> Working with tables via Pandas</a></li>
-<li class="chapter" data-level="19.3" data-path="game-context.html"><a href="game-context.html#single-context-to-rule-them-all"><i class="fa fa-check"></i><b>19.3</b> Single context to rule them all</a></li>
+<li class="chapter" data-level="19.1" data-path="context-settings-and-exceptions.html"><a href="context-settings-and-exceptions.html#context-manager"><i class="fa fa-check"></i><b>19.1</b> Context manager</a></li>
+<li class="chapter" data-level="19.2" data-path="context-settings-and-exceptions.html"><a href="context-settings-and-exceptions.html#settings-files"><i class="fa fa-check"></i><b>19.2</b> Settings file formats</a>
+<ul>
+<li class="chapter" data-level="19.2.1" data-path="context-settings-and-exceptions.html"><a href="context-settings-and-exceptions.html#xml"><i class="fa fa-check"></i><b>19.2.1</b> XML</a></li>
+<li class="chapter" data-level="19.2.2" data-path="context-settings-and-exceptions.html"><a href="context-settings-and-exceptions.html#ini"><i class="fa fa-check"></i><b>19.2.2</b> INI</a></li>
+<li class="chapter" data-level="19.2.3" data-path="context-settings-and-exceptions.html"><a href="context-settings-and-exceptions.html#json"><i class="fa fa-check"></i><b>19.2.3</b> JSON</a></li>
+<li class="chapter" data-level="19.2.4" data-path="context-settings-and-exceptions.html"><a href="context-settings-and-exceptions.html#yaml"><i class="fa fa-check"></i><b>19.2.4</b> YAML</a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="context-settings-and-exceptions.html"><a href="context-settings-and-exceptions.html#settings-file-for-guitar-hero"><i class="fa fa-check"></i><b>19.3</b> Settings file for Guitar Hero</a></li>
+<li class="chapter" data-level="19.4" data-path="context-settings-and-exceptions.html"><a href="context-settings-and-exceptions.html#context-based-on-settings"><i class="fa fa-check"></i><b>19.4</b> Context based on settings</a></li>
+<li class="chapter" data-level="19.5" data-path="context-settings-and-exceptions.html"><a href="context-settings-and-exceptions.html#using-settings"><i class="fa fa-check"></i><b>19.5</b> Using settings</a></li>
+<li class="chapter" data-level="19.6" data-path="context-settings-and-exceptions.html"><a href="context-settings-and-exceptions.html#logging-data-1"><i class="fa fa-check"></i><b>19.6</b> Logging data</a></li>
+<li class="chapter" data-level="19.7" data-path="context-settings-and-exceptions.html"><a href="context-settings-and-exceptions.html#exceptions"><i class="fa fa-check"></i><b>19.7</b> Exceptions</a></li>
+<li class="chapter" data-level="19.8" data-path="context-settings-and-exceptions.html"><a href="context-settings-and-exceptions.html#exception-within-context"><i class="fa fa-check"></i><b>19.8</b> Exception within context</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="cross-references.html"><a href="cross-references.html"><i class="fa fa-check"></i>Cross references</a></li>
 <li class="divider"></li>
@@ -540,7 +551,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb163-7"><a href="seminar-02-06.html#cb163-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(iterator_fun())</span>
 <span id="cb163-8"><a href="seminar-02-06.html#cb163-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb163-9"><a href="seminar-02-06.html#cb163-9" aria-hidden="true" tabindex="-1"></a><span class="co"># iterating via for loop</span></span></code></pre></div>
-<pre><code>## &lt;generator object iterator_fun at 0x00000000265DBA98&gt;</code></pre>
+<pre><code>## &lt;generator object iterator_fun at 0x0000000026F8BA98&gt;</code></pre>
 <div class="sourceCode" id="cb165"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb165-1"><a href="seminar-02-06.html#cb165-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> elem <span class="kw">in</span> iterator_fun():</span>
 <span id="cb165-2"><a href="seminar-02-06.html#cb165-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(elem)</span>
 <span id="cb165-3"><a href="seminar-02-06.html#cb165-3" aria-hidden="true" tabindex="-1"></a>    </span>
@@ -674,7 +685,7 @@ where <span class="math inline">\(y_{target}\)</span> is the vertical center of 
         </div>
       </div>
 <a href="seminar-02-05.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="game-context.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="context-settings-and-exceptions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

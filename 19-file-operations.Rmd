@@ -1,6 +1,6 @@
-# Context and control
+# Context, settings, and exceptions
 
-Today, we will reuse our lovely [Guitar Hero](seminar-02-06) game and see how we simplify our life via having settings in a separate file. Plus we will be using context to isolate repetitive initialization / clean-up code and exceptions to control the flow. Thus, create a new folder with all the classes and the final exercise from Guitar Hero, which you will serve as a foundation for exercise 1.
+Today, we will reuse our lovely [Guitar Hero](#seminar-02-06) game and see how we simplify our life via having settings in a separate file. Plus we will be using context to isolate repetitive initialization / clean-up code and exceptions to control the flow. Thus, create a new folder with all the classes and the final exercise from Guitar Hero, which you will serve as a foundation for exercise 1.
 
 ## Context manager
 On the one hand, context management is a frequently used feature in Python, particularly for file operations. On the other hand, its full power is rarely is less known even though it can be very useful whenever you the context of your program is the same or very similar, as in case of the PsychoPy games that we programmed and typical PsychoPy experiments. In both cases, there is a fairly fixed structure of the program:
@@ -61,7 +61,7 @@ class FileManager():
       self.file = open(self.filename, self.mode)
       return self.file
       
-    def __exit__(self):
+    def __exit__(self, exc_type, exc_value, traceback):
       """
       What we need to do before destroying the context:
         * Close the file before we exit the context.
@@ -72,6 +72,8 @@ class FileManager():
 with FileManager("somefile.txt", "r") as file:
     file.read()
 ```
+
+Note that `__exit__` method has extra parameters `exc_type`, `exc_value`, and `traceback`. They will be relevant for exception handling later on but for now, you can ignore them. 
 
 Now is your turn! Create a `WindowContext` class (in a separate file, of course) that will create a PsychoPy Window object of a given size, which is passed to the constructor, and [closes](https://psychopy.org/api/visual/window.html#psychopy.visual.Window.close) when the code exists the context. For now, you will need one attribute to store information about the requested size and one attribute for PsychoPy Window itself (hint, use `win`as an attribute name). There will be a small but important difference relative to `FileManager` class in the example: There will be other objects that are context-relevant (settings, logging class) that we will add later on, so instead of returning just the window object, the __enter__ it should return the reference to the object itself (reminder, reference to the current object is always in the `self` parameter of a method). Then, you can use it to create a 640-by-480 window (use whatever window size you need of course).
 
@@ -174,7 +176,7 @@ settings["Target"]["width"] # this will give a float number 0.4
 ```
 
 ## Settings file for Guitar Hero
-My personal preference is for [yaml](yaml). However, it requires a separate library, so you could use [json](json) file instead. Create a settings file and call it  _settings.json_ (or use your imagination and come up with a better name). You will add more settings later on but for now just define a window size as
+My personal preference is for [yaml](#yaml). However, it requires a separate library, so you could use [json](#json) file instead. Create a settings file and call it  _settings.json_ (or use your imagination and come up with a better name). You will add more settings later on but for now just define a window size as
 
 ```json
 {
@@ -196,9 +198,9 @@ Now, we will settings when we create the context. Create a new context manager c
 
 ```python
 with SettingsContext('settings.json') as ctx:
-  # your usual code inside but
-  # PsychoPy window is ctx.win
-  ctx.win.flip()
+    # your usual code inside but
+    # PsychoPy window is ctx.win
+    ctx.win.flip()
 ```
 
 ::: {.infobox .program}
@@ -215,4 +217,88 @@ Update `Target` and `TimedResponseTask` classes, put updated main script into _e
 
 
 ## Logging data
+In the real experiment, we would want to log the responses, e.g., when participants pressed a button and what was the score. PsychoPy provides a convenience class [ExperimentHandler](https://psychopy.org/api/data.html#experimenthandler) for such purposes that we already met when programming the [Memory Game](#logging-data). 
+
+Reuse the code of `SettingsContext` class for a `GameContext` class. In addition to the original functionality, it should create an `ExperimentHandler` object as a `data` attribute, so you could use it as `ctx.data` in the main script. For the context `__exit__`, you should save the results [as wide text](https://psychopy.org/api/data.html#psychopy.data.ExperimentHandler.saveAsWideText). I suggest that the log file name should be one of the settings. In the main code, log time the pressed key, time of press (relative to the game start), and the score of that press.
+
+::: {.infobox .program}
+Create `GameContext` class, use  in an updated main script in _exercise05.py_.
+:::
+
+## Exceptions
+When you are running an actual experiment, one of the worries that you have is "what happens to the data I have already logged, program crashes with an error"? Not collecting a full measurement is bad but not keeping at least partial log is even worse, as you can still use it for analysis or as a guidance for future adjustments. Python, as other languages, has special mechanisms to handle [exceptions](https://docs.python.org/3/tutorial/errors.html) that arise during the code execution.
+
+Whenever an error occurs at a run time, it [raises](https://docs.python.org/3/reference/simple_stmts.html#the-raise-statement) an exception: it creates an object of [a special class](https://docs.python.org/3/library/exceptions.html#concrete-exceptions) that contains information describe the problem. For example, a [ZeroDivisionError](https://docs.python.org/3/library/exceptions.html#ZeroDivisionError) is raised whenever you try to divide by zero, e.g., `1 / 0` (you can try this in a Jupyter notebook). A [KeyError](https://docs.python.org/3/library/exceptions.html#KeyError) is raised, if you using a dictionary with a wrong key, the code below will raise it:
+```python
+a_dict = {"a_key" : 1}
+a_dict["b_key"]
+```
+
+Similarly, an [IndexError](https://docs.python.org/3/library/exceptions.html#IndexError) is raise, if you try to use an invalid index for a list, a [NameError](https://docs.python.org/3/library/exceptions.html#NameError), if you are trying to access variable that does not exist, [AttributeError](https://docs.python.org/3/library/exceptions.html#AttributeError) when an object does not have an attribute you are trying to use, etc. 
+
+
+
+In Python, you can use `try: ... except:...finally:` operators:
+```python
+try:
+    # some code that might generate a runtime error
+except:  
+    # code that is executed if something bad happens
+finally:
+    # code that is executed both with and without exception
+    
+# code that is executed ONLY if there were no exceptions or if an exception was handled
+```
+
+In the simplest case, you need just the first two operators: `try` and `except`. Create a Jupyter notebook (that you will submit as part of the assignment) and write the code that generates a division-by-zero error but is handled via `try...except...`. In the `except` simply print out a message, so that you know that it was executed. Create another cell, copy the code and now check that the exception handling code is _not_ executed, if the error is not generated (i.e., divide by some non-zero number).
+
+Using `except:` catches _all_ exceptions. However, you can be more specific and handle exceptions based on their class.
+```python
+try:
+    # some code that might generate a runtime error
+except KeyError as key_error:  
+    # code that is executed only if KeyError exception was raised
+except ZeroDivisionError as zero_division_error:  
+    # code that is executed only if ZeroDivisionError exception was raised
+except:
+    # code that is executed if any OTHER exception is raised.
+```
+
+Implement handling for `KeyError` and `ZeroDivisionError`, they should print out different messages to check that it works. Test it generating these runtime errors with your code. What happens if you have the first two specific exception handlers but no general `except:`?
+
+So far, you generated exception but cause the errors in the code but you can raise these exceptions yourself via `raise` operator. For example, instead of dividing by zero, you can `raise ZeroDivisionError()` (note that you are create an object of the class, hence the round brackets!). Use it with you previous code, instead of an actual division by zero. Try raising other exception and see how your code handles them.
+
+
+
+::: {.infobox .program}
+Put exception handling code is cell of a Jupyter notebook.
+:::
+
+
+So far I have talked about exceptions as a way to report runtime errors. However, they can be used in a more general way to control the execution flow. You already did it when implementing [class-as-an-iterator](file:///E:/Teaching/2020WS/python-for-experimental-psychology/docs/seminar-02-05.html#duck-typiing-iterators) approach. Once you ran out of items to return, your __next__` method raised (StopIteration)[https://docs.python.org/3/library/exceptions.html#StopIteration] exception that informed the `for` loop that it has no more items to loop through. We will use that side of exception in the next section when dealing with context.
+
+## Exception within context
+`try..except...` operators provide a general mechanism for exceptions handling but what happens if an exception is raised inside a context? You can, of course, put a `try...except...` in the code itself, something you should do, if you are planning to handling specific exceptions. However, if an exception occur in the code inside the context, Python will first _exit_ the context, i.e., the `__exit__` method. Moreover, it will put the exception information into the parameters `exc_type` (a class of the exception) and `exc_value` (an object of that class). This way, you can perform a proper clean-up (save data, close window, etc.) and then handle an exception or leave it alone, so that it propagates further and can be handled by other pieces of your code or stop the execution.
+
+Here, we will use this mechanism not only for safe clean-up but also to make aborting an experiment (or a game) easy. In previous game with many rounds, you had nested loops that made aborting a game via _escape_ key press awkward. You had to check if in the inner loop, differentiate between a normal end-of-round and abort outside, etc. We can make out life much easier via a combination of a context manager and a custom exception. First, create a custom `GameAbort` class, which is a descendant of the `Exception` class. You do not need any code in it, even a constructor does not need to be redefined, so use `pass` statement for its body (you do need to have at least one line of code in the class, so `pass` will create a line but with no actual executable code). Next, you `raise GameAbort()`, if the player pressed _escape_ key (do not forget to import `GameAbort` class, so you can use it in the main script). Finally, in the __exit__ method of the `GameContext` manager, you should check whether `exc_type is GameAbort` (`exc_type` will be `None`, if no exception occurred) and, important(!), `return True` in that case:
+
+```python
+def GameContext:
+    ...
+    def __exit__(self, exc_type, exc_value, traceback):
+        ...
+        if exc_type is GameAbort:
+            return True
+  
+```
+
+That last bit `return True` informs Python that you handled the exception and all is good (not need to propagate it further). Now, you can safely abort your experiment from any code location, inside nested loops, functions, etc. In all cases, the exception will be propagated until the `__exit__` method, doing away with awkward extra checks.
+
+
+::: {.infobox .program}
+Create `GameAbort` exception class, update `GameContext` class to handle it, use this in an updated main script in _exercise06.py_.
+:::
+
+
+
 

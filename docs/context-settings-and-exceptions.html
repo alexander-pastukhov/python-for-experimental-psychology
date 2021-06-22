@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Seminar 16 Moon lander game | Python for social and experimental psychology</title>
+  <title>Seminar 19 Context, settings, and exceptions | Python for social and experimental psychology</title>
   <meta name="description" content="Material and exercises for ‘Python for social and experimental psychology’ seminar." />
   <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Seminar 16 Moon lander game | Python for social and experimental psychology" />
+  <meta property="og:title" content="Seminar 19 Context, settings, and exceptions | Python for social and experimental psychology" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Seminar 16 Moon lander game | Python for social and experimental psychology" />
+  <meta name="twitter:title" content="Seminar 19 Context, settings, and exceptions | Python for social and experimental psychology" />
   
   <meta name="twitter:description" content="Material and exercises for ‘Python for social and experimental psychology’ seminar." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="seminar-02-03.html"/>
-<link rel="next" href="seminar-02-05.html"/>
+<link rel="prev" href="seminar-02-06.html"/>
+<link rel="next" href="cross-references.html"/>
 <script src="libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -479,208 +479,246 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="seminar-02-04" class="section level1" number="16">
-<h1><span class="header-section-number">Seminar 16</span> Moon lander game</h1>
-<p>Today we will create a moon lander game. You job is simple: land your ship on the pad but do not crash it! Here is a brief video of my implementation of the game</p>
-<div style="text-align:center;">
-<video controls>
-<source src="videos/moonlander.m4v" type="video/mp4">
-</video>
-</div>
-<p>We will program it using object-oriented approach from the beginning by defining two classes: the <code>MoonLander</code> and the <code>LandingPad</code>. Here is the general outline of how we will proceed:</p>
+<div id="context-settings-and-exceptions" class="section level1" number="19">
+<h1><span class="header-section-number">Seminar 19</span> Context, settings, and exceptions</h1>
+<p>Today, we will reuse our lovely <a href="seminar-02-06.html#seminar-02-06">Guitar Hero</a> game and see how we simplify our life via having settings in a separate file. Plus we will be using context to isolate repetitive initialization / clean-up code and exceptions to control the flow. Thus, create a new folder with all the classes and the final exercise from Guitar Hero, which you will serve as a foundation for exercise 1.</p>
+<div id="context-manager" class="section level2" number="19.1">
+<h2><span class="header-section-number">19.1</span> Context manager</h2>
+<p>On the one hand, context management is a frequently used feature in Python, particularly for file operations. On the other hand, its full power is rarely is less known even though it can be very useful whenever you the context of your program is the same or very similar, as in case of the PsychoPy games that we programmed and typical PsychoPy experiments. In both cases, there is a fairly fixed structure of the program:</p>
 <ol style="list-style-type: decimal">
-<li>Create a basic PsychoPy window and main experimental loop.</li>
-<li>Define a basic <code>MoonLander</code> class with a static image and add its drawing to the main loop.</li>
-<li>Randomize position of the lander.</li>
-<li>Add gravity pull.</li>
-<li>Add vertical thruster that counter-act gravity.</li>
-<li>Add horizontal thrusters, so you can maneuver around.</li>
-<li>Define <code>LandingPad</code> class.</li>
-<li>Learn about virtual attributes and implement them for both classes.</li>
-<li>Implement landing / crashing checks.</li>
-<li>Add more runs.</li>
-<li>Limit the fuel.</li>
-</ol>
-<p>This time most of the code will be in classes, so making versions of them will be quite cumbersome. Thus, submit only the final game. I would suggest calling files <em>main.py</em> (main script), <em>moonlander.py</em> (<code>MoonLander</code> class), and <em>landingpad.py</em> (<code>LandingPad</code> class).</p>
-<div id="create-window" class="section level2" number="16.1">
-<h2><span class="header-section-number">16.1</span> Create window</h2>
-<p>Create our usual boilerplate code in <em>exercise01.py</em> (you will use the same files for classes but use versioning of the main file, it makes it easier for me to check your code). Create a PsychoPy window 640 × 480 in size. Add a main game loop with <code>gameover</code> variable that can be exited by pressing <em>escape</em>.</p>
-<div class="infobox program">
-<p>Put your code into <em>exercise01.py</em>.</p>
-</div>
-</div>
-<div id="create-moonlander-class" class="section level2" number="16.2">
-<h2><span class="header-section-number">16.2</span> Create MoonLander class</h2>
-<p>In <em>moonlander.py</em>, create a new <code>MoonLander</code> class. It should have an <code>ImageStim</code> attribute (that will be the visuals of the ship) created using <a href="material/ufo.png">ufo.png</a> image. For the moment, place it at its default location at the center. Also, implement <code>draw()</code> method that should draw all visual elements of the lander (we have one now but there will be more later on).</p>
-<p>Create an instance of <code>MoonLander</code> class in the main script and draw it in the main game loop. You should see a static picture of the ship at the center of the screen.</p>
-<div class="infobox program">
-<p>Put updated code into <em>exercise02.py</em>. Create <code>MoonLander</code> class and use it in the main game loop.</p>
-</div>
-</div>
-<div id="randomize-position" class="section level2" number="16.3">
-<h2><span class="header-section-number">16.3</span> Randomize position</h2>
-<p>Implement a new method <code>reset()</code> that resets the lander for the next round. At the moment, the only thing it should do is to randomize position of the image. Use range of -0.5..0.5 horizontally and 0.8..0.9 vertically. Call it in the constructor and test it in the main loop by calling it every time you press <em>space</em> button.</p>
-<div class="infobox program">
-<p>Put updated code into <em>exercise03.py</em>. Add <code>reset()</code> method to <code>MoonLander</code> class and use it in the main game loop.</p>
-</div>
-</div>
-<div id="gravity" class="section level2" number="16.4">
-<h2><span class="header-section-number">16.4</span> Gravity</h2>
-<p>Next we need to create a gravitational force that will pull the lander down. Create a constant <code>GRAVITY = 0.0001</code><a href="#fn34" class="footnote-ref" id="fnref34"><sup>34</sup></a> and create a new attribute <code>speed = [0, 0]</code> that is horizontal and vertical speed of the lander. Note that it should be reset to <code>(0, 0)</code> in the <code>reset()</code> method.</p>
-<p>The position of the lander (<code>self.image.pos</code>) must adjusted based on the the speed on every frame. But before that, speed itself must be adjusted based on the forces from gravity and thrusters that act upon the lander. Create a new method <code>update()</code> where you first adjust <em>vertical</em> speed based on gravity alone (we will add the effect of thrusters later) and when adjust <em>vertical</em> position based on vertical speed (we will worry about the horizontal speed, once we start working on horizontal thrusters). Call <code>update()</code> method before the <code>draw()</code> in the main loop. Your lander should fall down at accelerated rate (you can play with <code>GRAVITY</code> constant to see how it changes the speed of falling). Once it is off the screen, press space and see it go again.</p>
-<div class="infobox program">
-<p>Put updated code into <em>exercise04.py</em>. Update <code>MoonLander</code> class for the effect of gravity and use this in the main loop.</p>
-</div>
-</div>
-<div id="vertical-thurster" class="section level2" number="16.5">
-<h2><span class="header-section-number">16.5</span> Vertical thurster</h2>
-<p>PsychoPy allows you to get key presses or, using <a href="https://www.psychopy.org/api/hardware/keyboard.html">hardware.keyboard</a> to get both press and release time. Unfortunately, you get both only <em>after</em> the key was released. But in our game, the thursters must be active for as long as the player presses the key. Thus, we need to know whether a key is <em>currently</em> pressed, not that it was pressed and released at some time in the past. For this, we will use <em>pyglet</em> library (that is a backend used by PsychoPy) directly. First, in your <em>moonlander.py</em> add <code>import pyglet</code> and then include the following code inside the constructor of the class.</p>
-<div class="sourceCode" id="cb153"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb153-1"><a href="seminar-02-04.html#cb153-1" aria-hidden="true" tabindex="-1"></a><span class="co"># setting up keyboard monitoring</span></span>
-<span id="cb153-2"><a href="seminar-02-04.html#cb153-2" aria-hidden="true" tabindex="-1"></a><span class="va">self</span>.key <span class="op">=</span> pyglet.window.key</span>
-<span id="cb153-3"><a href="seminar-02-04.html#cb153-3" aria-hidden="true" tabindex="-1"></a><span class="va">self</span>.keyboard <span class="op">=</span> <span class="va">self</span>.key.KeyStateHandler()</span>
-<span id="cb153-4"><a href="seminar-02-04.html#cb153-4" aria-hidden="true" tabindex="-1"></a>win.winHandle.push_handlers(<span class="va">self</span>.keyboard)</span></code></pre></div>
-<p>This installs a “handler” that monitors the state of the keyboard. Now, you can read out the state of, say, <em>down arrow</em> key as<code>self.keyboard[self.key.DOWN]</code> (<code>True</code> if pressed, <code>False</code> otherwise). We will use <code>DOWN</code> for the vertical thruster and <code>LEFT</code> and <code>RIGHT</code> for the horizontal ones.</p>
-<p>Define a <code>VERTICAL_ACC</code> to be twice the gravity (but you can use some other number, of course) and update the <code>update()</code><a href="#fn35" class="footnote-ref" id="fnref35"><sup>35</sup></a>, so that the total vertical acceleration is <code>VERTICAL_ACC + GRAVITY</code> if the the user is pressing <em>down</em> key (use <code>self.keyboard</code> and <code>self.key</code> to figure that out) but <code>GRAVITY</code> alone, if not.</p>
-<p>Test you that vertical thruster works!</p>
-<div class="infobox program">
-<p>Put updated code into <em>exercise05.py</em>. Update <code>MoonLander</code> class for the counter-effect of a vertical thruster.</p>
-</div>
-</div>
-<div id="horizontal-thursters" class="section level2" number="16.6">
-<h2><span class="header-section-number">16.6</span> Horizontal thursters</h2>
-<p>Now implement the same logic, computing acceleration, speed, and position but for horizontal thrusters (define <code>HORIZONTAL_ACC</code>, decide on its value yourself). Remember, the <em>right</em> thruster pushes the lander to the <em>left</em> and vice versa! Assume that only one of the keys, <em>left</em> or <em>right</em>, can be pressed at a time. Test it by flying around!</p>
-<div class="infobox program">
-<p>Put updated code into <em>exercise06.py</em>. Add horizontal thrusters to <code>MoonLander</code>.</p>
-</div>
-</div>
-<div id="landing-pad-visuals" class="section level2" number="16.7">
-<h2><span class="header-section-number">16.7</span> Landing pad: visuals</h2>
-<p>The purpose of the game is to land on a landing pad. A landing pad is just a rectangle with some additional methods and properties. So it stands to reason to make it a descendant of the <code>visual.Rect</code> class. This way, the original class will do all the heavy lifting and provide properties like <code>size</code> and <code>pos</code> and we can concentrate on the added value. Unfortunately, for some technical reason I have not figured out yet, this does not work for shape classes like <code>Rect</code> or <code>Circle</code>. It <em>does</em> work for classes like <code>ImageStim</code> and we will use this opportunity when we program out next game.</p>
-<p>Create a new file <em>landing_pad.py</em> and a new class <code>LandingPad</code>. In the constructor, create a rectangle and store it in attribute (you pick the name). It should be <code>0.5</code> units wide and located at the bottom of the window but at a random position within the window horizontally. Pick the fill and line colors that you like. The only other method the class needs is <code>draw()</code>.</p>
-<p>In the main code, create an object of class <code>LandingPad</code> and draw it in the main loop, along with the lander itself.</p>
-<div class="infobox program">
-<p>Put updated code into <em>exercise07.py</em>. Create <code>LandingPad</code> class and use it in the main loop.</p>
-</div>
-</div>
-<div id="computing-edges-of-game-objects" class="section level2" number="16.8">
-<h2><span class="header-section-number">16.8</span> Computing edges of game objects</h2>
-<p>The aim of the game is a soft touchdown on a landing pad. For this, we need to know where the <em>top</em> of the landing pad is, as well as where the <em>bottom</em> of the lander is and where <em>left</em> and <em>right</em> limits of each object are. Let us think about <em>bottom</em> of the lander first, as the rest are very similar.</p>
-<p>We do not have information about it <em>directly</em>. We have the vertical position of the lander in <code>self.image.pos[1]</code> (I assume here that the visuals attribute is called image) and its height in <code>self.image.size[1]</code>. From this, it is easy to compute the bottom edge (but remember that position is about the <em>center</em> of the rectangle). Accordingly, you could create a method called <code>bottom()</code> that would return the computed value when it is called (e.g., <code>lander.bottom()</code>).</p>
-<div class="infobox program">
-<p>Implement <code>bottom()</code> method for the <code>MoonLander</code> class.</p>
-</div>
-</div>
-<div id="getter-setter" class="section level2" number="16.9">
-<h2><span class="header-section-number">16.9</span> Virtual attributes via getters and setters</h2>
-<p>Our approach of using <code>lander.bottom()</code> works but it is <em>semantically</em> inconsistent. Calling methods is about manipulating objects, e.g., drawing them, updating them, comparing them. However, <code>bottom</code> is, effectively, an <em>attribute</em> of an object, like its position or size. We <em>could</em> create and compute a <code>bottom</code> attribute inside the constructor, solving the problem of semantics, as now you could write <code>lander.bottom</code>. Note that as the lander moves all of its edge attributes (<code>bottom</code>, <code>left</code> and <code>right</code>) need to be recomputed after every update. This is unavoidable but a <em>real</em> attribute approach still creates another problem: What if someone <em>changes</em> it? In that case, its value will not be correct, as <code>bottom</code> value depends on both position and size, so changing it without a corresponding change in those two attributes makes no sense! And it is really hard to decide whether change in the <code>bottom</code> should mean a change in position, or size, or, perhaps, both? Thus, ideally, it should be a read-only attribute.</p>
-<p>For cases like these, Python has special <em>decorators</em><a href="#fn36" class="footnote-ref" id="fnref36"><sup>36</sup></a>: <code>@property</code> and <code>@&lt;name&gt;.setter</code>. The former one decorates a method that allows you to <em>get</em> an attribute’s value and, typically, is called a “getter”. The latter one, is for a “setter” method that <em>sets</em> a new value to an attribute. The idea is to isolate an actual attribute value from the outside influence. It is particularly helpful, if you need to control whether a new value of an attribute is a valid one, needs to converted, etc. For example, <code>color</code> attribute of the rectangle stimulus uses this approach, which is why it can take RGB triplets, hexadecimal codes, or plain color names as a value and set the color correctly.</p>
-<p>Here is a sketch of how it could work but note that today, we will only use the <em>getter</em> bit. To have a virtual attribute for <code>color</code>, one typically creates an <em>internal</em> attribute with almost the same name, e.g., <code>_color</code> or <code>__color</code> (see below for the difference). The value is stored and read from that internal attribute by getter and setter methods:</p>
-<div class="sourceCode" id="cb154"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb154-1"><a href="seminar-02-04.html#cb154-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ExampleClass:</span>
-<span id="cb154-2"><a href="seminar-02-04.html#cb154-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb154-3"><a href="seminar-02-04.html#cb154-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
-<span id="cb154-4"><a href="seminar-02-04.html#cb154-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.__color <span class="op">=</span> <span class="st">&quot;red&quot;</span></span>
-<span id="cb154-5"><a href="seminar-02-04.html#cb154-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb154-6"><a href="seminar-02-04.html#cb154-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">@property</span></span>
-<span id="cb154-7"><a href="seminar-02-04.html#cb154-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> color(<span class="va">self</span>):</span>
-<span id="cb154-8"><a href="seminar-02-04.html#cb154-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
-<span id="cb154-9"><a href="seminar-02-04.html#cb154-9" aria-hidden="true" tabindex="-1"></a><span class="co">    This is a getter method for virtual color</span></span>
-<span id="cb154-10"><a href="seminar-02-04.html#cb154-10" aria-hidden="true" tabindex="-1"></a><span class="co">    attribute.</span></span>
-<span id="cb154-11"><a href="seminar-02-04.html#cb154-11" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
-<span id="cb154-12"><a href="seminar-02-04.html#cb154-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Here, we simply return the value. But we could </span></span>
-<span id="cb154-13"><a href="seminar-02-04.html#cb154-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compute it from some other attribute(s) instead.</span></span>
-<span id="cb154-14"><a href="seminar-02-04.html#cb154-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">self</span>.__color</span>
-<span id="cb154-15"><a href="seminar-02-04.html#cb154-15" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb154-16"><a href="seminar-02-04.html#cb154-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">@color.setter</span> <span class="co"># not the most elegant syntax, IMHO</span></span>
-<span id="cb154-17"><a href="seminar-02-04.html#cb154-17" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> color(<span class="va">self</span>, newvalue):</span>
-<span id="cb154-18"><a href="seminar-02-04.html#cb154-18" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
-<span id="cb154-19"><a href="seminar-02-04.html#cb154-19" aria-hidden="true" tabindex="-1"></a><span class="co">    Note that the setter name has THE SAME name as the getter!</span></span>
-<span id="cb154-20"><a href="seminar-02-04.html#cb154-20" aria-hidden="true" tabindex="-1"></a><span class="co">    It sets a new value and does not return anything.</span></span>
-<span id="cb154-21"><a href="seminar-02-04.html#cb154-21" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
-<span id="cb154-22"><a href="seminar-02-04.html#cb154-22" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb154-23"><a href="seminar-02-04.html#cb154-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Here, you can have checks, conversion, </span></span>
-<span id="cb154-24"><a href="seminar-02-04.html#cb154-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># additional changes to other attributes, etc.</span></span>
-<span id="cb154-25"><a href="seminar-02-04.html#cb154-25" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.__color <span class="op">=</span> newvalue</span>
-<span id="cb154-26"><a href="seminar-02-04.html#cb154-26" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb154-27"><a href="seminar-02-04.html#cb154-27" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb154-28"><a href="seminar-02-04.html#cb154-28" aria-hidden="true" tabindex="-1"></a>example <span class="op">=</span> ExampleClass()</span>
-<span id="cb154-29"><a href="seminar-02-04.html#cb154-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb154-30"><a href="seminar-02-04.html#cb154-30" aria-hidden="true" tabindex="-1"></a><span class="co"># get the value, note the lack of () after color</span></span>
-<span id="cb154-31"><a href="seminar-02-04.html#cb154-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(example.color)</span>
-<span id="cb154-32"><a href="seminar-02-04.html#cb154-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb154-33"><a href="seminar-02-04.html#cb154-33" aria-hidden="true" tabindex="-1"></a><span class="co"># set the value</span></span>
-<span id="cb154-34"><a href="seminar-02-04.html#cb154-34" aria-hidden="true" tabindex="-1"></a>example.color <span class="op">=</span> <span class="st">&quot;blue&quot;</span></span></code></pre></div>
-<p>Note that there is no <em>actual</em> attribute <code>color</code><a href="#fn37" class="footnote-ref" id="fnref37"><sup>37</sup></a>, yet, our code works as if it does exist.</p>
-<p>There is another twist to the story. If you only define the getter <code>@property</code> method but no setter method, your property is read-only<a href="#fn38" class="footnote-ref" id="fnref38"><sup>38</sup></a>! And this exactly what we wanted. Turning our <code>bottom()</code> method into a getter of an attribute is as easy as adding the <code>@property</code> decorator above it. After that, we can use it as a read-only attribute <code>lander.bottom</code>. Do this and also create similar read-only attributes for <code>top</code>, <code>left</code>, and <code>right</code> of the pad and for <code>left</code>, and <code>right</code> of the lander class.</p>
-<div class="infobox program">
-<p>Implement virtual properties for <code>MoonLander</code> and <code>LandingPad</code> classes.</p>
-</div>
-</div>
-<div id="access-restrictions" class="section level2" number="16.10">
-<h2><span class="header-section-number">16.10</span> Access restrictions</h2>
-<p>In the example on getter/setter methods, I used <code>__color</code> name with <em>two</em> leading underscores. This is a Python way to make things (almost) private, that is, invisible from outside. If you copy-paste the class code from above and try to access the attribute directly via <code>example.__color</code>, you will get an error "‘ExampleClass’ object has no attribute ’__color’". However, as I wrote, it is <em>almost</em> private, so you still can access it! The code format is <code>object._&lt;ClassName&gt;&lt;hidden attribute name&gt;</code>, so in our case <code>example._ExampleClass__color</code><a href="#fn39" class="footnote-ref" id="fnref39"><sup>39</sup></a>. However, this is a last resort sort of thing that you should use only if you absolutely must access that attribute or method and, hopefully, know what you doing.</p>
-<p>You can also come across attributes with a <em>single</em> leading underscore in the name, e.g. <code>_color</code>. These are not private and are fully visible. However, the leading underscore <em>hints</em> that this attribute or method should be <em>considered</em> private. So, if you see an attribute like <code>_color</code>, you should pretend that you know not of its existence and, therefore, you never read or modify it directly. Of course, this is only an <em>agreement</em>, so you can always ignore it and work with that attribute directly<a href="#fn40" class="footnote-ref" id="fnref40"><sup>40</sup></a>. However, this almost certainly will break the code in unexpected and hard-to-trace ways.</p>
-</div>
-<div id="landing" class="section level2" number="16.11">
-<h2><span class="header-section-number">16.11</span> Landing</h2>
-<p>We should check for landing whenever the bottom edge of the lander is at or below the top edge of the landing pad. A successful landing must satisfy several conditions:</p>
+<li>Initialization
 <ul>
-<li>The lander must be within the limits of the lander pad horizontally.</li>
-<li>The vertical speed must be zero or negative (otherwise, the lander flies up) but below a certain threshold that we will define as a constant <code>VERTICAL_SPEED_THRESHOLD = 0.05</code>.</li>
-<li>The absolute horizontal speed must be below a certain threshold, also defined as a constant <code>HORIZONTAL_SPEED_THRESHOLD = 0.05</code>.</li>
-</ul>
-<p>If <em>any</em> of these three conditions are false, the lander has crashed. Either way, the game is over, so you should record the outcome (whether the landing was successful) and set <code>gameover</code> to <code>False</code>. After the loop, inform the player about the outcome. Draw all game objects plus the message about the outcome (e.g., “You did it!” / “Oh, no!” or something else) and wait for a space key press.</p>
-<p>The condition above will be quite long, so fitting it into a single line will make it hard to read. In Python, you can split the line by putting <code>\</code> at the end of it. So here, a multiline if statement will look as follows:</p>
-<div class="sourceCode" id="cb155"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb155-1"><a href="seminar-02-04.html#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> lander_is_within_horizontal_limits <span class="kw">and</span> <span class="op">\</span></span>
-<span id="cb155-2"><a href="seminar-02-04.html#cb155-2" aria-hidden="true" tabindex="-1"></a>   lander_vertical_speed_is_good <span class="kw">and</span> <span class="op">\</span></span>
-<span id="cb155-3"><a href="seminar-02-04.html#cb155-3" aria-hidden="true" tabindex="-1"></a>   lander_horizontal_speed_is_good:</span>
-<span id="cb155-4"><a href="seminar-02-04.html#cb155-4" aria-hidden="true" tabindex="-1"></a>   ...</span>
-<span id="cb155-5"><a href="seminar-02-04.html#cb155-5" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb155-6"><a href="seminar-02-04.html#cb155-6" aria-hidden="true" tabindex="-1"></a>  ...</span></code></pre></div>
+<li>define experimental settings by either reading them from an <a href="context-settings-and-exceptions.html#settings-files">external file</a>, as you will learn below, or creating constants (less flexible but what we have been doing so far)</li>
+<li>create PsychoPy window, logger for experimental results, mouse (if required), initialize special devices such as response box, eye tracker, etc.</li>
+</ul></li>
+<li>Actual experiment</li>
+<li>Saving and cleaning up
+<ul>
+<li>save data logs</li>
+<li>if required, close connection to special devices such as response boxes, eye tracker, etc.</li>
+<li>close PsychoPy window</li>
+</ul></li>
+</ol>
+<p>If you look at your code, you will realized that steps 1 and 3 remain fairly the same throughout all the games that we programmed. Thus, we will create a context manager class, which you can always reuse, that will hide away the boilerplate code.</p>
+<p>Here is an example of how use of a context manager helps when working with files (something, we will need to use later for our settings files). First, how it works <em>without</em> a context manager: you open a file and assign the object to variable, you work with it, you close it. The latter is important to ensure that information was fully written into it and that you do not lock for file.</p>
+<div class="sourceCode" id="cb179"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb179-1"><a href="context-settings-and-exceptions.html#cb179-1" aria-hidden="true" tabindex="-1"></a><span class="bu">file</span> <span class="op">=</span> <span class="bu">open</span>(<span class="st">&quot;somefile.txt&quot;</span>, <span class="st">&quot;r&quot;</span>)</span>
+<span id="cb179-2"><a href="context-settings-and-exceptions.html#cb179-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ... do something with the file, such as reading the entire file into a single variable</span></span>
+<span id="cb179-3"><a href="context-settings-and-exceptions.html#cb179-3" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> <span class="bu">file</span>.read()</span>
+<span id="cb179-4"><a href="context-settings-and-exceptions.html#cb179-4" aria-hidden="true" tabindex="-1"></a>close(<span class="bu">file</span>)</span></code></pre></div>
+<p>A better way is to use a context manager that file class implements via <code>with ... as ...</code> statement.</p>
+<div class="sourceCode" id="cb180"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb180-1"><a href="context-settings-and-exceptions.html#cb180-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">&quot;somefile.txt&quot;</span>, <span class="st">&quot;r&quot;</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb180-2"><a href="context-settings-and-exceptions.html#cb180-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">file</span>.read()</span></code></pre></div>
+<p>Note that now the <code>file.read()</code> is inside of the <code>with</code> block and there is no <code>file.close()</code> call. The latter is evoked automatically, once you run all the code inside the <code>with</code> block and exit it. Although for this example the difference is minimal — a different way to assign a value to a variable and explicit vs. implicit file closing — the second variant takes care of cleaning up, ensures that you do not forget about it, and allows you to concentrate on the important bits.</p>
+<p>Here is how it works behind the scenes. A context manager is a class that implements two special methods <code>__enter__</code> and <code>__exit__</code> (so, this is a classic Python <a href="duck-typing">duck typing</a>). The former creates and returns a context, which is whatever attribute or value you require, wheres the former performs cleaning up that is necessary before exiting the context. Here is how we would implement a limited file context manager by ourselves:</p>
+<div class="sourceCode" id="cb181"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb181-1"><a href="context-settings-and-exceptions.html#cb181-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> FileManager():</span>
+<span id="cb181-2"><a href="context-settings-and-exceptions.html#cb181-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, filename, mode):</span>
+<span id="cb181-3"><a href="context-settings-and-exceptions.html#cb181-3" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb181-4"><a href="context-settings-and-exceptions.html#cb181-4" aria-hidden="true" tabindex="-1"></a><span class="co">        Stores the settings for use in __enter__</span></span>
+<span id="cb181-5"><a href="context-settings-and-exceptions.html#cb181-5" aria-hidden="true" tabindex="-1"></a><span class="co">        </span></span>
+<span id="cb181-6"><a href="context-settings-and-exceptions.html#cb181-6" aria-hidden="true" tabindex="-1"></a><span class="co">        Parameters</span></span>
+<span id="cb181-7"><a href="context-settings-and-exceptions.html#cb181-7" aria-hidden="true" tabindex="-1"></a><span class="co">        ----------</span></span>
+<span id="cb181-8"><a href="context-settings-and-exceptions.html#cb181-8" aria-hidden="true" tabindex="-1"></a><span class="co">        filename : str</span></span>
+<span id="cb181-9"><a href="context-settings-and-exceptions.html#cb181-9" aria-hidden="true" tabindex="-1"></a><span class="co">        mode : str</span></span>
+<span id="cb181-10"><a href="context-settings-and-exceptions.html#cb181-10" aria-hidden="true" tabindex="-1"></a><span class="co">        &quot;&quot;&quot;</span></span>
+<span id="cb181-11"><a href="context-settings-and-exceptions.html#cb181-11" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.<span class="bu">file</span> <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb181-12"><a href="context-settings-and-exceptions.html#cb181-12" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.filename <span class="op">=</span> filename</span>
+<span id="cb181-13"><a href="context-settings-and-exceptions.html#cb181-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.mode <span class="op">=</span> mode</span>
+<span id="cb181-14"><a href="context-settings-and-exceptions.html#cb181-14" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb181-15"><a href="context-settings-and-exceptions.html#cb181-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__enter__</span>(<span class="va">self</span>):</span>
+<span id="cb181-16"><a href="context-settings-and-exceptions.html#cb181-16" aria-hidden="true" tabindex="-1"></a>      <span class="co">&quot;&quot;&quot; </span></span>
+<span id="cb181-17"><a href="context-settings-and-exceptions.html#cb181-17" aria-hidden="true" tabindex="-1"></a><span class="co">      What we need to do to create context:</span></span>
+<span id="cb181-18"><a href="context-settings-and-exceptions.html#cb181-18" aria-hidden="true" tabindex="-1"></a><span class="co">        * Open the file and returns the object.</span></span>
+<span id="cb181-19"><a href="context-settings-and-exceptions.html#cb181-19" aria-hidden="true" tabindex="-1"></a><span class="co">      </span></span>
+<span id="cb181-20"><a href="context-settings-and-exceptions.html#cb181-20" aria-hidden="true" tabindex="-1"></a><span class="co">      Returns</span></span>
+<span id="cb181-21"><a href="context-settings-and-exceptions.html#cb181-21" aria-hidden="true" tabindex="-1"></a><span class="co">      ----------</span></span>
+<span id="cb181-22"><a href="context-settings-and-exceptions.html#cb181-22" aria-hidden="true" tabindex="-1"></a><span class="co">      File object</span></span>
+<span id="cb181-23"><a href="context-settings-and-exceptions.html#cb181-23" aria-hidden="true" tabindex="-1"></a><span class="co">      &quot;&quot;&quot;</span></span>
+<span id="cb181-24"><a href="context-settings-and-exceptions.html#cb181-24" aria-hidden="true" tabindex="-1"></a>      <span class="va">self</span>.<span class="bu">file</span> <span class="op">=</span> <span class="bu">open</span>(<span class="va">self</span>.filename, <span class="va">self</span>.mode)</span>
+<span id="cb181-25"><a href="context-settings-and-exceptions.html#cb181-25" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="va">self</span>.<span class="bu">file</span></span>
+<span id="cb181-26"><a href="context-settings-and-exceptions.html#cb181-26" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb181-27"><a href="context-settings-and-exceptions.html#cb181-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__exit__</span>(<span class="va">self</span>, exc_type, exc_value, traceback):</span>
+<span id="cb181-28"><a href="context-settings-and-exceptions.html#cb181-28" aria-hidden="true" tabindex="-1"></a>      <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb181-29"><a href="context-settings-and-exceptions.html#cb181-29" aria-hidden="true" tabindex="-1"></a><span class="co">      What we need to do before destroying the context:</span></span>
+<span id="cb181-30"><a href="context-settings-and-exceptions.html#cb181-30" aria-hidden="true" tabindex="-1"></a><span class="co">        * Close the file before we exit the context.</span></span>
+<span id="cb181-31"><a href="context-settings-and-exceptions.html#cb181-31" aria-hidden="true" tabindex="-1"></a><span class="co">      &quot;&quot;&quot;</span></span>
+<span id="cb181-32"><a href="context-settings-and-exceptions.html#cb181-32" aria-hidden="true" tabindex="-1"></a>      close(<span class="va">self</span>.<span class="bu">file</span>)</span>
+<span id="cb181-33"><a href="context-settings-and-exceptions.html#cb181-33" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb181-34"><a href="context-settings-and-exceptions.html#cb181-34" aria-hidden="true" tabindex="-1"></a><span class="co"># and now we use it!</span></span>
+<span id="cb181-35"><a href="context-settings-and-exceptions.html#cb181-35" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> FileManager(<span class="st">&quot;somefile.txt&quot;</span>, <span class="st">&quot;r&quot;</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb181-36"><a href="context-settings-and-exceptions.html#cb181-36" aria-hidden="true" tabindex="-1"></a>    <span class="bu">file</span>.read()</span></code></pre></div>
+<p>Note that <code>__exit__</code> method has extra parameters <code>exc_type</code>, <code>exc_value</code>, and <code>traceback</code>. They will be relevant for exception handling later on but for now, you can ignore them.</p>
+<p>Now is your turn! Create a <code>WindowContext</code> class (in a separate file, of course) that will create a PsychoPy Window object of a given size, which is passed to the constructor, and <a href="https://psychopy.org/api/visual/window.html#psychopy.visual.Window.close">closes</a> when the code exists the context. For now, you will need one attribute to store information about the requested size and one attribute for PsychoPy Window itself (hint, use <code>win</code>as an attribute name). There will be a small but important difference relative to <code>FileManager</code> class in the example: There will be other objects that are context-relevant (settings, logging class) that we will add later on, so instead of returning just the window object, the <strong>enter</strong> it should return the reference to the object itself (reminder, reference to the current object is always in the <code>self</code> parameter of a method). Then, you can use it to create a 640-by-480 window (use whatever window size you need of course).</p>
+<div class="sourceCode" id="cb182"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb182-1"><a href="context-settings-and-exceptions.html#cb182-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> WindowContext((<span class="dv">640</span>, <span class="dv">480</span>)) <span class="im">as</span> ctx:</span>
+<span id="cb182-2"><a href="context-settings-and-exceptions.html#cb182-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># your usual code inside but</span></span>
+<span id="cb182-3"><a href="context-settings-and-exceptions.html#cb182-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># PsychoPy window is ctx.win</span></span>
+<span id="cb182-4"><a href="context-settings-and-exceptions.html#cb182-4" aria-hidden="true" tabindex="-1"></a>  ctx.win.flip()</span></code></pre></div>
 <div class="infobox program">
-<p>Put updated code into <em>exercise08.py</em>. Implement landing checks.</p>
+<p>Create <code>WindowContext</code> class and use it in <em>exercise01.py</em>.</p>
 </div>
 </div>
-<div id="more-rounds-1" class="section level2" number="16.12">
-<h2><span class="header-section-number">16.12</span> More rounds</h2>
-<p>Extend the game to have more than one round after the player either landed or crashed. Remember to reset the position of the lander before each new round. You can also add a <code>reset()</code> method to the landing pad as well, randomizing it horizontal position. Importantly, <em>escape</em> key should quit the game, not just the round, and there should be no “success”/“failure” message in that case. Think how you would implement this.</p>
+<div id="settings-files" class="section level2" number="19.2">
+<h2><span class="header-section-number">19.2</span> Settings file formats</h2>
+<p>So far, we either hard-coded specific values or defined them as constants (a better of these two approaches). However, this means that if you want to run your game with different settings, you need to modify the program itself. And if you want to have two versions of the game (two experimental conditions), you would need to have two programs with all the problems of maintaining virtually identical code in several places at once.</p>
+<p>A better approach is to have separate files with settings, so you can keep the code constant and alter specific parameters by specifying which settings file the program should use. This is helpful even you plan to have a single set of setting as it separates code from constants, puts the latter all in one place and makes easier to edit and check them. There are multiple formats for settings files: XML, INI, JSON, YALM, etc.</p>
+<div id="xml" class="section level3" number="19.2.1">
+<h3><span class="header-section-number">19.2.1</span> XML</h3>
+<p><a href="https://en.wikipedia.org/wiki/XML">XML</a> — an Extensible Markup Language — looks similar to HTML (HyperText Markup Language). Experiments designed using PsychoPy Builder interface are stored using XML files but with <a href="https://www.psychopy.org/psyexp.html">.psyexp extension</a>. A settings file for Guitar Hero in XML could look like this</p>
+<div class="sourceCode" id="cb183"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb183-1"><a href="context-settings-and-exceptions.html#cb183-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;Target&gt;</span></span>
+<span id="cb183-2"><a href="context-settings-and-exceptions.html#cb183-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;width&gt;</span>0.4<span class="kw">&lt;/width&gt;</span></span>
+<span id="cb183-3"><a href="context-settings-and-exceptions.html#cb183-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;height&gt;</span>0.1<span class="kw">&lt;/height&gt;</span></span>
+<span id="cb183-4"><a href="context-settings-and-exceptions.html#cb183-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;locations&gt;</span></span>
+<span id="cb183-5"><a href="context-settings-and-exceptions.html#cb183-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;location&gt;</span>-0.5<span class="kw">&lt;/location&gt;</span></span>
+<span id="cb183-6"><a href="context-settings-and-exceptions.html#cb183-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;location&gt;</span>0<span class="kw">&lt;/location&gt;</span></span>
+<span id="cb183-7"><a href="context-settings-and-exceptions.html#cb183-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;location&gt;</span>0.5<span class="kw">&lt;/location&gt;</span></span>
+<span id="cb183-8"><a href="context-settings-and-exceptions.html#cb183-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;/locations&gt;</span></span>
+<span id="cb183-9"><a href="context-settings-and-exceptions.html#cb183-9" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/Target&gt;</span></span></code></pre></div>
+<p>The advantage of XML is that it is very flexible yet structured and you can use <a href="https://docs.python.org/3/library/xml.html">native Python interface</a> to work with them. However, XML is not easy for humans to read, it is overpowered for our purposes of having a simple set of unique constants and its power means that using it is fairly cumbersome.</p>
+<div class="sourceCode" id="cb184"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb184-1"><a href="context-settings-and-exceptions.html#cb184-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> xml.dom <span class="im">import</span> minidom</span>
+<span id="cb184-2"><a href="context-settings-and-exceptions.html#cb184-2" aria-hidden="true" tabindex="-1"></a>settings <span class="op">=</span> minidom.parse(<span class="st">&#39;test.xml&#39;</span>)</span>
+<span id="cb184-3"><a href="context-settings-and-exceptions.html#cb184-3" aria-hidden="true" tabindex="-1"></a>settings.getElementsByTagName(<span class="st">&quot;target&quot;</span>)[<span class="dv">0</span>].getElementsByTagName(<span class="st">&quot;width&quot;</span>)[<span class="dv">0</span>].firstChild.data <span class="co"># this will give you string &quot;0.4&quot;</span></span></code></pre></div>
+</div>
+<div id="ini" class="section level3" number="19.2.2">
+<h3><span class="header-section-number">19.2.2</span> INI</h3>
+<p>This is a format with a structure similar to that found in MS Windows INI files.</p>
+<div class="sourceCode" id="cb185"><pre class="sourceCode ini"><code class="sourceCode ini"><span id="cb185-1"><a href="context-settings-and-exceptions.html#cb185-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[Target]</span></span>
+<span id="cb185-2"><a href="context-settings-and-exceptions.html#cb185-2" aria-hidden="true" tabindex="-1"></a><span class="dt">width </span><span class="ot">=</span><span class="st"> </span><span class="fl">0.4</span></span>
+<span id="cb185-3"><a href="context-settings-and-exceptions.html#cb185-3" aria-hidden="true" tabindex="-1"></a><span class="dt">height </span><span class="ot">=</span><span class="st"> </span><span class="fl">0.1</span></span>
+<span id="cb185-4"><a href="context-settings-and-exceptions.html#cb185-4" aria-hidden="true" tabindex="-1"></a><span class="dt">locations </span><span class="ot">=</span><span class="st"> -</span><span class="fl">0.5</span><span class="st">, </span><span class="dv">0</span><span class="st">, </span><span class="fl">0.5</span></span></code></pre></div>
+<p>As you can see it is easier to read and Python has a special <a href="https://docs.python.org/3/library/configparser.html">configparser</a> library to work with them. The object you get is, effectively, a dictionary with additional methods and attributes. Note, however, that <code>ConfigParser</code> does not try to guess the type of data, so all values are stored as <em>strings</em> and it is your job to convert them to whatever type you need, e.g. integer, list, etc.</p>
+<div class="sourceCode" id="cb186"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb186-1"><a href="context-settings-and-exceptions.html#cb186-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> configparser</span>
+<span id="cb186-2"><a href="context-settings-and-exceptions.html#cb186-2" aria-hidden="true" tabindex="-1"></a>settings <span class="op">=</span> configparser.ConfigParser()</span>
+<span id="cb186-3"><a href="context-settings-and-exceptions.html#cb186-3" aria-hidden="true" tabindex="-1"></a>settings.read(<span class="st">&#39;settings.ini&#39;</span>)</span>
+<span id="cb186-4"><a href="context-settings-and-exceptions.html#cb186-4" aria-hidden="true" tabindex="-1"></a>settings[<span class="st">&quot;Target&quot;</span>][<span class="st">&quot;width&quot;</span>] <span class="co"># this will give you a string &#39;0.4&#39;</span></span></code></pre></div>
+</div>
+<div id="json" class="section level3" number="19.2.3">
+<h3><span class="header-section-number">19.2.3</span> JSON</h3>
+<p><a href="https://en.wikipedia.org/wiki/JSON">JSON</a> (JavaScript Object Notation) is a popular format for web applications that use it to exchange data between server and client.</p>
+<div class="sourceCode" id="cb187"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb187-1"><a href="context-settings-and-exceptions.html#cb187-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb187-2"><a href="context-settings-and-exceptions.html#cb187-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;Target&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb187-3"><a href="context-settings-and-exceptions.html#cb187-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;width&quot;</span><span class="fu">:</span> <span class="fl">0.4</span><span class="fu">,</span></span>
+<span id="cb187-4"><a href="context-settings-and-exceptions.html#cb187-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;height&quot;</span><span class="fu">:</span> <span class="fl">0.1</span><span class="fu">,</span></span>
+<span id="cb187-5"><a href="context-settings-and-exceptions.html#cb187-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;locations&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="fl">-0.5</span><span class="ot">,</span> <span class="dv">0</span><span class="ot">,</span> <span class="fl">0.5</span><span class="ot">]</span></span>
+<span id="cb187-6"><a href="context-settings-and-exceptions.html#cb187-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb187-7"><a href="context-settings-and-exceptions.html#cb187-7" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<p>You can parse any <em>string</em> with JSON format into a dictionary in Python using <a href="https://docs.python.org/3/library/json.html">json</a> module. Its advantage over INI files is that JSON explicitly specifies data type, so it converts it automatically. Note that unlike configparse, json module does not work with files direction, so you need to open it manually.</p>
+<div class="sourceCode" id="cb188"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb188-1"><a href="context-settings-and-exceptions.html#cb188-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb188-2"><a href="context-settings-and-exceptions.html#cb188-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">&#39;settings.json&#39;</span>) <span class="im">as</span> json_file:</span>
+<span id="cb188-3"><a href="context-settings-and-exceptions.html#cb188-3" aria-hidden="true" tabindex="-1"></a>    settings <span class="op">=</span> json.load(json_file)</span>
+<span id="cb188-4"><a href="context-settings-and-exceptions.html#cb188-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb188-5"><a href="context-settings-and-exceptions.html#cb188-5" aria-hidden="true" tabindex="-1"></a>settings[<span class="st">&quot;Target&quot;</span>][<span class="st">&quot;width&quot;</span>] <span class="co"># this will give a float number 0.4</span></span></code></pre></div>
+</div>
+<div id="yaml" class="section level3" number="19.2.4">
+<h3><span class="header-section-number">19.2.4</span> YAML</h3>
+<p><a href="https://en.wikipedia.org/wiki/YAML">YAML</a> (YAML Ain’t Markup Language, rhymes with camel) is very similar to JSON but its config files are more human-readable. It has fewer special symbols and brackets but, as in Python, you must watch the indentations as they determine the hierarchy.</p>
+<div class="sourceCode" id="cb189"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb189-1"><a href="context-settings-and-exceptions.html#cb189-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Target</span><span class="kw">:</span></span>
+<span id="cb189-2"><a href="context-settings-and-exceptions.html#cb189-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">width </span><span class="kw">:</span><span class="at"> </span><span class="fl">0.4</span></span>
+<span id="cb189-3"><a href="context-settings-and-exceptions.html#cb189-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">height </span><span class="kw">:</span><span class="at"> </span><span class="fl">0.1</span></span>
+<span id="cb189-4"><a href="context-settings-and-exceptions.html#cb189-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">locations </span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="fl">-0.5</span><span class="kw">,</span><span class="at"> </span><span class="dv">0</span><span class="kw">,</span><span class="at"> </span><span class="fl">0.5</span><span class="kw">]</span></span></code></pre></div>
+<p>You will need to install a third-party library <a href="https://pyyaml.org/">pyyaml</a> to work with YAML files. Otherwise, you get the same dictionary as for the JSON</p>
+<div class="sourceCode" id="cb190"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb190-1"><a href="context-settings-and-exceptions.html#cb190-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> yaml</span>
+<span id="cb190-2"><a href="context-settings-and-exceptions.html#cb190-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">&quot;settings.yaml&quot;</span>) <span class="im">as</span> yaml_stream:</span>
+<span id="cb190-3"><a href="context-settings-and-exceptions.html#cb190-3" aria-hidden="true" tabindex="-1"></a>    settings <span class="op">=</span> yaml.load(yaml_stream)</span>
+<span id="cb190-4"><a href="context-settings-and-exceptions.html#cb190-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb190-5"><a href="context-settings-and-exceptions.html#cb190-5" aria-hidden="true" tabindex="-1"></a>settings[<span class="st">&quot;Target&quot;</span>][<span class="st">&quot;width&quot;</span>] <span class="co"># this will give a float number 0.4</span></span></code></pre></div>
+</div>
+</div>
+<div id="settings-file-for-guitar-hero" class="section level2" number="19.3">
+<h2><span class="header-section-number">19.3</span> Settings file for Guitar Hero</h2>
+<p>My personal preference is for <a href="context-settings-and-exceptions.html#yaml">yaml</a>. However, it requires a separate library, so you could use <a href="context-settings-and-exceptions.html#json">json</a> file instead. Create a settings file and call it <em>settings.json</em> (or use your imagination and come up with a better name). You will add more settings later on but for now just define a window size as</p>
+<div class="sourceCode" id="cb191"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb191-1"><a href="context-settings-and-exceptions.html#cb191-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb191-2"><a href="context-settings-and-exceptions.html#cb191-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;window&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb191-3"><a href="context-settings-and-exceptions.html#cb191-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;size&quot;</span> <span class="fu">:</span> <span class="ot">[</span><span class="dv">640</span><span class="ot">,</span> <span class="dv">480</span><span class="ot">]</span></span>
+<span id="cb191-4"><a href="context-settings-and-exceptions.html#cb191-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb191-5"><a href="context-settings-and-exceptions.html#cb191-5" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<p>In <em>exercise02.py</em> simply read the settings into a dictionary and print it out the window size. Remember that you will get a dictionary of dictionaries and think about keys that you need to access that <em>size</em> entry. Check that there are no errors and that dictionary has the correct structure. There should be no further code in <em>exercise02.py</em>.</p>
 <div class="infobox program">
-<p>Put updated code into <em>exercise09.py</em>. Add more rounds. Add <code>reset()</code> method to the <code>LandingPad</code> class.</p>
+<p>Implement reading and printing settings in <em>exercise02.py</em>.</p>
 </div>
 </div>
-<div id="limited-fuel" class="section level2" number="16.13">
-<h2><span class="header-section-number">16.13</span> Limited fuel</h2>
-<p>Let us add a fuel limit to make things more interesting, so that thrursters would work <em>only</em> if there is any fuel left. For this, define a new constant <code>FULL_TANK</code> (I’ve picked it to be <code>100</code> but you can have more) and add a new attribute <code>fuel</code> to the <code>Lander</code> class (remember that you need to explicitly define all attributes in the constructor). The <code>fuel</code> level should be set to <code>FULL_TANK</code> whenever you reset the lander.</p>
-<p>Every use of a thruster should reduce this by 1 and thrusters should work <em>only</em> if there is fuel. You need to take care of this in the <code>update</code> method. Think about how you would do it for both vertical and horizontal thrusters.</p>
-<p>We also need to tell the player how much the fuel is left. I’ve implemented it as a bar gauge but you can implement it as text stimulus as well. Create the appropriate visual attribute in the constructor and remember to update it every time the level of the fuel changes and to draw it whenever you draw the lander itself. As a nice touch, you can change the color to indicate how much of the fuel is left. I’ve used <em>green</em> for more than 2/3, <em>yellow</em> for more than 1/3, and <em>red</em> if less than that.</p>
+<div id="context-based-on-settings" class="section level2" number="19.4">
+<h2><span class="header-section-number">19.4</span> Context based on settings</h2>
+<p>Now, we will settings when we create the context. Create a new context manager class <code>SettingsContext</code> that will take a string with settings file name as the only input. In the <code>__enter__</code>, you should read settings into <code>settings</code> attribute (reuse your code from exercise 2) and then use window size <em>from that settings</em> to create PsychoPy window and store it in a <code>win</code> attribute. Again, you return the reference to an object itself. For now, the only thing you need to do in the <code>__exit__</code> is to close the window. Use it the same way as before but for the file name instead of the size.</p>
+<div class="sourceCode" id="cb192"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb192-1"><a href="context-settings-and-exceptions.html#cb192-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> SettingsContext(<span class="st">&#39;settings.json&#39;</span>) <span class="im">as</span> ctx:</span>
+<span id="cb192-2"><a href="context-settings-and-exceptions.html#cb192-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># your usual code inside but</span></span>
+<span id="cb192-3"><a href="context-settings-and-exceptions.html#cb192-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># PsychoPy window is ctx.win</span></span>
+<span id="cb192-4"><a href="context-settings-and-exceptions.html#cb192-4" aria-hidden="true" tabindex="-1"></a>    ctx.win.flip()</span></code></pre></div>
 <div class="infobox program">
-<p>Put updated code into <em>exercise10.py</em>. Add fuel and fuel gauge to <code>Lander</code> class.</p>
+<p>Create <code>SettingsContext</code> class and use it in <em>exercise03.py</em> (based on <em>exercise01.py</em>, what do you need to change?).</p>
 </div>
 </div>
-<div id="add-to-it" class="section level2" number="16.14">
-<h2><span class="header-section-number">16.14</span> Add to it!</h2>
-<p>We already have a functioning game but you can add so much more to it: visuals for the thrusters, sounds, background, etc. Experiment at will!</p>
+<div id="using-settings" class="section level2" number="19.5">
+<h2><span class="header-section-number">19.5</span> Using settings</h2>
+<p>The next exercise is simple: Look through your code, determine which values, either explicit constants or hard-coded ones, are effectively settings, define them in the <em>settings.json</em> file (create a nice hierarchical structure for them), and use them in the code. Hint, if you can get all settings for a window via <code>ctx.settings["Window"]</code>. Think how you can use this to simplify passing multiple settings to <code>Target</code> and <code>TimedResponseTask</code>.</p>
+<div class="infobox program">
+<p>Update <code>Target</code> and <code>TimedResponseTask</code> classes, put updated main script into <em>exercise04.py</em>.</p>
+</div>
+</div>
+<div id="logging-data-1" class="section level2" number="19.6">
+<h2><span class="header-section-number">19.6</span> Logging data</h2>
+<p>In the real experiment, we would want to log the responses, e.g., when participants pressed a button and what was the score. PsychoPy provides a convenience class <a href="https://psychopy.org/api/data.html#experimenthandler">ExperimentHandler</a> for such purposes that we already met when programming the <a href="seminar11.html#logging-data">Memory Game</a>.</p>
+<p>Reuse the code of <code>SettingsContext</code> class for a <code>GameContext</code> class. In addition to the original functionality, it should create an <code>ExperimentHandler</code> object as a <code>data</code> attribute, so you could use it as <code>ctx.data</code> in the main script. For the context <code>__exit__</code>, you should save the results <a href="https://psychopy.org/api/data.html#psychopy.data.ExperimentHandler.saveAsWideText">as wide text</a>. I suggest that the log file name should be one of the settings. In the main code, log time the pressed key, time of press (relative to the game start), and the score of that press.</p>
+<div class="infobox program">
+<p>Create <code>GameContext</code> class, use in an updated main script in <em>exercise05.py</em>.</p>
+</div>
+</div>
+<div id="exceptions" class="section level2" number="19.7">
+<h2><span class="header-section-number">19.7</span> Exceptions</h2>
+<p>When you are running an actual experiment, one of the worries that you have is “what happens to the data I have already logged, program crashes with an error”? Not collecting a full measurement is bad but not keeping at least partial log is even worse, as you can still use it for analysis or as a guidance for future adjustments. Python, as other languages, has special mechanisms to handle <a href="https://docs.python.org/3/tutorial/errors.html">exceptions</a> that arise during the code execution.</p>
+<p>Whenever an error occurs at a run time, it <a href="https://docs.python.org/3/reference/simple_stmts.html#the-raise-statement">raises</a> an exception: it creates an object of <a href="https://docs.python.org/3/library/exceptions.html#concrete-exceptions">a special class</a> that contains information describe the problem. For example, a <a href="https://docs.python.org/3/library/exceptions.html#ZeroDivisionError">ZeroDivisionError</a> is raised whenever you try to divide by zero, e.g., <code>1 / 0</code> (you can try this in a Jupyter notebook). A <a href="https://docs.python.org/3/library/exceptions.html#KeyError">KeyError</a> is raised, if you using a dictionary with a wrong key, the code below will raise it:</p>
+<div class="sourceCode" id="cb193"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb193-1"><a href="context-settings-and-exceptions.html#cb193-1" aria-hidden="true" tabindex="-1"></a>a_dict <span class="op">=</span> {<span class="st">&quot;a_key&quot;</span> : <span class="dv">1</span>}</span>
+<span id="cb193-2"><a href="context-settings-and-exceptions.html#cb193-2" aria-hidden="true" tabindex="-1"></a>a_dict[<span class="st">&quot;b_key&quot;</span>]</span></code></pre></div>
+<p>Similarly, an <a href="https://docs.python.org/3/library/exceptions.html#IndexError">IndexError</a> is raise, if you try to use an invalid index for a list, a <a href="https://docs.python.org/3/library/exceptions.html#NameError">NameError</a>, if you are trying to access variable that does not exist, <a href="https://docs.python.org/3/library/exceptions.html#AttributeError">AttributeError</a> when an object does not have an attribute you are trying to use, etc.</p>
+<p>In Python, you can use <code>try: ... except:...finally:</code> operators:</p>
+<div class="sourceCode" id="cb194"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb194-1"><a href="context-settings-and-exceptions.html#cb194-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb194-2"><a href="context-settings-and-exceptions.html#cb194-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># some code that might generate a runtime error</span></span>
+<span id="cb194-3"><a href="context-settings-and-exceptions.html#cb194-3" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span>:  </span>
+<span id="cb194-4"><a href="context-settings-and-exceptions.html#cb194-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># code that is executed if something bad happens</span></span>
+<span id="cb194-5"><a href="context-settings-and-exceptions.html#cb194-5" aria-hidden="true" tabindex="-1"></a><span class="cf">finally</span>:</span>
+<span id="cb194-6"><a href="context-settings-and-exceptions.html#cb194-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># code that is executed both with and without exception</span></span>
+<span id="cb194-7"><a href="context-settings-and-exceptions.html#cb194-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb194-8"><a href="context-settings-and-exceptions.html#cb194-8" aria-hidden="true" tabindex="-1"></a><span class="co"># code that is executed ONLY if there were no exceptions or if an exception was handled</span></span></code></pre></div>
+<p>In the simplest case, you need just the first two operators: <code>try</code> and <code>except</code>. Create a Jupyter notebook (that you will submit as part of the assignment) and write the code that generates a division-by-zero error but is handled via <code>try...except...</code>. In the <code>except</code> simply print out a message, so that you know that it was executed. Create another cell, copy the code and now check that the exception handling code is <em>not</em> executed, if the error is not generated (i.e., divide by some non-zero number).</p>
+<p>Using <code>except:</code> catches <em>all</em> exceptions. However, you can be more specific and handle exceptions based on their class.</p>
+<div class="sourceCode" id="cb195"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb195-1"><a href="context-settings-and-exceptions.html#cb195-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb195-2"><a href="context-settings-and-exceptions.html#cb195-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># some code that might generate a runtime error</span></span>
+<span id="cb195-3"><a href="context-settings-and-exceptions.html#cb195-3" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">KeyError</span> <span class="im">as</span> key_error:  </span>
+<span id="cb195-4"><a href="context-settings-and-exceptions.html#cb195-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># code that is executed only if KeyError exception was raised</span></span>
+<span id="cb195-5"><a href="context-settings-and-exceptions.html#cb195-5" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">ZeroDivisionError</span> <span class="im">as</span> zero_division_error:  </span>
+<span id="cb195-6"><a href="context-settings-and-exceptions.html#cb195-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># code that is executed only if ZeroDivisionError exception was raised</span></span>
+<span id="cb195-7"><a href="context-settings-and-exceptions.html#cb195-7" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span>:</span>
+<span id="cb195-8"><a href="context-settings-and-exceptions.html#cb195-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># code that is executed if any OTHER exception is raised.</span></span></code></pre></div>
+<p>Implement handling for <code>KeyError</code> and <code>ZeroDivisionError</code>, they should print out different messages to check that it works. Test it generating these runtime errors with your code. What happens if you have the first two specific exception handlers but no general <code>except:</code>?</p>
+<p>So far, you generated exception but cause the errors in the code but you can raise these exceptions yourself via <code>raise</code> operator. For example, instead of dividing by zero, you can <code>raise ZeroDivisionError()</code> (note that you are create an object of the class, hence the round brackets!). Use it with you previous code, instead of an actual division by zero. Try raising other exception and see how your code handles them.</p>
+<div class="infobox program">
+<p>Put exception handling code is cell of a Jupyter notebook.</p>
+</div>
+<p>So far I have talked about exceptions as a way to report runtime errors. However, they can be used in a more general way to control the execution flow. You already did it when implementing <a href="file:///E:/Teaching/2020WS/python-for-experimental-psychology/docs/seminar-02-05.html#duck-typiing-iterators">class-as-an-iterator</a> approach. Once you ran out of items to return, your <strong>next</strong><code>method raised (StopIteration)[https://docs.python.org/3/library/exceptions.html#StopIteration] exception that informed the</code>for` loop that it has no more items to loop through. We will use that side of exception in the next section when dealing with context.</p>
+</div>
+<div id="exception-within-context" class="section level2" number="19.8">
+<h2><span class="header-section-number">19.8</span> Exception within context</h2>
+<p><code>try..except...</code> operators provide a general mechanism for exceptions handling but what happens if an exception is raised inside a context? You can, of course, put a <code>try...except...</code> in the code itself, something you should do, if you are planning to handling specific exceptions. However, if an exception occur in the code inside the context, Python will first <em>exit</em> the context, i.e., the <code>__exit__</code> method. Moreover, it will put the exception information into the parameters <code>exc_type</code> (a class of the exception) and <code>exc_value</code> (an object of that class). This way, you can perform a proper clean-up (save data, close window, etc.) and then handle an exception or leave it alone, so that it propagates further and can be handled by other pieces of your code or stop the execution.</p>
+<p>Here, we will use this mechanism not only for safe clean-up but also to make aborting an experiment (or a game) easy. In previous game with many rounds, you had nested loops that made aborting a game via <em>escape</em> key press awkward. You had to check if in the inner loop, differentiate between a normal end-of-round and abort outside, etc. We can make out life much easier via a combination of a context manager and a custom exception. First, create a custom <code>GameAbort</code> class, which is a descendant of the <code>Exception</code> class. You do not need any code in it, even a constructor does not need to be redefined, so use <code>pass</code> statement for its body (you do need to have at least one line of code in the class, so <code>pass</code> will create a line but with no actual executable code). Next, you <code>raise GameAbort()</code>, if the player pressed <em>escape</em> key (do not forget to import <code>GameAbort</code> class, so you can use it in the main script). Finally, in the <strong>exit</strong> method of the <code>GameContext</code> manager, you should check whether <code>exc_type is GameAbort</code> (<code>exc_type</code> will be <code>None</code>, if no exception occurred) and, important(!), <code>return True</code> in that case:</p>
+<div class="sourceCode" id="cb196"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb196-1"><a href="context-settings-and-exceptions.html#cb196-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> GameContext:</span>
+<span id="cb196-2"><a href="context-settings-and-exceptions.html#cb196-2" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb196-3"><a href="context-settings-and-exceptions.html#cb196-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__exit__</span>(<span class="va">self</span>, exc_type, exc_value, traceback):</span>
+<span id="cb196-4"><a href="context-settings-and-exceptions.html#cb196-4" aria-hidden="true" tabindex="-1"></a>        ...</span>
+<span id="cb196-5"><a href="context-settings-and-exceptions.html#cb196-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> exc_type <span class="kw">is</span> GameAbort:</span>
+<span id="cb196-6"><a href="context-settings-and-exceptions.html#cb196-6" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">True</span></span>
+<span id="cb196-7"><a href="context-settings-and-exceptions.html#cb196-7" aria-hidden="true" tabindex="-1"></a>  </span></code></pre></div>
+<p>That last bit <code>return True</code> informs Python that you handled the exception and all is good (not need to propagate it further). Now, you can safely abort your experiment from any code location, inside nested loops, functions, etc. In all cases, the exception will be propagated until the <code>__exit__</code> method, doing away with awkward extra checks.</p>
+<div class="infobox program">
+<p>Create <code>GameAbort</code> exception class, update <code>GameContext</code> class to handle it, use this in an updated main script in <em>exercise06.py</em>.</p>
+</div>
 
 </div>
-</div>
-<div class="footnotes">
-<hr />
-<ol start="34">
-<li id="fn34"><p>The constant itself does not mean anything, I adjusted it to be reasonable for the image and window size that we are using.<a href="seminar-02-04.html#fnref34" class="footnote-back">↩︎</a></p></li>
-<li id="fn35"><p>Pun intended.<a href="seminar-02-04.html#fnref35" class="footnote-back">↩︎</a></p></li>
-<li id="fn36"><p>These are functions that “decorate” you function and are called <em>before</em> your function is called. They are like gatekeepers or face control, so they can alter whether or how your function is executed. They are very useful in certain scenarios and we will meet them again later. However, we will not talk about them in detail here.<a href="seminar-02-04.html#fnref36" class="footnote-back">↩︎</a></p></li>
-<li id="fn37"><p>Just like there is no physical phenomenon called “color”.<a href="seminar-02-04.html#fnref37" class="footnote-back">↩︎</a></p></li>
-<li id="fn38"><p>Note that you cannot have write-only property, you must have either getter alone or both.<a href="seminar-02-04.html#fnref38" class="footnote-back">↩︎</a></p></li>
-<li id="fn39"><p>Try it and see that it works.<a href="seminar-02-04.html#fnref39" class="footnote-back">↩︎</a></p></li>
-<li id="fn40"><p>On a side note of doing crazy things that you shouldn’t: You can replace a class method without inheritance with your own at run time, this is called “monkey patching”!<a href="seminar-02-04.html#fnref40" class="footnote-back">↩︎</a></p></li>
-</ol>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="seminar-02-03.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="seminar-02-05.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="seminar-02-06.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="cross-references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

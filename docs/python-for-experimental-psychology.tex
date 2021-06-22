@@ -117,7 +117,7 @@
 
 \title{Python for social and experimental psychology}
 \author{Alexander (Sasha) Pastukhov}
-\date{2021-06-09}
+\date{2021-06-22}
 
 \begin{document}
 \maketitle
@@ -4936,7 +4936,7 @@ In the next section, we will create a \texttt{TimedResponseTask} class that will
 \end{Shaded}
 
 \begin{verbatim}
-## <generator object iterator_fun at 0x00000000134FBA98>
+## <generator object iterator_fun at 0x000000002921BA98>
 \end{verbatim}
 
 \begin{Shaded}
@@ -5134,21 +5134,372 @@ Put updated code in \emph{exercise07.py}, create \texttt{ScoreText} class.
 
 As per usual, think about how you can extend the game. A clock showing the remaining time is definitely missing. Auditory feedback would be nice. More positions? Random colors to confuse a player?
 
-\hypertarget{game-context}{%
-\chapter{Game Context}\label{game-context}}
+\hypertarget{context-settings-and-exceptions}{%
+\chapter{Context, settings, and exceptions}\label{context-settings-and-exceptions}}
 
-\hypertarget{settings-file}{%
-\section{Settings file}\label{settings-file}}
+Today, we will reuse our lovely \protect\hyperlink{seminar-02-06}{Guitar Hero} game and see how we simplify our life via having settings in a separate file. Plus we will be using context to isolate repetitive initialization / clean-up code and exceptions to control the flow. Thus, create a new folder with all the classes and the final exercise from Guitar Hero, which you will serve as a foundation for exercise 1.
 
-So far, we either hard-coded values or defined constants. This means that to modify any of them, you need to modify the program itself. A better approach is to have a separate file with settings. This puts all of them in one place and makes easier to edit and check them. Plus, you can have many settings file for different experimental stages, groups, etc.
+\hypertarget{context-manager}{%
+\section{Context manager}\label{context-manager}}
 
-There multiple formats for settings files: XML, INI, YALM, etc. Experiment designed using PsychoPy Builder interface are stored using XML (Extensible Markup Language) files but with \href{https://www.psychopy.org/psyexp.html}{.psyexp extension}.
+On the one hand, context management is a frequently used feature in Python, particularly for file operations. On the other hand, its full power is rarely is less known even though it can be very useful whenever you the context of your program is the same or very similar, as in case of the PsychoPy games that we programmed and typical PsychoPy experiments. In both cases, there is a fairly fixed structure of the program:
 
-\hypertarget{working-with-tables-via-pandas}{%
-\section{Working with tables via Pandas}\label{working-with-tables-via-pandas}}
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Initialization
 
-\hypertarget{single-context-to-rule-them-all}{%
-\section{Single context to rule them all}\label{single-context-to-rule-them-all}}
+  \begin{itemize}
+  \tightlist
+  \item
+    define experimental settings by either reading them from an \protect\hyperlink{settings-files}{external file}, as you will learn below, or creating constants (less flexible but what we have been doing so far)
+  \item
+    create PsychoPy window, logger for experimental results, mouse (if required), initialize special devices such as response box, eye tracker, etc.
+  \end{itemize}
+\item
+  Actual experiment
+\item
+  Saving and cleaning up
+
+  \begin{itemize}
+  \tightlist
+  \item
+    save data logs
+  \item
+    if required, close connection to special devices such as response boxes, eye tracker, etc.
+  \item
+    close PsychoPy window
+  \end{itemize}
+\end{enumerate}
+
+If you look at your code, you will realized that steps 1 and 3 remain fairly the same throughout all the games that we programmed. Thus, we will create a context manager class, which you can always reuse, that will hide away the boilerplate code.
+
+Here is an example of how use of a context manager helps when working with files (something, we will need to use later for our settings files). First, how it works \emph{without} a context manager: you open a file and assign the object to variable, you work with it, you close it. The latter is important to ensure that information was fully written into it and that you do not lock for file.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{file} \OperatorTok{=} \BuiltInTok{open}\NormalTok{(}\StringTok{"somefile.txt"}\NormalTok{, }\StringTok{"r"}\NormalTok{)}
+\CommentTok{\# ... do something with the file, such as reading the entire file into a single variable}
+\NormalTok{data }\OperatorTok{=} \BuiltInTok{file}\NormalTok{.read()}
+\NormalTok{close(}\BuiltInTok{file}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+A better way is to use a context manager that file class implements via \texttt{with\ ...\ as\ ...} statement.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{with} \BuiltInTok{open}\NormalTok{(}\StringTok{"somefile.txt"}\NormalTok{, }\StringTok{"r"}\NormalTok{) }\ImportTok{as} \BuiltInTok{file}\NormalTok{:}
+    \BuiltInTok{file}\NormalTok{.read()}
+\end{Highlighting}
+\end{Shaded}
+
+Note that now the \texttt{file.read()} is inside of the \texttt{with} block and there is no \texttt{file.close()} call. The latter is evoked automatically, once you run all the code inside the \texttt{with} block and exit it. Although for this example the difference is minimal --- a different way to assign a value to a variable and explicit vs.~implicit file closing --- the second variant takes care of cleaning up, ensures that you do not forget about it, and allows you to concentrate on the important bits.
+
+Here is how it works behind the scenes. A context manager is a class that implements two special methods \texttt{\_\_enter\_\_} and \texttt{\_\_exit\_\_} (so, this is a classic Python \href{duck-typing}{duck typing}). The former creates and returns a context, which is whatever attribute or value you require, wheres the former performs cleaning up that is necessary before exiting the context. Here is how we would implement a limited file context manager by ourselves:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ FileManager():}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, filename, mode):}
+        \CommentTok{"""}
+\CommentTok{        Stores the settings for use in \_\_enter\_\_}
+\CommentTok{        }
+\CommentTok{        Parameters}
+\CommentTok{        {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{        filename : str}
+\CommentTok{        mode : str}
+\CommentTok{        """}
+        \VariableTok{self}\NormalTok{.}\BuiltInTok{file} \OperatorTok{=} \VariableTok{None}
+        \VariableTok{self}\NormalTok{.filename }\OperatorTok{=}\NormalTok{ filename}
+        \VariableTok{self}\NormalTok{.mode }\OperatorTok{=}\NormalTok{ mode}
+        
+    \KeywordTok{def} \FunctionTok{\_\_enter\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+      \CommentTok{""" }
+\CommentTok{      What we need to do to create context:}
+\CommentTok{        * Open the file and returns the object.}
+\CommentTok{      }
+\CommentTok{      Returns}
+\CommentTok{      {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{      File object}
+\CommentTok{      """}
+      \VariableTok{self}\NormalTok{.}\BuiltInTok{file} \OperatorTok{=} \BuiltInTok{open}\NormalTok{(}\VariableTok{self}\NormalTok{.filename, }\VariableTok{self}\NormalTok{.mode)}
+      \ControlFlowTok{return} \VariableTok{self}\NormalTok{.}\BuiltInTok{file}
+      
+    \KeywordTok{def} \FunctionTok{\_\_exit\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, exc\_type, exc\_value, traceback):}
+      \CommentTok{"""}
+\CommentTok{      What we need to do before destroying the context:}
+\CommentTok{        * Close the file before we exit the context.}
+\CommentTok{      """}
+\NormalTok{      close(}\VariableTok{self}\NormalTok{.}\BuiltInTok{file}\NormalTok{)}
+      
+\CommentTok{\# and now we use it!}
+\ControlFlowTok{with}\NormalTok{ FileManager(}\StringTok{"somefile.txt"}\NormalTok{, }\StringTok{"r"}\NormalTok{) }\ImportTok{as} \BuiltInTok{file}\NormalTok{:}
+    \BuiltInTok{file}\NormalTok{.read()}
+\end{Highlighting}
+\end{Shaded}
+
+Note that \texttt{\_\_exit\_\_} method has extra parameters \texttt{exc\_type}, \texttt{exc\_value}, and \texttt{traceback}. They will be relevant for exception handling later on but for now, you can ignore them.
+
+Now is your turn! Create a \texttt{WindowContext} class (in a separate file, of course) that will create a PsychoPy Window object of a given size, which is passed to the constructor, and \href{https://psychopy.org/api/visual/window.html\#psychopy.visual.Window.close}{closes} when the code exists the context. For now, you will need one attribute to store information about the requested size and one attribute for PsychoPy Window itself (hint, use \texttt{win}as an attribute name). There will be a small but important difference relative to \texttt{FileManager} class in the example: There will be other objects that are context-relevant (settings, logging class) that we will add later on, so instead of returning just the window object, the \textbf{enter} it should return the reference to the object itself (reminder, reference to the current object is always in the \texttt{self} parameter of a method). Then, you can use it to create a 640-by-480 window (use whatever window size you need of course).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{with}\NormalTok{ WindowContext((}\DecValTok{640}\NormalTok{, }\DecValTok{480}\NormalTok{)) }\ImportTok{as}\NormalTok{ ctx:}
+  \CommentTok{\# your usual code inside but}
+  \CommentTok{\# PsychoPy window is ctx.win}
+\NormalTok{  ctx.win.flip()}
+\end{Highlighting}
+\end{Shaded}
+
+Create \texttt{WindowContext} class and use it in \emph{exercise01.py}.
+
+\hypertarget{settings-files}{%
+\section{Settings file formats}\label{settings-files}}
+
+So far, we either hard-coded specific values or defined them as constants (a better of these two approaches). However, this means that if you want to run your game with different settings, you need to modify the program itself. And if you want to have two versions of the game (two experimental conditions), you would need to have two programs with all the problems of maintaining virtually identical code in several places at once.
+
+A better approach is to have separate files with settings, so you can keep the code constant and alter specific parameters by specifying which settings file the program should use. This is helpful even you plan to have a single set of setting as it separates code from constants, puts the latter all in one place and makes easier to edit and check them. There are multiple formats for settings files: XML, INI, JSON, YALM, etc.
+
+\hypertarget{xml}{%
+\subsection{XML}\label{xml}}
+
+\href{https://en.wikipedia.org/wiki/XML}{XML} --- an Extensible Markup Language --- looks similar to HTML (HyperText Markup Language). Experiments designed using PsychoPy Builder interface are stored using XML files but with \href{https://www.psychopy.org/psyexp.html}{.psyexp extension}. A settings file for Guitar Hero in XML could look like this
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{\textless{}Target\textgreater{}}
+  \KeywordTok{\textless{}width\textgreater{}}\NormalTok{0.4}\KeywordTok{\textless{}/width\textgreater{}}
+  \KeywordTok{\textless{}height\textgreater{}}\NormalTok{0.1}\KeywordTok{\textless{}/height\textgreater{}}
+  \KeywordTok{\textless{}locations\textgreater{}}
+    \KeywordTok{\textless{}location\textgreater{}}\NormalTok{{-}0.5}\KeywordTok{\textless{}/location\textgreater{}}
+    \KeywordTok{\textless{}location\textgreater{}}\NormalTok{0}\KeywordTok{\textless{}/location\textgreater{}}
+    \KeywordTok{\textless{}location\textgreater{}}\NormalTok{0.5}\KeywordTok{\textless{}/location\textgreater{}}
+  \KeywordTok{\textless{}/locations\textgreater{}}
+\KeywordTok{\textless{}/Target\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+The advantage of XML is that it is very flexible yet structured and you can use \href{https://docs.python.org/3/library/xml.html}{native Python interface} to work with them. However, XML is not easy for humans to read, it is overpowered for our purposes of having a simple set of unique constants and its power means that using it is fairly cumbersome.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ xml.dom }\ImportTok{import}\NormalTok{ minidom}
+\NormalTok{settings }\OperatorTok{=}\NormalTok{ minidom.parse(}\StringTok{\textquotesingle{}test.xml\textquotesingle{}}\NormalTok{)}
+\NormalTok{settings.getElementsByTagName(}\StringTok{"target"}\NormalTok{)[}\DecValTok{0}\NormalTok{].getElementsByTagName(}\StringTok{"width"}\NormalTok{)[}\DecValTok{0}\NormalTok{].firstChild.data }\CommentTok{\# this will give you string "0.4"}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ini}{%
+\subsection{INI}\label{ini}}
+
+This is a format with a structure similar to that found in MS Windows INI files.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{[Target]}
+\DataTypeTok{width }\OtherTok{=}\StringTok{ }\FloatTok{0.4}
+\DataTypeTok{height }\OtherTok{=}\StringTok{ }\FloatTok{0.1}
+\DataTypeTok{locations }\OtherTok{=}\StringTok{ {-}}\FloatTok{0.5}\StringTok{, }\DecValTok{0}\StringTok{, }\FloatTok{0.5}
+\end{Highlighting}
+\end{Shaded}
+
+As you can see it is easier to read and Python has a special \href{https://docs.python.org/3/library/configparser.html}{configparser} library to work with them. The object you get is, effectively, a dictionary with additional methods and attributes. Note, however, that \texttt{ConfigParser} does not try to guess the type of data, so all values are stored as \emph{strings} and it is your job to convert them to whatever type you need, e.g.~integer, list, etc.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ configparser}
+\NormalTok{settings }\OperatorTok{=}\NormalTok{ configparser.ConfigParser()}
+\NormalTok{settings.read(}\StringTok{\textquotesingle{}settings.ini\textquotesingle{}}\NormalTok{)}
+\NormalTok{settings[}\StringTok{"Target"}\NormalTok{][}\StringTok{"width"}\NormalTok{] }\CommentTok{\# this will give you a string \textquotesingle{}0.4\textquotesingle{}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{json}{%
+\subsection{JSON}\label{json}}
+
+\href{https://en.wikipedia.org/wiki/JSON}{JSON} (JavaScript Object Notation) is a popular format for web applications that use it to exchange data between server and client.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{\{}
+  \DataTypeTok{"Target"}\FunctionTok{:} \FunctionTok{\{}
+    \DataTypeTok{"width"}\FunctionTok{:} \FloatTok{0.4}\FunctionTok{,}
+    \DataTypeTok{"height"}\FunctionTok{:} \FloatTok{0.1}\FunctionTok{,}
+    \DataTypeTok{"locations"}\FunctionTok{:} \OtherTok{[}\FloatTok{{-}0.5}\OtherTok{,} \DecValTok{0}\OtherTok{,} \FloatTok{0.5}\OtherTok{]}
+  \FunctionTok{\}}
+\FunctionTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+You can parse any \emph{string} with JSON format into a dictionary in Python using \href{https://docs.python.org/3/library/json.html}{json} module. Its advantage over INI files is that JSON explicitly specifies data type, so it converts it automatically. Note that unlike configparse, json module does not work with files direction, so you need to open it manually.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ json}
+\ControlFlowTok{with} \BuiltInTok{open}\NormalTok{(}\StringTok{\textquotesingle{}settings.json\textquotesingle{}}\NormalTok{) }\ImportTok{as}\NormalTok{ json\_file:}
+\NormalTok{    settings }\OperatorTok{=}\NormalTok{ json.load(json\_file)}
+    
+\NormalTok{settings[}\StringTok{"Target"}\NormalTok{][}\StringTok{"width"}\NormalTok{] }\CommentTok{\# this will give a float number 0.4}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{yaml}{%
+\subsection{YAML}\label{yaml}}
+
+\href{https://en.wikipedia.org/wiki/YAML}{YAML} (YAML Ain't Markup Language, rhymes with camel) is very similar to JSON but its config files are more human-readable. It has fewer special symbols and brackets but, as in Python, you must watch the indentations as they determine the hierarchy.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{Target}\KeywordTok{:}
+\AttributeTok{  }\FunctionTok{width }\KeywordTok{:}\AttributeTok{ }\FloatTok{0.4}
+\AttributeTok{  }\FunctionTok{height }\KeywordTok{:}\AttributeTok{ }\FloatTok{0.1}
+\AttributeTok{  }\FunctionTok{locations }\KeywordTok{:}\AttributeTok{ }\KeywordTok{[}\FloatTok{{-}0.5}\KeywordTok{,}\AttributeTok{ }\DecValTok{0}\KeywordTok{,}\AttributeTok{ }\FloatTok{0.5}\KeywordTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+You will need to install a third-party library \href{https://pyyaml.org/}{pyyaml} to work with YAML files. Otherwise, you get the same dictionary as for the JSON
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ yaml}
+\ControlFlowTok{with} \BuiltInTok{open}\NormalTok{(}\StringTok{"settings.yaml"}\NormalTok{) }\ImportTok{as}\NormalTok{ yaml\_stream:}
+\NormalTok{    settings }\OperatorTok{=}\NormalTok{ yaml.load(yaml\_stream)}
+    
+\NormalTok{settings[}\StringTok{"Target"}\NormalTok{][}\StringTok{"width"}\NormalTok{] }\CommentTok{\# this will give a float number 0.4}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{settings-file-for-guitar-hero}{%
+\section{Settings file for Guitar Hero}\label{settings-file-for-guitar-hero}}
+
+My personal preference is for \protect\hyperlink{yaml}{yaml}. However, it requires a separate library, so you could use \protect\hyperlink{json}{json} file instead. Create a settings file and call it \emph{settings.json} (or use your imagination and come up with a better name). You will add more settings later on but for now just define a window size as
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{\{}
+  \DataTypeTok{"window"}\FunctionTok{:} \FunctionTok{\{}
+    \DataTypeTok{"size"} \FunctionTok{:} \OtherTok{[}\DecValTok{640}\OtherTok{,} \DecValTok{480}\OtherTok{]}
+  \FunctionTok{\}}
+\FunctionTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+In \emph{exercise02.py} simply read the settings into a dictionary and print it out the window size. Remember that you will get a dictionary of dictionaries and think about keys that you need to access that \emph{size} entry. Check that there are no errors and that dictionary has the correct structure. There should be no further code in \emph{exercise02.py}.
+
+Implement reading and printing settings in \emph{exercise02.py}.
+
+\hypertarget{context-based-on-settings}{%
+\section{Context based on settings}\label{context-based-on-settings}}
+
+Now, we will settings when we create the context. Create a new context manager class \texttt{SettingsContext} that will take a string with settings file name as the only input. In the \texttt{\_\_enter\_\_}, you should read settings into \texttt{settings} attribute (reuse your code from exercise 2) and then use window size \emph{from that settings} to create PsychoPy window and store it in a \texttt{win} attribute. Again, you return the reference to an object itself. For now, the only thing you need to do in the \texttt{\_\_exit\_\_} is to close the window. Use it the same way as before but for the file name instead of the size.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{with}\NormalTok{ SettingsContext(}\StringTok{\textquotesingle{}settings.json\textquotesingle{}}\NormalTok{) }\ImportTok{as}\NormalTok{ ctx:}
+    \CommentTok{\# your usual code inside but}
+    \CommentTok{\# PsychoPy window is ctx.win}
+\NormalTok{    ctx.win.flip()}
+\end{Highlighting}
+\end{Shaded}
+
+Create \texttt{SettingsContext} class and use it in \emph{exercise03.py} (based on \emph{exercise01.py}, what do you need to change?).
+
+\hypertarget{using-settings}{%
+\section{Using settings}\label{using-settings}}
+
+The next exercise is simple: Look through your code, determine which values, either explicit constants or hard-coded ones, are effectively settings, define them in the \emph{settings.json} file (create a nice hierarchical structure for them), and use them in the code. Hint, if you can get all settings for a window via \texttt{ctx.settings{[}"Window"{]}}. Think how you can use this to simplify passing multiple settings to \texttt{Target} and \texttt{TimedResponseTask}.
+
+Update \texttt{Target} and \texttt{TimedResponseTask} classes, put updated main script into \emph{exercise04.py}.
+
+\hypertarget{logging-data-1}{%
+\section{Logging data}\label{logging-data-1}}
+
+In the real experiment, we would want to log the responses, e.g., when participants pressed a button and what was the score. PsychoPy provides a convenience class \href{https://psychopy.org/api/data.html\#experimenthandler}{ExperimentHandler} for such purposes that we already met when programming the \protect\hyperlink{logging-data}{Memory Game}.
+
+Reuse the code of \texttt{SettingsContext} class for a \texttt{GameContext} class. In addition to the original functionality, it should create an \texttt{ExperimentHandler} object as a \texttt{data} attribute, so you could use it as \texttt{ctx.data} in the main script. For the context \texttt{\_\_exit\_\_}, you should save the results \href{https://psychopy.org/api/data.html\#psychopy.data.ExperimentHandler.saveAsWideText}{as wide text}. I suggest that the log file name should be one of the settings. In the main code, log time the pressed key, time of press (relative to the game start), and the score of that press.
+
+Create \texttt{GameContext} class, use in an updated main script in \emph{exercise05.py}.
+
+\hypertarget{exceptions}{%
+\section{Exceptions}\label{exceptions}}
+
+When you are running an actual experiment, one of the worries that you have is ``what happens to the data I have already logged, program crashes with an error''? Not collecting a full measurement is bad but not keeping at least partial log is even worse, as you can still use it for analysis or as a guidance for future adjustments. Python, as other languages, has special mechanisms to handle \href{https://docs.python.org/3/tutorial/errors.html}{exceptions} that arise during the code execution.
+
+Whenever an error occurs at a run time, it \href{https://docs.python.org/3/reference/simple_stmts.html\#the-raise-statement}{raises} an exception: it creates an object of \href{https://docs.python.org/3/library/exceptions.html\#concrete-exceptions}{a special class} that contains information describe the problem. For example, a \href{https://docs.python.org/3/library/exceptions.html\#ZeroDivisionError}{ZeroDivisionError} is raised whenever you try to divide by zero, e.g., \texttt{1\ /\ 0} (you can try this in a Jupyter notebook). A \href{https://docs.python.org/3/library/exceptions.html\#KeyError}{KeyError} is raised, if you using a dictionary with a wrong key, the code below will raise it:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a\_dict }\OperatorTok{=}\NormalTok{ \{}\StringTok{"a\_key"}\NormalTok{ : }\DecValTok{1}\NormalTok{\}}
+\NormalTok{a\_dict[}\StringTok{"b\_key"}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+Similarly, an \href{https://docs.python.org/3/library/exceptions.html\#IndexError}{IndexError} is raise, if you try to use an invalid index for a list, a \href{https://docs.python.org/3/library/exceptions.html\#NameError}{NameError}, if you are trying to access variable that does not exist, \href{https://docs.python.org/3/library/exceptions.html\#AttributeError}{AttributeError} when an object does not have an attribute you are trying to use, etc.
+
+In Python, you can use \texttt{try:\ ...\ except:...finally:} operators:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{try}\NormalTok{:}
+    \CommentTok{\# some code that might generate a runtime error}
+\ControlFlowTok{except}\NormalTok{:  }
+    \CommentTok{\# code that is executed if something bad happens}
+\ControlFlowTok{finally}\NormalTok{:}
+    \CommentTok{\# code that is executed both with and without exception}
+    
+\CommentTok{\# code that is executed ONLY if there were no exceptions or if an exception was handled}
+\end{Highlighting}
+\end{Shaded}
+
+In the simplest case, you need just the first two operators: \texttt{try} and \texttt{except}. Create a Jupyter notebook (that you will submit as part of the assignment) and write the code that generates a division-by-zero error but is handled via \texttt{try...except...}. In the \texttt{except} simply print out a message, so that you know that it was executed. Create another cell, copy the code and now check that the exception handling code is \emph{not} executed, if the error is not generated (i.e., divide by some non-zero number).
+
+Using \texttt{except:} catches \emph{all} exceptions. However, you can be more specific and handle exceptions based on their class.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{try}\NormalTok{:}
+    \CommentTok{\# some code that might generate a runtime error}
+\ControlFlowTok{except} \PreprocessorTok{KeyError} \ImportTok{as}\NormalTok{ key\_error:  }
+    \CommentTok{\# code that is executed only if KeyError exception was raised}
+\ControlFlowTok{except} \PreprocessorTok{ZeroDivisionError} \ImportTok{as}\NormalTok{ zero\_division\_error:  }
+    \CommentTok{\# code that is executed only if ZeroDivisionError exception was raised}
+\ControlFlowTok{except}\NormalTok{:}
+    \CommentTok{\# code that is executed if any OTHER exception is raised.}
+\end{Highlighting}
+\end{Shaded}
+
+Implement handling for \texttt{KeyError} and \texttt{ZeroDivisionError}, they should print out different messages to check that it works. Test it generating these runtime errors with your code. What happens if you have the first two specific exception handlers but no general \texttt{except:}?
+
+So far, you generated exception but cause the errors in the code but you can raise these exceptions yourself via \texttt{raise} operator. For example, instead of dividing by zero, you can \texttt{raise\ ZeroDivisionError()} (note that you are create an object of the class, hence the round brackets!). Use it with you previous code, instead of an actual division by zero. Try raising other exception and see how your code handles them.
+
+Put exception handling code is cell of a Jupyter notebook.
+
+So far I have talked about exceptions as a way to report runtime errors. However, they can be used in a more general way to control the execution flow. You already did it when implementing \href{file:///E:/Teaching/2020WS/python-for-experimental-psychology/docs/seminar-02-05.html\#duck-typiing-iterators}{class-as-an-iterator} approach. Once you ran out of items to return, your \textbf{next}\texttt{method\ raised\ (StopIteration){[}https://docs.python.org/3/library/exceptions.html\#StopIteration{]}\ exception\ that\ informed\ the}for` loop that it has no more items to loop through. We will use that side of exception in the next section when dealing with context.
+
+\hypertarget{exception-within-context}{%
+\section{Exception within context}\label{exception-within-context}}
+
+\texttt{try..except...} operators provide a general mechanism for exceptions handling but what happens if an exception is raised inside a context? You can, of course, put a \texttt{try...except...} in the code itself, something you should do, if you are planning to handling specific exceptions. However, if an exception occur in the code inside the context, Python will first \emph{exit} the context, i.e., the \texttt{\_\_exit\_\_} method. Moreover, it will put the exception information into the parameters \texttt{exc\_type} (a class of the exception) and \texttt{exc\_value} (an object of that class). This way, you can perform a proper clean-up (save data, close window, etc.) and then handle an exception or leave it alone, so that it propagates further and can be handled by other pieces of your code or stop the execution.
+
+Here, we will use this mechanism not only for safe clean-up but also to make aborting an experiment (or a game) easy. In previous game with many rounds, you had nested loops that made aborting a game via \emph{escape} key press awkward. You had to check if in the inner loop, differentiate between a normal end-of-round and abort outside, etc. We can make out life much easier via a combination of a context manager and a custom exception. First, create a custom \texttt{GameAbort} class, which is a descendant of the \texttt{Exception} class. You do not need any code in it, even a constructor does not need to be redefined, so use \texttt{pass} statement for its body (you do need to have at least one line of code in the class, so \texttt{pass} will create a line but with no actual executable code). Next, you \texttt{raise\ GameAbort()}, if the player pressed \emph{escape} key (do not forget to import \texttt{GameAbort} class, so you can use it in the main script). Finally, in the \textbf{exit} method of the \texttt{GameContext} manager, you should check whether \texttt{exc\_type\ is\ GameAbort} (\texttt{exc\_type} will be \texttt{None}, if no exception occurred) and, important(!), \texttt{return\ True} in that case:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ GameContext:}
+\NormalTok{    ...}
+    \KeywordTok{def} \FunctionTok{\_\_exit\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, exc\_type, exc\_value, traceback):}
+\NormalTok{        ...}
+        \ControlFlowTok{if}\NormalTok{ exc\_type }\KeywordTok{is}\NormalTok{ GameAbort:}
+            \ControlFlowTok{return} \VariableTok{True}
+  
+\end{Highlighting}
+\end{Shaded}
+
+That last bit \texttt{return\ True} informs Python that you handled the exception and all is good (not need to propagate it further). Now, you can safely abort your experiment from any code location, inside nested loops, functions, etc. In all cases, the exception will be propagated until the \texttt{\_\_exit\_\_} method, doing away with awkward extra checks.
+
+Create \texttt{GameAbort} exception class, update \texttt{GameContext} class to handle it, use this in an updated main script in \emph{exercise06.py}.
 
 \hypertarget{cross-references}{%
 \chapter*{Cross references}\label{cross-references}}
