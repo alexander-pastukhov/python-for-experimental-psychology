@@ -1,8 +1,93 @@
 # Context and control
 
-Today, we will reuse our lovely [Guitar Hero](#seminar-02-06) game and see how we simplify our life via having settings in a separate file. Plus we will be using context to isolate repetitive initialization / clean-up code and exceptions to control the flow.
+Today, we will reuse our lovely [Guitar Hero](seminar-02-06) game and see how we simplify our life via having settings in a separate file. Plus we will be using context to isolate repetitive initialization / clean-up code and exceptions to control the flow. Thus, create a new folder with all the classes and the final exercise from Guitar Hero, which you will serve as a foundation for exercise 1.
 
-## Settings file formats
+## Context manager
+On the one hand, context management is a frequently used feature in Python, particularly for file operations. On the other hand, its full power is rarely is less known even though it can be very useful whenever you the context of your program is the same or very similar, as in case of the PsychoPy games that we programmed and typical PsychoPy experiments. In both cases, there is a fairly fixed structure of the program:
+
+1. Initialization 
+    * define experimental settings by either reading them from an [external file](#settings-files), as you will learn below, or creating constants (less flexible but what we have been doing so far)
+    * create PsychoPy window, logger for experimental results, mouse (if required), initialize special devices such as response box, eye tracker, etc.
+2. Actual experiment
+3. Saving and cleaning up
+    * save data logs
+    * if required, close connection to special devices such as response boxes, eye tracker, etc.
+    * close PsychoPy window
+  
+If you look at your code, you will realized that steps 1 and 3 remain fairly the same throughout all the games that we programmed. Thus, we will create a context manager class, which you can always reuse, that will hide away the boilerplate code.
+
+Here is an example of how use of a context manager helps when working with files (something, we will need to use later for our settings files). First, how it works _without_ a context manager: you open a file and assign the object to variable, you work with it, you close it. The latter is important to ensure that information was fully written into it and that you do not lock for file.
+
+```python
+file = open("somefile.txt", "r")
+# ... do something with the file, such as reading the entire file into a single variable
+data = file.read()
+close(file)
+```
+
+A better way is to use a context manager that file class implements via `with ... as ...` statement.
+```python
+with open("somefile.txt", "r") as file:
+    file.read()
+```
+
+Note that now the `file.read()` is inside of the `with` block and there is no `file.close()` call. The latter is evoked automatically, once you run all the code inside the `with` block and exit it. Although for this example the difference is minimal --- a different way to assign a value to a variable and explicit vs. implicit file closing --- the second variant takes care of cleaning up, ensures that you do not forget about it, and allows you to concentrate on the important bits. 
+
+Here is how it works behind the scenes. A context manager is a class that implements two special methods `__enter__` and `__exit__` (so, this is a classic Python [duck typing](duck-typing)). The former creates and returns a context, which is whatever attribute or value you require, wheres the former performs cleaning up that is necessary before exiting the context. Here is how we would implement a limited file context manager by ourselves:
+```python
+class FileManager():
+    def __init__(self, filename, mode):
+        """
+        Stores the settings for use in __enter__
+        
+        Parameters
+        ----------
+        filename : str
+        mode : str
+        """
+        self.file = None
+        self.filename = filename
+        self.mode = mode
+        
+    def __enter__(self):
+      """ 
+      What we need to do to create context:
+        * Open the file and returns the object.
+      
+      Returns
+      ----------
+      File object
+      """
+      self.file = open(self.filename, self.mode)
+      return self.file
+      
+    def __exit__(self):
+      """
+      What we need to do before destroying the context:
+        * Close the file before we exit the context.
+      """
+      close(self.file)
+      
+# and now we use it!
+with FileManager("somefile.txt", "r") as file:
+    file.read()
+```
+
+Now is your turn! Create a `WindowContext` class (in a separate file, of course) that will create a PsychoPy Window object of a given size, which is passed to the constructor, and [closes](https://psychopy.org/api/visual/window.html#psychopy.visual.Window.close) when the code exists the context. For now, you will need one attribute to store information about the requested size and one attribute for PsychoPy Window itself (hint, use `win`as an attribute name). There will be a small but important difference relative to `FileManager` class in the example: There will be other objects that are context-relevant (settings, logging class) that we will add later on, so instead of returning just the window object, the __enter__ it should return the reference to the object itself (reminder, reference to the current object is always in the `self` parameter of a method). Then, you can use it to create a 640-by-480 window (use whatever window size you need of course).
+
+```python
+with WindowContext((640, 480)) as ctx:
+  # your usual code inside but
+  # PsychoPy window is ctx.win
+  ctx.win.flip()
+```
+
+::: {.infobox .program}
+Create `WindowContext` class and use it in  _exercise01.py_.
+:::
+
+
+## Settings file formats {#settings-files}
 So far, we either hard-coded specific values or defined them as constants (a better of these two approaches). However, this means that if you want to run your game with different settings, you need to modify the program itself. And if you want to have two versions of the game (two experimental conditions), you would need to have two programs with all the problems of maintaining virtually identical code in several places at once.
 
 A better approach is to have separate files with settings, so you can keep the code constant and alter specific parameters by specifying which settings file the program should use. This is helpful even you plan to have a single set of setting as it separates code from constants, puts the latter all in one place and makes easier to edit and check them. There are multiple formats for settings files: XML, INI, JSON, YALM, etc. 
@@ -49,7 +134,7 @@ settings.read('settings.ini')
 settings["Target"]["width"] # this will give you a string '0.4'
 ```
 
-### JSON
+### JSON{#json}
 [JSON](https://en.wikipedia.org/wiki/JSON) (JavaScript Object Notation) is a popular format for web applications that use it to exchange data between server and client. 
 ```json
 {
@@ -70,7 +155,7 @@ with open('settings.json') as json_file:
 settings["Target"]["width"] # this will give a float number 0.4
 ```
 
-### YAML
+### YAML{#yaml}
 [YAML](https://en.wikipedia.org/wiki/YAML) (YAML Ain't Markup Language, rhymes with camel) is very similar to JSON but its config files are more human-readable. It has fewer special symbols and brackets but, as in Python, you must watch the indentations as they determine the hierarchy.
 ```yaml
 Target:
@@ -89,14 +174,45 @@ settings["Target"]["width"] # this will give a float number 0.4
 ```
 
 ## Settings file for Guitar Hero
+My personal preference is for [yaml](yaml). However, it requires a separate library, so you could use [json](json) file instead. Create a settings file and call it  _settings.json_ (or use your imagination and come up with a better name). You will add more settings later on but for now just define a window size as
+
+```json
+{
+  "window": {
+    "size" : [640, 480]
+  }
+}
+```
+
+In _exercise02.py_ simply read the settings into a dictionary and print it out the window size. Remember that you will get a dictionary of dictionaries and think about keys that you need to access that _size_ entry. Check that there are no errors and that dictionary has the correct structure. There should be no further code in _exercise02.py_.
 
 
+::: {.infobox .program}
+Implement reading and printing settings in  _exercise02.py_.
+:::
+
+## Context based on settings
+Now, we will settings when we create the context. Create a new context manager class `SettingsContext` that will take a string with settings file name as the only input. In the `__enter__`, you should read settings into `settings` attribute (reuse your code from exercise 2) and then use window size _from that settings_ to create PsychoPy window and store it in a `win` attribute. Again, you return the reference to an object itself. For now, the only thing you need to do in the `__exit__` is to close the window. Use it the same way as before but for the file name instead of the size.
+
+```python
+with SettingsContext('settings.json') as ctx:
+  # your usual code inside but
+  # PsychoPy window is ctx.win
+  ctx.win.flip()
+```
+
+::: {.infobox .program}
+Create `SettingsContext` class and use it in  _exercise03.py_ (based on _exercise01.py_, what do you need to change?).
+:::
 
 
+## Using settings
+The next exercise is simple: Look through your code, determine which values, either explicit constants or hard-coded ones, are effectively settings, define them in the _settings.json_ file (create a nice hierarchical structure for them), and use them in the code. Hint, if you can get all settings for a window via `ctx.settings["Window"]`. Think how you can use this to simplify passing multiple settings to `Target` and `TimedResponseTask`.
 
-## Working with tables via Pandas
+::: {.infobox .program}
+Update `Target` and `TimedResponseTask` classes, put updated main script into _exercise04.py_.
+:::
 
 
-## Single context to rule them all
-
+## Logging data
 
