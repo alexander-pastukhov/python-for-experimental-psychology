@@ -1,6 +1,16 @@
 # Game of life in NumPy {#seminar-02-08}
 
-Today you will be programming the [Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) created by the British mathematician John Horton Conway. This is not really a game but rather a simulation where you set initial conditions up and observe how the population evolves. Here is an example simulation with a random starting state.
+Today you will be programming the [Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) created by the British mathematician John Horton Conway. This is not really a game but rather a simulation where you set initial conditions up and observe how the population evolves. The rules, [as described on Wikipedia](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life), are very simple:
 
+1. Any live cell with two or three live neighbours survives.
+2. Any dead cell with three live neighbours becomes a live cell.
+3. All other live cells die in the next generation. Similarly, all other dead cells stay dead.
 
-The rules
+Despite simplicity they produce remarkable evolution of a cell culture and give rise to many dynamic or static configurations. Here is an example simulation with a random starting state.
+
+## Implementing  the rules
+
+## NumPy
+
+Our cells live on a 2D grid. In principle, we could implement it as a list of lists. However, to compute the total number of neighbouring cells, we need to make a 2D slice, which is impossible with list of lists. This is not a deal breaker, as we can emulate this via nested loops, one over horizontal, one over vertical coordiantes. However, this would be fairly inefficient. Instead, we can use [NumPy](https://numpy.org/) that provides fast and easy to use implementation of multidimensional arrays and matrix operations.
+
