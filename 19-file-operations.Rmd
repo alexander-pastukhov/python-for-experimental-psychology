@@ -1,4 +1,4 @@
-# Context, settings, and exceptions
+# Context, settings, and exceptions {#seminar-02-07}
 
 Today, we will reuse our lovely [Guitar Hero](#seminar-02-06) game and see how we simplify our life via having settings in a separate file. Plus we will be using context to isolate repetitive initialization / clean-up code and exceptions to control the flow. Thus, create a new folder with all the classes and the final exercise from Guitar Hero, which you will serve as a foundation for exercise 1.
 
