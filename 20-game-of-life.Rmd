@@ -1,0 +1,6 @@
+# Game of life in NumPy {#seminar-02-08}
+
+Today you will be programming the [Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) created by the British mathematician John Horton Conway. This is not really a game but rather a simulation where you set initial conditions up and observe how the population evolves. Here is an example simulation with a random starting state.
+
+
+The rules
