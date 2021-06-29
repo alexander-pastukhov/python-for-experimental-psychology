@@ -10,7 +10,25 @@ Despite simplicity they produce remarkable evolution of a cell culture and give 
 
 ## Implementing  the rules
 
+To program the game, you need to count live neighbours for every cell and use the rules above to decide whether it will be alive or dead on the _next_ iteration. The latter bit is important, you need to evaluate all cells at their current state, you cannot change their status during that period. Accordingly, on each iteration you need to a _new_ cell culture and overwrite the original one.
+
+Our cells will live in a rectangular world, so you need to count number of neighbours in the 8 cells around it, as shown in the image below (index / location of the dot in question is assumed to be _i, j_.
+
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("images/game-of-life-grid.png")
+```
+
+However, things become slightly trickier, if a cell lies on the _border_ of the world.
+
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics("images/game-of-live-border.png")
+```
+
+The same rule for living or dying still apply but when counting neigbours you need to make sure that we do not try to access cells 
+_outside_ of the world. If we mess up our indexing, at best we will get an error, at worst we will access wrong elements. E.g., when our index is negative, Python will not issue a mistake but will simply count elements _from the end_. We could, of course, add extra range checks for index values but there is a simpler solution. Think, how can you avoid border indexing issues _without_ explicit range checks?
+
+
 ## NumPy
 
-Our cells live on a 2D grid. In principle, we could implement it as a list of lists. However, to compute the total number of neighbouring cells, we need to make a 2D slice, which is impossible with list of lists. This is not a deal breaker, as we can emulate this via nested loops, one over horizontal, one over vertical coordiantes. However, this would be fairly inefficient. Instead, we can use [NumPy](https://numpy.org/) that provides fast and easy to use implementation of multidimensional arrays and matrix operations.
+Our cells live on a 2D grid. In principle, we could implement it as a list of lists. However, to compute the total number of neighbouring cells, we need to make a 2D slice, which is impossible with list of lists. This is not a deal breaker, as we can emulate this via nested loops, one over horizontal, one over vertical coordinates. However, this would be fairly inefficient. Instead, we can use [NumPy](https://numpy.org/) that provides fast and easy to use implementation of multidimensional arrays and matrix operations.
 
