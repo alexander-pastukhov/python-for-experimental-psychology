@@ -119,6 +119,11 @@ I would suggest creating and testing both function in a Jupyter notebook first a
 Put both generators into _generators.py_.
 :::
 
+
+```{r echo=FALSE}
+# ADD INFORMATION ABOUT tuple/list unpacking via *, so that a tuple is unpacked for the time_to_next_taget_generator()
+```
+
 ## TimedResponseTask class
 Now we are ready to create the `TimedResponseTask` class. For our first take, it will create targets at a random location (`next_target_generator()`) after a random interval (`time_to_next_target_generator()`) plus take care of moving and drawing all of them. More bells and whistles (disposing of targets that went past the screen, changing the speed, checking response validity, etc.) will come later.
 
