@@ -219,7 +219,7 @@ Update `Target` and `TimedResponseTask` classes, put updated main script into _e
 ## Logging data
 In the real experiment, we would want to log the responses, e.g., when participants pressed a button and what was the score. PsychoPy provides a convenience class [ExperimentHandler](https://psychopy.org/api/data.html#experimenthandler) for such purposes that we already met when programming the [Memory Game](#logging-data). 
 
-Reuse the code of `SettingsContext` class for a `GameContext` class. In addition to the original functionality, it should create an `ExperimentHandler` object as a `data` attribute, so you could use it as `ctx.data` in the main script. For the context `__exit__`, you should save the results [as wide text](https://psychopy.org/api/data.html#psychopy.data.ExperimentHandler.saveAsWideText). I suggest that the log file name should be one of the settings. In the main code, log time the pressed key, time of press (relative to the game start), and the score of that press.
+Reuse the code of `SettingsContext` class for a `GameContext` class. In addition to the original functionality, it should create an `ExperimentHandler` object as a `data` attribute, so you could use it as `ctx.data` in the main script. For the context `__exit__`, you should save the results [as wide text](https://psychopy.org/api/data.html#psychopy.data.ExperimentHandler.saveAsWideText). I suggest that the log file name should be one of the settings. In the main code, log the pressed key, time of press (relative to the game start), and the score of that press.
 
 ::: {.infobox .program}
 Create `GameContext` class, use  in an updated main script in _exercise05.py_.
