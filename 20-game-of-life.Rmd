@@ -140,7 +140,32 @@ Update `CellCulture` class by creating a zero-padded initial population and corr
 
 Test the code, use breakpoints if necessary.
 
-## Dynamics
+## Evolution
+Now, let us make cells get born, live, and die. For this, you need to create an `update()` method for the `CellCulture` class. Inside, create a new temporary array `grid width` by `grid height` size, call it `next_gen`. Then, loop through all the cells of the current cell culture _excluding_ the padding, count number of neighbours for each cell, and use [rules above](#seminar-02-08) to determine whether a cell should be dead or alive on the _next_ frame. Put the result into the corresponding in `next_gen`. Once you went through all the cells via nested for loops, copy the `next_gen` into into `.cells` (the same way you copied the initial random state) overwriting the current generation and update the `.image`. In the main experimental code, call `.update()` method on every frame and you should see your cell culture change.
+
+::: {.infobox .program}
+Create `update` method in `CellCulture` and use it in the main loop, put it into _exercise03.py_.
+:::
+
+## Pause
+Add an ability to pause / continue the process via _space_ button. Think how you can implement via a state variable or an attribute of the class.
+
+::: {.infobox .program}
+Put the code into _exercise04.py_.
+:::
+
+## Drawing
+Add an ability to draw/erase cell via mouse. Left mouse button (index `0`) should add a living cell at the location, whereas the right button (index `2`) should put a dead cell. First, create a new method (I called it `set`) that takes x and y index of the cell and its new value (0 or 1) and puts it into the correct position (mind the zero-padding!) in the `.cells`. Next, compute the index of the cell based on the mouse position with the window and the size of the square. Use these coordinates and a button-based value to modify the cell.
+
+::: {.infobox .program}
+Create `set` method in `CellCulture`. Use it together with the mouse control in the main loop, put it into _exercise05.py_.
+:::
+
+
+
+
+## We want more!
+You can always 
 
 
 
