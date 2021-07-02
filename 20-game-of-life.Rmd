@@ -10,25 +10,64 @@ Despite simplicity they produce remarkable evolution of a cell culture and give 
 
 ## Implementing  the rules
 
-To program the game, you need to count live neighbours for every cell and use the rules above to decide whether it will be alive or dead on the _next_ iteration. The latter bit is important, you need to evaluate all cells at their current state, you cannot change their status during that period. Accordingly, on each iteration you need to a _new_ cell culture and overwrite the original one.
+To program the game, you need to count live neighbours for every cell and use the rules above to decide whether it will be alive or dead on the _next_ iteration. The latter bit is important, you need to evaluate all cells at their current state, you cannot change their status during that period. Accordingly, on each iteration you need to a _new_ cell culture / grid and then overwrite the original one.
 
-Our cells will live in a rectangular world, so you need to count number of neighbours in the 8 cells around it, as shown in the image below (index / location of the dot in question is assumed to be _i, j_.
+Our cells will live in a rectangular world, so you need to count number of neighbours in the 8 cells around it, as shown in the left hand-side image below (index / location of the dot in question is assumed to be _i, j_).
 
 ```{r echo=FALSE, fig.align='center'}
 knitr::include_graphics("images/game-of-life-grid.png")
 ```
 
-However, things become slightly trickier, if a cell lies on the _border_ of the world.
-
-```{r echo=FALSE, fig.align='center'}
-knitr::include_graphics("images/game-of-live-border.png")
-```
-
-The same rule for living or dying still apply but when counting neigbours you need to make sure that we do not try to access cells 
-_outside_ of the world. If we mess up our indexing, at best we will get an error, at worst we will access wrong elements. E.g., when our index is negative, Python will not issue a mistake but will simply count elements _from the end_. We could, of course, add extra range checks for index values but there is a simpler solution. Think, how can you avoid border indexing issues _without_ explicit range checks?
-
+However, things become slightly trickier, if a cell lies on the _border_ of the world, as depicted on the right hand-side. The same rule for living or dying still apply but when counting neigbours you need to make sure that we do not try to access cells _outside_ of the world (marked in red). If we mess up our indexing, at best we will get an error, at worst we will access wrong elements. E.g., when our index is negative, Python will not issue a mistake but will simply count elements _from the end_. We could, of course, add extra range checks for index values but there is a simpler solution. Think, how can you avoid border indexing issues _without_ explicit range checks?
 
 ## NumPy
 
-Our cells live on a 2D grid. In principle, we could implement it as a list of lists. However, to compute the total number of neighbouring cells, we need to make a 2D slice, which is impossible with list of lists. This is not a deal breaker, as we can emulate this via nested loops, one over horizontal, one over vertical coordinates. However, this would be fairly inefficient. Instead, we can use [NumPy](https://numpy.org/) that provides fast and easy to use implementation of multidimensional arrays and matrix operations.
+Our cells live on a 2D grid. In principle, we could implement it as a list of lists. However, to compute the total number of neighbouring cells, we need to make a 2D slice, which is impossible with a list of lists. This is not a deal breaker, as we can emulate this via nested loops, one over horizontal, one over vertical coordinates. However, this would be fairly inefficient. Instead, we can use [NumPy](https://numpy.org/) that provides fast and easy to use implementation of multidimensional arrays, matrix operations, and various functions that re-implement functionality, such as generating random numbers, but for arrays. I will not try to properly cover NumPy here and the material below will contain just the bare minimum that we need for the game. Instead, I encourage you to read the [quickstart guide](quickstart.html) and the [the absolute basics for beginners](https://numpy.org/doc/stable/user/absolute_beginners.html).
+
+
+The NumPy is not included with the base Python distribution. However, you can easily install it, including versions that utilize special libraries to speed up linear algebra computation. Moreover, PsychoPy Python distribution comes with NumPy, so you should already have it.
+
+As with all libraries, you first need to import it. The traditional way to do this is
+```python
+import numpy as np
+```
+You may remember that I advised you against renaming libraries via `as`. However, NumPy and a few other popular and widely used libraries, such as [pandas](https://pandas.pydata.org/) (`as pd`), are exceptions to the rule. This is only because of the tradition / general agreement to consistently rename them to make names shorter. Hence, if you see a code snippet that has `np.` in it, you can be fairly certain that it uses NumPy library imported `as np`. However, you should still double-check, just in case!
+
+## Basic PsychoPy code
+To begin with, we need our usual boilerplate for PsychoPy. I recommend that you use [settings file](#settings-files) in combination with the context manager, as you have learned during the previous seminar. This is an overkill for this specific game but it is a good practice. In the settings file, you need just two settings: 
+
+* `grid size`: I've picked a 30×30.
+* `cell size [pix]` : size of an individual cell in pixels. I've picked 10 (so, each cell is 10×10 pixels) but pick the number that is suitable for you.
+
+These two numbers determine the size of the PsychoPy window in pixels (cells will cover the entire window).
+
+::: {.infobox .program}
+Implement the boilerplate code with the correct window size in  _exercise01.py_.
+:::
+
+
+## Matrix of life
+As noted, our cells live on a 2D array called matrix. There are different ways to create it using Python lists but also making a simple array filled with zeros via [np.zeros()](https://numpy.org/doc/stable/reference/generated/numpy.zeros.html), ones via [np.ones()](https://numpy.org/doc/stable/reference/generated/numpy.ones.html)), or [random numbers](https://numpy.org/doc/stable/reference/random/index.html) ^[See [this guide](https://numpy.org/doc/stable/user/absolute_beginners.html#how-to-create-a-basic-array) as well].
+
+To create a 3×3 array filled with zeros, you simply write
+```{python}
+import numpy as np
+
+x = np.zeros((3, 3))
+x
+```
+
+However, we do not want to start our game with no living cells (what would happen as per rules above?). Instead, we want a 2D array where a cell is _randomly_ either alive (1) or dead (0). The function that we used for such cases previously was [randint()](https://docs.python.org/3/library/random.html#random.randint) from random library. NumPy has a function with the same name but which returns an array of random integer numbers instead of a single one. Read documentation for [np.random.randint()](https://numpy.org/doc/stable/reference/random/generated/numpy.random.randint.html) function and write a code to generate a 2D 5×3 array filled randomly with 0s and 1s. Hint, you will need to specify the `size` parameter for this. Experiment with `size` and the highest number parameters.
+
+::: {.infobox .program}
+Implement the code in a cell in a Jupyter Notebook.
+:::
+
+## Drawing cells
+State of our cells is represented by a 2D NumPy array but how do we visualize this? We could create a [Rect](https://psychopy.org/api/visual/rect.html#psychopy.visual.rect.Rect) stimulus for each cell and draw them in a loop based on a state of the cell. However, there is a better and faster way to achieve same end by turning a NumPy array into an [ImageStim](https://psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim). You have used it before by supplying a filename to the file but it also accepts a 3D NumPy array of size `[width, height, 3]`. Thus, we can 
+
+
+
+
+
 
