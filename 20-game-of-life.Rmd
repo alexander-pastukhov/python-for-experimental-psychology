@@ -84,7 +84,7 @@ The second function should take `.cells` 2D array, turn it into 3D RGB array (yo
 In the main code, create an object of class `CellCulture` and draw it in the main game loop. Currently, it should be a static random patter of black and white squares.
 
 ::: {.infobox .program}
-Create `CellCultere` class and use it in the main code, drawing the cells. Put code in _exercise02.py_.
+Create `CellCulture` class and use it in the main code, drawing the cells. Put code in _exercise02.py_.
 :::
 
 ## Slicing a 2D array
@@ -120,7 +120,7 @@ Implement relative slicing code in a cell in a Jupyter Notebook.
 :::
 
 ## Dealing with borders
-So, what was your solution to deal with the border problem that I have described above? My solution is to simply pad the cell culture with an extra rows/columns of dead cells. Then, we count neighbours and modify state only of the _inner_ cells (so starting with cells in the second row and column) and keep the outer cells permanently dead. 
+So, what was your solution to deal with the border problem that I have described above? Mine is to simply pad the cell culture with an extra rows/columns of dead cells. Then, we count neighbours and modify state only of the _inner_ cells (so starting with cells in the second row and column) and keep the outer cells permanently dead. 
 
 To this I create a 2D array of size `[grid width + 2, grid height + 2]` with the outer rows and columns set to zero. One way to do this, is to 
 
@@ -131,6 +131,17 @@ To this I create a 2D array of size `[grid width + 2, grid height + 2]` with the
 ::: {.infobox .program}
 In the Jupyter notebook, write the new code that will generate the random cell culture padded with zeros.
 :::
+
+Once the code is working, copy it into the constructor of the `CellCulture` class, so that `.cells` array is zero-padded. However, we do not want to show the padding, so also modify the `array2img()` method, so that it repeats not the entire `.cells` array but only the inner part (same slicing!).
+
+::: {.infobox .program}
+Update `CellCulture` class by creating a zero-padded initial population and correct array-2-image conversion.
+:::
+
+Test the code, use breakpoints if necessary.
+
+## Dynamics
+
 
 
 
