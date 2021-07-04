@@ -8,6 +8,14 @@ Today you will be programming the [Game of Life](https://en.wikipedia.org/wiki/C
 
 Despite simplicity they produce remarkable evolution of a cell culture and give rise to many dynamic or static configurations. Here is an example simulation with a random starting state.
 
+```{r, eval=knitr::is_html_output(excludes = "epub"), results = 'asis', echo = F}
+cat(
+'<div style="text-align:center;"><video controls>
+    <source src="videos/game-of-life.m4v" type="video/mp4"> 
+  </video></div>'
+)
+```
+
 ## Implementing  the rules
 
 To program the game, you need to count live neighbours for every cell and use the rules above to decide whether it will be alive or dead on the _next_ iteration. The latter bit is important, you need to evaluate all cells at their current state, you cannot change their status during that period. Accordingly, on each iteration you need to a _new_ cell culture / grid and then overwrite the original one.
@@ -161,11 +169,6 @@ Add an ability to draw/erase cell via mouse. Left mouse button (index `0`) shoul
 Create `set` method in `CellCulture`. Use it together with the mouse control in the main loop, put it into _exercise05.py_.
 :::
 
-
-
-
-## We want more!
-You can always 
 
 
 
