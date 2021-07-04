@@ -236,7 +236,7 @@ score
 staircase
 limiting-time
 this-is-just-a-start
-context-settings-and-exceptions
+seminar-02-07
 context-manager
 settings-files
 xml
@@ -249,4 +249,16 @@ using-settings
 logging-data-1
 exceptions
 exception-within-context
+seminar-02-08
+implementing-the-rules
+numpy
+basic-psychopy-code
+matrix-of-life
+from-2d-to-3d
+drawing-cells
+slicing-a-2d-array
+dealing-with-borders
+evolution
+pause
+drawing
 w--.unlisted

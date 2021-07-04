@@ -117,7 +117,7 @@
 
 \title{Python for social and experimental psychology}
 \author{Alexander (Sasha) Pastukhov}
-\date{2021-06-22}
+\date{2021-07-04}
 
 \begin{document}
 \maketitle
@@ -4936,7 +4936,7 @@ In the next section, we will create a \texttt{TimedResponseTask} class that will
 \end{Shaded}
 
 \begin{verbatim}
-## <generator object iterator_fun at 0x000000002921BA98>
+## <generator object iterator_fun at 0x000000002718BA98>
 \end{verbatim}
 
 \begin{Shaded}
@@ -5134,8 +5134,8 @@ Put updated code in \emph{exercise07.py}, create \texttt{ScoreText} class.
 
 As per usual, think about how you can extend the game. A clock showing the remaining time is definitely missing. Auditory feedback would be nice. More positions? Random colors to confuse a player?
 
-\hypertarget{context-settings-and-exceptions}{%
-\chapter{Context, settings, and exceptions}\label{context-settings-and-exceptions}}
+\hypertarget{seminar-02-07}{%
+\chapter{Context, settings, and exceptions}\label{seminar-02-07}}
 
 Today, we will reuse our lovely \protect\hyperlink{seminar-02-06}{Guitar Hero} game and see how we simplify our life via having settings in a separate file. Plus we will be using context to isolate repetitive initialization / clean-up code and exceptions to control the flow. Thus, create a new folder with all the classes and the final exercise from Guitar Hero, which you will serve as a foundation for exercise 1.
 
@@ -5418,7 +5418,7 @@ Update \texttt{Target} and \texttt{TimedResponseTask} classes, put updated main 
 
 In the real experiment, we would want to log the responses, e.g., when participants pressed a button and what was the score. PsychoPy provides a convenience class \href{https://psychopy.org/api/data.html\#experimenthandler}{ExperimentHandler} for such purposes that we already met when programming the \protect\hyperlink{logging-data}{Memory Game}.
 
-Reuse the code of \texttt{SettingsContext} class for a \texttt{GameContext} class. In addition to the original functionality, it should create an \texttt{ExperimentHandler} object as a \texttt{data} attribute, so you could use it as \texttt{ctx.data} in the main script. For the context \texttt{\_\_exit\_\_}, you should save the results \href{https://psychopy.org/api/data.html\#psychopy.data.ExperimentHandler.saveAsWideText}{as wide text}. I suggest that the log file name should be one of the settings. In the main code, log time the pressed key, time of press (relative to the game start), and the score of that press.
+Reuse the code of \texttt{SettingsContext} class for a \texttt{GameContext} class. In addition to the original functionality, it should create an \texttt{ExperimentHandler} object as a \texttt{data} attribute, so you could use it as \texttt{ctx.data} in the main script. For the context \texttt{\_\_exit\_\_}, you should save the results \href{https://psychopy.org/api/data.html\#psychopy.data.ExperimentHandler.saveAsWideText}{as wide text}. I suggest that the log file name should be one of the settings. In the main code, log the pressed key, time of press (relative to the game start), and the score of that press.
 
 Create \texttt{GameContext} class, use in an updated main script in \emph{exercise05.py}.
 
@@ -5500,6 +5500,252 @@ Here, we will use this mechanism not only for safe clean-up but also to make abo
 That last bit \texttt{return\ True} informs Python that you handled the exception and all is good (not need to propagate it further). Now, you can safely abort your experiment from any code location, inside nested loops, functions, etc. In all cases, the exception will be propagated until the \texttt{\_\_exit\_\_} method, doing away with awkward extra checks.
 
 Create \texttt{GameAbort} exception class, update \texttt{GameContext} class to handle it, use this in an updated main script in \emph{exercise06.py}.
+
+\hypertarget{seminar-02-08}{%
+\chapter{Game of life in NumPy}\label{seminar-02-08}}
+
+Today you will be programming the \href{https://en.wikipedia.org/wiki/Conway\%27s_Game_of_Life}{Game of Life} created by the British mathematician John Horton Conway. This is not really a game but rather a simulation where you set initial conditions up and observe how the population evolves. The rules, \href{https://en.wikipedia.org/wiki/Conway\%27s_Game_of_Life}{as described on Wikipedia}, are very simple:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Any live cell with two or three live neighbours survives.
+\item
+  Any dead cell with three live neighbours becomes a live cell.
+\item
+  All other live cells die in the next generation. Similarly, all other dead cells stay dead.
+\end{enumerate}
+
+Despite simplicity they produce remarkable evolution of a cell culture and give rise to many dynamic or static configurations. Here is an example simulation with a random starting state.
+
+\hypertarget{implementing-the-rules}{%
+\section{Implementing the rules}\label{implementing-the-rules}}
+
+To program the game, you need to count live neighbours for every cell and use the rules above to decide whether it will be alive or dead on the \emph{next} iteration. The latter bit is important, you need to evaluate all cells at their current state, you cannot change their status during that period. Accordingly, on each iteration you need to a \emph{new} cell culture / grid and then overwrite the original one.
+
+Our cells will live in a rectangular world, so you need to count number of neighbours in the 8 cells around it, as shown in the left hand-side image below (index / location of the dot in question is assumed to be \emph{i, j}).
+
+\begin{center}\includegraphics[width=16.68in]{images/game-of-life-grid} \end{center}
+
+However, things become slightly trickier, if a cell lies on the \emph{border} of the world, as depicted on the right hand-side. The same rule for living or dying still apply but when counting neigbours you need to make sure that we do not try to access cells \emph{outside} of the world (marked in red). If we mess up our indexing, at best we will get an error, at worst we will access wrong elements. E.g., when our index is negative, Python will not issue a mistake but will simply count elements \emph{from the end}. We could, of course, add extra range checks for index values but there is a simpler solution. Think, how can you avoid border indexing issues \emph{without} explicit range checks?
+
+\hypertarget{numpy}{%
+\section{NumPy}\label{numpy}}
+
+Our cells live on a 2D grid. In principle, we could implement it as a list of lists. However, to compute the total number of neighbouring cells, we need to make a 2D slice, which is impossible with a list of lists. This is not a deal breaker, as we can emulate this via nested loops, one over horizontal, one over vertical coordinates. However, this would be fairly inefficient. Instead, we can use \href{https://numpy.org/}{NumPy} that provides fast and easy to use implementation of multidimensional arrays, matrix operations, and various functions that re-implement functionality, such as generating random numbers, but for arrays. I will not try to properly cover NumPy here and the material below will contain just the bare minimum that we need for the game. Instead, I encourage you to read the \href{quickstart.html}{quickstart guide} and the \href{https://numpy.org/doc/stable/user/absolute_beginners.html}{the absolute basics for beginners}.
+
+The NumPy is not included with the base Python distribution. However, you can easily install it, including versions that utilize special libraries to speed up linear algebra computation. Moreover, PsychoPy Python distribution comes with NumPy, so you should already have it.
+
+As with all libraries, you first need to import it. The traditional way to do this is
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\end{Highlighting}
+\end{Shaded}
+
+You may remember that I advised you against renaming libraries via \texttt{as}. However, NumPy and a few other popular and widely used libraries, such as \href{https://pandas.pydata.org/}{pandas} (\texttt{as\ pd}), are exceptions to the rule. This is only because of the tradition / general agreement to consistently rename them to make names shorter. Hence, if you see a code snippet that has \texttt{np.} in it, you can be fairly certain that it uses NumPy library imported \texttt{as\ np}. However, you should still double-check, just in case!
+
+\hypertarget{basic-psychopy-code}{%
+\section{Basic PsychoPy code}\label{basic-psychopy-code}}
+
+To begin with, we need our usual boilerplate for PsychoPy. I recommend that you use \protect\hyperlink{settings-files}{settings file} in combination with the context manager, as you have learned during the previous seminar. This is an overkill for this specific game but it is a good practice. In the settings file, you need just three settings:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{grid\ width}: I've picked a 30
+\item
+  \texttt{grid\ height}: I've also picked a 30
+\item
+  \texttt{cell\ size\ {[}pix{]}} : size of an individual cell in pixels. I've picked 10 (so, each cell is 10×10 pixels) but pick the number that is suitable for you.
+\end{itemize}
+
+These three numbers determine the size of the PsychoPy window in pixels (cells will cover the entire window).
+
+Implement the boilerplate code, including the main game loop, with the correct window size in \emph{exercise01.py}.
+
+\hypertarget{matrix-of-life}{%
+\section{Matrix of life}\label{matrix-of-life}}
+
+As noted, our cells live on a 2D array called matrix. There are different ways to create it using Python lists but also making a simple array filled with zeros via \href{https://numpy.org/doc/stable/reference/generated/numpy.zeros.html}{np.zeros()}, ones via \href{https://numpy.org/doc/stable/reference/generated/numpy.ones.html}{np.ones()}), or \href{https://numpy.org/doc/stable/reference/random/index.html}{random numbers} \footnote{See \href{https://numpy.org/doc/stable/user/absolute_beginners.html\#how-to-create-a-basic-array}{this guide} as well}.
+
+To create a 3×3 array filled with zeros, you simply write
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+
+\NormalTok{x }\OperatorTok{=}\NormalTok{ np.zeros((}\DecValTok{3}\NormalTok{, }\DecValTok{3}\NormalTok{))}
+\NormalTok{x}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## array([[0., 0., 0.],
+##        [0., 0., 0.],
+##        [0., 0., 0.]])
+\end{verbatim}
+
+However, we do not want to start our game with no living cells (what would happen as per rules above?). Instead, we want a 2D array where a cell is \emph{randomly} either alive (1) or dead (0). The function that we used for such cases previously was \href{https://docs.python.org/3/library/random.html\#random.randint}{randint()} from random library. NumPy has a function with the same name but which returns an array of random integer numbers instead of a single one. Read documentation for \href{https://numpy.org/doc/stable/reference/random/generated/numpy.random.randint.html}{np.random.randint()} function and write a code to generate a 2D 5×3 array filled randomly with 0s and 1s. Hint, you will need to specify the \emph{named} \texttt{size} parameter for this. Experiment with \texttt{size} and the highest number parameters.
+
+Implement the code in a cell in a Jupyter Notebook.
+
+\hypertarget{from-2d-to-3d}{%
+\section{From 2D to 3D}\label{from-2d-to-3d}}
+
+State of our cells is represented by a 2D NumPy array but how do we visualize this? We could create a \href{https://psychopy.org/api/visual/rect.html\#psychopy.visual.rect.Rect}{Rect} stimulus for each cell and draw them in a loop based on a state of the cell. However, there is a better and faster way to achieve same end by turning a NumPy array into an \href{https://psychopy.org/api/visual/imagestim.html}{ImageStim}. You have used it before by supplying a file name to the file but it also accepts a 3D NumPy array of size \texttt{{[}width,\ height,\ 3{]}} that defines the image in the \href{https://psychopy.org/general/colours.html\#rgb-color-space}{RGB} or some other \href{https://psychopy.org/general/colours.html}{color space}.
+
+Thus, we can take our NumPy array of cells, turn it into an image that spans the entire window, and draw it. However, for this we need a \texttt{{[}grid\ width,\ grid\ height,\ 3{]}} array but we only have \texttt{{[}grid\ width,\ grid\ height{]}}. To get the former, we can just replicate the same array three times and stack it into a 3D representation. The function you need is \href{https://numpy.org/doc/stable/reference/generated/numpy.repeat.html}{np.repeat()}, you need to repeat you original array three times along the \emph{third} axis (\texttt{axis=2}, rows are \texttt{axis=0}, columns are \texttt{axis=1}, so stacking 2D arrays is along the third axis). Experiment with the code looking at what happens when you use other \texttt{axis} values or repeat different number of times. Check it visually but also check the \texttt{.shape} of the array.
+
+In addition, for the default RGB color space in PsychoPy values go from -1 (black) to 1 (white). However, in our array we have zeros and ones. Thusm while repeating array, you also need to rescale it, so values go from -1 to 1.
+
+Implement the code in a cell in a Jupyter Notebook.
+
+\hypertarget{drawing-cells}{%
+\section{Drawing cells}\label{drawing-cells}}
+
+Create a new class (I called it \texttt{CellCulture}) that will take care of cells. It should be a descendant of the \href{https://psychopy.org/api/visual/imagestim.html}{ImageStim}. We need to implement two methods. First, the constructor. It should have a parameter for PsychoPy window (something you definitely need to pass to the ancestor's constructor) and the grid size (either as a tuple or as two width and height parameters, your choice). It should generate a random 2D array (as you already implemented in Jupyter Notebook) and store it in an attribute \texttt{cells}. Then, you need to call the ancestor's constructor, passing PsychoPy window and setting size so that the image spans the entire window (what should it size be, given \texttt{"normal"} units?). This way, although each cell is a single pixel in the image, we stretch it and turn pixels into squares. Note that you do not need to specify the actual image in the constructor, as we will make a function for that!
+
+The second function should take \texttt{.cells} 2D array, turn it into 3D RGB array (you just implemented that code in the Jupyter notebook) and assign it to the \texttt{.image} attribute of the class. Call this function \texttt{array2img} (or something along these lines) and call it in the constructor \emph{after} the ancestor constructor was called.
+
+In the main code, create an object of class \texttt{CellCulture} and draw it in the main game loop. Currently, it should be a static random patter of black and white squares.
+
+Create \texttt{CellCulture} class and use it in the main code, drawing the cells. Put code in \emph{exercise02.py}.
+
+\hypertarget{slicing-a-2d-array}{%
+\section{Slicing a 2D array}\label{slicing-a-2d-array}}
+
+Slicing for Numpy arrays is more powerful than for lists, see \href{https://numpy.org/doc/stable/user/absolute_beginners.html\#indexing-and-slicing}{Indexing and slicing}. However, for our intents and purposes, we only need to supply two arrays of indexes, one per each dimension to get the elements that we want.
+
+You can use Python lists
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OperatorTok{=}\NormalTok{ np.array([[}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{], [}\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{], [}\DecValTok{7}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{9}\NormalTok{]])}
+\BuiltInTok{print}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1 2 3]
+##  [4 5 6]
+##  [7 8 9]]
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{print}\NormalTok{(x[ (}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{) , (}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1 5]
+\end{verbatim}
+
+or you can use NumPy arrays.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OperatorTok{=}\NormalTok{ np.array([[}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{], [}\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{], [}\DecValTok{7}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{9}\NormalTok{]])}
+\BuiltInTok{print}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1 2 3]
+##  [4 5 6]
+##  [7 8 9]]
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{print}\NormalTok{(x[ np.array((}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)) , np.array((}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{))])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1 5]
+\end{verbatim}
+
+However, the latter have an advantage that you can apply algebra operations to them such as addition, note the \texttt{1\ +\ np.array()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OperatorTok{=}\NormalTok{ np.array([[}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{], [}\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{], [}\DecValTok{7}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{9}\NormalTok{]])}
+\BuiltInTok{print}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1 2 3]
+##  [4 5 6]
+##  [7 8 9]]
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{print}\NormalTok{(x[ }\DecValTok{1} \OperatorTok{+}\NormalTok{ np.array((}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)) , np.array((}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{))])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [4 8]
+\end{verbatim}
+
+To count the neighbours, we need to \href{https://numpy.org/doc/stable/reference/generated/numpy.sum.html}{sum} over eight cells \emph{relative} to the current one (see the image above). Create two index NumPy arrays that will have correct \emph{relative} indexes in them, i.e., values should be \texttt{-1} and \texttt{-1} for the top-left corner, \texttt{0} and \texttt{-1} for the top-middle cell, etc. Once you have them, you know indexes of all neighbours of a cell \emph{i, j}, as you can simple add them to a corresponding index and center it on that cell.
+
+In Jupyter notebook, create the \emph{relative} index of eight neighbours and test it for cells in the 2D array that you created previously. For a moment, use only valid values of \texttt{i} and \texttt{j} which are \emph{not} on the border and check that you do extract correct cells and that the total number of neighbours that you compute via \href{https://numpy.org/doc/stable/reference/generated/numpy.sum.html}{sum} is also correct.
+
+Implement relative slicing code in a cell in a Jupyter Notebook.
+
+\hypertarget{dealing-with-borders}{%
+\section{Dealing with borders}\label{dealing-with-borders}}
+
+So, what was your solution to deal with the border problem that I have described above? Mine is to simply pad the cell culture with an extra rows/columns of dead cells. Then, we count neighbours and modify state only of the \emph{inner} cells (so starting with cells in the second row and column) and keep the outer cells permanently dead.
+
+To this I create a 2D array of size \texttt{{[}grid\ width\ +\ 2,\ grid\ height\ +\ 2{]}} with the outer rows and columns set to zero. One way to do this, is to
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Create a \texttt{grid\ width\ +\ 2} by \texttt{grid\ height\ +\ 2} array of \href{https://numpy.org/doc/stable/reference/generated/numpy.zeros.html}{zeros},
+\item
+  Generate a random array of size \texttt{grid\ width} by \texttt{grid\ height}
+\item
+  Put the random (smaller) array into the inner part of the zeros (larger) array using \href{(https://numpy.org/doc/stable/user/absolute_beginners.html\#indexing-and-slicing)}{slicing}. I.e., just as with Python lists, you can write \texttt{1:-1} to slice through each dimension.
+\end{enumerate}
+
+In the Jupyter notebook, write the new code that will generate the random cell culture padded with zeros.
+
+Once the code is working, copy it into the constructor of the \texttt{CellCulture} class, so that \texttt{.cells} array is zero-padded. However, we do not want to show the padding, so also modify the \texttt{array2img()} method, so that it repeats not the entire \texttt{.cells} array but only the inner part (same slicing!).
+
+Update \texttt{CellCulture} class by creating a zero-padded initial population and correct array-2-image conversion.
+
+Test the code, use breakpoints if necessary.
+
+\hypertarget{evolution}{%
+\section{Evolution}\label{evolution}}
+
+Now, let us make cells get born, live, and die. For this, you need to create an \texttt{update()} method for the \texttt{CellCulture} class. Inside, create a new temporary array \texttt{grid\ width} by \texttt{grid\ height} size, call it \texttt{next\_gen}. Then, loop through all the cells of the current cell culture \emph{excluding} the padding, count number of neighbours for each cell, and use \protect\hyperlink{seminar-02-08}{rules above} to determine whether a cell should be dead or alive on the \emph{next} frame. Put the result into the corresponding in \texttt{next\_gen}. Once you went through all the cells via nested for loops, copy the \texttt{next\_gen} into into \texttt{.cells} (the same way you copied the initial random state) overwriting the current generation and update the \texttt{.image}. In the main experimental code, call \texttt{.update()} method on every frame and you should see your cell culture change.
+
+Create \texttt{update} method in \texttt{CellCulture} and use it in the main loop, put it into \emph{exercise03.py}.
+
+\hypertarget{pause}{%
+\section{Pause}\label{pause}}
+
+Add an ability to pause / continue the process via \emph{space} button. Think how you can implement via a state variable or an attribute of the class.
+
+Put the code into \emph{exercise04.py}.
+
+\hypertarget{drawing}{%
+\section{Drawing}\label{drawing}}
+
+Add an ability to draw/erase cell via mouse. Left mouse button (index \texttt{0}) should add a living cell at the location, whereas the right button (index \texttt{2}) should put a dead cell. First, create a new method (I called it \texttt{set}) that takes x and y index of the cell and its new value (0 or 1) and puts it into the correct position (mind the zero-padding!) in the \texttt{.cells}. Next, compute the index of the cell based on the mouse position with the window and the size of the square. Use these coordinates and a button-based value to modify the cell.
+
+Create \texttt{set} method in \texttt{CellCulture}. Use it together with the mouse control in the main loop, put it into \emph{exercise05.py}.
 
 \hypertarget{cross-references}{%
 \chapter*{Cross references}\label{cross-references}}
