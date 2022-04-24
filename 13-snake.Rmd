@@ -37,7 +37,7 @@ As you can see, each new step builds on the previous one. Because of that, remem
 
 ## Initializing PsychoPy
 
-To remind yourself on how you initialize PsychoPy window, see [here](#seminar08). Let us plan ahead and decide on windows size and its units. Recall that PsychoPy has [five different units](#psychopy-units) for size and position. Given that our snake will be composed of square segments and move on a grid made out of squares, which units should we pick? Read on [units](#psychopy-units) and think which units you would pick before continuing
+To remind yourself on how you initialize PsychoPy window, see [here](#seminar08). Let us plan ahead and decide on windows size and its units. Recall that PsychoPy has [five different units](#psychopy-units) for size and position. Given that our snake will be composed of square segments and move on a grid made out of squares, which units should we pick? Read on [units](#psychopy-units) and think which units you would pick before continuing.
 
 ---
 
